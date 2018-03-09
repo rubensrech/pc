@@ -12,7 +12,6 @@ DIGIT       [0-9]
 INTEGER     ("+"|"-")?{DIGIT}+
 ID          [_a-zA-Z][a-zA-Z0-9_]*
 
-
 %%
 
 \n          ++num_lines;
@@ -77,5 +76,6 @@ protected   return TK_PR_PROTECTED;
 #           return (int)'#';
 "^"         return (int)'^';
 "."         return (int)'.';
+"$"         return (int)'$';
 
 %%

@@ -1,66 +1,66 @@
-e1_aval_001 0 0
-e1_aval_002 0 0
-e1_aval_003 0 0
-e1_aval_004 0 0
-e1_aval_005 0 0
-e1_aval_006 0 0
-e1_aval_007 0 0
-e1_aval_008 0 0
-e1_aval_009 0 0
-e1_aval_010 0 0
-e1_aval_011 0 0
-e1_aval_012 0 0
-e1_aval_013 0 0
-e1_aval_014 0 0
-e1_aval_015 0 0
-e1_aval_016 0 0
-e1_aval_017 0 0
-e1_aval_018 0 0
-e1_aval_019 0 0
-e1_aval_020 0 0
-e1_aval_021 0 0
-e1_aval_022 0 0
-e1_aval_023 0 0
-e1_aval_024 0 0
-e1_aval_025 0 0
-e1_aval_026 0 0
-e1_aval_027 0 0
-e1_aval_028 0 0
-e1_aval_029 0 0
-e1_aval_030 0 0
-e1_aval_031 0 0
-e1_aval_032 0 0
-e1_aval_033 0 0
-e1_aval_034 0 0
-e1_aval_035 0 0
-e1_aval_036 0 0
-e1_aval_037 0 0
-e1_aval_038 0 0
-e1_aval_039 0 0
-e1_aval_040 0 0
-e1_aval_041 0 0
-e1_aval_042 0 0
-e1_aval_043 0 0
-e1_aval_044 0 0
-e1_aval_045 0 0
-e1_aval_046 0 0
-e1_aval_047 0 0
-e1_aval_048 0 0
-e1_aval_049 0 0
-e1_aval_050 0 0
-e1_aval_051 0 0
-e1_aval_052 0 0
-e1_aval_053 0 0
-e1_aval_054 0 0
-e1_aval_055 0 0
-e1_aval_056 0 0
-e1_aval_057 0 0
-e1_aval_058 0 0
-e1_aval_059 0 0
-e1_aval_060 0 0
-e1_aval_061 0 0
-e1_aval_062 0 0
-e1_aval_063 0 0
+e1_aval_001 2 0.102288
+e1_aval_002 2 0.100189
+e1_aval_003 2 0.10234
+e1_aval_004 2 0.0978866
+e1_aval_005 2 0.102602
+e1_aval_006 2 0.0993345
+e1_aval_007 2 0.099027
+e1_aval_008 2 0.0983895
+e1_aval_009 2 0.0993531
+e1_aval_010 2 0.099854
+e1_aval_011 2 0.102232
+e1_aval_012 2 0.100821
+e1_aval_013 2 0.10169
+e1_aval_014 2 0.10047
+e1_aval_015 2 0.101433
+e1_aval_016 2 0.101563
+e1_aval_017 2 0.103413
+e1_aval_018 2 0.102928
+e1_aval_019 2 0.100477
+e1_aval_020 2 0.104843
+e1_aval_021 2 0.103922
+e1_aval_022 2 0.103891
+e1_aval_023 2 0.0990524
+e1_aval_024 2 0.100667
+e1_aval_025 2 0.102028
+e1_aval_026 2 0.102321
+e1_aval_027 2 0.104359
+e1_aval_028 2 0.107569
+e1_aval_029 2 0.108709
+e1_aval_030 2 0.104415
+e1_aval_031 2 0.101189
+e1_aval_032 2 0.105633
+e1_aval_033 2 0.0981125
+e1_aval_034 2 0.0976876
+e1_aval_035 2 0.100721
+e1_aval_036 2 0.100294
+e1_aval_037 2 0.0966525
+e1_aval_038 2 0.0956606
+e1_aval_039 2 0.098111
+e1_aval_040 2 0.0989115
+e1_aval_041 2 0.102547
+e1_aval_042 2 0.103697
+e1_aval_043 2 0.0998734
+e1_aval_044 1 0.199778
+e1_aval_045 2 0.101773
+e1_aval_046 2 0.100695
+e1_aval_047 2 0.0967505
+e1_aval_048 2 0.0973635
+e1_aval_049 2 0.0981661
+e1_aval_050 2 0.101014
+e1_aval_051 2 0.097417
+e1_aval_052 2 0.101586
+e1_aval_053 2 0.098637
+e1_aval_054 2 0.100461
+e1_aval_055 2 0.096987
+e1_aval_056 2 0.0983856
+e1_aval_057 2 0.0953115
+e1_aval_058 2 0.0955465
+e1_aval_059 2 0.0976115
+e1_aval_060 2 0.0982349
+e1_aval_061 2 0.097818
+e1_aval_062 2 0.096097
+e1_aval_063 2 0.0982931
 e1_aval_064 0 0
 e1_aval_065 0 0
 e1_aval_066 0 0
@@ -183,69 +183,6 @@ e1_valgrind_13 0 0
 e1_valgrind_14 0 0
 e1_valgrind_15 0 0
 ---
-e1_aval_001
-e1_aval_002
-e1_aval_003
-e1_aval_004
-e1_aval_005
-e1_aval_006
-e1_aval_007
-e1_aval_008
-e1_aval_009
-e1_aval_010
-e1_aval_011
-e1_aval_012
-e1_aval_013
-e1_aval_014
-e1_aval_015
-e1_aval_016
-e1_aval_017
-e1_aval_018
-e1_aval_019
-e1_aval_020
-e1_aval_021
-e1_aval_022
-e1_aval_023
-e1_aval_024
-e1_aval_025
-e1_aval_026
-e1_aval_027
-e1_aval_028
-e1_aval_029
-e1_aval_030
-e1_aval_031
-e1_aval_032
-e1_aval_033
-e1_aval_034
-e1_aval_035
-e1_aval_036
-e1_aval_037
-e1_aval_038
-e1_aval_039
-e1_aval_040
-e1_aval_041
-e1_aval_042
-e1_aval_043
-e1_aval_044
-e1_aval_045
-e1_aval_046
-e1_aval_047
-e1_aval_048
-e1_aval_049
-e1_aval_050
-e1_aval_051
-e1_aval_052
-e1_aval_053
-e1_aval_054
-e1_aval_055
-e1_aval_056
-e1_aval_057
-e1_aval_058
-e1_aval_059
-e1_aval_060
-e1_aval_061
-e1_aval_062
-e1_aval_063
 e1_aval_064
 e1_aval_065
 e1_aval_066

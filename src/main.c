@@ -12,7 +12,7 @@ void main_avaliacao_etapa_1_tabela (void);
 int main_avaliacao_etapa_1 (int argc, char **argv)
 {
   int token = 0;
-  while (token = yylex()) {
+  while ((token = yylex())) {
     if (getenv("INF47_TABLE")){
       continue;
     }

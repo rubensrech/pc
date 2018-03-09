@@ -1,4 +1,9 @@
-TESTE TESTE TESTE
-int TESTE TESTE
-TESTE float TESTE
-bool TESTE
+tes9te {_teste} teste
+int teste [teste]
+teste float :teste -5 + 6
+bool (teste) ,; 102 - 52
+10*5 15 / 3 teste! &&&
+^Jr # =
+
+teste 5 <= 6
+4 == 4

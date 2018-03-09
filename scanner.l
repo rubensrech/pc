@@ -8,7 +8,10 @@ int num_lines = 1;
 
 %}
 
-DIGIT    [0-9]
+DIGIT       [0-9]
+INTEGER     ("+"|"-")?{DIGIT}+
+ID          [_a-zA-Z][a-zA-Z0-9_]*
+
 
 %%
 
@@ -40,5 +43,39 @@ private     return TK_PR_PRIVATE;
 public      return TK_PR_PUBLIC;
 protected   return TK_PR_PROTECTED;
 
+{ID}        return TK_IDENTIFICADOR;
+{INTEGER}   return TK_LIT_INT;
+
+"<="        return TK_OC_LE;
+">="        return TK_OC_GE;
+"=="        return TK_OC_EQ;
+"!="        return TK_OC_NE;
+"&&"        return TK_OC_AND;
+"||"        return TK_OC_OR;
+">>"        return TK_OC_SR;
+"<<"        return TK_OC_SL;
+
+,           return (int)',';
+;           return (int)';';
+:           return (int)':';
+"("         return (int)'(';
+")"         return (int)')';
+"["         return (int)'[';
+"]"         return (int)']';
+"{"         return (int)'{';
+"}"         return (int)'}';
+"+"         return (int)'+';
+-           return (int)'-';
+"*"         return (int)'*';
+"/"         return (int)'/';
+"<"         return (int)'<';
+">"         return (int)'>';
+=           return (int)'=';
+!           return (int)'!';
+&           return (int)'&';
+%           return (int)'%';
+#           return (int)'#';
+"^"         return (int)'^';
+"."         return (int)'.';
 
 %%

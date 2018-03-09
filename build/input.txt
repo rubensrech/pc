@@ -1,3 +1,4 @@
-TESTE
-int rubens rech
-int
+TESTE TESTE TESTE
+int TESTE TESTE
+TESTE float TESTE
+bool TESTE

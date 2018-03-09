@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/cc -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/cc_dict_main_example.dir/src/cc_dict.c.o CMakeFiles/cc_dict_main_example.dir/src/cc_dict_main_example.c.o  -o cc_dict_main_example 

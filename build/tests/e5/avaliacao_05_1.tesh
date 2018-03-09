@@ -1,0 +1,10 @@
+! timeout 5
+
+$ ./tests/e5/execute.sh "./main < ./tests/e5/input/e05_1.amarela | ./tests/scripts/ilocsim --bss 0 --stack 1024 -m 1"
+> 00000000 25
+> 00000004 1
+> 00000044 2
+> 00000104 3
+> 00000188 4
+> 00000804 6
+> 00002504 5

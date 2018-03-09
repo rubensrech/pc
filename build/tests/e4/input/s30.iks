@@ -1,0 +1,10 @@
+/* IKS_ERROR_WRONG_PAR_RETURN or IKS_ERROR_CHAR_TO_X */
+char g()
+{
+   char c;
+   return c;
+}
+int f()
+{
+   return g();
+}

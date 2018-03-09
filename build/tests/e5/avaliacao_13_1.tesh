@@ -1,0 +1,8 @@
+! timeout 5
+
+$ ./tests/e5/execute.sh "./main < ./tests/e5/input/e13_1.amarela | ./tests/scripts/ilocsim --bss 0 --stack 1024 -m 1"
+> 00000000 4566
+> 00000004 298
+
+$ ./tests/e5/execute.sh "./main < ./tests/e5/input/e13_1.amarela | ./tests/scripts/ilocsim --bss 0 --stack 1024 -i 1 | grep cbr"
+> 1 cbr

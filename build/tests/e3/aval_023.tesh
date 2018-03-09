@@ -1,0 +1,4 @@
+#! ./tesh
+! timeout 5
+! output ignore
+$ ./tests/e3/e3_verify.sh ./main tests/e3/i_e3_023.ptg tests/e3/i_e3_023.dot /tmp/

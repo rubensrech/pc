@@ -1,0 +1,24 @@
+/* the bubblesort by ta ga */
+int vetor[10];
+int v[10];
+int  bubblesort (int  vetor2, int  tamanho){
+        int  i;
+        int  j;
+        int  aux;
+        int  k;
+        k = tamanho -1;
+        i = 0;
+        j = 0;
+        while (i < tamanho) do
+        {
+                j = 0;
+                while (j < k) do
+                {
+                        if (vetor[j] > vetor[j+1]) then {aux = v[j]; v[j] = v[j+1]; v[j+1] = aux;};;
+                        j = j + 1;
+                };;
+                i = i + 1;
+                k = k - 1;
+        };;
+
+}

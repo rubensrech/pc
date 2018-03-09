@@ -1,0 +1,4 @@
+#! ./tesh
+! timeout 5
+$ ./main tests/e1/entrada_048
+> 1 TK_OC_LE [<=]

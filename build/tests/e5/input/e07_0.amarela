@@ -1,0 +1,9 @@
+/* arithm. */
+int x;
+int y;
+int main()
+{
+  y = 123;
+  x = 10*(1+2)*3;
+  y = 0 + 2 * x + y;
+}

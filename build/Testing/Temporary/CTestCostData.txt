@@ -1,0 +1,369 @@
+e1_aval_001 0 0
+e1_aval_002 0 0
+e1_aval_003 0 0
+e1_aval_004 0 0
+e1_aval_005 0 0
+e1_aval_006 0 0
+e1_aval_007 0 0
+e1_aval_008 0 0
+e1_aval_009 0 0
+e1_aval_010 0 0
+e1_aval_011 0 0
+e1_aval_012 0 0
+e1_aval_013 0 0
+e1_aval_014 0 0
+e1_aval_015 0 0
+e1_aval_016 0 0
+e1_aval_017 0 0
+e1_aval_018 0 0
+e1_aval_019 0 0
+e1_aval_020 0 0
+e1_aval_021 0 0
+e1_aval_022 0 0
+e1_aval_023 0 0
+e1_aval_024 0 0
+e1_aval_025 0 0
+e1_aval_026 0 0
+e1_aval_027 0 0
+e1_aval_028 0 0
+e1_aval_029 0 0
+e1_aval_030 0 0
+e1_aval_031 0 0
+e1_aval_032 0 0
+e1_aval_033 0 0
+e1_aval_034 0 0
+e1_aval_035 0 0
+e1_aval_036 0 0
+e1_aval_037 0 0
+e1_aval_038 0 0
+e1_aval_039 0 0
+e1_aval_040 0 0
+e1_aval_041 0 0
+e1_aval_042 0 0
+e1_aval_043 0 0
+e1_aval_044 0 0
+e1_aval_045 0 0
+e1_aval_046 0 0
+e1_aval_047 0 0
+e1_aval_048 0 0
+e1_aval_049 0 0
+e1_aval_050 0 0
+e1_aval_051 0 0
+e1_aval_052 0 0
+e1_aval_053 0 0
+e1_aval_054 0 0
+e1_aval_055 0 0
+e1_aval_056 0 0
+e1_aval_057 0 0
+e1_aval_058 0 0
+e1_aval_059 0 0
+e1_aval_060 0 0
+e1_aval_061 0 0
+e1_aval_062 0 0
+e1_aval_063 0 0
+e1_aval_064 0 0
+e1_aval_065 0 0
+e1_aval_066 0 0
+e1_aval_067 0 0
+e1_aval_068 0 0
+e1_aval_069 0 0
+e1_aval_070 0 0
+e1_aval_071 0 0
+e1_aval_072 0 0
+e1_aval_073 0 0
+e1_aval_074 0 0
+e1_aval_075 0 0
+e1_aval_076 0 0
+e1_avaliacao_00 0 0
+e1_avaliacao_01 0 0
+e1_avaliacao_02 0 0
+e1_avaliacao_03 0 0
+e1_avaliacao_05 0 0
+e1_avaliacao_06 0 0
+e1_avaliacao_07 0 0
+e1_avaliacao_08 0 0
+e1_avaliacao_09 0 0
+e1_avaliacao_10 0 0
+e1_avaliacao_11 0 0
+e1_avaliacao_12 0 0
+e1_avaliacao_13 0 0
+e1_avaliacao_14 0 0
+e1_avaliacao_15 0 0
+e1_avaliacao_16 0 0
+e1_avaliacao_17 0 0
+e1_valg_001 0 0
+e1_valg_002 0 0
+e1_valg_003 0 0
+e1_valg_004 0 0
+e1_valg_005 0 0
+e1_valg_006 0 0
+e1_valg_007 0 0
+e1_valg_008 0 0
+e1_valg_009 0 0
+e1_valg_010 0 0
+e1_valg_011 0 0
+e1_valg_012 0 0
+e1_valg_013 0 0
+e1_valg_014 0 0
+e1_valg_015 0 0
+e1_valg_016 0 0
+e1_valg_017 0 0
+e1_valg_018 0 0
+e1_valg_019 0 0
+e1_valg_020 0 0
+e1_valg_021 0 0
+e1_valg_022 0 0
+e1_valg_023 0 0
+e1_valg_024 0 0
+e1_valg_025 0 0
+e1_valg_026 0 0
+e1_valg_027 0 0
+e1_valg_028 0 0
+e1_valg_029 0 0
+e1_valg_030 0 0
+e1_valg_031 0 0
+e1_valg_032 0 0
+e1_valg_033 0 0
+e1_valg_034 0 0
+e1_valg_035 0 0
+e1_valg_036 0 0
+e1_valg_037 0 0
+e1_valg_038 0 0
+e1_valg_039 0 0
+e1_valg_040 0 0
+e1_valg_041 0 0
+e1_valg_042 0 0
+e1_valg_043 0 0
+e1_valg_044 0 0
+e1_valg_045 0 0
+e1_valg_046 0 0
+e1_valg_047 0 0
+e1_valg_048 0 0
+e1_valg_049 0 0
+e1_valg_050 0 0
+e1_valg_051 0 0
+e1_valg_052 0 0
+e1_valg_053 0 0
+e1_valg_054 0 0
+e1_valg_055 0 0
+e1_valg_056 0 0
+e1_valg_057 0 0
+e1_valg_058 0 0
+e1_valg_059 0 0
+e1_valg_060 0 0
+e1_valg_061 0 0
+e1_valg_062 0 0
+e1_valg_063 0 0
+e1_valg_064 0 0
+e1_valg_065 0 0
+e1_valg_066 0 0
+e1_valg_067 0 0
+e1_valg_068 0 0
+e1_valg_069 0 0
+e1_valg_070 0 0
+e1_valg_071 0 0
+e1_valg_072 0 0
+e1_valg_073 0 0
+e1_valg_074 0 0
+e1_valg_075 0 0
+e1_valg_076 0 0
+e1_valgrind_00 0 0
+e1_valgrind_01 0 0
+e1_valgrind_02 0 0
+e1_valgrind_03 0 0
+e1_valgrind_05 0 0
+e1_valgrind_06 0 0
+e1_valgrind_07 0 0
+e1_valgrind_08 0 0
+e1_valgrind_09 0 0
+e1_valgrind_10 0 0
+e1_valgrind_11 0 0
+e1_valgrind_12 0 0
+e1_valgrind_13 0 0
+e1_valgrind_14 0 0
+e1_valgrind_15 0 0
+---
+e1_aval_001
+e1_aval_002
+e1_aval_003
+e1_aval_004
+e1_aval_005
+e1_aval_006
+e1_aval_007
+e1_aval_008
+e1_aval_009
+e1_aval_010
+e1_aval_011
+e1_aval_012
+e1_aval_013
+e1_aval_014
+e1_aval_015
+e1_aval_016
+e1_aval_017
+e1_aval_018
+e1_aval_019
+e1_aval_020
+e1_aval_021
+e1_aval_022
+e1_aval_023
+e1_aval_024
+e1_aval_025
+e1_aval_026
+e1_aval_027
+e1_aval_028
+e1_aval_029
+e1_aval_030
+e1_aval_031
+e1_aval_032
+e1_aval_033
+e1_aval_034
+e1_aval_035
+e1_aval_036
+e1_aval_037
+e1_aval_038
+e1_aval_039
+e1_aval_040
+e1_aval_041
+e1_aval_042
+e1_aval_043
+e1_aval_044
+e1_aval_045
+e1_aval_046
+e1_aval_047
+e1_aval_048
+e1_aval_049
+e1_aval_050
+e1_aval_051
+e1_aval_052
+e1_aval_053
+e1_aval_054
+e1_aval_055
+e1_aval_056
+e1_aval_057
+e1_aval_058
+e1_aval_059
+e1_aval_060
+e1_aval_061
+e1_aval_062
+e1_aval_063
+e1_aval_064
+e1_aval_065
+e1_aval_066
+e1_aval_067
+e1_aval_068
+e1_aval_069
+e1_aval_070
+e1_aval_071
+e1_aval_072
+e1_aval_073
+e1_aval_074
+e1_aval_075
+e1_aval_076
+e1_avaliacao_00
+e1_avaliacao_01
+e1_avaliacao_02
+e1_avaliacao_03
+e1_avaliacao_05
+e1_avaliacao_06
+e1_avaliacao_07
+e1_avaliacao_08
+e1_avaliacao_09
+e1_avaliacao_10
+e1_avaliacao_11
+e1_avaliacao_12
+e1_avaliacao_13
+e1_avaliacao_14
+e1_avaliacao_15
+e1_avaliacao_16
+e1_avaliacao_17
+e1_valg_001
+e1_valg_002
+e1_valg_003
+e1_valg_004
+e1_valg_005
+e1_valg_006
+e1_valg_007
+e1_valg_008
+e1_valg_009
+e1_valg_010
+e1_valg_011
+e1_valg_012
+e1_valg_013
+e1_valg_014
+e1_valg_015
+e1_valg_016
+e1_valg_017
+e1_valg_018
+e1_valg_019
+e1_valg_020
+e1_valg_021
+e1_valg_022
+e1_valg_023
+e1_valg_024
+e1_valg_025
+e1_valg_026
+e1_valg_027
+e1_valg_028
+e1_valg_029
+e1_valg_030
+e1_valg_031
+e1_valg_032
+e1_valg_033
+e1_valg_034
+e1_valg_035
+e1_valg_036
+e1_valg_037
+e1_valg_038
+e1_valg_039
+e1_valg_040
+e1_valg_041
+e1_valg_042
+e1_valg_043
+e1_valg_044
+e1_valg_045
+e1_valg_046
+e1_valg_047
+e1_valg_048
+e1_valg_049
+e1_valg_050
+e1_valg_051
+e1_valg_052
+e1_valg_053
+e1_valg_054
+e1_valg_055
+e1_valg_056
+e1_valg_057
+e1_valg_058
+e1_valg_059
+e1_valg_060
+e1_valg_061
+e1_valg_062
+e1_valg_063
+e1_valg_064
+e1_valg_065
+e1_valg_066
+e1_valg_067
+e1_valg_068
+e1_valg_069
+e1_valg_070
+e1_valg_071
+e1_valg_072
+e1_valg_073
+e1_valg_074
+e1_valg_075
+e1_valg_076
+e1_valgrind_00
+e1_valgrind_01
+e1_valgrind_02
+e1_valgrind_03
+e1_valgrind_05
+e1_valgrind_06
+e1_valgrind_07
+e1_valgrind_08
+e1_valgrind_09
+e1_valgrind_10
+e1_valgrind_11
+e1_valgrind_12
+e1_valgrind_13
+e1_valgrind_14
+e1_valgrind_15

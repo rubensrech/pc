@@ -1,0 +1,4 @@
+! timeout 5
+
+$ ./tests/e5/execute.sh "./main < ./tests/e6/input/e07.amarela | ./tests/scripts/ilocsim --bss 1000000000 -m 1 | grep 1000000004"
+> 1000000004 352

@@ -1,0 +1,5 @@
+/Users/rubensrechjunior/Developer/pc/build/CMakeFiles/rebuild_cache.dir
+/Users/rubensrechjunior/Developer/pc/build/CMakeFiles/edit_cache.dir
+/Users/rubensrechjunior/Developer/pc/build/CMakeFiles/test.dir
+/Users/rubensrechjunior/Developer/pc/build/CMakeFiles/cc_dict_main_example.dir
+/Users/rubensrechjunior/Developer/pc/build/CMakeFiles/main.dir

@@ -1,0 +1,19 @@
+digraph G {
+node_0x2302f60 [label="programa"]
+node_0x2307050 [label="identificador"]
+node_0x23070a0 [label="3"]
+node_0x23070d0 [label="<<"]
+node_0x23070d0 -> node_0x2307050
+node_0x23070d0 -> node_0x23070a0
+node_0x2307100 [label="identificador"]
+node_0x2307150 [label="4"]
+node_0x2307180 [label=">>"]
+node_0x2307180 -> node_0x2307100
+node_0x2307180 -> node_0x2307150
+node_0x23070d0 -> node_0x2307180
+node_0x23071b0 [label="main"]
+node_0x23071b0 -> node_0x23070d0
+node_0x2302f60 -> node_0x23071b0
+root -> node_0x2302f60
+  root [label="root"]
+}

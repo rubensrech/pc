@@ -1,0 +1,4 @@
+#! ./tesh
+! timeout 15
+! output ignore
+$ ./tests/scripts/valgrindtest ./main tests/e1/entrada_046

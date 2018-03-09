@@ -1,0 +1,10 @@
+! timeout 5
+
+$ ./tests/e5/execute.sh "./main < ./tests/e5/input/e02_1.amarela | ./tests/scripts/ilocsim --bss 0 --stack 1024 -m 1"
+> 00277268 12
+> 00692829 12
+> 00692834 34
+> 06707119 34
+> 06707123 56
+> 06708276 89
+> 06708280 67

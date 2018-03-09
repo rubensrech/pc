@@ -1,0 +1,4 @@
+int f()
+{
+    do {}; while (true);
+}

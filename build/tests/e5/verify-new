@@ -1,0 +1,31 @@
+#!/bin/bash
+
+SIM=tests/scripts/ilocsim
+COMPILER="$1"
+FILE="$2"
+shift 2
+EXPECTED=($@)
+retval=${#EXPECTED[@]}
+
+# executes the compiler and sends the output to the simulator
+# then, grabs all lines that show the contents of the memory
+mem=($($COMPILER $FILE | $SIM 2>&1| grep '^0x' | grep -o ' .*'))
+
+# checks if every expected value was found in the memory
+for i in ${EXPECTED[@]}
+do
+	for (( j=0 ; j < ${#mem[@]} ; j++ ))
+	do
+		v=${mem[j]}
+		if [[ $v == $i ]]
+		then
+			retval=$[ retval - 1 ]
+			# clears the value since it was already used
+			mem[$j]=""
+			# no need to check the rest of the array
+			break
+		fi
+	done
+done
+
+exit $retval

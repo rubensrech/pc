@@ -1,9 +1,16 @@
 #include "cc_misc.h"
 
+extern int num_lines;
+extern char *yytext;
+
+int getLineNumber(void) {
+  return num_lines;
+}
+
 int comp_get_line_number (void)
 {
   //implemente esta função
-  return -1;
+  return getLineNumber();
 }
 
 void yyerror (char const *mensagem)
@@ -14,11 +21,13 @@ void yyerror (char const *mensagem)
 void main_init (int argc, char **argv)
 {
   //implemente esta função com rotinas de inicialização, se necessário
+
 }
 
 void main_finalize (void)
 {
   //implemente esta função com rotinas de inicialização, se necessário
+  comp_print_table();
 }
 
 void comp_print_table (void)

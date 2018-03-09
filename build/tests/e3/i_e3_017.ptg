@@ -1,0 +1,4 @@
+int f() {
+    float iks;
+        iks = 10.12;
+}

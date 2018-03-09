@@ -1,0 +1,13 @@
+/* arithm. associativity */
+int x;
+int y;
+int main()
+{
+  x = 0+1+2+3;
+}
+
+//0+1 should be added first
+//then with 2
+//then with 3
+//check is made by order of loadI instructions
+

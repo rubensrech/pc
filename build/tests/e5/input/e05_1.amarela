@@ -1,0 +1,13 @@
+/* global arranjo with expression */
+int x;
+int y[212];
+int main()
+{
+  x = 25;
+  y[0] = 1;
+  y[x-15] = 2;
+  y[x] = 3;
+  y[x+21] = 4;
+  y[x*x] = 5;
+  y[200] = 6;
+}

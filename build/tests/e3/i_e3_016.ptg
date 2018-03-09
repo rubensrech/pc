@@ -1,0 +1,4 @@
+int f() {
+    int iks;
+        iks = 10;
+}

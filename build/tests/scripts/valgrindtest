@@ -1,0 +1,40 @@
+#!/bin/bash
+
+#check if valgrind is installed
+VALGRIND=`which valgrind`
+if [ "$VALGRIND" = "" ]
+then
+    tput setaf 1; tput bold; echo "Valgrind is probably not installed (checked with 'which valgrind')"; tput sgr0
+    exit 2
+fi
+
+if [ ! -x $VALGRIND ]
+then
+    tput setaf 1; tput bold; echo "Valgrind was found, but it is not executable (tested with 'test -x valgrind')"; tput sgr0
+    exit 2
+fi
+
+if [[ $# -lt 1 ]]; then
+	echo "Usage: $0 BINARY PARAMETERS"
+	exit 2
+fi
+output=$($VALGRIND $* 2>&1 1>/dev/null)
+invalidwrites=$(grep "Invalid write"<<< "$output" | wc -l)
+invalidreads=$(grep "Invalid read"<<< "$output" | wc -l)
+conditional=$(grep "Conditional"<<< "$output" | wc -l)
+lostbytes=$(grep "definitely lost:"<<< "$output" | awk '{ print $4 }' | sed "s/,//g")
+cat << EOF
+invalid writes:
+$invalidwrites
+invalid read:
+$invalidreads
+jumps/moves depending on uninitialized values:
+$conditional
+lost bytes:
+$lostbytes
+EOF
+if [[ 0 -eq $invalidwrites && 0 -eq $invalidreads && 0 -eq $conditional && 0 -eq $lostbytes ]]; then
+	exit 0
+else
+	exit 1
+fi

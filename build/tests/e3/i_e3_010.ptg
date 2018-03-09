@@ -1,0 +1,5 @@
+int f()
+{
+   int b;
+   output 3+b, 3+b;
+}

@@ -1,0 +1,13 @@
+/* arithm. */
+int y;
+int z;
+int k;
+int x;
+int main()
+{
+  y = 1;
+  z = 2;
+  k = 3;
+  
+  x = 0 * y + z * k;
+}

@@ -14,6 +14,9 @@ ID          [_a-zA-Z][a-zA-Z0-9_]*
 
 %%
 
+\/\/.*
+\/\*(.|\n)*\*\/
+
 \n          ++num_lines;
 
 int         return TK_PR_INT;

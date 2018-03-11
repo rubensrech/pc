@@ -4,6 +4,9 @@ teste float :teste -5 + 6
 bool (teste) ,; 102 - 52
 10*5 15 / 3 teste! &&&
 ^Jr # =
-
+int x = 3; // teste
 teste 5 <= 6
 4 == 4
+/* aqui vai um
+		comentario
+		de 3 linhas */

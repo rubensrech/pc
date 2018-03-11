@@ -57,28 +57,6 @@ protected   return TK_PR_PROTECTED;
 ">>"        return TK_OC_SR;
 "<<"        return TK_OC_SL;
 
-,           return (int)',';
-;           return (int)';';
-:           return (int)':';
-"("         return (int)'(';
-")"         return (int)')';
-"["         return (int)'[';
-"]"         return (int)']';
-"{"         return (int)'{';
-"}"         return (int)'}';
-"+"         return (int)'+';
--           return (int)'-';
-"*"         return (int)'*';
-"/"         return (int)'/';
-"<"         return (int)'<';
-">"         return (int)'>';
-=           return (int)'=';
-!           return (int)'!';
-&           return (int)'&';
-%           return (int)'%';
-#           return (int)'#';
-"^"         return (int)'^';
-"."         return (int)'.';
-"$"         return (int)'$';
+[,;:()[\]{}+\-*/<>=!&%#^.$]    return (int)yytext[0];
 
 %%

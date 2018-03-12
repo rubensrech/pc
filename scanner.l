@@ -1,11 +1,13 @@
 /*
   Coloque aqui o identificador do grupo e dos seus membros
 */
+
+%x comment
+
 %{
 #include "parser.h" //arquivo automaticamente gerado pelo bison
 
 int num_lines = 1;
-
 %}
 
 DIGIT           [0-9]
@@ -16,11 +18,16 @@ ID              [_a-zA-Z][a-zA-Z0-9_]*
 
 %%
 
-\n          ++num_lines;
+\n          ++num_lines;   /* regular line count */
 
-[[:space:]]+
-\/\/.*
-\/\*(.|\n)*\*\/
+[[:space:]]+               /* remove whitespaces */
+"//".*                     /* ignore single line comments */
+
+"/*"        BEGIN(comment);
+<comment>[^*\n]*           /* ignore anything but a '*' */
+<comment>"*"+[^*/\n]*      /* ignore '*' not followed by '/' */
+<comment>\n		           ++num_lines; /* count lines inside multi-line comments */
+<comment>"*"+"/"	   BEGIN(INITIAL);
 
 int         return TK_PR_INT;
 float       return TK_PR_FLOAT;

@@ -10,4 +10,5 @@ int x = 3; // teste false
 		de 3 linhas */
 teste 5 <= 6
 4 == -12.4E+3
+// teste
 'a' '\0''

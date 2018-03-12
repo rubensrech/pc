@@ -9,15 +9,16 @@ int num_lines = 1;
 %}
 
 DIGIT       [0-9]
-INTEGER     ("+"|"-")?{DIGIT}+
+LIT_INTEGER     (\+|\-)?{DIGIT}+
+LIT_FLOAT       {LIT_INTEGER}+\.{DIGIT}+((e|E)(\+|\-)?{DIGIT}+)?
 ID          [_a-zA-Z][a-zA-Z0-9_]*
 
 %%
 
+\n          ++num_lines;
+
 \/\/.*
 \/\*(.|\n)*\*\/
-
-\n          ++num_lines;
 
 int         return TK_PR_INT;
 float       return TK_PR_FLOAT;
@@ -45,8 +46,14 @@ private     return TK_PR_PRIVATE;
 public      return TK_PR_PUBLIC;
 protected   return TK_PR_PROTECTED;
 
+true        return TK_LIT_TRUE;
+false       return TK_LIT_FALSE;
+
 {ID}        return TK_IDENTIFICADOR;
-{INTEGER}   return TK_LIT_INT;
+
+{LIT_FLOAT}     return TK_LIT_FLOAT;
+{LIT_INTEGER}   return TK_LIT_INT;
+
 
 "<="        return TK_OC_LE;
 ">="        return TK_OC_GE;

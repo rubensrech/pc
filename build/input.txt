@@ -3,10 +3,10 @@ int teste [teste]
 teste float :teste -5 + 6
 bool (teste) ,; 102 - 52
 10*5 15 / 3 teste! &&&
-^Jr # =
-int x = 3; // teste
-teste 5 <= 6
-4 == 4
+^Jr # = true
+int x = 3; // teste false
 /* aqui vai um
 		comentario
 		de 3 linhas */
+teste 5 <= 6
+4 == -12.4E+3

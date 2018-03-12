@@ -8,15 +8,17 @@ int num_lines = 1;
 
 %}
 
-DIGIT       [0-9]
+DIGIT           [0-9]
 LIT_INTEGER     (\+|\-)?{DIGIT}+
 LIT_FLOAT       {LIT_INTEGER}+\.{DIGIT}+((e|E)(\+|\-)?{DIGIT}+)?
-ID          [_a-zA-Z][a-zA-Z0-9_]*
+LIT_CHAR        '([^']|(\\.))'
+ID              [_a-zA-Z][a-zA-Z0-9_]*
 
 %%
 
 \n          ++num_lines;
 
+[[:space:]]+
 \/\/.*
 \/\*(.|\n)*\*\/
 
@@ -53,7 +55,7 @@ false       return TK_LIT_FALSE;
 
 {LIT_FLOAT}     return TK_LIT_FLOAT;
 {LIT_INTEGER}   return TK_LIT_INT;
-
+{LIT_CHAR}      return TK_LIT_CHAR;
 
 "<="        return TK_OC_LE;
 ">="        return TK_OC_GE;

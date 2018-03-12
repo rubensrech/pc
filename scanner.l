@@ -14,6 +14,7 @@ DIGIT           [0-9]
 LIT_INTEGER     (\+|\-)?{DIGIT}+
 LIT_FLOAT       {LIT_INTEGER}+\.{DIGIT}+((e|E)(\+|\-)?{DIGIT}+)?
 LIT_CHAR        '([^']|(\\.))'
+LIT_STR         \"[^\"]*\"
 ID              [_a-zA-Z][a-zA-Z0-9_]*
 
 %%
@@ -63,6 +64,7 @@ false       return TK_LIT_FALSE;
 {LIT_FLOAT}     return TK_LIT_FLOAT;
 {LIT_INTEGER}   return TK_LIT_INT;
 {LIT_CHAR}      return TK_LIT_CHAR;
+{LIT_STR}       return TK_LIT_STRING;
 
 "<="        return TK_OC_LE;
 ">="        return TK_OC_GE;

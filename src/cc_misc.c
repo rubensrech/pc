@@ -28,7 +28,7 @@ void main_init (int argc, char **argv)
 void main_finalize (void)
 {
   //implemente esta função com rotinas de inicialização, se necessário
-  comp_print_table();
+  //comp_print_table();
 }
 
 void comp_print_table (void)

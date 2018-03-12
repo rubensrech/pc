@@ -2,6 +2,7 @@ tes9te {_teste} teste
 int teste [teste]
 teste float :teste -5 + 6
 bool (teste) ,; 102 - 52
+"rubens luiz rech\n" teste
 10*5 15 / 3 teste! &&&
 ^Jr # = true
 int x = 3; // teste false

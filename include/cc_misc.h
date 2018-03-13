@@ -8,5 +8,6 @@ void main_init (int argc, char **argv);
 void main_finalize (void);
 
 void comp_print_table (void);
+void addSymbolsTable();
 
 #endif

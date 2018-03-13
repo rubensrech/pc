@@ -6,6 +6,7 @@
 
 %{
 #include "parser.h" //arquivo automaticamente gerado pelo bison
+#include "cc_misc.h"
 
 int num_lines = 1;
 %}
@@ -59,12 +60,12 @@ protected   return TK_PR_PROTECTED;
 true        return TK_LIT_TRUE;
 false       return TK_LIT_FALSE;
 
-{ID}        return TK_IDENTIFICADOR;
+{ID}        { addSymbolsTable(); return TK_IDENTIFICADOR; }
 
-{LIT_FLOAT}     return TK_LIT_FLOAT;
-{LIT_INTEGER}   return TK_LIT_INT;
-{LIT_CHAR}      return TK_LIT_CHAR;
-{LIT_STR}       return TK_LIT_STRING;
+{LIT_FLOAT}     { addSymbolsTable(); return TK_LIT_FLOAT; }
+{LIT_INTEGER}   { addSymbolsTable(); return TK_LIT_INT; }
+{LIT_CHAR}      { addSymbolsTable(); return TK_LIT_CHAR; }
+{LIT_STR}       { addSymbolsTable(); return TK_LIT_STRING; }
 
 "<="        return TK_OC_LE;
 ">="        return TK_OC_GE;

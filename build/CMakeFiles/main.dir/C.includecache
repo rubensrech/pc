@@ -55,6 +55,8 @@ inttypes.h
 -
 parser.h
 /Users/rubensrechjunior/Developer/pc/build/parser.h
+cc_misc.h
+/Users/rubensrechjunior/Developer/pc/build/cc_misc.h
 unistd.h
 -
 
@@ -79,8 +81,16 @@ cc_ast.h
 /Users/rubensrechjunior/Developer/pc/src/cc_list.c
 
 /Users/rubensrechjunior/Developer/pc/src/cc_misc.c
+string.h
+-
+stdlib.h
+-
 cc_misc.h
 /Users/rubensrechjunior/Developer/pc/src/cc_misc.h
+cc_dict.h
+/Users/rubensrechjunior/Developer/pc/src/cc_dict.h
+main.h
+/Users/rubensrechjunior/Developer/pc/src/main.h
 
 /Users/rubensrechjunior/Developer/pc/src/cc_tree.c
 stdio.h

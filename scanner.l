@@ -20,10 +20,10 @@ ID              [_a-zA-Z][a-zA-Z0-9_]*
 
 %%
 
-\n          ++num_lines;   /* regular line count */
+[ \t]+               /* remove whitespaces */
+\n                 ++num_lines;   /* regular line count */
 
-[[:space:]]+               /* remove whitespaces */
-"//".*                     /* ignore single line comments */
+"//".*                  /* remove single-line comments */
 
 "/*"        BEGIN(comment);
 <comment>[^*\n]*           /* ignore anything but a '*' */

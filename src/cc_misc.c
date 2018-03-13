@@ -41,6 +41,8 @@ void main_finalize (void)
   int i;
   struct comp_dict_item *entry, *tmp;
 
+  // comp_print_table();
+
   // Free symbols table
   for (i = 0; i < symbolsTable->size; i++) {
     entry = symbolsTable->data[i];

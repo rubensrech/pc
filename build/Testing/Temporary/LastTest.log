@@ -1,20 +1,20 @@
-Start testing: Mar 13 01:12 -03
+Start testing: Mar 13 17:16 -03
 ----------------------------------------------------------
 1/563 Testing: e1_aval_001
 1/563 Test: e1_aval_001
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_001.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_001" start time: Mar 13 01:12 -03
+"e1_aval_001" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_001'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_001:3] ./main tests/e1/entrada_001
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_001' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.26 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_001" end time: Mar 13 01:12 -03
+"e1_aval_001" end time: Mar 13 17:16 -03
 "e1_aval_001" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -22,17 +22,17 @@ Test Passed.
 2/563 Test: e1_aval_002
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_002.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_002" start time: Mar 13 01:12 -03
+"e1_aval_002" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_002'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_002:3] ./main tests/e1/entrada_002
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_002' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_002" end time: Mar 13 01:12 -03
+"e1_aval_002" end time: Mar 13 17:16 -03
 "e1_aval_002" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -40,17 +40,17 @@ Test Passed.
 3/563 Test: e1_aval_003
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_003.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_003" start time: Mar 13 01:12 -03
+"e1_aval_003" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_003'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_003:3] ./main tests/e1/entrada_003
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_003' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_003" end time: Mar 13 01:12 -03
+"e1_aval_003" end time: Mar 13 17:16 -03
 "e1_aval_003" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -58,17 +58,17 @@ Test Passed.
 4/563 Test: e1_aval_004
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_004.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_004" start time: Mar 13 01:12 -03
+"e1_aval_004" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_004'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_004:3] ./main tests/e1/entrada_004
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_004' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_004" end time: Mar 13 01:12 -03
+"e1_aval_004" end time: Mar 13 17:16 -03
 "e1_aval_004" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -76,17 +76,17 @@ Test Passed.
 5/563 Test: e1_aval_005
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_005.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_005" start time: Mar 13 01:12 -03
+"e1_aval_005" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_005'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_005:3] ./main tests/e1/entrada_005
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_005' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_005" end time: Mar 13 01:12 -03
+"e1_aval_005" end time: Mar 13 17:16 -03
 "e1_aval_005" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -94,17 +94,17 @@ Test Passed.
 6/563 Test: e1_aval_006
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_006.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_006" start time: Mar 13 01:12 -03
+"e1_aval_006" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_006'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_006:3] ./main tests/e1/entrada_006
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_006' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_006" end time: Mar 13 01:12 -03
+"e1_aval_006" end time: Mar 13 17:16 -03
 "e1_aval_006" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -112,17 +112,17 @@ Test Passed.
 7/563 Test: e1_aval_007
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_007.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_007" start time: Mar 13 01:12 -03
+"e1_aval_007" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_007'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_007:3] ./main tests/e1/entrada_007
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_007' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_007" end time: Mar 13 01:12 -03
+"e1_aval_007" end time: Mar 13 17:16 -03
 "e1_aval_007" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -130,17 +130,17 @@ Test Passed.
 8/563 Test: e1_aval_008
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_008.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_008" start time: Mar 13 01:12 -03
+"e1_aval_008" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_008'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_008:3] ./main tests/e1/entrada_008
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_008' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_008" end time: Mar 13 01:12 -03
+"e1_aval_008" end time: Mar 13 17:16 -03
 "e1_aval_008" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -148,17 +148,17 @@ Test Passed.
 9/563 Test: e1_aval_009
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_009.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_009" start time: Mar 13 01:12 -03
+"e1_aval_009" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_009'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_009:3] ./main tests/e1/entrada_009
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_009' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_009" end time: Mar 13 01:12 -03
+"e1_aval_009" end time: Mar 13 17:16 -03
 "e1_aval_009" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -166,17 +166,17 @@ Test Passed.
 10/563 Test: e1_aval_010
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_010.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_010" start time: Mar 13 01:12 -03
+"e1_aval_010" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_010'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_010:3] ./main tests/e1/entrada_010
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_010' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_010" end time: Mar 13 01:12 -03
+"e1_aval_010" end time: Mar 13 17:16 -03
 "e1_aval_010" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -184,17 +184,17 @@ Test Passed.
 11/563 Test: e1_aval_011
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_011.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_011" start time: Mar 13 01:12 -03
+"e1_aval_011" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_011'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_011:3] ./main tests/e1/entrada_011
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_011' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_011" end time: Mar 13 01:12 -03
+"e1_aval_011" end time: Mar 13 17:16 -03
 "e1_aval_011" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -202,17 +202,17 @@ Test Passed.
 12/563 Test: e1_aval_012
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_012.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_012" start time: Mar 13 01:12 -03
+"e1_aval_012" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_012'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_012:3] ./main tests/e1/entrada_012
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_012' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_012" end time: Mar 13 01:12 -03
+"e1_aval_012" end time: Mar 13 17:16 -03
 "e1_aval_012" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -220,17 +220,17 @@ Test Passed.
 13/563 Test: e1_aval_013
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_013.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_013" start time: Mar 13 01:12 -03
+"e1_aval_013" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_013'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_013:3] ./main tests/e1/entrada_013
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_013' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_013" end time: Mar 13 01:12 -03
+"e1_aval_013" end time: Mar 13 17:16 -03
 "e1_aval_013" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -238,17 +238,17 @@ Test Passed.
 14/563 Test: e1_aval_014
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_014.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_014" start time: Mar 13 01:12 -03
+"e1_aval_014" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_014'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_014:3] ./main tests/e1/entrada_014
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_014' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_014" end time: Mar 13 01:12 -03
+"e1_aval_014" end time: Mar 13 17:16 -03
 "e1_aval_014" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -256,17 +256,17 @@ Test Passed.
 15/563 Test: e1_aval_015
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_015.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_015" start time: Mar 13 01:12 -03
+"e1_aval_015" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_015'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_015:3] ./main tests/e1/entrada_015
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_015' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_015" end time: Mar 13 01:12 -03
+"e1_aval_015" end time: Mar 13 17:16 -03
 "e1_aval_015" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -274,17 +274,17 @@ Test Passed.
 16/563 Test: e1_aval_016
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_016.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_016" start time: Mar 13 01:12 -03
+"e1_aval_016" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_016'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_016:3] ./main tests/e1/entrada_016
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_016' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_016" end time: Mar 13 01:12 -03
+"e1_aval_016" end time: Mar 13 17:16 -03
 "e1_aval_016" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -292,17 +292,17 @@ Test Passed.
 17/563 Test: e1_aval_017
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_017.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_017" start time: Mar 13 01:12 -03
+"e1_aval_017" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_017'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_017:3] ./main tests/e1/entrada_017
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_017' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_017" end time: Mar 13 01:12 -03
+"e1_aval_017" end time: Mar 13 17:16 -03
 "e1_aval_017" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -310,17 +310,17 @@ Test Passed.
 18/563 Test: e1_aval_018
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_018.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_018" start time: Mar 13 01:12 -03
+"e1_aval_018" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_018'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_018:3] ./main tests/e1/entrada_018
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_018' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_018" end time: Mar 13 01:12 -03
+"e1_aval_018" end time: Mar 13 17:16 -03
 "e1_aval_018" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -328,17 +328,17 @@ Test Passed.
 19/563 Test: e1_aval_019
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_019.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_019" start time: Mar 13 01:12 -03
+"e1_aval_019" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_019'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_019:3] ./main tests/e1/entrada_019
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_019' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_019" end time: Mar 13 01:12 -03
+"e1_aval_019" end time: Mar 13 17:16 -03
 "e1_aval_019" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -346,17 +346,17 @@ Test Passed.
 20/563 Test: e1_aval_020
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_020.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_020" start time: Mar 13 01:12 -03
+"e1_aval_020" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_020'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_020:3] ./main tests/e1/entrada_020
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_020' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_020" end time: Mar 13 01:12 -03
+"e1_aval_020" end time: Mar 13 17:16 -03
 "e1_aval_020" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -364,17 +364,17 @@ Test Passed.
 21/563 Test: e1_aval_021
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_021.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_021" start time: Mar 13 01:12 -03
+"e1_aval_021" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_021'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_021:3] ./main tests/e1/entrada_021
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_021' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_021" end time: Mar 13 01:12 -03
+"e1_aval_021" end time: Mar 13 17:16 -03
 "e1_aval_021" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -382,17 +382,17 @@ Test Passed.
 22/563 Test: e1_aval_022
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_022.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_022" start time: Mar 13 01:12 -03
+"e1_aval_022" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_022'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_022:3] ./main tests/e1/entrada_022
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_022' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_022" end time: Mar 13 01:12 -03
+"e1_aval_022" end time: Mar 13 17:16 -03
 "e1_aval_022" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -400,17 +400,17 @@ Test Passed.
 23/563 Test: e1_aval_023
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_023.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_023" start time: Mar 13 01:12 -03
+"e1_aval_023" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_023'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_023:3] ./main tests/e1/entrada_023
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_023' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_023" end time: Mar 13 01:12 -03
+"e1_aval_023" end time: Mar 13 17:16 -03
 "e1_aval_023" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -418,17 +418,17 @@ Test Passed.
 24/563 Test: e1_aval_024
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_024.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_024" start time: Mar 13 01:12 -03
+"e1_aval_024" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_024'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_024:3] ./main tests/e1/entrada_024
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_024' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_024" end time: Mar 13 01:12 -03
+"e1_aval_024" end time: Mar 13 17:16 -03
 "e1_aval_024" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -436,17 +436,17 @@ Test Passed.
 25/563 Test: e1_aval_025
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_025.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_025" start time: Mar 13 01:12 -03
+"e1_aval_025" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_025'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_025:3] ./main tests/e1/entrada_025
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_025' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_025" end time: Mar 13 01:12 -03
+"e1_aval_025" end time: Mar 13 17:16 -03
 "e1_aval_025" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -454,17 +454,17 @@ Test Passed.
 26/563 Test: e1_aval_026
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_026.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_026" start time: Mar 13 01:12 -03
+"e1_aval_026" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_026'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_026:3] ./main tests/e1/entrada_026
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_026' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_026" end time: Mar 13 01:12 -03
+"e1_aval_026" end time: Mar 13 17:16 -03
 "e1_aval_026" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -472,17 +472,17 @@ Test Passed.
 27/563 Test: e1_aval_027
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_027.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_027" start time: Mar 13 01:12 -03
+"e1_aval_027" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_027'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_027:3] ./main tests/e1/entrada_027
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_027' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_027" end time: Mar 13 01:12 -03
+"e1_aval_027" end time: Mar 13 17:16 -03
 "e1_aval_027" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -490,17 +490,17 @@ Test Passed.
 28/563 Test: e1_aval_028
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_028.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_028" start time: Mar 13 01:12 -03
+"e1_aval_028" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_028'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_028:3] ./main tests/e1/entrada_028
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_028' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_028" end time: Mar 13 01:12 -03
+"e1_aval_028" end time: Mar 13 17:16 -03
 "e1_aval_028" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -508,17 +508,17 @@ Test Passed.
 29/563 Test: e1_aval_029
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_029.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_029" start time: Mar 13 01:12 -03
+"e1_aval_029" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_029'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_029:3] ./main tests/e1/entrada_029
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_029' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_029" end time: Mar 13 01:12 -03
+"e1_aval_029" end time: Mar 13 17:16 -03
 "e1_aval_029" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -526,17 +526,17 @@ Test Passed.
 30/563 Test: e1_aval_030
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_030.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_030" start time: Mar 13 01:12 -03
+"e1_aval_030" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_030'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_030:3] ./main tests/e1/entrada_030
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_030' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_030" end time: Mar 13 01:12 -03
+"e1_aval_030" end time: Mar 13 17:16 -03
 "e1_aval_030" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -544,17 +544,17 @@ Test Passed.
 31/563 Test: e1_aval_031
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_031.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_031" start time: Mar 13 01:12 -03
+"e1_aval_031" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_031'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_031:3] ./main tests/e1/entrada_031
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_031' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_031" end time: Mar 13 01:12 -03
+"e1_aval_031" end time: Mar 13 17:16 -03
 "e1_aval_031" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -562,17 +562,17 @@ Test Passed.
 32/563 Test: e1_aval_032
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_032.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_032" start time: Mar 13 01:12 -03
+"e1_aval_032" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_032'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_032:3] ./main tests/e1/entrada_032
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_032' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_032" end time: Mar 13 01:12 -03
+"e1_aval_032" end time: Mar 13 17:16 -03
 "e1_aval_032" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -580,17 +580,17 @@ Test Passed.
 33/563 Test: e1_aval_033
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_033.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_033" start time: Mar 13 01:12 -03
+"e1_aval_033" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_033'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_033:3] ./main tests/e1/entrada_033
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_033' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_033" end time: Mar 13 01:12 -03
+"e1_aval_033" end time: Mar 13 17:16 -03
 "e1_aval_033" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -598,17 +598,17 @@ Test Passed.
 34/563 Test: e1_aval_034
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_034.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_034" start time: Mar 13 01:12 -03
+"e1_aval_034" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_034'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_034:3] ./main tests/e1/entrada_034
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_034' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_034" end time: Mar 13 01:12 -03
+"e1_aval_034" end time: Mar 13 17:16 -03
 "e1_aval_034" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -616,17 +616,17 @@ Test Passed.
 35/563 Test: e1_aval_035
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_035.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_035" start time: Mar 13 01:12 -03
+"e1_aval_035" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_035'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_035:3] ./main tests/e1/entrada_035
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_035' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_035" end time: Mar 13 01:12 -03
+"e1_aval_035" end time: Mar 13 17:16 -03
 "e1_aval_035" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -634,17 +634,17 @@ Test Passed.
 36/563 Test: e1_aval_036
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_036.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_036" start time: Mar 13 01:12 -03
+"e1_aval_036" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_036'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_036:3] ./main tests/e1/entrada_036
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_036' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_036" end time: Mar 13 01:12 -03
+"e1_aval_036" end time: Mar 13 17:16 -03
 "e1_aval_036" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -652,17 +652,17 @@ Test Passed.
 37/563 Test: e1_aval_037
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_037.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_037" start time: Mar 13 01:12 -03
+"e1_aval_037" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_037'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_037:3] ./main tests/e1/entrada_037
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_037' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_037" end time: Mar 13 01:12 -03
+"e1_aval_037" end time: Mar 13 17:16 -03
 "e1_aval_037" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -670,17 +670,17 @@ Test Passed.
 38/563 Test: e1_aval_038
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_038.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_038" start time: Mar 13 01:12 -03
+"e1_aval_038" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_038'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_038:3] ./main tests/e1/entrada_038
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_038' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_038" end time: Mar 13 01:12 -03
+"e1_aval_038" end time: Mar 13 17:16 -03
 "e1_aval_038" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -688,17 +688,17 @@ Test Passed.
 39/563 Test: e1_aval_039
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_039.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_039" start time: Mar 13 01:12 -03
+"e1_aval_039" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_039'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_039:3] ./main tests/e1/entrada_039
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_039' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_039" end time: Mar 13 01:12 -03
+"e1_aval_039" end time: Mar 13 17:16 -03
 "e1_aval_039" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -706,17 +706,17 @@ Test Passed.
 40/563 Test: e1_aval_040
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_040.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_040" start time: Mar 13 01:12 -03
+"e1_aval_040" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_040'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_040:3] ./main tests/e1/entrada_040
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_040' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_040" end time: Mar 13 01:12 -03
+"e1_aval_040" end time: Mar 13 17:16 -03
 "e1_aval_040" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -724,17 +724,17 @@ Test Passed.
 41/563 Test: e1_aval_041
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_041.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_041" start time: Mar 13 01:12 -03
+"e1_aval_041" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_041'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_041:3] ./main tests/e1/entrada_041
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_041' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_041" end time: Mar 13 01:12 -03
+"e1_aval_041" end time: Mar 13 17:16 -03
 "e1_aval_041" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -742,17 +742,17 @@ Test Passed.
 42/563 Test: e1_aval_042
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_042.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_042" start time: Mar 13 01:12 -03
+"e1_aval_042" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_042'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_042:3] ./main tests/e1/entrada_042
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_042' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_042" end time: Mar 13 01:12 -03
+"e1_aval_042" end time: Mar 13 17:16 -03
 "e1_aval_042" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -760,17 +760,17 @@ Test Passed.
 43/563 Test: e1_aval_043
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_043.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_043" start time: Mar 13 01:12 -03
+"e1_aval_043" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_043'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_043:3] ./main tests/e1/entrada_043
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_043' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_043" end time: Mar 13 01:12 -03
+"e1_aval_043" end time: Mar 13 17:16 -03
 "e1_aval_043" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -778,17 +778,17 @@ Test Passed.
 44/563 Test: e1_aval_044
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_044.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_044" start time: Mar 13 01:12 -03
+"e1_aval_044" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_044'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_044:3] ./main tests/e1/entrada_044
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_044' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_044" end time: Mar 13 01:12 -03
+"e1_aval_044" end time: Mar 13 17:16 -03
 "e1_aval_044" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -796,17 +796,17 @@ Test Passed.
 45/563 Test: e1_aval_045
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_045.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_045" start time: Mar 13 01:12 -03
+"e1_aval_045" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_045'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_045:3] ./main tests/e1/entrada_045
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_045' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_045" end time: Mar 13 01:12 -03
+"e1_aval_045" end time: Mar 13 17:16 -03
 "e1_aval_045" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -814,17 +814,17 @@ Test Passed.
 46/563 Test: e1_aval_046
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_046.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_046" start time: Mar 13 01:12 -03
+"e1_aval_046" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_046'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_046:3] ./main tests/e1/entrada_046
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_046' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_046" end time: Mar 13 01:12 -03
+"e1_aval_046" end time: Mar 13 17:16 -03
 "e1_aval_046" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -832,17 +832,17 @@ Test Passed.
 47/563 Test: e1_aval_047
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_047.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_047" start time: Mar 13 01:12 -03
+"e1_aval_047" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_047'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_047:3] ./main tests/e1/entrada_047
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_047' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_047" end time: Mar 13 01:12 -03
+"e1_aval_047" end time: Mar 13 17:16 -03
 "e1_aval_047" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -850,17 +850,17 @@ Test Passed.
 48/563 Test: e1_aval_048
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_048.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_048" start time: Mar 13 01:12 -03
+"e1_aval_048" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_048'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_048:3] ./main tests/e1/entrada_048
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_048' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_048" end time: Mar 13 01:12 -03
+"e1_aval_048" end time: Mar 13 17:16 -03
 "e1_aval_048" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -868,17 +868,17 @@ Test Passed.
 49/563 Test: e1_aval_049
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_049.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_049" start time: Mar 13 01:12 -03
+"e1_aval_049" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_049'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_049:3] ./main tests/e1/entrada_049
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_049' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_049" end time: Mar 13 01:12 -03
+"e1_aval_049" end time: Mar 13 17:16 -03
 "e1_aval_049" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -886,17 +886,17 @@ Test Passed.
 50/563 Test: e1_aval_050
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_050.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_050" start time: Mar 13 01:12 -03
+"e1_aval_050" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_050'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_050:3] ./main tests/e1/entrada_050
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_050' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_050" end time: Mar 13 01:12 -03
+"e1_aval_050" end time: Mar 13 17:16 -03
 "e1_aval_050" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -904,17 +904,17 @@ Test Passed.
 51/563 Test: e1_aval_051
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_051.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_051" start time: Mar 13 01:12 -03
+"e1_aval_051" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_051'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_051:3] ./main tests/e1/entrada_051
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_051' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_051" end time: Mar 13 01:12 -03
+"e1_aval_051" end time: Mar 13 17:16 -03
 "e1_aval_051" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -922,17 +922,17 @@ Test Passed.
 52/563 Test: e1_aval_052
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_052.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_052" start time: Mar 13 01:12 -03
+"e1_aval_052" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_052'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_052:3] ./main tests/e1/entrada_052
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_052' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_052" end time: Mar 13 01:12 -03
+"e1_aval_052" end time: Mar 13 17:16 -03
 "e1_aval_052" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -940,17 +940,17 @@ Test Passed.
 53/563 Test: e1_aval_053
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_053.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_053" start time: Mar 13 01:12 -03
+"e1_aval_053" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_053'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_053:3] ./main tests/e1/entrada_053
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_053' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_053" end time: Mar 13 01:12 -03
+"e1_aval_053" end time: Mar 13 17:16 -03
 "e1_aval_053" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -958,17 +958,17 @@ Test Passed.
 54/563 Test: e1_aval_054
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_054.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_054" start time: Mar 13 01:12 -03
+"e1_aval_054" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_054'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_054:3] ./main tests/e1/entrada_054
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_054' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_054" end time: Mar 13 01:12 -03
+"e1_aval_054" end time: Mar 13 17:16 -03
 "e1_aval_054" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -976,17 +976,17 @@ Test Passed.
 55/563 Test: e1_aval_055
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_055.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_055" start time: Mar 13 01:12 -03
+"e1_aval_055" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_055'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_055:3] ./main tests/e1/entrada_055
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_055' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_055" end time: Mar 13 01:12 -03
+"e1_aval_055" end time: Mar 13 17:16 -03
 "e1_aval_055" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -994,17 +994,17 @@ Test Passed.
 56/563 Test: e1_aval_056
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_056.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_056" start time: Mar 13 01:12 -03
+"e1_aval_056" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_056'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_056:3] ./main tests/e1/entrada_056
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_056' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_056" end time: Mar 13 01:12 -03
+"e1_aval_056" end time: Mar 13 17:16 -03
 "e1_aval_056" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1012,17 +1012,17 @@ Test Passed.
 57/563 Test: e1_aval_057
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_057.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_057" start time: Mar 13 01:12 -03
+"e1_aval_057" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_057'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_057:3] ./main tests/e1/entrada_057
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_057' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_057" end time: Mar 13 01:12 -03
+"e1_aval_057" end time: Mar 13 17:16 -03
 "e1_aval_057" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1030,17 +1030,17 @@ Test Passed.
 58/563 Test: e1_aval_058
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_058.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_058" start time: Mar 13 01:12 -03
+"e1_aval_058" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_058'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_058:3] ./main tests/e1/entrada_058
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_058' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_058" end time: Mar 13 01:12 -03
+"e1_aval_058" end time: Mar 13 17:16 -03
 "e1_aval_058" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1048,17 +1048,17 @@ Test Passed.
 59/563 Test: e1_aval_059
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_059.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_059" start time: Mar 13 01:12 -03
+"e1_aval_059" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_059'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_059:3] ./main tests/e1/entrada_059
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_059' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_059" end time: Mar 13 01:12 -03
+"e1_aval_059" end time: Mar 13 17:16 -03
 "e1_aval_059" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1066,17 +1066,17 @@ Test Passed.
 60/563 Test: e1_aval_060
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_060.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_060" start time: Mar 13 01:12 -03
+"e1_aval_060" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_060'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_060:3] ./main tests/e1/entrada_060
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_060' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_060" end time: Mar 13 01:12 -03
+"e1_aval_060" end time: Mar 13 17:16 -03
 "e1_aval_060" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1084,17 +1084,17 @@ Test Passed.
 61/563 Test: e1_aval_061
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_061.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_061" start time: Mar 13 01:12 -03
+"e1_aval_061" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_061'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_061:3] ./main tests/e1/entrada_061
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_061' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_061" end time: Mar 13 01:12 -03
+"e1_aval_061" end time: Mar 13 17:16 -03
 "e1_aval_061" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1102,17 +1102,17 @@ Test Passed.
 62/563 Test: e1_aval_062
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_062.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_062" start time: Mar 13 01:12 -03
+"e1_aval_062" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_062'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_062:3] ./main tests/e1/entrada_062
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_062' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_062" end time: Mar 13 01:12 -03
+"e1_aval_062" end time: Mar 13 17:16 -03
 "e1_aval_062" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1120,17 +1120,17 @@ Test Passed.
 63/563 Test: e1_aval_063
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_063.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_063" start time: Mar 13 01:12 -03
+"e1_aval_063" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_063'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_063:3] ./main tests/e1/entrada_063
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_063' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_063" end time: Mar 13 01:12 -03
+"e1_aval_063" end time: Mar 13 17:16 -03
 "e1_aval_063" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1138,17 +1138,17 @@ Test Passed.
 64/563 Test: e1_aval_064
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_064.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_064" start time: Mar 13 01:12 -03
+"e1_aval_064" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_064'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_064:3] ./main tests/e1/entrada_064
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_064' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_064" end time: Mar 13 01:12 -03
+"e1_aval_064" end time: Mar 13 17:16 -03
 "e1_aval_064" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1156,17 +1156,17 @@ Test Passed.
 65/563 Test: e1_aval_065
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_065.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_065" start time: Mar 13 01:12 -03
+"e1_aval_065" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_065'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_065:3] ./main tests/e1/entrada_065
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_065' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_065" end time: Mar 13 01:12 -03
+"e1_aval_065" end time: Mar 13 17:16 -03
 "e1_aval_065" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1174,17 +1174,17 @@ Test Passed.
 66/563 Test: e1_aval_066
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_066.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_066" start time: Mar 13 01:12 -03
+"e1_aval_066" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_066'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_066:3] ./main tests/e1/entrada_066
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_066' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_066" end time: Mar 13 01:12 -03
+"e1_aval_066" end time: Mar 13 17:16 -03
 "e1_aval_066" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1192,17 +1192,17 @@ Test Passed.
 67/563 Test: e1_aval_067
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_067.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_067" start time: Mar 13 01:12 -03
+"e1_aval_067" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_067'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_067:3] ./main tests/e1/entrada_067
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_067' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_067" end time: Mar 13 01:12 -03
+"e1_aval_067" end time: Mar 13 17:16 -03
 "e1_aval_067" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1210,17 +1210,17 @@ Test Passed.
 68/563 Test: e1_aval_068
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_068.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_068" start time: Mar 13 01:12 -03
+"e1_aval_068" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_068'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_068:3] ./main tests/e1/entrada_068
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_068' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_068" end time: Mar 13 01:12 -03
+"e1_aval_068" end time: Mar 13 17:16 -03
 "e1_aval_068" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1228,17 +1228,17 @@ Test Passed.
 69/563 Test: e1_aval_069
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_069.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_069" start time: Mar 13 01:12 -03
+"e1_aval_069" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_069'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_069:3] ./main tests/e1/entrada_069
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_069' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_069" end time: Mar 13 01:12 -03
+"e1_aval_069" end time: Mar 13 17:16 -03
 "e1_aval_069" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1246,17 +1246,17 @@ Test Passed.
 70/563 Test: e1_aval_070
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_070.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_070" start time: Mar 13 01:12 -03
+"e1_aval_070" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_070'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_070:3] ./main tests/e1/entrada_070
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_070' OK
 <end of output>
-Test time =   0.18 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_070" end time: Mar 13 01:12 -03
+"e1_aval_070" end time: Mar 13 17:16 -03
 "e1_aval_070" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1264,17 +1264,17 @@ Test Passed.
 71/563 Test: e1_aval_071
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_071.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_071" start time: Mar 13 01:12 -03
+"e1_aval_071" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_071'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_071:3] ./main tests/e1/entrada_071
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_071' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_071" end time: Mar 13 01:12 -03
+"e1_aval_071" end time: Mar 13 17:16 -03
 "e1_aval_071" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1282,17 +1282,17 @@ Test Passed.
 72/563 Test: e1_aval_072
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_072.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_072" start time: Mar 13 01:12 -03
+"e1_aval_072" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_072'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_072:3] ./main tests/e1/entrada_072
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_072' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_072" end time: Mar 13 01:12 -03
+"e1_aval_072" end time: Mar 13 17:16 -03
 "e1_aval_072" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1300,17 +1300,17 @@ Test Passed.
 73/563 Test: e1_aval_073
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_073.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_073" start time: Mar 13 01:12 -03
+"e1_aval_073" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_073'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_073:3] ./main tests/e1/entrada_073
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_073' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_073" end time: Mar 13 01:12 -03
+"e1_aval_073" end time: Mar 13 17:16 -03
 "e1_aval_073" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1318,7 +1318,7 @@ Test Passed.
 74/563 Test: e1_aval_074
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_074.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_074" start time: Mar 13 01:12 -03
+"e1_aval_074" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_074'
@@ -1327,10 +1327,10 @@ Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_074'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_074:7] "./main tests/e1/entrada_074 | sort"
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_074' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.23 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_074" end time: Mar 13 01:12 -03
+"e1_aval_074" end time: Mar 13 17:16 -03
 "e1_aval_074" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1338,7 +1338,7 @@ Test Passed.
 75/563 Test: e1_aval_075
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_075.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_075" start time: Mar 13 01:12 -03
+"e1_aval_075" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_075'
@@ -1347,10 +1347,10 @@ Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_075'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_075:7] "./main tests/e1/entrada_075 | sort"
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_075' OK
 <end of output>
-Test time =   0.21 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_075" end time: Mar 13 01:12 -03
+"e1_aval_075" end time: Mar 13 17:16 -03
 "e1_aval_075" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1358,7 +1358,7 @@ Test Passed.
 76/563 Test: e1_aval_076
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/aval_076.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_aval_076" start time: Mar 13 01:12 -03
+"e1_aval_076" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_076'
@@ -1367,10 +1367,10 @@ Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_076'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/aval_076:8] "./main tests/e1/entrada_076 | sort"
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/aval_076' OK
 <end of output>
-Test time =   0.21 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_aval_076" end time: Mar 13 01:12 -03
+"e1_aval_076" end time: Mar 13 17:16 -03
 "e1_aval_076" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1378,7 +1378,7 @@ Test Passed.
 77/563 Test: e1_avaliacao_00
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_00.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_avaliacao_00" start time: Mar 13 01:12 -03
+"e1_avaliacao_00" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_00'
@@ -1395,10 +1395,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_00.tesh:55> m
 + 51 [brasil]
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_00.tesh': NOK (</Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_00.tesh:55> output mismatch)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_avaliacao_00" end time: Mar 13 01:12 -03
+"e1_avaliacao_00" end time: Mar 13 17:16 -03
 "e1_avaliacao_00" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1406,7 +1406,7 @@ Test Failed.
 78/563 Test: e1_avaliacao_01
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_01.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_avaliacao_01" start time: Mar 13 01:12 -03
+"e1_avaliacao_01" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_01'
@@ -1418,7 +1418,7 @@ Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_01' OK
 Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_avaliacao_01" end time: Mar 13 01:12 -03
+"e1_avaliacao_01" end time: Mar 13 17:16 -03
 "e1_avaliacao_01" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1426,7 +1426,7 @@ Test Passed.
 79/563 Test: e1_avaliacao_02
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_02.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_avaliacao_02" start time: Mar 13 01:12 -03
+"e1_avaliacao_02" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_02'
@@ -1884,10 +1884,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_02.tesh:1608>
 + sort: Illegal byte sequence
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_02.tesh': NOK (</Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_02.tesh:1608> output mismatch)
 <end of output>
-Test time =   0.21 sec
+Test time =   0.23 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_avaliacao_02" end time: Mar 13 01:12 -03
+"e1_avaliacao_02" end time: Mar 13 17:16 -03
 "e1_avaliacao_02" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1895,7 +1895,7 @@ Test Failed.
 80/563 Test: e1_avaliacao_03
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_03.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_avaliacao_03" start time: Mar 13 01:12 -03
+"e1_avaliacao_03" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_03'
@@ -1904,10 +1904,10 @@ Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_03'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_03:9] "./main ./tests/e1/input/nivel3.tokens | sort"
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_03' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_avaliacao_03" end time: Mar 13 01:12 -03
+"e1_avaliacao_03" end time: Mar 13 17:16 -03
 "e1_avaliacao_03" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1915,7 +1915,7 @@ Test Passed.
 81/563 Test: e1_avaliacao_05
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_05.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_avaliacao_05" start time: Mar 13 01:12 -03
+"e1_avaliacao_05" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_05'
@@ -1946,10 +1946,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_05.tesh:23> m
   5 [z<=_<=p / == = p||G input &v<>gQ&&9]
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_05.tesh': NOK (</Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_05.tesh:23> output mismatch)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_avaliacao_05" end time: Mar 13 01:12 -03
+"e1_avaliacao_05" end time: Mar 13 17:16 -03
 "e1_avaliacao_05" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1957,7 +1957,7 @@ Test Failed.
 82/563 Test: e1_avaliacao_06
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_06.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_avaliacao_06" start time: Mar 13 01:12 -03
+"e1_avaliacao_06" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_06'
@@ -1966,10 +1966,10 @@ Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_06'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_06:27] "./main ./tests/e1/input/nivel6.tokens | sort"
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_06' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_avaliacao_06" end time: Mar 13 01:12 -03
+"e1_avaliacao_06" end time: Mar 13 17:16 -03
 "e1_avaliacao_06" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -1977,7 +1977,7 @@ Test Passed.
 83/563 Test: e1_avaliacao_07
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_07.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_avaliacao_07" start time: Mar 13 01:12 -03
+"e1_avaliacao_07" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_07'
@@ -2022,10 +2022,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_07.tesh:27> m
 - 1 [+]
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_07.tesh': NOK (</Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_07.tesh:27> output mismatch)
 <end of output>
-Test time =   0.21 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_avaliacao_07" end time: Mar 13 01:12 -03
+"e1_avaliacao_07" end time: Mar 13 17:16 -03
 "e1_avaliacao_07" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2033,7 +2033,7 @@ Test Failed.
 84/563 Test: e1_avaliacao_08
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_08.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_avaliacao_08" start time: Mar 13 01:12 -03
+"e1_avaliacao_08" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_08'
@@ -2042,10 +2042,10 @@ Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_08'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_08:13] "./main ./tests/e1/input/nivel8.tokens | sort"
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_08' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_avaliacao_08" end time: Mar 13 01:12 -03
+"e1_avaliacao_08" end time: Mar 13 17:16 -03
 "e1_avaliacao_08" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2053,7 +2053,7 @@ Test Passed.
 85/563 Test: e1_avaliacao_09
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_09.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_avaliacao_09" start time: Mar 13 01:12 -03
+"e1_avaliacao_09" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_09'
@@ -2075,10 +2075,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_09.tesh:5> mi
 + <Invalid Token with code 46>
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_09.tesh': NOK (</Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_09.tesh:5> output mismatch)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_avaliacao_09" end time: Mar 13 01:12 -03
+"e1_avaliacao_09" end time: Mar 13 17:16 -03
 "e1_avaliacao_09" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2086,7 +2086,7 @@ Test Failed.
 86/563 Test: e1_avaliacao_10
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_10.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_avaliacao_10" start time: Mar 13 01:12 -03
+"e1_avaliacao_10" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_10'
@@ -2095,10 +2095,10 @@ Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_10'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_10:13] "./main ./tests/e1/input/nivel10.tokens | sort"
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_10' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_avaliacao_10" end time: Mar 13 01:12 -03
+"e1_avaliacao_10" end time: Mar 13 17:16 -03
 "e1_avaliacao_10" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2106,23 +2106,19 @@ Test Passed.
 87/563 Test: e1_avaliacao_11
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_11.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_avaliacao_11" start time: Mar 13 01:12 -03
+"e1_avaliacao_11" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_11'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_11:5] ./main ./tests/e1/input/nivel11.tokens
-Output of </Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_11.tesh:5> mismatch:
-...
-  7 TK_LIT_STRING [","]
-  8 TK_LIT_STRING ["="]
-- 9 TOKEN_ERRO ["]
-+ "
-Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_11.tesh': NOK (</Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_11.tesh:5> output mismatch)
+[Tesh/INFO] setenv INF47_TABLE=True
+[/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_11:17] "./main ./tests/e1/input/nivel11.tokens | sort"
+Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_11' OK
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
-Test Failed.
-"e1_avaliacao_11" end time: Mar 13 01:12 -03
+Test Passed.
+"e1_avaliacao_11" end time: Mar 13 17:16 -03
 "e1_avaliacao_11" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2130,7 +2126,7 @@ Test Failed.
 88/563 Test: e1_avaliacao_12
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_12.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_avaliacao_12" start time: Mar 13 01:12 -03
+"e1_avaliacao_12" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_12'
@@ -2139,10 +2135,10 @@ Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_12'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_12:10] "./main ./tests/e1/input/nivel12.tokens | sort"
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_12' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_avaliacao_12" end time: Mar 13 01:12 -03
+"e1_avaliacao_12" end time: Mar 13 17:16 -03
 "e1_avaliacao_12" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2150,7 +2146,7 @@ Test Passed.
 89/563 Test: e1_avaliacao_13
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_13.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_avaliacao_13" start time: Mar 13 01:12 -03
+"e1_avaliacao_13" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_13'
@@ -2159,10 +2155,10 @@ Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_13'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_13:11] "./main ./tests/e1/input/nivel13.tokens | sort"
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_13' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_avaliacao_13" end time: Mar 13 01:12 -03
+"e1_avaliacao_13" end time: Mar 13 17:16 -03
 "e1_avaliacao_13" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2170,7 +2166,7 @@ Test Passed.
 90/563 Test: e1_avaliacao_14
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_14.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_avaliacao_14" start time: Mar 13 01:12 -03
+"e1_avaliacao_14" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_14'
@@ -2179,10 +2175,10 @@ Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_14'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_14:11] "./main ./tests/e1/input/nivel14.tokens | sort"
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_14' OK
 <end of output>
-Test time =   0.21 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_avaliacao_14" end time: Mar 13 01:12 -03
+"e1_avaliacao_14" end time: Mar 13 17:16 -03
 "e1_avaliacao_14" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2190,7 +2186,7 @@ Test Passed.
 91/563 Test: e1_avaliacao_15
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_15.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_avaliacao_15" start time: Mar 13 01:12 -03
+"e1_avaliacao_15" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_15'
@@ -2199,10 +2195,10 @@ Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_15'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_15:42] "./main ./tests/e1/input/nivel15.tokens | sort"
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_15' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_avaliacao_15" end time: Mar 13 01:12 -03
+"e1_avaliacao_15" end time: Mar 13 17:16 -03
 "e1_avaliacao_15" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2210,7 +2206,7 @@ Test Passed.
 92/563 Test: e1_avaliacao_16
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_16.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_avaliacao_16" start time: Mar 13 01:12 -03
+"e1_avaliacao_16" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_16'
@@ -2219,10 +2215,10 @@ Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_16'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_16:11] "./main ./tests/e1/input/nivel16.tokens | sort"
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_16' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_avaliacao_16" end time: Mar 13 01:12 -03
+"e1_avaliacao_16" end time: Mar 13 17:16 -03
 "e1_avaliacao_16" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2230,17 +2226,17 @@ Test Passed.
 93/563 Test: e1_avaliacao_17
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_17.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_avaliacao_17" start time: Mar 13 01:12 -03
+"e1_avaliacao_17" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_17'
 [/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_17:5] ./main ./tests/e1/input/nivel17.tokens
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/avaliacao_17' OK
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Passed.
-"e1_avaliacao_17" end time: Mar 13 01:12 -03
+"e1_avaliacao_17" end time: Mar 13 17:16 -03
 "e1_avaliacao_17" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2248,7 +2244,7 @@ Test Passed.
 94/563 Test: e1_valg_001
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_001.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_001" start time: Mar 13 01:12 -03
+"e1_valg_001" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_001'
@@ -2259,10 +2255,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_001.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_001.tesh:4> as requested)
 <end of output>
-Test time =   0.21 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_001" end time: Mar 13 01:12 -03
+"e1_valg_001" end time: Mar 13 17:16 -03
 "e1_valg_001" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2270,7 +2266,7 @@ Test Failed.
 95/563 Test: e1_valg_002
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_002.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_002" start time: Mar 13 01:12 -03
+"e1_valg_002" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_002'
@@ -2284,7 +2280,7 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_002.tesh:4> so far
 Test time =   0.23 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_002" end time: Mar 13 01:12 -03
+"e1_valg_002" end time: Mar 13 17:16 -03
 "e1_valg_002" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2292,7 +2288,7 @@ Test Failed.
 96/563 Test: e1_valg_003
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_003.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_003" start time: Mar 13 01:12 -03
+"e1_valg_003" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_003'
@@ -2303,10 +2299,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_003.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_003.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_003" end time: Mar 13 01:12 -03
+"e1_valg_003" end time: Mar 13 17:16 -03
 "e1_valg_003" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2314,7 +2310,7 @@ Test Failed.
 97/563 Test: e1_valg_004
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_004.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_004" start time: Mar 13 01:12 -03
+"e1_valg_004" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_004'
@@ -2325,10 +2321,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_004.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_004.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_004" end time: Mar 13 01:12 -03
+"e1_valg_004" end time: Mar 13 17:16 -03
 "e1_valg_004" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2336,7 +2332,7 @@ Test Failed.
 98/563 Test: e1_valg_005
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_005.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_005" start time: Mar 13 01:12 -03
+"e1_valg_005" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_005'
@@ -2347,10 +2343,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_005.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_005.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_005" end time: Mar 13 01:12 -03
+"e1_valg_005" end time: Mar 13 17:16 -03
 "e1_valg_005" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2358,7 +2354,7 @@ Test Failed.
 99/563 Test: e1_valg_006
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_006.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_006" start time: Mar 13 01:12 -03
+"e1_valg_006" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_006'
@@ -2369,10 +2365,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_006.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_006.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.24 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_006" end time: Mar 13 01:12 -03
+"e1_valg_006" end time: Mar 13 17:16 -03
 "e1_valg_006" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2380,7 +2376,7 @@ Test Failed.
 100/563 Test: e1_valg_007
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_007.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_007" start time: Mar 13 01:12 -03
+"e1_valg_007" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_007'
@@ -2391,10 +2387,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_007.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_007.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_007" end time: Mar 13 01:12 -03
+"e1_valg_007" end time: Mar 13 17:16 -03
 "e1_valg_007" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2402,7 +2398,7 @@ Test Failed.
 101/563 Test: e1_valg_008
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_008.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_008" start time: Mar 13 01:12 -03
+"e1_valg_008" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_008'
@@ -2416,7 +2412,7 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_008.tesh:4> so far
 Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_008" end time: Mar 13 01:12 -03
+"e1_valg_008" end time: Mar 13 17:16 -03
 "e1_valg_008" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2424,7 +2420,7 @@ Test Failed.
 102/563 Test: e1_valg_009
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_009.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_009" start time: Mar 13 01:12 -03
+"e1_valg_009" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_009'
@@ -2435,10 +2431,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_009.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_009.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_009" end time: Mar 13 01:12 -03
+"e1_valg_009" end time: Mar 13 17:16 -03
 "e1_valg_009" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2446,7 +2442,7 @@ Test Failed.
 103/563 Test: e1_valg_010
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_010.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_010" start time: Mar 13 01:12 -03
+"e1_valg_010" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_010'
@@ -2457,10 +2453,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_010.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_010.tesh:4> as requested)
 <end of output>
-Test time =   0.21 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_010" end time: Mar 13 01:12 -03
+"e1_valg_010" end time: Mar 13 17:16 -03
 "e1_valg_010" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2468,7 +2464,7 @@ Test Failed.
 104/563 Test: e1_valg_011
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_011.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_011" start time: Mar 13 01:12 -03
+"e1_valg_011" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_011'
@@ -2479,10 +2475,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_011.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_011.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_011" end time: Mar 13 01:12 -03
+"e1_valg_011" end time: Mar 13 17:16 -03
 "e1_valg_011" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2490,7 +2486,7 @@ Test Failed.
 105/563 Test: e1_valg_012
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_012.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_012" start time: Mar 13 01:12 -03
+"e1_valg_012" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_012'
@@ -2501,10 +2497,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_012.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_012.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_012" end time: Mar 13 01:12 -03
+"e1_valg_012" end time: Mar 13 17:16 -03
 "e1_valg_012" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2512,7 +2508,7 @@ Test Failed.
 106/563 Test: e1_valg_013
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_013.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_013" start time: Mar 13 01:12 -03
+"e1_valg_013" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_013'
@@ -2523,10 +2519,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_013.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_013.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_013" end time: Mar 13 01:12 -03
+"e1_valg_013" end time: Mar 13 17:16 -03
 "e1_valg_013" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2534,7 +2530,7 @@ Test Failed.
 107/563 Test: e1_valg_014
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_014.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_014" start time: Mar 13 01:12 -03
+"e1_valg_014" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_014'
@@ -2545,10 +2541,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_014.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_014.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_014" end time: Mar 13 01:12 -03
+"e1_valg_014" end time: Mar 13 17:16 -03
 "e1_valg_014" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2556,7 +2552,7 @@ Test Failed.
 108/563 Test: e1_valg_015
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_015.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_015" start time: Mar 13 01:12 -03
+"e1_valg_015" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_015'
@@ -2567,10 +2563,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_015.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_015.tesh:4> as requested)
 <end of output>
-Test time =   0.21 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_015" end time: Mar 13 01:12 -03
+"e1_valg_015" end time: Mar 13 17:16 -03
 "e1_valg_015" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2578,7 +2574,7 @@ Test Failed.
 109/563 Test: e1_valg_016
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_016.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_016" start time: Mar 13 01:12 -03
+"e1_valg_016" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_016'
@@ -2589,10 +2585,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_016.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_016.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.23 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_016" end time: Mar 13 01:12 -03
+"e1_valg_016" end time: Mar 13 17:16 -03
 "e1_valg_016" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2600,7 +2596,7 @@ Test Failed.
 110/563 Test: e1_valg_017
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_017.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_017" start time: Mar 13 01:12 -03
+"e1_valg_017" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_017'
@@ -2611,10 +2607,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_017.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_017.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_017" end time: Mar 13 01:12 -03
+"e1_valg_017" end time: Mar 13 17:16 -03
 "e1_valg_017" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2622,7 +2618,7 @@ Test Failed.
 111/563 Test: e1_valg_018
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_018.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_018" start time: Mar 13 01:12 -03
+"e1_valg_018" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_018'
@@ -2633,10 +2629,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_018.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_018.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_018" end time: Mar 13 01:12 -03
+"e1_valg_018" end time: Mar 13 17:16 -03
 "e1_valg_018" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2644,7 +2640,7 @@ Test Failed.
 112/563 Test: e1_valg_019
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_019.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_019" start time: Mar 13 01:12 -03
+"e1_valg_019" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_019'
@@ -2655,10 +2651,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_019.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_019.tesh:4> as requested)
 <end of output>
-Test time =   0.21 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_019" end time: Mar 13 01:12 -03
+"e1_valg_019" end time: Mar 13 17:16 -03
 "e1_valg_019" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2666,7 +2662,7 @@ Test Failed.
 113/563 Test: e1_valg_020
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_020.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_020" start time: Mar 13 01:12 -03
+"e1_valg_020" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_020'
@@ -2677,10 +2673,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_020.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_020.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_020" end time: Mar 13 01:12 -03
+"e1_valg_020" end time: Mar 13 17:16 -03
 "e1_valg_020" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2688,7 +2684,7 @@ Test Failed.
 114/563 Test: e1_valg_021
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_021.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_021" start time: Mar 13 01:12 -03
+"e1_valg_021" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_021'
@@ -2699,10 +2695,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_021.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_021.tesh:4> as requested)
 <end of output>
-Test time =   0.21 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_021" end time: Mar 13 01:12 -03
+"e1_valg_021" end time: Mar 13 17:16 -03
 "e1_valg_021" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2710,7 +2706,7 @@ Test Failed.
 115/563 Test: e1_valg_022
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_022.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_022" start time: Mar 13 01:12 -03
+"e1_valg_022" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_022'
@@ -2721,10 +2717,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_022.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_022.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_022" end time: Mar 13 01:12 -03
+"e1_valg_022" end time: Mar 13 17:16 -03
 "e1_valg_022" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2732,7 +2728,7 @@ Test Failed.
 116/563 Test: e1_valg_023
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_023.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_023" start time: Mar 13 01:12 -03
+"e1_valg_023" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_023'
@@ -2743,10 +2739,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_023.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_023.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_023" end time: Mar 13 01:12 -03
+"e1_valg_023" end time: Mar 13 17:16 -03
 "e1_valg_023" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2754,7 +2750,7 @@ Test Failed.
 117/563 Test: e1_valg_024
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_024.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_024" start time: Mar 13 01:12 -03
+"e1_valg_024" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_024'
@@ -2765,10 +2761,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_024.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_024.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.24 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_024" end time: Mar 13 01:12 -03
+"e1_valg_024" end time: Mar 13 17:16 -03
 "e1_valg_024" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2776,7 +2772,7 @@ Test Failed.
 118/563 Test: e1_valg_025
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_025.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_025" start time: Mar 13 01:12 -03
+"e1_valg_025" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_025'
@@ -2787,10 +2783,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_025.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_025.tesh:4> as requested)
 <end of output>
-Test time =   0.22 sec
+Test time =   0.27 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_025" end time: Mar 13 01:12 -03
+"e1_valg_025" end time: Mar 13 17:16 -03
 "e1_valg_025" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2798,7 +2794,7 @@ Test Failed.
 119/563 Test: e1_valg_026
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_026.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_026" start time: Mar 13 01:12 -03
+"e1_valg_026" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_026'
@@ -2809,10 +2805,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_026.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_026.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_026" end time: Mar 13 01:12 -03
+"e1_valg_026" end time: Mar 13 17:16 -03
 "e1_valg_026" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2820,7 +2816,7 @@ Test Failed.
 120/563 Test: e1_valg_027
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_027.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_027" start time: Mar 13 01:12 -03
+"e1_valg_027" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_027'
@@ -2831,10 +2827,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_027.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_027.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.24 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_027" end time: Mar 13 01:12 -03
+"e1_valg_027" end time: Mar 13 17:16 -03
 "e1_valg_027" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2842,7 +2838,7 @@ Test Failed.
 121/563 Test: e1_valg_028
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_028.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_028" start time: Mar 13 01:12 -03
+"e1_valg_028" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_028'
@@ -2853,10 +2849,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_028.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_028.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_028" end time: Mar 13 01:12 -03
+"e1_valg_028" end time: Mar 13 17:16 -03
 "e1_valg_028" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2864,7 +2860,7 @@ Test Failed.
 122/563 Test: e1_valg_029
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_029.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_029" start time: Mar 13 01:12 -03
+"e1_valg_029" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_029'
@@ -2875,10 +2871,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_029.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_029.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_029" end time: Mar 13 01:12 -03
+"e1_valg_029" end time: Mar 13 17:16 -03
 "e1_valg_029" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2886,7 +2882,7 @@ Test Failed.
 123/563 Test: e1_valg_030
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_030.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_030" start time: Mar 13 01:12 -03
+"e1_valg_030" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_030'
@@ -2897,10 +2893,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_030.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_030.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_030" end time: Mar 13 01:12 -03
+"e1_valg_030" end time: Mar 13 17:16 -03
 "e1_valg_030" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2908,7 +2904,7 @@ Test Failed.
 124/563 Test: e1_valg_031
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_031.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_031" start time: Mar 13 01:12 -03
+"e1_valg_031" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_031'
@@ -2919,10 +2915,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_031.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_031.tesh:4> as requested)
 <end of output>
-Test time =   0.21 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_031" end time: Mar 13 01:12 -03
+"e1_valg_031" end time: Mar 13 17:16 -03
 "e1_valg_031" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2930,7 +2926,7 @@ Test Failed.
 125/563 Test: e1_valg_032
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_032.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_032" start time: Mar 13 01:12 -03
+"e1_valg_032" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_032'
@@ -2941,10 +2937,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_032.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_032.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_032" end time: Mar 13 01:12 -03
+"e1_valg_032" end time: Mar 13 17:16 -03
 "e1_valg_032" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2952,7 +2948,7 @@ Test Failed.
 126/563 Test: e1_valg_033
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_033.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_033" start time: Mar 13 01:12 -03
+"e1_valg_033" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_033'
@@ -2963,10 +2959,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_033.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_033.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_033" end time: Mar 13 01:12 -03
+"e1_valg_033" end time: Mar 13 17:16 -03
 "e1_valg_033" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2974,7 +2970,7 @@ Test Failed.
 127/563 Test: e1_valg_034
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_034.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_034" start time: Mar 13 01:12 -03
+"e1_valg_034" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_034'
@@ -2985,10 +2981,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_034.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_034.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_034" end time: Mar 13 01:12 -03
+"e1_valg_034" end time: Mar 13 17:16 -03
 "e1_valg_034" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -2996,7 +2992,7 @@ Test Failed.
 128/563 Test: e1_valg_035
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_035.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_035" start time: Mar 13 01:12 -03
+"e1_valg_035" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_035'
@@ -3007,10 +3003,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_035.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_035.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_035" end time: Mar 13 01:12 -03
+"e1_valg_035" end time: Mar 13 17:16 -03
 "e1_valg_035" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3018,7 +3014,7 @@ Test Failed.
 129/563 Test: e1_valg_036
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_036.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_036" start time: Mar 13 01:12 -03
+"e1_valg_036" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_036'
@@ -3029,10 +3025,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_036.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_036.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_036" end time: Mar 13 01:12 -03
+"e1_valg_036" end time: Mar 13 17:16 -03
 "e1_valg_036" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3040,7 +3036,7 @@ Test Failed.
 130/563 Test: e1_valg_037
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_037.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_037" start time: Mar 13 01:12 -03
+"e1_valg_037" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_037'
@@ -3051,10 +3047,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_037.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_037.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_037" end time: Mar 13 01:12 -03
+"e1_valg_037" end time: Mar 13 17:16 -03
 "e1_valg_037" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3062,7 +3058,7 @@ Test Failed.
 131/563 Test: e1_valg_038
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_038.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_038" start time: Mar 13 01:12 -03
+"e1_valg_038" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_038'
@@ -3073,10 +3069,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_038.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_038.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_038" end time: Mar 13 01:12 -03
+"e1_valg_038" end time: Mar 13 17:16 -03
 "e1_valg_038" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3084,7 +3080,7 @@ Test Failed.
 132/563 Test: e1_valg_039
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_039.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_039" start time: Mar 13 01:12 -03
+"e1_valg_039" start time: Mar 13 17:16 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_039'
@@ -3095,10 +3091,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_039.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_039.tesh:4> as requested)
 <end of output>
-Test time =   0.21 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_039" end time: Mar 13 01:12 -03
+"e1_valg_039" end time: Mar 13 17:17 -03
 "e1_valg_039" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3106,7 +3102,7 @@ Test Failed.
 133/563 Test: e1_valg_040
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_040.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_040" start time: Mar 13 01:12 -03
+"e1_valg_040" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_040'
@@ -3117,10 +3113,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_040.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_040.tesh:4> as requested)
 <end of output>
-Test time =   0.21 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_040" end time: Mar 13 01:12 -03
+"e1_valg_040" end time: Mar 13 17:17 -03
 "e1_valg_040" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3128,7 +3124,7 @@ Test Failed.
 134/563 Test: e1_valg_041
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_041.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_041" start time: Mar 13 01:12 -03
+"e1_valg_041" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_041'
@@ -3139,10 +3135,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_041.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_041.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_041" end time: Mar 13 01:12 -03
+"e1_valg_041" end time: Mar 13 17:17 -03
 "e1_valg_041" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3150,7 +3146,7 @@ Test Failed.
 135/563 Test: e1_valg_042
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_042.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_042" start time: Mar 13 01:12 -03
+"e1_valg_042" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_042'
@@ -3161,10 +3157,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_042.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_042.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_042" end time: Mar 13 01:12 -03
+"e1_valg_042" end time: Mar 13 17:17 -03
 "e1_valg_042" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3172,7 +3168,7 @@ Test Failed.
 136/563 Test: e1_valg_043
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_043.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_043" start time: Mar 13 01:12 -03
+"e1_valg_043" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_043'
@@ -3183,10 +3179,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_043.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_043.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_043" end time: Mar 13 01:12 -03
+"e1_valg_043" end time: Mar 13 17:17 -03
 "e1_valg_043" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3194,7 +3190,7 @@ Test Failed.
 137/563 Test: e1_valg_044
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_044.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_044" start time: Mar 13 01:12 -03
+"e1_valg_044" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_044'
@@ -3205,10 +3201,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_044.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_044.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_044" end time: Mar 13 01:12 -03
+"e1_valg_044" end time: Mar 13 17:17 -03
 "e1_valg_044" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3216,7 +3212,7 @@ Test Failed.
 138/563 Test: e1_valg_045
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_045.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_045" start time: Mar 13 01:12 -03
+"e1_valg_045" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_045'
@@ -3227,10 +3223,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_045.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_045.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_045" end time: Mar 13 01:12 -03
+"e1_valg_045" end time: Mar 13 17:17 -03
 "e1_valg_045" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3238,7 +3234,7 @@ Test Failed.
 139/563 Test: e1_valg_046
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_046.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_046" start time: Mar 13 01:12 -03
+"e1_valg_046" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_046'
@@ -3249,10 +3245,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_046.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_046.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_046" end time: Mar 13 01:12 -03
+"e1_valg_046" end time: Mar 13 17:17 -03
 "e1_valg_046" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3260,7 +3256,7 @@ Test Failed.
 140/563 Test: e1_valg_047
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_047.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_047" start time: Mar 13 01:12 -03
+"e1_valg_047" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_047'
@@ -3271,10 +3267,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_047.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_047.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_047" end time: Mar 13 01:12 -03
+"e1_valg_047" end time: Mar 13 17:17 -03
 "e1_valg_047" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3282,7 +3278,7 @@ Test Failed.
 141/563 Test: e1_valg_048
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_048.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_048" start time: Mar 13 01:12 -03
+"e1_valg_048" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_048'
@@ -3293,10 +3289,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_048.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_048.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_048" end time: Mar 13 01:12 -03
+"e1_valg_048" end time: Mar 13 17:17 -03
 "e1_valg_048" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3304,7 +3300,7 @@ Test Failed.
 142/563 Test: e1_valg_049
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_049.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_049" start time: Mar 13 01:12 -03
+"e1_valg_049" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_049'
@@ -3315,10 +3311,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_049.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_049.tesh:4> as requested)
 <end of output>
-Test time =   0.21 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_049" end time: Mar 13 01:12 -03
+"e1_valg_049" end time: Mar 13 17:17 -03
 "e1_valg_049" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3326,7 +3322,7 @@ Test Failed.
 143/563 Test: e1_valg_050
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_050.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_050" start time: Mar 13 01:12 -03
+"e1_valg_050" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_050'
@@ -3337,10 +3333,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_050.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_050.tesh:4> as requested)
 <end of output>
-Test time =   0.21 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_050" end time: Mar 13 01:12 -03
+"e1_valg_050" end time: Mar 13 17:17 -03
 "e1_valg_050" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3348,7 +3344,7 @@ Test Failed.
 144/563 Test: e1_valg_051
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_051.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_051" start time: Mar 13 01:12 -03
+"e1_valg_051" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_051'
@@ -3359,10 +3355,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_051.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_051.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_051" end time: Mar 13 01:12 -03
+"e1_valg_051" end time: Mar 13 17:17 -03
 "e1_valg_051" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3370,7 +3366,7 @@ Test Failed.
 145/563 Test: e1_valg_052
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_052.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_052" start time: Mar 13 01:12 -03
+"e1_valg_052" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_052'
@@ -3384,7 +3380,7 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_052.tesh:4> so far
 Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_052" end time: Mar 13 01:12 -03
+"e1_valg_052" end time: Mar 13 17:17 -03
 "e1_valg_052" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3392,7 +3388,7 @@ Test Failed.
 146/563 Test: e1_valg_053
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_053.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_053" start time: Mar 13 01:12 -03
+"e1_valg_053" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_053'
@@ -3403,10 +3399,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_053.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_053.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_053" end time: Mar 13 01:12 -03
+"e1_valg_053" end time: Mar 13 17:17 -03
 "e1_valg_053" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3414,7 +3410,7 @@ Test Failed.
 147/563 Test: e1_valg_054
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_054.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_054" start time: Mar 13 01:12 -03
+"e1_valg_054" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_054'
@@ -3425,10 +3421,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_054.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_054.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_054" end time: Mar 13 01:12 -03
+"e1_valg_054" end time: Mar 13 17:17 -03
 "e1_valg_054" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3436,7 +3432,7 @@ Test Failed.
 148/563 Test: e1_valg_055
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_055.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_055" start time: Mar 13 01:12 -03
+"e1_valg_055" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_055'
@@ -3447,10 +3443,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_055.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_055.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_055" end time: Mar 13 01:12 -03
+"e1_valg_055" end time: Mar 13 17:17 -03
 "e1_valg_055" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3458,7 +3454,7 @@ Test Failed.
 149/563 Test: e1_valg_056
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_056.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_056" start time: Mar 13 01:12 -03
+"e1_valg_056" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_056'
@@ -3469,10 +3465,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_056.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_056.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.23 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_056" end time: Mar 13 01:12 -03
+"e1_valg_056" end time: Mar 13 17:17 -03
 "e1_valg_056" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3480,7 +3476,7 @@ Test Failed.
 150/563 Test: e1_valg_057
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_057.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_057" start time: Mar 13 01:12 -03
+"e1_valg_057" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_057'
@@ -3491,10 +3487,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_057.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_057.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_057" end time: Mar 13 01:12 -03
+"e1_valg_057" end time: Mar 13 17:17 -03
 "e1_valg_057" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3502,7 +3498,7 @@ Test Failed.
 151/563 Test: e1_valg_058
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_058.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_058" start time: Mar 13 01:12 -03
+"e1_valg_058" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_058'
@@ -3513,10 +3509,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_058.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_058.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_058" end time: Mar 13 01:12 -03
+"e1_valg_058" end time: Mar 13 17:17 -03
 "e1_valg_058" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3524,7 +3520,7 @@ Test Failed.
 152/563 Test: e1_valg_059
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_059.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_059" start time: Mar 13 01:12 -03
+"e1_valg_059" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_059'
@@ -3535,10 +3531,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_059.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_059.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_059" end time: Mar 13 01:12 -03
+"e1_valg_059" end time: Mar 13 17:17 -03
 "e1_valg_059" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3546,7 +3542,7 @@ Test Failed.
 153/563 Test: e1_valg_060
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_060.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_060" start time: Mar 13 01:12 -03
+"e1_valg_060" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_060'
@@ -3557,10 +3553,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_060.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_060.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_060" end time: Mar 13 01:12 -03
+"e1_valg_060" end time: Mar 13 17:17 -03
 "e1_valg_060" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3568,7 +3564,7 @@ Test Failed.
 154/563 Test: e1_valg_061
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_061.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_061" start time: Mar 13 01:12 -03
+"e1_valg_061" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_061'
@@ -3579,10 +3575,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_061.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_061.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_061" end time: Mar 13 01:12 -03
+"e1_valg_061" end time: Mar 13 17:17 -03
 "e1_valg_061" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3590,7 +3586,7 @@ Test Failed.
 155/563 Test: e1_valg_062
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_062.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_062" start time: Mar 13 01:12 -03
+"e1_valg_062" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_062'
@@ -3601,10 +3597,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_062.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_062.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.24 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_062" end time: Mar 13 01:12 -03
+"e1_valg_062" end time: Mar 13 17:17 -03
 "e1_valg_062" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3612,7 +3608,7 @@ Test Failed.
 156/563 Test: e1_valg_063
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_063.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_063" start time: Mar 13 01:12 -03
+"e1_valg_063" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_063'
@@ -3623,10 +3619,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_063.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_063.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.23 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_063" end time: Mar 13 01:12 -03
+"e1_valg_063" end time: Mar 13 17:17 -03
 "e1_valg_063" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3634,7 +3630,7 @@ Test Failed.
 157/563 Test: e1_valg_064
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_064.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_064" start time: Mar 13 01:12 -03
+"e1_valg_064" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_064'
@@ -3645,10 +3641,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_064.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_064.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.25 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_064" end time: Mar 13 01:12 -03
+"e1_valg_064" end time: Mar 13 17:17 -03
 "e1_valg_064" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3656,7 +3652,7 @@ Test Failed.
 158/563 Test: e1_valg_065
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_065.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_065" start time: Mar 13 01:12 -03
+"e1_valg_065" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_065'
@@ -3667,10 +3663,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_065.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_065.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_065" end time: Mar 13 01:12 -03
+"e1_valg_065" end time: Mar 13 17:17 -03
 "e1_valg_065" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3678,7 +3674,7 @@ Test Failed.
 159/563 Test: e1_valg_066
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_066.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_066" start time: Mar 13 01:12 -03
+"e1_valg_066" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_066'
@@ -3689,10 +3685,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_066.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_066.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.23 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_066" end time: Mar 13 01:12 -03
+"e1_valg_066" end time: Mar 13 17:17 -03
 "e1_valg_066" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3700,7 +3696,7 @@ Test Failed.
 160/563 Test: e1_valg_067
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_067.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_067" start time: Mar 13 01:12 -03
+"e1_valg_067" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_067'
@@ -3711,10 +3707,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_067.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_067.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_067" end time: Mar 13 01:12 -03
+"e1_valg_067" end time: Mar 13 17:17 -03
 "e1_valg_067" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3722,7 +3718,7 @@ Test Failed.
 161/563 Test: e1_valg_068
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_068.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_068" start time: Mar 13 01:12 -03
+"e1_valg_068" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_068'
@@ -3733,10 +3729,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_068.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_068.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.23 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_068" end time: Mar 13 01:12 -03
+"e1_valg_068" end time: Mar 13 17:17 -03
 "e1_valg_068" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3744,7 +3740,7 @@ Test Failed.
 162/563 Test: e1_valg_069
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_069.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_069" start time: Mar 13 01:12 -03
+"e1_valg_069" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_069'
@@ -3755,10 +3751,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_069.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_069.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.24 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_069" end time: Mar 13 01:12 -03
+"e1_valg_069" end time: Mar 13 17:17 -03
 "e1_valg_069" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3766,7 +3762,7 @@ Test Failed.
 163/563 Test: e1_valg_070
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_070.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_070" start time: Mar 13 01:12 -03
+"e1_valg_070" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_070'
@@ -3777,10 +3773,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_070.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_070.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_070" end time: Mar 13 01:12 -03
+"e1_valg_070" end time: Mar 13 17:17 -03
 "e1_valg_070" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3788,7 +3784,7 @@ Test Failed.
 164/563 Test: e1_valg_071
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_071.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_071" start time: Mar 13 01:12 -03
+"e1_valg_071" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_071'
@@ -3799,10 +3795,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_071.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_071.tesh:4> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_071" end time: Mar 13 01:12 -03
+"e1_valg_071" end time: Mar 13 17:17 -03
 "e1_valg_071" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3810,7 +3806,7 @@ Test Failed.
 165/563 Test: e1_valg_072
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_072.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_072" start time: Mar 13 01:12 -03
+"e1_valg_072" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_072'
@@ -3821,10 +3817,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_072.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_072.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_072" end time: Mar 13 01:12 -03
+"e1_valg_072" end time: Mar 13 17:17 -03
 "e1_valg_072" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3832,7 +3828,7 @@ Test Failed.
 166/563 Test: e1_valg_073
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_073.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_073" start time: Mar 13 01:12 -03
+"e1_valg_073" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_073'
@@ -3843,10 +3839,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_073.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_073.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_073" end time: Mar 13 01:12 -03
+"e1_valg_073" end time: Mar 13 17:17 -03
 "e1_valg_073" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3854,7 +3850,7 @@ Test Failed.
 167/563 Test: e1_valg_074
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_074.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_074" start time: Mar 13 01:12 -03
+"e1_valg_074" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_074'
@@ -3865,10 +3861,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_074.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_074.tesh:4> as requested)
 <end of output>
-Test time =   0.24 sec
+Test time =   0.23 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_074" end time: Mar 13 01:12 -03
+"e1_valg_074" end time: Mar 13 17:17 -03
 "e1_valg_074" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3876,7 +3872,7 @@ Test Failed.
 168/563 Test: e1_valg_075
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_075.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_075" start time: Mar 13 01:12 -03
+"e1_valg_075" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_075'
@@ -3887,10 +3883,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_075.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_075.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_075" end time: Mar 13 01:12 -03
+"e1_valg_075" end time: Mar 13 17:17 -03
 "e1_valg_075" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3898,7 +3894,7 @@ Test Failed.
 169/563 Test: e1_valg_076
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valg_076.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valg_076" start time: Mar 13 01:12 -03
+"e1_valg_076" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valg_076'
@@ -3909,10 +3905,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_076.tesh:4> so far
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valg_076.tesh:4> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.23 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valg_076" end time: Mar 13 01:12 -03
+"e1_valg_076" end time: Mar 13 17:17 -03
 "e1_valg_076" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3920,7 +3916,7 @@ Test Failed.
 170/563 Test: e1_valgrind_00
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_00.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valgrind_00" start time: Mar 13 01:12 -03
+"e1_valgrind_00" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_00'
@@ -3931,10 +3927,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_00.tesh:6> so 
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_00.tesh:6> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.23 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valgrind_00" end time: Mar 13 01:12 -03
+"e1_valgrind_00" end time: Mar 13 17:17 -03
 "e1_valgrind_00" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3942,7 +3938,7 @@ Test Failed.
 171/563 Test: e1_valgrind_01
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_01.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valgrind_01" start time: Mar 13 01:12 -03
+"e1_valgrind_01" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_01'
@@ -3953,10 +3949,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_01.tesh:6> so 
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_01.tesh:6> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.24 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valgrind_01" end time: Mar 13 01:12 -03
+"e1_valgrind_01" end time: Mar 13 17:17 -03
 "e1_valgrind_01" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3964,7 +3960,7 @@ Test Failed.
 172/563 Test: e1_valgrind_02
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_02.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valgrind_02" start time: Mar 13 01:12 -03
+"e1_valgrind_02" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_02'
@@ -3975,10 +3971,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_02.tesh:6> so 
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_02.tesh:6> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.23 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valgrind_02" end time: Mar 13 01:12 -03
+"e1_valgrind_02" end time: Mar 13 17:17 -03
 "e1_valgrind_02" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -3986,7 +3982,7 @@ Test Failed.
 173/563 Test: e1_valgrind_03
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_03.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valgrind_03" start time: Mar 13 01:12 -03
+"e1_valgrind_03" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_03'
@@ -3997,10 +3993,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_03.tesh:6> so 
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_03.tesh:6> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.23 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valgrind_03" end time: Mar 13 01:12 -03
+"e1_valgrind_03" end time: Mar 13 17:17 -03
 "e1_valgrind_03" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -4008,7 +4004,7 @@ Test Failed.
 174/563 Test: e1_valgrind_05
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_05.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valgrind_05" start time: Mar 13 01:12 -03
+"e1_valgrind_05" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_05'
@@ -4019,10 +4015,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_05.tesh:6> so 
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_05.tesh:6> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.21 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valgrind_05" end time: Mar 13 01:12 -03
+"e1_valgrind_05" end time: Mar 13 17:17 -03
 "e1_valgrind_05" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -4030,7 +4026,7 @@ Test Failed.
 175/563 Test: e1_valgrind_06
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_06.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valgrind_06" start time: Mar 13 01:12 -03
+"e1_valgrind_06" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_06'
@@ -4041,10 +4037,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_06.tesh:6> so 
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_06.tesh:6> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.24 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valgrind_06" end time: Mar 13 01:12 -03
+"e1_valgrind_06" end time: Mar 13 17:17 -03
 "e1_valgrind_06" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -4052,7 +4048,7 @@ Test Failed.
 176/563 Test: e1_valgrind_07
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_07.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valgrind_07" start time: Mar 13 01:12 -03
+"e1_valgrind_07" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_07'
@@ -4063,10 +4059,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_07.tesh:6> so 
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_07.tesh:6> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.23 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valgrind_07" end time: Mar 13 01:12 -03
+"e1_valgrind_07" end time: Mar 13 17:17 -03
 "e1_valgrind_07" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -4074,7 +4070,7 @@ Test Failed.
 177/563 Test: e1_valgrind_08
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_08.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valgrind_08" start time: Mar 13 01:12 -03
+"e1_valgrind_08" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_08'
@@ -4085,10 +4081,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_08.tesh:6> so 
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_08.tesh:6> as requested)
 <end of output>
-Test time =   0.21 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valgrind_08" end time: Mar 13 01:12 -03
+"e1_valgrind_08" end time: Mar 13 17:17 -03
 "e1_valgrind_08" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -4096,7 +4092,7 @@ Test Failed.
 178/563 Test: e1_valgrind_09
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_09.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valgrind_09" start time: Mar 13 01:12 -03
+"e1_valgrind_09" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_09'
@@ -4107,10 +4103,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_09.tesh:6> so 
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_09.tesh:6> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.23 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valgrind_09" end time: Mar 13 01:12 -03
+"e1_valgrind_09" end time: Mar 13 17:17 -03
 "e1_valgrind_09" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -4118,7 +4114,7 @@ Test Failed.
 179/563 Test: e1_valgrind_10
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_10.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valgrind_10" start time: Mar 13 01:12 -03
+"e1_valgrind_10" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_10'
@@ -4129,10 +4125,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_10.tesh:6> so 
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_10.tesh:6> as requested)
 <end of output>
-Test time =   0.20 sec
+Test time =   0.24 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valgrind_10" end time: Mar 13 01:12 -03
+"e1_valgrind_10" end time: Mar 13 17:17 -03
 "e1_valgrind_10" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -4140,7 +4136,7 @@ Test Failed.
 180/563 Test: e1_valgrind_11
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_11.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valgrind_11" start time: Mar 13 01:12 -03
+"e1_valgrind_11" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_11'
@@ -4151,10 +4147,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_11.tesh:6> so 
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_11.tesh:6> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.23 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valgrind_11" end time: Mar 13 01:12 -03
+"e1_valgrind_11" end time: Mar 13 17:17 -03
 "e1_valgrind_11" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -4162,7 +4158,7 @@ Test Failed.
 181/563 Test: e1_valgrind_12
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_12.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valgrind_12" start time: Mar 13 01:12 -03
+"e1_valgrind_12" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_12'
@@ -4173,10 +4169,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_12.tesh:6> so 
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_12.tesh:6> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.24 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valgrind_12" end time: Mar 13 01:12 -03
+"e1_valgrind_12" end time: Mar 13 17:17 -03
 "e1_valgrind_12" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -4184,7 +4180,7 @@ Test Failed.
 182/563 Test: e1_valgrind_13
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_13.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valgrind_13" start time: Mar 13 01:12 -03
+"e1_valgrind_13" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_13'
@@ -4195,10 +4191,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_13.tesh:6> so 
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_13.tesh:6> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.24 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valgrind_13" end time: Mar 13 01:12 -03
+"e1_valgrind_13" end time: Mar 13 17:17 -03
 "e1_valgrind_13" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -4206,7 +4202,7 @@ Test Failed.
 183/563 Test: e1_valgrind_14
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_14.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valgrind_14" start time: Mar 13 01:12 -03
+"e1_valgrind_14" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_14'
@@ -4217,10 +4213,10 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_14.tesh:6> so 
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_14.tesh:6> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.22 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valgrind_14" end time: Mar 13 01:12 -03
+"e1_valgrind_14" end time: Mar 13 17:17 -03
 "e1_valgrind_14" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -4228,7 +4224,7 @@ Test Failed.
 184/563 Test: e1_valgrind_15
 Command: "/usr/bin/perl" "-I" "./tests/scripts" "./tests/scripts/tesh" "/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_15.tesh"
 Directory: /Users/rubensrechjunior/Developer/pc/build
-"e1_valgrind_15" start time: Mar 13 01:12 -03
+"e1_valgrind_15" start time: Mar 13 17:17 -03
 Output:
 ----------------------------------------------------------
 Test suite `/Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_15'
@@ -4239,11 +4235,11 @@ Output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_15.tesh:6> so 
 || (B[m
 (ignoring the output of </Users/rubensrechjunior/Developer/pc/tests/e1/valgrind_15.tesh:6> as requested)
 <end of output>
-Test time =   0.19 sec
+Test time =   0.24 sec
 ----------------------------------------------------------
 Test Failed.
-"e1_valgrind_15" end time: Mar 13 01:12 -03
+"e1_valgrind_15" end time: Mar 13 17:17 -03
 "e1_valgrind_15" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Mar 13 01:12 -03
+End testing: Mar 13 17:17 -03

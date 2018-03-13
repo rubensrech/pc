@@ -352,8 +352,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 50
-#define YY_END_OF_BUFFER 51
+#define YY_NUM_RULES 51
+#define YY_END_OF_BUFFER 52
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -363,7 +363,7 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[171] =
     {   0,
-        0,    0,    5,    5,   51,   50,    1,    2,   49,   50,
+        0,    0,    5,    5,   52,   50,    1,    2,   49,   50,
        49,   49,   50,   49,   49,   38,   49,   49,   49,   36,
        36,   36,   36,   36,   36,   36,   36,   36,   36,   36,
        36,   36,   50,    5,    7,    6,    1,   44,    0,   40,
@@ -388,7 +388,7 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    4,    5,    6,    6,    6,    7,    8,    6,
+        1,    2,    4,    5,    6,    1,    6,    7,    8,    6,
         6,    9,   10,    6,   11,   12,   13,   14,   14,   14,
        14,   14,   14,   14,   14,   14,   14,    6,    6,   15,
        16,   17,    1,    1,   18,   18,   18,   18,   19,   18,
@@ -853,7 +853,7 @@ YY_RULE_SETUP
 case 3:
 YY_RULE_SETUP
 #line 26 "scanner.l"
-/* remove single-line comments */
+/* ignore single-line comments */
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
@@ -1089,11 +1089,17 @@ YY_RULE_SETUP
 return (int)yytext[0];
 	YY_BREAK
 case 50:
+/* rule 50 can match eol */
 YY_RULE_SETUP
-#line 81 "scanner.l"
+#line 80 "scanner.l"
+return TOKEN_ERRO;
+	YY_BREAK
+case 51:
+YY_RULE_SETUP
+#line 82 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 1096 "/Users/rubensrechjunior/Developer/pc/build/scanner.c"
+#line 1102 "/Users/rubensrechjunior/Developer/pc/build/scanner.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(comment):
 	yyterminate();
@@ -2099,6 +2105,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 81 "scanner.l"
+#line 82 "scanner.l"
 
 

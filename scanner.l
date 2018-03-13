@@ -21,9 +21,9 @@ ID              [_a-zA-Z][a-zA-Z0-9_]*
 %%
 
 [ \t]+               /* remove whitespaces */
-\n                 ++num_lines;   /* regular line count */
+\n                   ++num_lines;   /* regular line count */
 
-"//".*                  /* remove single-line comments */
+"//".*               /* ignore single-line comments */
 
 "/*"        BEGIN(comment);
 <comment>[^*\n]*           /* ignore anything but a '*' */
@@ -76,6 +76,7 @@ false       return TK_LIT_FALSE;
 ">>"        return TK_OC_SR;
 "<<"        return TK_OC_SL;
 
-[,;:()[\]{}+\-*/<>=!&%#^.$]    return (int)yytext[0];
+[,;:()[\]{}+\-*/<>=!&%#^.]    return (int)yytext[0];
+[^,;:()[\]{}+\-*/<>=!&%#^.]    return TOKEN_ERRO;
 
 %%

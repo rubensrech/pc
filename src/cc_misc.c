@@ -4,8 +4,6 @@
 #include "cc_dict.h"
 #include "main.h"
 
-#define MAX_LEXEME_SIZE 200
-
 extern int num_lines;
 extern char *yytext;
 
@@ -39,7 +37,8 @@ void main_finalize (void)
 {
   //implemente esta função com rotinas de inicialização, se necessário
   int i;
-  struct comp_dict_item *entry, *tmp;
+  struct comp_dict_item *entry, *next;
+  void *value;
 
   //comp_print_table();
 
@@ -47,9 +46,10 @@ void main_finalize (void)
   for (i = 0; i < symbolsTable->size; i++) {
     entry = symbolsTable->data[i];
       while (entry != NULL) {
-        tmp = dict_remove(symbolsTable, entry->key);
-        entry = entry->next;
-        free(tmp);
+        next = entry->next;
+        value = dict_remove(symbolsTable, entry->key);
+        entry = next;
+        free(value);
       }
   }
   dict_free(symbolsTable);
@@ -75,19 +75,26 @@ void comp_print_table (void)
   }
 }
 
+void removeQuotes(char *token) {
+  int i;
+  if (token[0] == '\'' || token[0] == '"') {
+    // Remove literal strings/chars quotes
+    token[strlen(token)-1] = '\0';
+    for (i = 0; i < strlen(token); i++) {
+      token[i] = token[i+1];
+    }
+  }
+}
+
 void addSymbolsTable() {
-  char *token = (char *)calloc(strlen(yytext), sizeof(char));
+  char *token = strdup(yytext);
   int *line = (int *)malloc(sizeof(int));
 
-  if (yytext[0] == '\'' || yytext[0] == '"') {
-    // Remove literal strings/chars quotes
-    strncpy(token, yytext+1, strlen(yytext)-2);
-  } else {
-    strcpy(token, yytext);
-  }
+  removeQuotes(token);
 
   (*line) = num_lines;
 
   dict_put(symbolsTable, token, line);
+  free(token); // token is duplicated (strdup) inside dict_put function
   // printf("> Added to symbols table: %s - %d\n", token, *line);
 }

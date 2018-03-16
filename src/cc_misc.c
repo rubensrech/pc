@@ -40,8 +40,6 @@ void main_finalize (void)
   struct comp_dict_item *entry, *next;
   void *value;
 
-  //comp_print_table();
-
   // Free symbols table
   for (i = 0; i < symbolsTable->size; i++) {
     entry = symbolsTable->data[i];
@@ -96,5 +94,4 @@ void addSymbolsTable() {
 
   dict_put(symbolsTable, token, line);
   free(token); // token is duplicated (strdup) inside dict_put function
-  // printf("> Added to symbols table: %s - %d\n", token, *line);
 }

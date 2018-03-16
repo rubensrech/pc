@@ -1,5 +1,0 @@
-int f()
-{
-  string iks;
-  iks = "teste";
-}

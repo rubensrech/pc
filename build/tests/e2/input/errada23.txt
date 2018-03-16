@@ -1,5 +1,0 @@
-int h[10];
-const funcao(int j)
-{
-	int <= 12;
-}

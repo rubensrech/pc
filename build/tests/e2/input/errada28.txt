@@ -1,5 +1,0 @@
-int var <= 10; // global nao deve ser inicializada
-float func(int arg)
-{
-	arg = 10;
-}

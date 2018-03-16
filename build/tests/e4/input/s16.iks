@@ -1,6 +1,0 @@
-/* IKS_ERROR_WRONG_PAR_RETURN or IKS_ERROR_STRING_TO_X */
-int f()
-{
-  string str;
-  return str;
-}

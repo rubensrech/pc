@@ -1,5 +1,0 @@
-int f()
-{
-   int b;
-   input 3+b;
-}

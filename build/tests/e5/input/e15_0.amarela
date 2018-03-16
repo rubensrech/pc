@@ -1,8 +1,0 @@
-/* arranjo with two dimensions */
-int x[10][10];
-
-int main ()
-{
-  x[9][8] = 123; //if rbss = 0, mem = 260
-  x[6][5] = 456; //if rbss = 0, mem = 392
-}

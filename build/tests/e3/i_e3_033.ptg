@@ -1,5 +1,0 @@
-int f(){
-    int x;
-    int z;
-        x = !z;
-}

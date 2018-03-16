@@ -20,16 +20,15 @@ ID              [_a-zA-Z][a-zA-Z0-9_]*
 
 %%
 
-[ \t]+               /* remove whitespaces */
-\n                   ++num_lines;   /* regular line count */
+[ \t]+                                    /* remove whitespaces */
+\n               ++num_lines;             /* regular line count */
 
-"//".*               /* ignore single-line comments */
-
-"/*"        BEGIN(comment);
-<comment>[^*\n]*           /* ignore anything but a '*' */
-<comment>"*"+[^*/\n]*      /* ignore '*' not followed by '/' */
-<comment>\n		           ++num_lines; /* count lines inside multi-line comments */
-<comment>"*"+"/"	   BEGIN(INITIAL);
+"//".*                                    /* ignore single-line comments */
+"/*"                     BEGIN(comment);
+<comment>[^*\n]*                          /* ignore anything but a '*' */
+<comment>"*"+[^*/\n]*                     /* ignore '*' not followed by '/' */
+<comment>\n		           ++num_lines;     /* count lines inside multi-line comments */
+<comment>"*"+"/"	       BEGIN(INITIAL);
 
 int         return TK_PR_INT;
 float       return TK_PR_FLOAT;

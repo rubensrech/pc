@@ -1,5 +1,0 @@
-int f()
-{
-  int x;
-  if (true) then x = 3;;
-}

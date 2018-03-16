@@ -1,4 +1,0 @@
-int f()
-{
-  if (true) then {}; else {};;
-}

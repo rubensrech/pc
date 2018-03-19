@@ -75,7 +75,7 @@ false       return TK_LIT_FALSE;
 ">>"        return TK_OC_SR;
 "<<"        return TK_OC_SL;
 
-[,;:()[\]{}+\-*/<>=!&%#^.]    return (int)yytext[0];
-[^,;:()[\]{}+\-*/<>=!&%#^.]    return TOKEN_ERRO;
+[,;:()[\]{}+\-*/<>=!&%#^$]    return (int)yytext[0];
+<*>.|\\n			return TOKEN_ERRO;
 
 %%

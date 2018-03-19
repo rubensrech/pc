@@ -35,7 +35,7 @@ int main_avaliacao_etapa_1 (int argc, char **argv)
     case '=':
     case '!':
     case '&':
-    case '$':
+    case '.':       // $ is not valid anymore...
     case '%':
     case '#':
     case '^': print_nome2 (token); break;

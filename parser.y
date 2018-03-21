@@ -39,6 +39,8 @@
 %token TK_OC_OR
 %token TK_OC_SL
 %token TK_OC_SR
+%token TK_OC_PG
+%token TK_OC_PB
 %token TK_LIT_INT
 %token TK_LIT_FLOAT
 %token TK_LIT_FALSE

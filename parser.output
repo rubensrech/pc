@@ -33,6 +33,8 @@ Terminals unused in grammar
    TK_OC_OR
    TK_OC_SL
    TK_OC_SR
+   TK_OC_PG
+   TK_OC_PB
    TK_LIT_INT
    TK_LIT_FLOAT
    TK_LIT_FALSE
@@ -87,21 +89,23 @@ TK_OC_AND (287)
 TK_OC_OR (288)
 TK_OC_SL (289)
 TK_OC_SR (290)
-TK_LIT_INT (291)
-TK_LIT_FLOAT (292)
-TK_LIT_FALSE (293)
-TK_LIT_TRUE (294)
-TK_LIT_CHAR (295)
-TK_LIT_STRING (296)
-TK_IDENTIFICADOR (297)
-TOKEN_ERRO (298)
+TK_OC_PG (291)
+TK_OC_PB (292)
+TK_LIT_INT (293)
+TK_LIT_FLOAT (294)
+TK_LIT_FALSE (295)
+TK_LIT_TRUE (296)
+TK_LIT_CHAR (297)
+TK_LIT_STRING (298)
+TK_IDENTIFICADOR (299)
+TOKEN_ERRO (300)
 
 
 Nonterminals, with rules where they appear
 
-$accept (44)
+$accept (46)
     on left: 0
-programa (45)
+programa (47)
     on left: 1, on right: 0
 
 

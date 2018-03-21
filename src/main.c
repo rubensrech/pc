@@ -72,6 +72,8 @@ int main_avaliacao_etapa_1 (int argc, char **argv)
     case TK_OC_OR: print_nome (TK_OC_OR); break;
     case TK_OC_SL: print_nome (TK_OC_SL); break;
     case TK_OC_SR: print_nome (TK_OC_SR); break;
+    case TK_OC_PG: print_nome (TK_OC_PG); break;
+    case TK_OC_PB: print_nome (TK_OC_PB); break;
     case TK_LIT_INT: print_nome (TK_LIT_INT); break;
     case TK_LIT_FLOAT: print_nome (TK_LIT_FLOAT); break;
     case TK_LIT_FALSE: print_nome (TK_LIT_FALSE); break;

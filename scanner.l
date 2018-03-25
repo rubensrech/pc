@@ -15,7 +15,7 @@ DIGIT           [0-9]
 LIT_INTEGER     (\+|\-)?{DIGIT}+
 LIT_FLOAT       {LIT_INTEGER}+\.{DIGIT}+((e|E)(\+|\-)?{DIGIT}+)?
 LIT_CHAR        '([^']|(\\.))'
-LIT_STR         \"[^\"]*\"
+LIT_STR         \"([^\"\\\n]|\\.)*\"
 ID              [_a-zA-Z][a-zA-Z0-9_]*
 
 %%
@@ -24,6 +24,7 @@ ID              [_a-zA-Z][a-zA-Z0-9_]*
 \n               ++num_lines;             /* regular line count */
 
 "//".*                                    /* ignore single-line comments */
+
 "/*"                     BEGIN(comment);
 <comment>[^*\n]*                          /* ignore anything but a '*' */
 <comment>"*"+[^*/\n]*                     /* ignore '*' not followed by '/' */

@@ -57,19 +57,16 @@
 /* Regras (e ações) da gramática */
 
 programa: /* empty */
-          | programa globs_def
-          | programa types_def
-          | programa funcs_def;
+          | programa content;
+
+content: type_def ';';
 
 /* Types declaration */
-
-types_def: type_def
-          | types_def type_def;
-
+        
 type_def: TK_PR_CLASS TK_IDENTIFICADOR '[' type_def_campos ']';
 
 type_def_campos: type_def_campo
-                | type_def_campo ':' type_def_campos;
+                | type_def_campos ':' type_def_campo;
               
 type_def_campo: type_def_camp_enc native_type TK_IDENTIFICADOR;
 
@@ -82,9 +79,5 @@ native_type: TK_PR_INT
             | TK_PR_CHAR
             | TK_PR_BOOL
             | TK_PR_STRING;
-
-globs_def:
-
-funcs_def:
 
 %%

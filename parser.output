@@ -1,10 +1,5 @@
 Terminals unused in grammar
 
-   TK_PR_INT
-   TK_PR_FLOAT
-   TK_PR_BOOL
-   TK_PR_CHAR
-   TK_PR_STRING
    TK_PR_IF
    TK_PR_THEN
    TK_PR_ELSE
@@ -21,10 +16,6 @@ Terminals unused in grammar
    TK_PR_CASE
    TK_PR_BREAK
    TK_PR_CONTINUE
-   TK_PR_CLASS
-   TK_PR_PRIVATE
-   TK_PR_PUBLIC
-   TK_PR_PROTECTED
    TK_OC_LE
    TK_OC_GE
    TK_OC_EQ
@@ -41,8 +32,18 @@ Terminals unused in grammar
    TK_LIT_TRUE
    TK_LIT_CHAR
    TK_LIT_STRING
-   TK_IDENTIFICADOR
    TOKEN_ERRO
+
+
+Rules useless in parser due to conflicts
+
+   19 globs_def: %empty
+
+   20 funcs_def: %empty
+
+
+State 1 conflicts: 2 shift/reduce, 2 reduce/reduce
+State 4 conflicts: 1 shift/reduce
 
 
 Grammar
@@ -50,17 +51,47 @@ Grammar
     0 $accept: programa $end
 
     1 programa: %empty
+    2         | programa globs_def
+    3         | programa types_def
+    4         | programa funcs_def
+
+    5 types_def: type_def
+    6          | types_def type_def
+
+    7 type_def: TK_PR_CLASS TK_IDENTIFICADOR '[' type_def_campos ']'
+
+    8 type_def_campos: type_def_campo
+    9                | type_def_campo ':' type_def_campos
+
+   10 type_def_campo: type_def_camp_enc native_type TK_IDENTIFICADOR
+
+   11 type_def_camp_enc: TK_PR_PROTECTED
+   12                  | TK_PR_PRIVATE
+   13                  | TK_PR_PUBLIC
+
+   14 native_type: TK_PR_INT
+   15            | TK_PR_FLOAT
+   16            | TK_PR_CHAR
+   17            | TK_PR_BOOL
+   18            | TK_PR_STRING
+
+   19 globs_def: %empty
+
+   20 funcs_def: %empty
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
+':' (58) 9
+'[' (91) 7
+']' (93) 7
 error (256)
-TK_PR_INT (258)
-TK_PR_FLOAT (259)
-TK_PR_BOOL (260)
-TK_PR_CHAR (261)
-TK_PR_STRING (262)
+TK_PR_INT (258) 14
+TK_PR_FLOAT (259) 15
+TK_PR_BOOL (260) 17
+TK_PR_CHAR (261) 16
+TK_PR_STRING (262) 18
 TK_PR_IF (263)
 TK_PR_THEN (264)
 TK_PR_ELSE (265)
@@ -77,10 +108,10 @@ TK_PR_SWITCH (275)
 TK_PR_CASE (276)
 TK_PR_BREAK (277)
 TK_PR_CONTINUE (278)
-TK_PR_CLASS (279)
-TK_PR_PRIVATE (280)
-TK_PR_PUBLIC (281)
-TK_PR_PROTECTED (282)
+TK_PR_CLASS (279) 7
+TK_PR_PRIVATE (280) 12
+TK_PR_PUBLIC (281) 13
+TK_PR_PROTECTED (282) 11
 TK_OC_LE (283)
 TK_OC_GE (284)
 TK_OC_EQ (285)
@@ -97,16 +128,32 @@ TK_LIT_FALSE (295)
 TK_LIT_TRUE (296)
 TK_LIT_CHAR (297)
 TK_LIT_STRING (298)
-TK_IDENTIFICADOR (299)
+TK_IDENTIFICADOR (299) 7 10
 TOKEN_ERRO (300)
 
 
 Nonterminals, with rules where they appear
 
-$accept (46)
+$accept (49)
     on left: 0
-programa (47)
-    on left: 1, on right: 0
+programa (50)
+    on left: 1 2 3 4, on right: 0 2 3 4
+types_def (51)
+    on left: 5 6, on right: 3 6
+type_def (52)
+    on left: 7, on right: 5 6
+type_def_campos (53)
+    on left: 8 9, on right: 7 9
+type_def_campo (54)
+    on left: 10, on right: 8 9
+type_def_camp_enc (55)
+    on left: 11 12 13, on right: 10
+native_type (56)
+    on left: 14 15 16 17 18, on right: 10
+globs_def (57)
+    on left: 19, on right: 2
+funcs_def (58)
+    on left: 20, on right: 4
 
 
 State 0
@@ -121,8 +168,22 @@ State 0
 State 1
 
     0 $accept: programa . $end
+    2 programa: programa . globs_def
+    3         | programa . types_def
+    4         | programa . funcs_def
 
-    $end  shift, and go to state 2
+    $end         shift, and go to state 2
+    TK_PR_CLASS  shift, and go to state 3
+
+    $end         [reduce using rule 19 (globs_def)]
+    $end         [reduce using rule 20 (funcs_def)]
+    TK_PR_CLASS  [reduce using rule 19 (globs_def)]
+    TK_PR_CLASS  [reduce using rule 20 (funcs_def)]
+
+    types_def  go to state 4
+    type_def   go to state 5
+    globs_def  go to state 6
+    funcs_def  go to state 7
 
 
 State 2
@@ -130,3 +191,198 @@ State 2
     0 $accept: programa $end .
 
     $default  accept
+
+
+State 3
+
+    7 type_def: TK_PR_CLASS . TK_IDENTIFICADOR '[' type_def_campos ']'
+
+    TK_IDENTIFICADOR  shift, and go to state 8
+
+
+State 4
+
+    3 programa: programa types_def .
+    6 types_def: types_def . type_def
+
+    TK_PR_CLASS  shift, and go to state 3
+
+    TK_PR_CLASS  [reduce using rule 3 (programa)]
+    $default     reduce using rule 3 (programa)
+
+    type_def  go to state 9
+
+
+State 5
+
+    5 types_def: type_def .
+
+    $default  reduce using rule 5 (types_def)
+
+
+State 6
+
+    2 programa: programa globs_def .
+
+    $default  reduce using rule 2 (programa)
+
+
+State 7
+
+    4 programa: programa funcs_def .
+
+    $default  reduce using rule 4 (programa)
+
+
+State 8
+
+    7 type_def: TK_PR_CLASS TK_IDENTIFICADOR . '[' type_def_campos ']'
+
+    '['  shift, and go to state 10
+
+
+State 9
+
+    6 types_def: types_def type_def .
+
+    $default  reduce using rule 6 (types_def)
+
+
+State 10
+
+    7 type_def: TK_PR_CLASS TK_IDENTIFICADOR '[' . type_def_campos ']'
+
+    TK_PR_PRIVATE    shift, and go to state 11
+    TK_PR_PUBLIC     shift, and go to state 12
+    TK_PR_PROTECTED  shift, and go to state 13
+
+    type_def_campos    go to state 14
+    type_def_campo     go to state 15
+    type_def_camp_enc  go to state 16
+
+
+State 11
+
+   12 type_def_camp_enc: TK_PR_PRIVATE .
+
+    $default  reduce using rule 12 (type_def_camp_enc)
+
+
+State 12
+
+   13 type_def_camp_enc: TK_PR_PUBLIC .
+
+    $default  reduce using rule 13 (type_def_camp_enc)
+
+
+State 13
+
+   11 type_def_camp_enc: TK_PR_PROTECTED .
+
+    $default  reduce using rule 11 (type_def_camp_enc)
+
+
+State 14
+
+    7 type_def: TK_PR_CLASS TK_IDENTIFICADOR '[' type_def_campos . ']'
+
+    ']'  shift, and go to state 17
+
+
+State 15
+
+    8 type_def_campos: type_def_campo .
+    9                | type_def_campo . ':' type_def_campos
+
+    ':'  shift, and go to state 18
+
+    $default  reduce using rule 8 (type_def_campos)
+
+
+State 16
+
+   10 type_def_campo: type_def_camp_enc . native_type TK_IDENTIFICADOR
+
+    TK_PR_INT     shift, and go to state 19
+    TK_PR_FLOAT   shift, and go to state 20
+    TK_PR_BOOL    shift, and go to state 21
+    TK_PR_CHAR    shift, and go to state 22
+    TK_PR_STRING  shift, and go to state 23
+
+    native_type  go to state 24
+
+
+State 17
+
+    7 type_def: TK_PR_CLASS TK_IDENTIFICADOR '[' type_def_campos ']' .
+
+    $default  reduce using rule 7 (type_def)
+
+
+State 18
+
+    9 type_def_campos: type_def_campo ':' . type_def_campos
+
+    TK_PR_PRIVATE    shift, and go to state 11
+    TK_PR_PUBLIC     shift, and go to state 12
+    TK_PR_PROTECTED  shift, and go to state 13
+
+    type_def_campos    go to state 25
+    type_def_campo     go to state 15
+    type_def_camp_enc  go to state 16
+
+
+State 19
+
+   14 native_type: TK_PR_INT .
+
+    $default  reduce using rule 14 (native_type)
+
+
+State 20
+
+   15 native_type: TK_PR_FLOAT .
+
+    $default  reduce using rule 15 (native_type)
+
+
+State 21
+
+   17 native_type: TK_PR_BOOL .
+
+    $default  reduce using rule 17 (native_type)
+
+
+State 22
+
+   16 native_type: TK_PR_CHAR .
+
+    $default  reduce using rule 16 (native_type)
+
+
+State 23
+
+   18 native_type: TK_PR_STRING .
+
+    $default  reduce using rule 18 (native_type)
+
+
+State 24
+
+   10 type_def_campo: type_def_camp_enc native_type . TK_IDENTIFICADOR
+
+    TK_IDENTIFICADOR  shift, and go to state 26
+
+
+State 25
+
+    9 type_def_campos: type_def_campo ':' type_def_campos .
+
+    $default  reduce using rule 9 (type_def_campos)
+
+
+State 26
+
+   10 type_def_campo: type_def_camp_enc native_type TK_IDENTIFICADOR .
+
+    $default  reduce using rule 10 (type_def_campo)

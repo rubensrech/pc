@@ -1,6 +1,9 @@
 /*
-  Coloque aqui o identificador do grupo e dos seus membros
+  Grupo Kappa
+  Rubens Luiz Rech Junior - 275601
+  Giovane Dutra Ribeiro - 252965
 */
+
 %code requires{
 #include "main.h"
 }
@@ -53,6 +56,35 @@
 %%
 /* Regras (e ações) da gramática */
 
-programa:
+programa: /* empty */
+          | programa globs_def
+          | programa types_def
+          | programa funcs_def;
+
+/* Types declaration */
+
+types_def: type_def
+          | types_def type_def;
+
+type_def: TK_PR_CLASS TK_IDENTIFICADOR '[' type_def_campos ']';
+
+type_def_campos: type_def_campo
+                | type_def_campo ':' type_def_campos;
+              
+type_def_campo: type_def_camp_enc native_type TK_IDENTIFICADOR;
+
+type_def_camp_enc: TK_PR_PROTECTED
+                  | TK_PR_PRIVATE
+                  | TK_PR_PUBLIC;
+
+native_type: TK_PR_INT
+            | TK_PR_FLOAT
+            | TK_PR_CHAR
+            | TK_PR_BOOL
+            | TK_PR_STRING;
+
+globs_def:
+
+funcs_def:
 
 %%

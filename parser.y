@@ -59,7 +59,8 @@
 programa: /* empty */
           | programa content;
 
-content: type_def ';';
+content: type_def ';'
+        | global_def ';';
 
 /* Types declaration */
         
@@ -79,5 +80,21 @@ native_type: TK_PR_INT
             | TK_PR_CHAR
             | TK_PR_BOOL
             | TK_PR_STRING;
+
+/* Globals declaration */
+
+global_def: global_var
+           | global_arr;
+
+global_var: TK_PR_STATIC type TK_IDENTIFICADOR
+         | type TK_IDENTIFICADOR;
+
+global_arr: TK_PR_STATIC type TK_IDENTIFICADOR '[' int_pos ']'
+         | type TK_IDENTIFICADOR '[' int_pos ']';
+
+type: native_type
+     | TK_IDENTIFICADOR; // use TK_IDENTIFICADOR for detecting types defined by user??
+
+int_pos: TK_LIT_INT; // how to accept only positive integers!?
 
 %%

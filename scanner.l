@@ -12,8 +12,8 @@ int num_lines = 1;
 %}
 
 DIGIT           [0-9]
-LIT_INTEGER     (\+|\-)?{DIGIT}+
-LIT_FLOAT       {LIT_INTEGER}+\.{DIGIT}+((e|E)(\+|\-)?{DIGIT}+)?
+LIT_INTEGER     [-+]?{DIGIT}+
+LIT_FLOAT       [-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?
 LIT_CHAR        '([^']|(\\.))'
 LIT_STR         \"([^\"\\\n]|\\.)*\"
 ID              [_a-zA-Z][a-zA-Z0-9_]*
@@ -62,8 +62,8 @@ false       return TK_LIT_FALSE;
 
 {ID}        { addSymbolsTable(); return TK_IDENTIFICADOR; }
 
-{LIT_FLOAT}     { addSymbolsTable(); return TK_LIT_FLOAT; }
 {LIT_INTEGER}   { addSymbolsTable(); return TK_LIT_INT; }
+{LIT_FLOAT}     { addSymbolsTable(); return TK_LIT_FLOAT; }
 {LIT_CHAR}      { addSymbolsTable(); return TK_LIT_CHAR; }
 {LIT_STR}       { addSymbolsTable(); return TK_LIT_STRING; }
 

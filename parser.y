@@ -60,7 +60,8 @@ programa: /* empty */
           | programa content;
 
 content: type_def ';'
-        | global_def ';';
+        | global_def ';'
+        | func_dec;
 
 /* Types declaration */
         
@@ -96,5 +97,42 @@ type: native_type
      | TK_IDENTIFICADOR; // use TK_IDENTIFICADOR for detecting types defined by user??
 
 int_pos: TK_LIT_INT; // how to accept only positive integers!?
+
+/* Function declaration */
+
+func_dec: TK_PR_STATIC type TK_IDENTIFICADOR '(' params_dec ')' block
+         | type TK_IDENTIFICADOR '(' params_dec ')' block;
+
+params_dec: /* empty */
+           | params_dec_list;
+
+params_dec_list: param_dec
+                | params_dec_list ',' param_dec;
+
+param_dec: TK_PR_CONST type TK_IDENTIFICADOR
+          | type TK_IDENTIFICADOR;
+
+block: '{' commands '}';
+
+commands: /* empty */
+         | commands command;
+
+command: var_dec;
+
+var_dec: TK_PR_STATIC TK_PR_CONST type TK_IDENTIFICADOR init_var ';'
+        | TK_PR_STATIC type TK_IDENTIFICADOR init_var ';'
+        | TK_PR_CONST type TK_IDENTIFICADOR init_var ';'
+        | type TK_IDENTIFICADOR init_var ';';
+
+init_var: /* empty */
+         | TK_OC_LE literal
+         | TK_OC_LE TK_IDENTIFICADOR;
+
+literal: TK_LIT_INT
+        | TK_LIT_FLOAT
+        | TK_LIT_FALSE
+        | TK_LIT_TRUE
+        | TK_LIT_CHAR
+        | TK_LIT_STRING;
 
 %%

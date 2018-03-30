@@ -67,6 +67,8 @@ false       return TK_LIT_FALSE;
 {LIT_CHAR}      { addSymbolsTable(); return TK_LIT_CHAR; }
 {LIT_STR}       { addSymbolsTable(); return TK_LIT_STRING; }
 
+[0-9]+[a-zA-Z]+     return TOKEN_ERRO;
+
 "<="        return TK_OC_LE;
 ">="        return TK_OC_GE;
 "=="        return TK_OC_EQ;

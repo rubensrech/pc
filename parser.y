@@ -53,6 +53,14 @@
 %token TK_IDENTIFICADOR
 %token TOKEN_ERRO
 
+%left TK_OC_OR
+%left TK_OC_AND
+%left TK_OC_EQ TK_OC_NE
+%left '<' '>' TK_OC_LE TK_OC_GE
+%left '-' '+'
+%left '*' '/' '%'
+%right '!'
+
 %%
 /* Regras (e ações) da gramática */
 
@@ -117,9 +125,13 @@ block: '{' commands '}';
 commands: /* empty */
          | commands command;
 
-command: var_dec;
+command: var_dec_cmd
+        | shift_cmd
+        | assig_cmd;
 
-var_dec: TK_PR_STATIC TK_PR_CONST type TK_IDENTIFICADOR init_var ';'
+/* Local variables declaration */
+
+var_dec_cmd: TK_PR_STATIC TK_PR_CONST type TK_IDENTIFICADOR init_var ';'
         | TK_PR_STATIC type TK_IDENTIFICADOR init_var ';'
         | TK_PR_CONST type TK_IDENTIFICADOR init_var ';'
         | type TK_IDENTIFICADOR init_var ';';
@@ -134,5 +146,48 @@ literal: TK_LIT_INT
         | TK_LIT_TRUE
         | TK_LIT_CHAR
         | TK_LIT_STRING;
+
+/* Shift command */
+
+shift_cmd: TK_IDENTIFICADOR TK_OC_SL int_pos ';'
+          | TK_IDENTIFICADOR TK_OC_SR int_pos ';';
+
+/* Assignment */
+
+assig_cmd: TK_IDENTIFICADOR '=' exp ';'
+          | TK_IDENTIFICADOR '[' exp ']' '=' exp ';'
+          | TK_IDENTIFICADOR '.' TK_IDENTIFICADOR '=' exp ';';
+
+/* Expressions */
+
+exp: TK_IDENTIFICADOR
+    | TK_IDENTIFICADOR '[' exp ']'
+    | TK_LIT_INT
+    | TK_LIT_FLOAT;
+    | exp '+' exp
+    | exp '-' exp
+    | exp '*' exp
+    | exp '/' exp
+    | '(' exp ')'
+    | exp TK_OC_EQ exp
+    | exp TK_OC_NE exp
+    | exp TK_OC_GE 
+    | exp TK_OC_LE exp
+    | exp '>' exp
+    | exp '<' exp
+    | exp TK_OC_AND exp
+    | exp TK_OC_OR exp
+/* Doubts */
+    | exp '%' exp
+    | TK_LIT_TRUE
+    | TK_LIT_FALSE
+    | '!' exp;
+    /*
+    | '-' exp;
+    | func_call
+    | pipe_exp
+    */
+    
+    
 
 %%

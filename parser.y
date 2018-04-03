@@ -58,6 +58,7 @@
 %left TK_OC_EQ TK_OC_NE
 %left '<' '>' TK_OC_LE TK_OC_GE
 %left '-' '+'
+%left TK_OC_PG TK_OC_PB
 %left '*' '/' '%'
 %right '!'
 
@@ -134,7 +135,8 @@ command: var_dec_cmd
         | return_cmd
         | break_cmd
         | continue_cmd
-        | case_cmd;
+        | case_cmd
+        | pipe_exp ';';
 
 /* Local variables declaration - command */
 
@@ -199,6 +201,13 @@ continue_cmd: TK_PR_CONTINUE ';';
 
 case_cmd: TK_PR_CASE TK_LIT_INT ':';
 
+/* Pipes - command */
+
+pipe_exp: func_call TK_OC_PG func_call
+         | func_call TK_OC_PB func_call
+         | pipe_exp TK_OC_PG func_call
+         | pipe_exp TK_OC_PB func_call;
+
 /* Expressions */
 
 exp: TK_IDENTIFICADOR
@@ -226,8 +235,7 @@ exp: TK_IDENTIFICADOR
     | '!' exp
     | '.'
     | '-' exp;
-    /*
-    | pipe_exp
-    */
+    | pipe_exp;
+
 
 %%

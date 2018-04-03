@@ -130,7 +130,11 @@ command: var_dec_cmd
         | assig_cmd
         | block
         | io_cmd
-        | func_call ';';
+        | func_call ';'
+        | return_cmd
+        | break_cmd
+        | continue_cmd
+        | case_cmd;
 
 /* Local variables declaration - command */
 
@@ -184,6 +188,16 @@ params_list: param
             | params_list ',' param;
         
 param: exp;
+
+/* Return, break, continue and case - commands */
+
+return_cmd: TK_PR_RETURN exp ';';
+
+break_cmd: TK_PR_BREAK ';';
+
+continue_cmd: TK_PR_CONTINUE ';';
+
+case_cmd: TK_PR_CASE TK_LIT_INT ':';
 
 /* Expressions */
 

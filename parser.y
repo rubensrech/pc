@@ -163,7 +163,7 @@ assig_cmd: TK_IDENTIFICADOR '=' exp ';'
 exp: TK_IDENTIFICADOR
     | TK_IDENTIFICADOR '[' exp ']'
     | TK_LIT_INT
-    | TK_LIT_FLOAT;
+    | TK_LIT_FLOAT
     | exp '+' exp
     | exp '-' exp
     | exp '*' exp
@@ -181,7 +181,8 @@ exp: TK_IDENTIFICADOR
     | exp '%' exp
     | TK_LIT_TRUE
     | TK_LIT_FALSE
-    | '!' exp;
+    | '!' exp
+    | '.';
     /*
     | '-' exp;
     | func_call

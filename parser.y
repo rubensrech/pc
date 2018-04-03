@@ -127,7 +127,8 @@ commands: /* empty */
 
 command: var_dec_cmd
         | shift_cmd
-        | assig_cmd;
+        | assig_cmd
+        | block;
 
 /* Local variables declaration */
 

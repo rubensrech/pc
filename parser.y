@@ -141,7 +141,11 @@ init_var: /* empty */
          | TK_OC_LE TK_IDENTIFICADOR;
 
 literal: TK_LIT_INT
+        | '+' TK_LIT_INT
+        | '-' TK_LIT_INT
         | TK_LIT_FLOAT
+        | '+' TK_LIT_FLOAT
+        | '-' TK_LIT_FLOAT
         | TK_LIT_FALSE
         | TK_LIT_TRUE
         | TK_LIT_CHAR
@@ -182,12 +186,13 @@ exp: TK_IDENTIFICADOR
     | TK_LIT_TRUE
     | TK_LIT_FALSE
     | '!' exp
-    | '.';
-    /*
+    | '.'
     | '-' exp;
+    /*
     | func_call
     | pipe_exp
     */
+
     
     
 

@@ -11,9 +11,10 @@
 int num_lines = 1;
 %}
 
+/* Removed the rule for integers and flot with signs in front of them */
 DIGIT           [0-9]
-LIT_INTEGER     [-+]?{DIGIT}+
-LIT_FLOAT       [-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?
+LIT_INTEGER     {DIGIT}+
+LIT_FLOAT       [0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?
 LIT_CHAR        '([^']|(\\.))'
 LIT_STR         \"([^\"\\\n]|\\.)*\"
 ID              [_a-zA-Z][a-zA-Z0-9_]*

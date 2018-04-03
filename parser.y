@@ -128,9 +128,10 @@ commands: /* empty */
 command: var_dec_cmd
         | shift_cmd
         | assig_cmd
-        | block;
+        | block
+        | io_cmd;
 
-/* Local variables declaration */
+/* Local variables declaration - command */
 
 var_dec_cmd: TK_PR_STATIC TK_PR_CONST type TK_IDENTIFICADOR init_var ';'
         | TK_PR_STATIC type TK_IDENTIFICADOR init_var ';'
@@ -152,16 +153,24 @@ literal: TK_LIT_INT
         | TK_LIT_CHAR
         | TK_LIT_STRING;
 
-/* Shift command */
+/* Shift command - command */
 
 shift_cmd: TK_IDENTIFICADOR TK_OC_SL int_pos ';'
           | TK_IDENTIFICADOR TK_OC_SR int_pos ';';
 
-/* Assignment */
+/* Assignment - command */
 
 assig_cmd: TK_IDENTIFICADOR '=' exp ';'
           | TK_IDENTIFICADOR '[' exp ']' '=' exp ';'
           | TK_IDENTIFICADOR '.' TK_IDENTIFICADOR '=' exp ';';
+
+/* Input and output - command */
+
+io_cmd: TK_PR_INPUT exp ';'
+       | TK_PR_OUTPUT exps_list ';';
+
+exps_list: exp
+          | exps_list ',' exp;
 
 /* Expressions */
 
@@ -193,8 +202,5 @@ exp: TK_IDENTIFICADOR
     | func_call
     | pipe_exp
     */
-
-    
-    
 
 %%

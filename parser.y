@@ -129,7 +129,8 @@ command: var_dec_cmd
         | shift_cmd
         | assig_cmd
         | block
-        | io_cmd;
+        | io_cmd
+        | func_call ';';
 
 /* Local variables declaration - command */
 
@@ -172,6 +173,18 @@ io_cmd: TK_PR_INPUT exp ';'
 exps_list: exp
           | exps_list ',' exp;
 
+/* Function call - command */
+
+func_call: TK_IDENTIFICADOR '(' params ')';
+
+params: /* empty */
+       | params_list;
+
+params_list: param
+            | params_list ',' param;
+        
+param: exp;
+
 /* Expressions */
 
 exp: TK_IDENTIFICADOR
@@ -191,6 +204,7 @@ exp: TK_IDENTIFICADOR
     | exp '<' exp
     | exp TK_OC_AND exp
     | exp TK_OC_OR exp
+    | func_call
 /* Doubts */
     | exp '%' exp
     | TK_LIT_TRUE
@@ -199,7 +213,6 @@ exp: TK_IDENTIFICADOR
     | '.'
     | '-' exp;
     /*
-    | func_call
     | pipe_exp
     */
 

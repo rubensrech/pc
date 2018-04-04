@@ -61,6 +61,7 @@
 %left TK_OC_PG TK_OC_PB
 %left '*' '/' '%'
 %right '!'
+%right TK_PR_THEN TK_PR_ELSE
 
 %%
 /* Regras (e ações) da gramática */
@@ -136,7 +137,9 @@ command: var_dec_cmd
         | break_cmd
         | continue_cmd
         | case_cmd
-        | pipe_exp ';';
+        | pipe_exp ';'
+        | if_stm
+        | foreach;
 
 /* Local variables declaration - command */
 
@@ -176,9 +179,6 @@ assig_cmd: TK_IDENTIFICADOR '=' exp ';'
 io_cmd: TK_PR_INPUT exp ';'
        | TK_PR_OUTPUT exps_list ';';
 
-exps_list: exp
-          | exps_list ',' exp;
-
 /* Function call - command */
 
 func_call: TK_IDENTIFICADOR '(' params ')';
@@ -208,6 +208,13 @@ pipe_exp: func_call TK_OC_PG func_call
          | pipe_exp TK_OC_PG func_call
          | pipe_exp TK_OC_PB func_call;
 
+/* Control flow - commands */
+
+if_stm: TK_PR_IF '(' exp ')' TK_PR_THEN block;
+       | TK_PR_IF '(' exp ')' TK_PR_THEN block TK_PR_ELSE block;
+
+foreach: TK_PR_FOREACH '(' TK_IDENTIFICADOR ':' exps_list ')' block;
+
 /* Expressions */
 
 exp: TK_IDENTIFICADOR
@@ -228,6 +235,7 @@ exp: TK_IDENTIFICADOR
     | exp TK_OC_AND exp
     | exp TK_OC_OR exp
     | func_call
+    | pipe_exp
 /* Doubts */
     | exp '%' exp
     | TK_LIT_TRUE
@@ -235,7 +243,8 @@ exp: TK_IDENTIFICADOR
     | '!' exp
     | '.'
     | '-' exp;
-    | pipe_exp;
 
+exps_list: exp
+          | exps_list ',' exp;
 
 %%

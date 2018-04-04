@@ -127,26 +127,30 @@ block: '{' commands '}';
 commands: /* empty */
          | commands command;
 
-command: var_dec_cmd
-        | shift_cmd
-        | assig_cmd
+command: var_dec ';'
+        | shift_cmd ';'
+        | assig_cmd ';'
         | block
-        | io_cmd
+        | io_cmd ';'
         | func_call ';'
-        | return_cmd
-        | break_cmd
-        | continue_cmd
+        | return_cmd ';'
+        | break_cmd ';'
+        | continue_cmd ';'
         | case_cmd
         | pipe_exp ';'
         | if_stm
-        | foreach;
+        | foreach
+        | while
+        | do_while ';'
+        | switch
+        | for;
 
 /* Local variables declaration - command */
 
-var_dec_cmd: TK_PR_STATIC TK_PR_CONST type TK_IDENTIFICADOR init_var ';'
-        | TK_PR_STATIC type TK_IDENTIFICADOR init_var ';'
-        | TK_PR_CONST type TK_IDENTIFICADOR init_var ';'
-        | type TK_IDENTIFICADOR init_var ';';
+var_dec: TK_PR_STATIC TK_PR_CONST type TK_IDENTIFICADOR init_var 
+        | TK_PR_STATIC type TK_IDENTIFICADOR init_var
+        | TK_PR_CONST type TK_IDENTIFICADOR init_var
+        | type TK_IDENTIFICADOR init_var;
 
 init_var: /* empty */
          | TK_OC_LE literal
@@ -165,19 +169,19 @@ literal: TK_LIT_INT
 
 /* Shift command - command */
 
-shift_cmd: TK_IDENTIFICADOR TK_OC_SL int_pos ';'
-          | TK_IDENTIFICADOR TK_OC_SR int_pos ';';
+shift_cmd: TK_IDENTIFICADOR TK_OC_SL int_pos
+          | TK_IDENTIFICADOR TK_OC_SR int_pos;
 
 /* Assignment - command */
 
-assig_cmd: TK_IDENTIFICADOR '=' exp ';'
-          | TK_IDENTIFICADOR '[' exp ']' '=' exp ';'
-          | TK_IDENTIFICADOR '.' TK_IDENTIFICADOR '=' exp ';';
+assig_cmd: TK_IDENTIFICADOR '=' exp
+          | TK_IDENTIFICADOR '[' exp ']' '=' exp
+          | TK_IDENTIFICADOR '.' TK_IDENTIFICADOR '=' exp;
 
 /* Input and output - command */
 
-io_cmd: TK_PR_INPUT exp ';'
-       | TK_PR_OUTPUT exps_list ';';
+io_cmd: TK_PR_INPUT exp
+       | TK_PR_OUTPUT exps_list;
 
 /* Function call - command */
 
@@ -193,11 +197,11 @@ param: exp;
 
 /* Return, break, continue and case - commands */
 
-return_cmd: TK_PR_RETURN exp ';';
+return_cmd: TK_PR_RETURN exp;
 
-break_cmd: TK_PR_BREAK ';';
+break_cmd: TK_PR_BREAK;
 
-continue_cmd: TK_PR_CONTINUE ';';
+continue_cmd: TK_PR_CONTINUE;
 
 case_cmd: TK_PR_CASE TK_LIT_INT ':';
 
@@ -214,6 +218,35 @@ if_stm: TK_PR_IF '(' exp ')' TK_PR_THEN block;
        | TK_PR_IF '(' exp ')' TK_PR_THEN block TK_PR_ELSE block;
 
 foreach: TK_PR_FOREACH '(' TK_IDENTIFICADOR ':' exps_list ')' block;
+
+while: TK_PR_WHILE '(' exp ')' TK_PR_DO block;
+
+do_while: TK_PR_DO block TK_PR_WHILE '(' exp ')';
+
+switch: TK_PR_SWITCH '(' exp ')' block;
+
+for: TK_PR_FOR '(' cmd_list ':' exp ':' cmd_list ')' block;
+
+cmd_list: cmd
+         | cmd_list ',' cmd;
+
+cmd:    var_dec
+        | shift_cmd
+        | assig_cmd;
+/* Simple commands not containing comma??
+        | block
+        | func_call
+        | return_cmd
+        | break_cmd
+        | continue_cmd
+        | pipe_exp
+        | if_stm
+        | foreach
+        | while
+        | do_while
+        | switch
+        | for;
+*/
 
 /* Expressions */
 

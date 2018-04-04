@@ -1,0 +1,96 @@
+class type [
+    private int campo1:
+    public char campo2
+];
+
+static type var;
+
+int foo(const char c) {
+    // Local vars declarations
+    static const int number <= 15;
+    static const char character <= c;
+    static float number <= 15e-4;
+    const int number <= -15;
+    bool condition;
+    bool condition <= false;
+    char ca <= 'a';
+
+    // Block inside block
+    {
+        int a;
+    }
+
+    // Shift command
+    number << 15;
+    number >> 4;
+
+    // Assignments
+    number = -5;
+    number = 5+10;
+    number = -5 + (a && b);
+    array[10+15+b] = abc + (5);
+    var.campo = true && false;
+
+    // Input, output
+    input abc;
+    output abc, 5;
+
+    // Function call
+    func();
+    func2(18, abc, func());
+
+    // Break, return, continue, case
+    return 5;
+    break;
+    continue;
+    case 15:
+
+    // Pipes
+    f() %>% g(., a);
+    f() %>% g(., a) %|% z(.);
+    f() %>% g(., a) %|% z(.) %|% i(.);
+
+    a = f() %>% g(., a) %|% z(.);
+
+    _X_(f() %>% g(., a));
+
+    // If statement
+    if (a) then {
+
+    } else {
+        if (true) then {
+            if (false) then {
+
+            } else {
+
+            }
+        }
+    }
+
+    // Foreach
+    foreach (arr : a - b, b + c) {
+
+    }
+
+    // While
+    while (a < 5) do {
+
+    }
+
+    // Do-While
+    do {
+        a = b;
+        c = 0;
+    } while (a + b < c);
+
+    // Switch
+    switch (var) {
+        case 5:
+    }
+
+    // For
+    for (int i <= 0, a = b : i < 10 : i = i + 1, a = 2*b) {
+        
+    }
+
+}

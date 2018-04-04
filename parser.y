@@ -63,6 +63,8 @@
 %right '!'
 %right TK_PR_THEN TK_PR_ELSE
 
+%error-verbose
+
 %%
 /* Regras (e ações) da gramática */
 

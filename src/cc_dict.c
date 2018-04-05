@@ -193,8 +193,11 @@ void *dict_put(comp_dict_t * dict, char *key, void *value)
     if (!exists) {
       dict_item_insert(dict->data[hash], newitem);
     } else {
+      exists->value = value;
       dict_item_free_item(newitem);
-      return exists->value;
+      return value;
+      /*dict_item_free_item(newitem);
+      return exists->value;*/
     }
   }
   return newitem->value;

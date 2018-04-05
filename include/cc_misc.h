@@ -2,7 +2,7 @@
 #define __MISC_H
 #include <stdio.h>
 
-typedef struct hashEntry {
+typedef struct tokenInfo {
     int line;
     int type;
     union {
@@ -12,7 +12,7 @@ typedef struct hashEntry {
       int boolVal;
       char *strVal;  
     } value;
-} HashValue;
+} TokenInfo;
 
 int getLineNumber (void);
 void yyerror (char const *mensagem);
@@ -21,6 +21,6 @@ void main_finalize (void);
 
 void comp_print_table (void);
 void addSymbolsTable(int tokenType);
-void debugPrintHashValue(HashValue *value);
+void debugPrintTokenInfo(TokenInfo *info);
 
 #endif

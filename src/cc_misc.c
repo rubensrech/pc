@@ -41,7 +41,7 @@ void main_finalize (void)
   //implemente esta função com rotinas de inicialização, se necessário
   int i;
   struct comp_dict_item *entry, *next;
-  HashValue *value;
+  TokenInfo *info;
 
   // comp_print_table();
 
@@ -50,9 +50,9 @@ void main_finalize (void)
     entry = symbolsTable->data[i];
       while (entry != NULL) {
         next = entry->next;
-        value = dict_remove(symbolsTable, entry->key);
+        info = dict_remove(symbolsTable, entry->key);
         entry = next;
-        free(value);
+        free(info);
       }
   }
   dict_free(symbolsTable);
@@ -66,15 +66,15 @@ void comp_print_table (void)
 
   int i;
   struct comp_dict_item *entry, *tmp;
-  HashValue *value;
+  TokenInfo *info;
 
   for (i = 0; i < symbolsTable->size; i++) {
     entry = symbolsTable->data[i];
       while (entry != NULL) {
-        value = entry->value;
+        info = entry->value;
 
-        //debugPrintHashValue(value);
-        cc_dict_etapa_1_print_entrada(entry->key, value->line);
+        //debugPrintTokenInfo(info);
+        cc_dict_etapa_1_print_entrada(entry->key, info->line);
         
         entry = entry->next;
       }
@@ -92,36 +92,36 @@ void removeQuotes(char *token) {
 }
 
 void addSymbolsTable(int tokenType) {
-  char *token;
+  TokenInfo *info = malloc(sizeof(struct tokenInfo)); 
   char key[MAX_HASH_KEY_SIZE+1];
-  HashValue *entryValue = malloc(sizeof(struct hashEntry)); 
-
+  char *token;
+  
   token = strdup(yytext);
   
-  entryValue->line = num_lines;
-  entryValue->type = tokenType;
+  info->line = num_lines;
+  info->type = tokenType;
 
   // Get token real value
   switch (tokenType) {
     case POA_LIT_STRING:
       removeQuotes(token);
-      entryValue->value.strVal = token;
+      info->value.strVal = token;
       break;
     case POA_LIT_CHAR:
       removeQuotes(token);
-      entryValue->value.charVal = token[0];
+      info->value.charVal = token[0];
       break;
     case POA_IDENT:
-      entryValue->value.strVal = token;
+      info->value.strVal = token;
       break;
     case POA_LIT_BOOL:
-      entryValue->value.boolVal = !strcmp(token, "true");
+      info->value.boolVal = !strcmp(token, "true");
       break;
     case POA_LIT_FLOAT:
-      entryValue->value.floatVal = atof(token);
+      info->value.floatVal = atof(token);
       break;
     case POA_LIT_INT:
-      entryValue->value.intVal = atoi(token);
+      info->value.intVal = atoi(token);
       break;
   }
 
@@ -131,19 +131,19 @@ void addSymbolsTable(int tokenType) {
   free(token);
 
   // Key is duplicated (strdup) inside dict_put function
-  dict_put(symbolsTable, key, entryValue);
+  dict_put(symbolsTable, key, info);
 }
 
-void debugPrintHashValue(HashValue *value) {
+void debugPrintTokenInfo(TokenInfo *info) {
     printf(">> ---------------\n");
-    printf(">> Line: %d\n", value->line);
-    printf(">> Type: %d\n", value->type);
-    switch (value->type) {
-      case POA_LIT_STRING: printf(">> Value: %s\n", value->value.strVal); break;
-      case POA_LIT_CHAR: printf(">> Value: %c\n", value->value.charVal); break;
-      case POA_IDENT: printf(">> Value: %s\n", value->value.strVal); break;
-      case POA_LIT_BOOL: printf(">> Value: %d\n", value->value.boolVal); break;
-      case POA_LIT_FLOAT: printf(">> Value: %.2f\n", value->value.floatVal); break;
-      case POA_LIT_INT: printf(">> Value: %d\n", value->value.intVal); break;
+    printf(">> Line: %d\n", info->line);
+    printf(">> Type: %d\n", info->type);
+    switch (info->type) {
+      case POA_LIT_STRING: printf(">> Value: %s\n", info->value.strVal); break;
+      case POA_LIT_CHAR: printf(">> Value: %c\n", info->value.charVal); break;
+      case POA_IDENT: printf(">> Value: %s\n", info->value.strVal); break;
+      case POA_LIT_BOOL: printf(">> Value: %d\n", info->value.boolVal); break;
+      case POA_LIT_FLOAT: printf(">> Value: %.2f\n", info->value.floatVal); break;
+      case POA_LIT_INT: printf(">> Value: %d\n", info->value.intVal); break;
     }
 }

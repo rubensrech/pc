@@ -97,9 +97,6 @@ void addSymbolsTable(int tokenType) {
   HashValue *entryValue = malloc(sizeof(struct hashEntry)); 
 
   token = strdup(yytext);
-
-  // Generate hash table key (TOKEN $$ TYPE)
-  snprintf(key, MAX_HASH_KEY_SIZE, "%s $$ %d", token, tokenType);
   
   entryValue->line = num_lines;
   entryValue->type = tokenType;
@@ -127,6 +124,11 @@ void addSymbolsTable(int tokenType) {
       entryValue->value.intVal = atoi(token);
       break;
   }
+
+  // Generate hash table key (TOKEN $$ TYPE)
+  snprintf(key, MAX_HASH_KEY_SIZE, "%s $$ %d", token, tokenType);
+
+  free(token);
 
   // Key is duplicated (strdup) inside dict_put function
   dict_put(symbolsTable, key, entryValue);

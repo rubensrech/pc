@@ -272,6 +272,8 @@ exp: TK_IDENTIFICADOR
     | func_call
     | pipe_exp
 /* Doubts */
+    | TK_LIT_STRING
+    | TK_LIT_CHAR
     | exp '%' exp
     | TK_LIT_TRUE
     | TK_LIT_FALSE

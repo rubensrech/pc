@@ -65,16 +65,17 @@ void comp_print_table (void)
   //implemente esta função
 
   int i;
-  struct comp_dict_item *entry, *tmp;
+  struct comp_dict_item *entry;
   TokenInfo *info;
+  char token[MAX_HASH_KEY_SIZE];
 
   for (i = 0; i < symbolsTable->size; i++) {
     entry = symbolsTable->data[i];
       while (entry != NULL) {
         info = entry->value;
 
-        //debugPrintTokenInfo(info);
-        cc_dict_etapa_1_print_entrada(entry->key, info->line);
+        sscanf(entry->key, "%s $$ %*d", token);
+        cc_dict_etapa_2_print_entrada(token, info->line, info->type);
         
         entry = entry->next;
       }
@@ -91,7 +92,7 @@ void removeQuotes(char *token) {
   }
 }
 
-void addSymbolsTable(int tokenType) {
+TokenInfo *addSymbolsTable(int tokenType) {
   TokenInfo *info = malloc(sizeof(struct tokenInfo)); 
   char key[MAX_HASH_KEY_SIZE+1];
   char *token;
@@ -131,7 +132,7 @@ void addSymbolsTable(int tokenType) {
   free(token);
 
   // Key is duplicated (strdup) inside dict_put function
-  dict_put(symbolsTable, key, info);
+  return (TokenInfo*)dict_put(symbolsTable, key, info);
 }
 
 void debugPrintTokenInfo(TokenInfo *info) {

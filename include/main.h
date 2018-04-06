@@ -32,6 +32,7 @@ void yyerror(const char *s);
 #define POA_IDENT      6
 
 void cc_dict_etapa_1_print_entrada (char *token, int line);
+void cc_dict_etapa_2_print_entrada (char *token, int line, int tipo);
 int comp_get_line_number (void);
 void comp_print_table (void);
 

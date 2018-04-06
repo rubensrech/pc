@@ -58,15 +58,15 @@ private     return TK_PR_PRIVATE;
 public      return TK_PR_PUBLIC;
 protected   return TK_PR_PROTECTED;
 
-true        { addSymbolsTable(POA_LIT_BOOL); return TK_LIT_TRUE; }
-false       { addSymbolsTable(POA_LIT_BOOL); return TK_LIT_FALSE; }
+true        { yylval.valor_lexico = addSymbolsTable(POA_LIT_BOOL); return TK_LIT_TRUE; }
+false       { yylval.valor_lexico =addSymbolsTable(POA_LIT_BOOL); return TK_LIT_FALSE; }
 
-{ID}            { addSymbolsTable(POA_IDENT); return TK_IDENTIFICADOR; }
+{ID}            { yylval.valor_lexico = addSymbolsTable(POA_IDENT); return TK_IDENTIFICADOR; }
 
-{LIT_INTEGER}   { addSymbolsTable(POA_LIT_INT); return TK_LIT_INT; }
-{LIT_FLOAT}     { addSymbolsTable(POA_LIT_FLOAT); return TK_LIT_FLOAT; }
-{LIT_CHAR}      { addSymbolsTable(POA_LIT_CHAR); return TK_LIT_CHAR; }
-{LIT_STR}       { addSymbolsTable(POA_LIT_STRING); return TK_LIT_STRING; }
+{LIT_INTEGER}   { yylval.valor_lexico = addSymbolsTable(POA_LIT_INT); return TK_LIT_INT; }
+{LIT_FLOAT}     { yylval.valor_lexico = addSymbolsTable(POA_LIT_FLOAT); return TK_LIT_FLOAT; }
+{LIT_CHAR}      { yylval.valor_lexico = addSymbolsTable(POA_LIT_CHAR); return TK_LIT_CHAR; }
+{LIT_STR}       { yylval.valor_lexico = addSymbolsTable(POA_LIT_STRING); return TK_LIT_STRING; }
 
 [0-9]+[a-zA-Z]+     return TOKEN_ERRO;
 

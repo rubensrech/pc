@@ -4,8 +4,9 @@
   Giovane Dutra Ribeiro - 252965
 */
 
-%code requires{
+%code requires {
 #include "main.h"
+#include "cc_misc.h"
 }
 
 /* Declaração dos tokens da linguagem */
@@ -44,13 +45,13 @@
 %token TK_OC_SR
 %token TK_OC_PG
 %token TK_OC_PB
-%token TK_LIT_INT
-%token TK_LIT_FLOAT
-%token TK_LIT_FALSE
-%token TK_LIT_TRUE
-%token TK_LIT_CHAR
-%token TK_LIT_STRING
-%token TK_IDENTIFICADOR
+%token <valor_lexico>TK_LIT_INT
+%token <valor_lexico>TK_LIT_FLOAT
+%token <valor_lexico>TK_LIT_FALSE
+%token <valor_lexico>TK_LIT_TRUE
+%token <valor_lexico>TK_LIT_CHAR
+%token <valor_lexico>TK_LIT_STRING
+%token <valor_lexico>TK_IDENTIFICADOR
 %token TOKEN_ERRO
 
 %left TK_OC_OR
@@ -64,6 +65,10 @@
 %right TK_PR_THEN TK_PR_ELSE
 
 %error-verbose
+
+%union {
+   TokenInfo *valor_lexico;
+}
 
 %%
 /* Regras (e ações) da gramática */

@@ -25,6 +25,7 @@ int foo(const char c) {
     bool condition;
     bool condition <= false;
     char ca <= 'a';
+    static const type a;
 
     // Block inside block
     {

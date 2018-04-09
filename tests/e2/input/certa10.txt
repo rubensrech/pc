@@ -5,7 +5,7 @@ int minha_funcao (float k, int l)
         p=a;
         if (a==0)
         then { output x; }
-        else { output "nada"; };
+        else { output "nada"; }
         if (a==0)
-        then { float x; output x; };
+        then { float x; output x; }
 }

@@ -3,5 +3,5 @@ int f1 (float k, int l)
 {
   a=5;
   p=a;
-  if (a==0) then { output x; };
+  if (a==0) then { output x; }
 }

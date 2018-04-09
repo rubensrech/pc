@@ -2,9 +2,9 @@
 float variavel_flutuante;
 int variavel_inteira;
 char variavel_caractere;
-int minha_funcao (float k, int l) 
+int minha_funcao (float k, int l)
 {
-        while (a<=9) do { output "a=", a; };
+        while (a<=9) do { output "a=", a; }
         a=5;
         p=a;
 }

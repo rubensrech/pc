@@ -1,5 +1,7 @@
 /*
-  Coloque aqui o identificador do grupo e dos seus membros
+  Grupo Kappa
+  Rubens Luiz Rech Junior - 275601
+  Giovane Dutra Ribeiro - 252965
 */
 
 %x comment

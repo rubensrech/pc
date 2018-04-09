@@ -15,6 +15,10 @@ class type2 [
     protected char campo2
 ];
 
+// Array Declaration
+static char arr[10];
+type2 arr2[100];
+
 // Func declaration
 int foo(const char c) {
     // Local vars declarations

@@ -1,5 +1,3 @@
-** Kappa Language Usage Overview
-
 // New Type Definition
 class type [
     private int campo1:

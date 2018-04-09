@@ -36,6 +36,15 @@ int foo(const char c) {
         int a;
     };
 
+    // Nested Blocks
+    {
+        {
+            int a <= a;
+        };
+    };
+
+
+
     // Shift command
     number << 15;
     number >> 4;

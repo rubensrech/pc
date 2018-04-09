@@ -281,7 +281,6 @@ exp: TK_IDENTIFICADOR
     | exp TK_OC_OR exp
     | func_call
     | pipe_exp
-/* Doubts */
     | TK_LIT_STRING
     | TK_LIT_CHAR
     | exp '%' exp
@@ -289,7 +288,7 @@ exp: TK_IDENTIFICADOR
     | TK_LIT_FALSE
     | '!' exp
     | '.'
-    | '-' exp;
+    | '-' exp; // Accepts negative numbers
 
 exps_list: exp
           | exps_list ',' exp;

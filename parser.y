@@ -134,6 +134,7 @@ block: '{' commands '}';
 commands: /* empty */
          | commands command;
 
+/* Simple Commands */
 command: var_dec ';'
         | shift_cmd ';'
         | assig_cmd ';'
@@ -152,7 +153,7 @@ command: var_dec ';'
         | switch
         | for;
 
-/* Local variables declaration - command */
+/* Local Variables Declaration - command */
 
 var_dec: TK_PR_STATIC TK_PR_CONST native_type TK_IDENTIFICADOR init_var 
         | TK_PR_STATIC native_type TK_IDENTIFICADOR init_var

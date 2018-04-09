@@ -226,7 +226,7 @@ pipe_exp: func_call TK_OC_PG func_call
          | pipe_exp TK_OC_PG func_call
          | pipe_exp TK_OC_PB func_call;
 
-/* Control flow - commands */
+/* Flow Control - Commands */
 
 if_stm: TK_PR_IF '(' exp ')' TK_PR_THEN block;
        | TK_PR_IF '(' exp ')' TK_PR_THEN block TK_PR_ELSE block;

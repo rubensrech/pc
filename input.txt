@@ -1,13 +1,14 @@
-// Type def
+// New Type Definition
 class type [
     private int campo1:
     public char campo2
 ];
 
-// Global vars
+// Global Variables Declaration
 int pid;
 string str;
 static type var;
+static type2 arr[20];
 
 // Type def
 class type2 [
@@ -39,7 +40,7 @@ int foo(const char c) {
     // Nested Blocks
     {
         {
-            int a <= a;
+            a = .; // This is allowed because . is also an expression
         };
     };
 

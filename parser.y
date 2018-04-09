@@ -154,10 +154,16 @@ command: var_dec ';'
 
 /* Local variables declaration - command */
 
-var_dec: TK_PR_STATIC TK_PR_CONST type TK_IDENTIFICADOR init_var 
-        | TK_PR_STATIC type TK_IDENTIFICADOR init_var
-        | TK_PR_CONST type TK_IDENTIFICADOR init_var
-        | type TK_IDENTIFICADOR init_var;
+var_dec: TK_PR_STATIC TK_PR_CONST native_type TK_IDENTIFICADOR init_var 
+        | TK_PR_STATIC native_type TK_IDENTIFICADOR init_var
+        | TK_PR_CONST native_type TK_IDENTIFICADOR init_var
+        | native_type TK_IDENTIFICADOR init_var
+        
+        /* Cannot initialize user type variables */
+        | TK_PR_STATIC TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR 
+        | TK_PR_STATIC TK_IDENTIFICADOR TK_IDENTIFICADOR
+        | TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR
+        | TK_IDENTIFICADOR TK_IDENTIFICADOR;
 
 init_var: /* empty */
          | TK_OC_LE literal

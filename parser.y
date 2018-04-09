@@ -137,7 +137,6 @@ commands: /* empty */
 command: var_dec ';'
         | shift_cmd ';'
         | assig_cmd ';'
-        | block
         | io_cmd ';'
         | func_call ';'
         | return_cmd ';'
@@ -145,10 +144,11 @@ command: var_dec ';'
         | continue_cmd ';'
         | case_cmd
         | pipe_exp ';'
+        | do_while ';'
+        | block ';'
         | if_stm
         | foreach
         | while
-        | do_while ';'
         | switch
         | for;
 
@@ -239,8 +239,7 @@ cmd_list: cmd
 
 cmd:    var_dec
         | shift_cmd
-        | assig_cmd;
-/* Simple commands not containing comma??
+        | assig_cmd
         | block
         | func_call
         | return_cmd
@@ -253,7 +252,6 @@ cmd:    var_dec
         | do_while
         | switch
         | for;
-*/
 
 /* Expressions */
 

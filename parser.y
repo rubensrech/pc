@@ -80,7 +80,7 @@ content: type_def ';'
         | global_def ';'
         | func_dec;
 
-/* Types declaration */
+/* New Type Declaration */
         
 type_def: TK_PR_CLASS TK_IDENTIFICADOR '[' type_def_campos ']';
 
@@ -99,7 +99,7 @@ native_type: TK_PR_INT
             | TK_PR_BOOL
             | TK_PR_STRING;
 
-/* Globals declaration */
+/* Global Variables Declaration */
 
 global_def: global_var
            | global_arr;
@@ -111,11 +111,11 @@ global_arr: TK_PR_STATIC type TK_IDENTIFICADOR '[' int_pos ']'
          | type TK_IDENTIFICADOR '[' int_pos ']';
 
 type: native_type
-     | TK_IDENTIFICADOR; // use TK_IDENTIFICADOR for detecting types defined by user??
+     | TK_IDENTIFICADOR; // Detects user created types
 
-int_pos: TK_LIT_INT; // how to accept only positive integers!?
+int_pos: TK_LIT_INT; // The '+' Sign was removed from the regEx to accept only positive numbers with TK_LIT_INT
 
-/* Function declaration */
+/* Function Declaration */
 
 func_dec: TK_PR_STATIC type TK_IDENTIFICADOR '(' params_dec ')' block
          | type TK_IDENTIFICADOR '(' params_dec ')' block;

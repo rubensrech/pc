@@ -1,10 +1,21 @@
+// Type def
 class type [
     private int campo1:
     public char campo2
 ];
 
+// Global vars
+int pid;
+string str;
 static type var;
 
+// Type def
+class type2 [
+    private int campo1:
+    protected char campo2
+];
+
+// Func declaration
 int foo(const char c) {
     // Local vars declarations
     static const int number <= 15;

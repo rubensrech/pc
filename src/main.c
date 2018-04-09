@@ -109,6 +109,10 @@ void main_avaliacao_etapa_1_tabela (void)
 int main_avaliacao_etapa_2 (int argc, char **argv)
 {
   int ret = yyparse();
+
+  // To enable the pritting of the symbols table uncomment te function bellow !!
+  // comp_print_table();
+
   return ret;
 }
 

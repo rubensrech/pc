@@ -70,7 +70,9 @@ int foo(const char c) {
     break;
     continue;
     case 15:
-
+    case +15:
+    case -15:
+    
     // Pipes
     f() %>% g(., a);
     f() %>% g(., a) %|% z(.);

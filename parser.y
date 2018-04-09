@@ -217,7 +217,9 @@ break_cmd: TK_PR_BREAK;
 
 continue_cmd: TK_PR_CONTINUE;
 
-case_cmd: TK_PR_CASE TK_LIT_INT ':';
+case_cmd: TK_PR_CASE TK_LIT_INT ':'
+        | TK_PR_CASE '+' TK_LIT_INT ':'
+        | TK_PR_CASE '-' TK_LIT_INT ':';
 
 /* Pipes - command */
 

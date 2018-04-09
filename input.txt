@@ -1,3 +1,5 @@
+** Kappa Language Usage Overview
+
 // New Type Definition
 class type [
     private int campo1:
@@ -72,7 +74,7 @@ int foo(const char c) {
     case 15:
     case +15:
     case -15:
-    
+
     // Pipes
     f() %>% g(., a);
     f() %>% g(., a) %|% z(.);
@@ -83,12 +85,12 @@ int foo(const char c) {
     _X_(f() %>% g(., a));
 
     // If statement
-    if (a) then {
+    if (a) then 
+    {
 
-    } else {
-        if (true) then {
-            if (false) then {
-
+        } else {
+            if (true) then {
+                if (false) then {
             } else {
 
             }

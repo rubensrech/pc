@@ -38,5 +38,4 @@ Coloque aqui qualquer comentário que achares pertinente.
 * Documentação
 ** Kappa Language Usage Overview
 
-
-- [[./input.txt][Kappa Language Usage overview)]]
+- [[./usage.kpa][Kappa Language Usage overview]]

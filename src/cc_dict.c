@@ -18,6 +18,7 @@
 #include <string.h>
 
 #include "cc_dict.h"
+#include "cc_misc.h"
 
 #define ERRO(MENSAGEM) { fprintf (stderr, "[cc_dict, %s] %s.\n", __FUNCTION__, MENSAGEM); abort(); }
 
@@ -194,7 +195,7 @@ void *dict_put(comp_dict_t * dict, char *key, void *value)
       dict_item_insert(dict->data[hash], newitem);
     } else {
       // Caso entrada já exista na tabela, substitui antigo valor pelo novo!
-      free(exists->value);
+      freeTokenInfo(exists->value);
       exists->value = value;
       dict_item_free_item(newitem);
       return value;

@@ -5,6 +5,7 @@
 typedef struct tokenInfo {
     int line;
     int type;
+    char *lexeme;
     union {
       int intVal;
       float floatVal;
@@ -14,6 +15,11 @@ typedef struct tokenInfo {
     } value;
 } TokenInfo;
 
+typedef struct astNodeInfo {
+  int type;
+  TokenInfo *tokenInfo;
+} AstNodeInfo;
+
 int getLineNumber (void);
 void yyerror (char const *mensagem);
 void main_init (int argc, char **argv);
@@ -21,6 +27,8 @@ void main_finalize (void);
 
 void comp_print_table (void);
 TokenInfo *addSymbolsTable(int tokenType);
-void debugPrintTokenInfo(TokenInfo *info);
+void freeTokenInfo(TokenInfo *info);
+
+#define MAX_HASH_KEY_SIZE 1000
 
 #endif

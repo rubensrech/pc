@@ -2,14 +2,15 @@
 #include <stdlib.h>
 #include "cc_misc.h"
 #include "cc_dict.h"
+#include "cc_tree.h"
+#include "cc_ast.h"
 #include "main.h"
-
-#define MAX_HASH_KEY_SIZE 1000
 
 extern int num_lines;
 extern char *yytext;
 
-struct comp_dict *symbolsTable;
+comp_dict_t *symbolsTable;
+comp_tree_t *ast;
 
 int getLineNumber(void) {
   return num_lines;
@@ -52,6 +53,7 @@ void main_finalize (void)
         next = entry->next;
         info = dict_remove(symbolsTable, entry->key);
         entry = next;
+        free(info->lexeme);
         free(info);
       }
   }
@@ -80,6 +82,13 @@ void comp_print_table (void)
         entry = entry->next;
       }
   }
+}
+
+// MARK: - Auxiliary functions
+
+void freeTokenInfo(TokenInfo *info) {
+  free(info->lexeme);
+  free(info);
 }
 
 void removeQuotes(char *token) {
@@ -129,22 +138,9 @@ TokenInfo *addSymbolsTable(int tokenType) {
   // Generate hash table key (TOKEN $$ TYPE)
   snprintf(key, MAX_HASH_KEY_SIZE, "%s $$ %d", token, tokenType);
 
-  free(token);
+  info->lexeme = token;
 
   // Key is duplicated (strdup) inside dict_put function
   return (TokenInfo*)dict_put(symbolsTable, key, info);
 }
 
-void debugPrintTokenInfo(TokenInfo *info) {
-    printf(">> ---------------\n");
-    printf(">> Line: %d\n", info->line);
-    printf(">> Type: %d\n", info->type);
-    switch (info->type) {
-      case POA_LIT_STRING: printf(">> Value: %s\n", info->value.strVal); break;
-      case POA_LIT_CHAR: printf(">> Value: %c\n", info->value.charVal); break;
-      case POA_IDENT: printf(">> Value: %s\n", info->value.strVal); break;
-      case POA_LIT_BOOL: printf(">> Value: %d\n", info->value.boolVal); break;
-      case POA_LIT_FLOAT: printf(">> Value: %.2f\n", info->value.floatVal); break;
-      case POA_LIT_INT: printf(">> Value: %d\n", info->value.intVal); break;
-    }
-}

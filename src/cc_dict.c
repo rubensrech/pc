@@ -17,8 +17,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "cc_dict.h"
 #include "cc_misc.h"
+#include "cc_dict.h"
 
 #define ERRO(MENSAGEM) { fprintf (stderr, "[cc_dict, %s] %s.\n", __FUNCTION__, MENSAGEM); abort(); }
 
@@ -194,13 +194,15 @@ void *dict_put(comp_dict_t * dict, char *key, void *value)
     if (!exists) {
       dict_item_insert(dict->data[hash], newitem);
     } else {
+      /*
       // Caso entrada já exista na tabela, substitui antigo valor pelo novo!
       freeTokenInfo(exists->value);
       exists->value = value;
       dict_item_free_item(newitem);
       return value;
-      /*dict_item_free_item(newitem);
-      return exists->value;*/
+      */
+      dict_item_free_item(newitem);
+      return exists->value;
     }
   }
   return newitem->value;
@@ -212,14 +214,16 @@ void *dict_get(comp_dict_t * dict, char *key)
     ERRO("At least one parameter is NULL");
   }
 
-
   int hash = generate_hash(key, dict->size);
   comp_dict_item_t *item = NULL;
 
   if (dict->data[hash])
     item = dict_item_get(dict->data[hash], key);
-
-  return item->value;
+  
+  if (item == NULL)
+    return NULL;
+  else
+    return item->value;
 }
 
 void *dict_remove(comp_dict_t * dict, char *key)

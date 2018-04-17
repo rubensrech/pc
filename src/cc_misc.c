@@ -102,7 +102,8 @@ void removeQuotes(char *token) {
 }
 
 TokenInfo *addSymbolsTable(int tokenType) {
-  TokenInfo *info = malloc(sizeof(struct tokenInfo)); 
+  TokenInfo *info = malloc(sizeof(struct tokenInfo));
+  TokenInfo *oldInfo;
   char key[MAX_HASH_KEY_SIZE+1];
   char *token;
   
@@ -139,6 +140,12 @@ TokenInfo *addSymbolsTable(int tokenType) {
   snprintf(key, MAX_HASH_KEY_SIZE, "%s $$ %d", token, tokenType);
 
   info->lexeme = token;
+
+  // Hash already contais same key => remove old entry
+  if (dict_get(symbolsTable, key) != NULL) {
+    oldInfo = dict_remove(symbolsTable, key);
+    freeTokenInfo(oldInfo);
+  }
 
   // Key is duplicated (strdup) inside dict_put function
   return (TokenInfo*)dict_put(symbolsTable, key, info);

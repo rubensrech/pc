@@ -7,6 +7,13 @@
 %code requires {
 #include "main.h"
 #include "cc_misc.h"
+#include "cc_tree.h"
+#include "cc_ast.h"
+}
+
+%union {
+   TokenInfo *valor_lexico;
+   comp_tree_t *ast;
 }
 
 /* Declaração dos tokens da linguagem */
@@ -66,19 +73,46 @@
 
 %error-verbose
 
-%union {
-   TokenInfo *valor_lexico;
-}
+/*
+%type <ast>programa
+%type <ast>code
+%type <ast>func_dec
+%type <ast>block
+%type <ast>commands
+
+%type <ast>command
+
+%type <ast>exp
+%type <ast>assig_cmd
+*/
+
+%type <ast>programa
+%type <ast>code
+%type <ast>func_dec
+%type <ast>block
+%type <ast>commands
+%type <ast>command
+%type <ast>var_dec
+%type <ast>init_var
+%type <ast>literal
+%type <ast>id
 
 %%
 /* Regras (e ações) da gramática */
 
-programa: /* empty */
-          | programa content;
+programa: /* empty */  {}
+        | code { $$ = makeASTUnaryNode(AST_PROGRAMA, NULL, $1); };
 
-content: type_def ';'
-        | global_def ';'
-        | func_dec;
+code: type_def ';'              { $$ = NULL; }
+     | global_def ';'           { $$ = NULL; }
+     | func_dec                 { $$ = $1; }
+     | code type_def ';'    { $$ = $1; }
+     | code global_def ';'  { $$ = $1; }
+     | code func_dec        { if ($1 != NULL) { tree_insert_node($1, $2); } $$ = $1; } ;
+
+/* Auxiliary rule - Add ID to AST */
+
+id: TK_IDENTIFICADOR    { $$ = makeASTNode(AST_IDENTIFICADOR, $1); };
 
 /* New Type Declaration */
         
@@ -117,8 +151,8 @@ int_pos: TK_LIT_INT; // The '+' Sign was removed from the regEx to accept only p
 
 /* Function Declaration */
 
-func_dec: TK_PR_STATIC type TK_IDENTIFICADOR '(' params_dec ')' block
-         | type TK_IDENTIFICADOR '(' params_dec ')' block;
+func_dec: TK_PR_STATIC type TK_IDENTIFICADOR '(' params_dec ')' block   { $$ = makeASTUnaryNode(AST_FUNCAO, $3, $7); }
+         | type TK_IDENTIFICADOR '(' params_dec ')' block               { $$ = makeASTUnaryNode(AST_FUNCAO, $2, $6); };
 
 params_dec: /* empty */
            | params_dec_list;
@@ -129,57 +163,62 @@ params_dec_list: param_dec
 param_dec: TK_PR_CONST type TK_IDENTIFICADOR
           | type TK_IDENTIFICADOR;
 
-block: '{' commands '}';
+block: '{' '}'                     {  }
+      | '{' commands '}'           { $$ = $2; };
 
-commands: /* empty */
-         | commands command;
+commands: command                  { $$ = $1; }
+         | commands command        { tree_insert_node($1, $2); $$ = $1; };
 
 /* Simple Commands */
-command: var_dec ';'
-        | shift_cmd ';'
-        | assig_cmd ';'
-        | io_cmd ';'
-        | func_call ';'
-        | return_cmd ';'
-        | break_cmd ';'
-        | continue_cmd ';'
-        | case_cmd
-        | pipe_exp ';'
-        | do_while ';'
-        | block ';'
-        | if_stm
-        | foreach
-        | while
-        | switch
-        | for;
+command: var_dec ';'            { $$ = $1; }
+        | shift_cmd ';'         {}
+        | assig_cmd ';'         {}
+        | io_cmd ';'            {}
+        | func_call ';'         {}
+        | return_cmd ';'        {}
+        | break_cmd ';'         {}
+        | continue_cmd ';'      {}
+        | case_cmd              {}
+        | pipe_exp ';'          {}
+        | do_while ';'          {}
+        | block ';'             {}
+        | if_stm                {}
+        | foreach               {}
+        | while                 {}
+        | switch                {}
+        | for                   {};
 
 /* Local Variables Declaration - command */
 
-var_dec: TK_PR_STATIC TK_PR_CONST native_type TK_IDENTIFICADOR init_var 
-        | TK_PR_STATIC native_type TK_IDENTIFICADOR init_var
-        | TK_PR_CONST native_type TK_IDENTIFICADOR init_var
-        | native_type TK_IDENTIFICADOR init_var
+var_dec: TK_PR_STATIC TK_PR_CONST native_type id init_var { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $4, $5); }
+        | TK_PR_STATIC native_type id init_var            { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $3, $4); }
+        | TK_PR_CONST native_type id init_var             { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $3, $4); }
+        | native_type id init_var                         { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $2, $3); }
+
+        | TK_PR_STATIC TK_PR_CONST native_type TK_IDENTIFICADOR         { }
+        | TK_PR_STATIC native_type TK_IDENTIFICADOR                     { }
+        | TK_PR_CONST native_type TK_IDENTIFICADOR                      { }
+        | native_type TK_IDENTIFICADOR                                  { }
         
         /* Cannot initialize user type variables */
-        | TK_PR_STATIC TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR 
-        | TK_PR_STATIC TK_IDENTIFICADOR TK_IDENTIFICADOR
-        | TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR
-        | TK_IDENTIFICADOR TK_IDENTIFICADOR;
+        | TK_PR_STATIC TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR    { }
+        | TK_PR_STATIC TK_IDENTIFICADOR TK_IDENTIFICADOR                { }
+        | TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR                 { }
+        | TK_IDENTIFICADOR TK_IDENTIFICADOR                             { };
 
-init_var: /* empty */
-         | TK_OC_LE literal
-         | TK_OC_LE TK_IDENTIFICADOR;
+init_var: TK_OC_LE literal                     { $$ = $2; }
+         | TK_OC_LE id                         { $$ = $2; };
 
-literal: TK_LIT_INT
-        | '+' TK_LIT_INT
-        | '-' TK_LIT_INT
-        | TK_LIT_FLOAT
-        | '+' TK_LIT_FLOAT
-        | '-' TK_LIT_FLOAT
-        | TK_LIT_FALSE
-        | TK_LIT_TRUE
-        | TK_LIT_CHAR
-        | TK_LIT_STRING;
+literal: TK_LIT_INT             { $$ = makeASTNode(AST_LITERAL, $1); }
+        | '+' TK_LIT_INT        { $$ = makeASTNode(AST_LITERAL, $2); }
+        | '-' TK_LIT_INT        { $$ = makeASTNode(AST_LITERAL, $2); /* add signal!! */ }
+        | TK_LIT_FLOAT          { $$ = makeASTNode(AST_LITERAL, $1); }
+        | '+' TK_LIT_FLOAT      { $$ = makeASTNode(AST_LITERAL, $2); }
+        | '-' TK_LIT_FLOAT      { $$ = makeASTNode(AST_LITERAL, $2); /* add signal!! */ }
+        | TK_LIT_FALSE          { $$ = makeASTNode(AST_LITERAL, $1); }
+        | TK_LIT_TRUE           { $$ = makeASTNode(AST_LITERAL, $1); }
+        | TK_LIT_CHAR           { $$ = makeASTNode(AST_LITERAL, $1); }
+        | TK_LIT_STRING         { $$ = makeASTNode(AST_LITERAL, $1); };
 
 /* Shift command - command */
 
@@ -264,10 +303,8 @@ cmd:    var_dec
 
 /* Expressions */
 
-exp: TK_IDENTIFICADOR
+exp: TK_IDENTIFICADOR                           
     | TK_IDENTIFICADOR '[' exp ']'
-    | TK_LIT_INT
-    | TK_LIT_FLOAT
     | exp '+' exp
     | exp '-' exp
     | exp '*' exp
@@ -283,14 +320,16 @@ exp: TK_IDENTIFICADOR
     | exp TK_OC_OR exp
     | func_call
     | pipe_exp
-    | TK_LIT_STRING
-    | TK_LIT_CHAR
     | exp '%' exp
-    | TK_LIT_TRUE
-    | TK_LIT_FALSE
     | '!' exp
     | '.'
-    | '-' exp; // Accepts negative numbers
+    | '-' exp // Accepts negative numbers
+    | TK_LIT_INT
+    | TK_LIT_FLOAT
+    | TK_LIT_STRING
+    | TK_LIT_CHAR
+    | TK_LIT_TRUE
+    | TK_LIT_FALSE;
 
 exps_list: exp
           | exps_list ',' exp;

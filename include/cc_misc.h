@@ -1,6 +1,7 @@
 #ifndef __MISC_H
 #define __MISC_H
 #include <stdio.h>
+#include "cc_tree.h"
 
 typedef struct tokenInfo {
     int line;
@@ -27,9 +28,16 @@ void main_finalize (void);
 
 void comp_print_table (void);
 TokenInfo *addSymbolsTable(int tokenType);
+
+comp_tree_t *makeASTNode(int type, TokenInfo *token);
+comp_tree_t *makeASTUnaryNode(int type, TokenInfo *token, comp_tree_t *node1);
+comp_tree_t *makeASTBinaryNode(int type, TokenInfo *token, comp_tree_t *node1, comp_tree_t *node2);
+comp_tree_t *makeASTTernaryNode(int type, TokenInfo *token, comp_tree_t *node1, comp_tree_t *node2, comp_tree_t *node3);
+
 void freeTokenInfo(TokenInfo *info);
 void freeSymbolsTable();
 
 #define MAX_HASH_KEY_SIZE 1000
+#define GV_OUT_FILE "saida.dot"
 
 #endif

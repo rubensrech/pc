@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "cc_misc.h"
 #include "cc_dict.h"
-#include "cc_tree.h"
 #include "cc_ast.h"
 #include "main.h"
 
@@ -29,18 +28,43 @@ void yyerror (char const *mensagem)
   exit(1);
 }
 
+void teste() {
+  AstNodeInfo *sum = malloc(sizeof(struct astNodeInfo));
+  AstNodeInfo *child = malloc(sizeof(struct astNodeInfo));
+  TokenInfo *childInfo = malloc(sizeof(struct tokenInfo));
+  char val[2] = "5";
+
+  sum->type = AST_ARIM_SOMA;
+  sum->tokenInfo = NULL;
+
+  childInfo->line = 10;
+  childInfo->type = POA_LIT_INT;
+  childInfo->lexeme = val;
+  childInfo->value.intVal = 5;
+
+  child->type = AST_LITERAL;
+  child->tokenInfo = childInfo;
+
+  ast = tree_make_binary_node(sum, 
+              tree_make_node(child), 
+              tree_make_node(child));
+
+}
+
 void main_init (int argc, char **argv)
 {
   //implemente esta função com rotinas de inicialização, se necessário
 
   // Initialize symbols table
   symbolsTable = dict_new();
+  ast = tree_new();
 }
 
 void main_finalize (void)
 {
 
   // comp_print_table();
+  gv_close();
 
   freeSymbolsTable();
 }
@@ -70,6 +94,8 @@ void comp_print_table (void)
 }
 
 // MARK: - Auxiliary functions
+
+// > Symbols Table
 
 void freeSymbolsTable() {
   int i;
@@ -155,3 +181,32 @@ TokenInfo *addSymbolsTable(int tokenType) {
   return (TokenInfo*)dict_put(symbolsTable, key, info);
 }
 
+// > AST
+
+comp_tree_t *makeASTNode(int type, TokenInfo *token) {
+  AstNodeInfo *nodeInfo = malloc(sizeof(struct astNodeInfo));
+  nodeInfo->type = type;
+  nodeInfo->tokenInfo = token;
+  return tree_make_node(nodeInfo);
+}
+
+comp_tree_t *makeASTUnaryNode(int type, TokenInfo *token, comp_tree_t *node1) {
+  comp_tree_t *newnode = makeASTNode(type, token);
+	tree_insert_node(newnode, node1);
+	return newnode;
+}
+
+comp_tree_t *makeASTBinaryNode(int type, TokenInfo *token, comp_tree_t *node1, comp_tree_t *node2) {
+  comp_tree_t *newnode = makeASTNode(type, token);
+	tree_insert_node(newnode, node1);
+  tree_insert_node(newnode, node2);
+	return newnode;
+}
+
+comp_tree_t *makeASTTernaryNode(int type, TokenInfo *token, comp_tree_t *node1, comp_tree_t *node2, comp_tree_t *node3) {
+  comp_tree_t *newnode = makeASTNode(type, token);
+	tree_insert_node(newnode, node1);
+  tree_insert_node(newnode, node2);
+  tree_insert_node(newnode, node3);
+	return newnode;
+}

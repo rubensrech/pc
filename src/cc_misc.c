@@ -39,25 +39,10 @@ void main_init (int argc, char **argv)
 
 void main_finalize (void)
 {
-  //implemente esta função com rotinas de inicialização, se necessário
-  int i;
-  struct comp_dict_item *entry, *next;
-  TokenInfo *info;
 
   // comp_print_table();
 
-  // Free symbols table
-  for (i = 0; i < symbolsTable->size; i++) {
-    entry = symbolsTable->data[i];
-      while (entry != NULL) {
-        next = entry->next;
-        info = dict_remove(symbolsTable, entry->key);
-        entry = next;
-        free(info->lexeme);
-        free(info);
-      }
-  }
-  dict_free(symbolsTable);
+  freeSymbolsTable();
 }
 
 void comp_print_table (void)
@@ -85,6 +70,24 @@ void comp_print_table (void)
 }
 
 // MARK: - Auxiliary functions
+
+void freeSymbolsTable() {
+  int i;
+  struct comp_dict_item *entry, *next;
+  TokenInfo *info;
+
+  for (i = 0; i < symbolsTable->size; i++) {
+    entry = symbolsTable->data[i];
+      while (entry != NULL) {
+        next = entry->next;
+        info = dict_remove(symbolsTable, entry->key);
+        freeTokenInfo(info);
+        entry = next;
+      }
+  }
+
+  dict_free(symbolsTable);
+}
 
 void freeTokenInfo(TokenInfo *info) {
   free(info->lexeme);
@@ -139,6 +142,7 @@ TokenInfo *addSymbolsTable(int tokenType) {
   // Generate hash table key (TOKEN $$ TYPE)
   snprintf(key, MAX_HASH_KEY_SIZE, "%s $$ %d", token, tokenType);
 
+  // info->lexeke must be freed later
   info->lexeme = token;
 
   // Hash already contais same key => remove old entry

@@ -28,6 +28,7 @@ void main_finalize (void);
 void comp_print_table (void);
 TokenInfo *addSymbolsTable(int tokenType);
 void freeTokenInfo(TokenInfo *info);
+void freeSymbolsTable();
 
 #define MAX_HASH_KEY_SIZE 1000
 

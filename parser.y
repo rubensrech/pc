@@ -84,6 +84,8 @@
 %type <ast>assig_cmd
 %type <ast>var_dec
 %type <ast>init_var
+%type <ast>while
+%type <ast>do_while
 
 %type <ast>exp
 %type <ast>literal
@@ -101,7 +103,7 @@
 %%
 /* Regras (e ações) da gramática */
 
-programa: /* empty */   { }
+programa: /* empty */   { $$ = makeASTNode(AST_PROGRAMA, NULL); }
          | code         { $$ = makeASTUnaryNode(AST_PROGRAMA, NULL, $1); };
 
 code:  type_def ';'             { $$ = NULL; }
@@ -110,11 +112,9 @@ code:  type_def ';'             { $$ = NULL; }
      | type_def ';' code        { $$ = $3; }
      | global_def ';' code      { $$ = $3; }
      | func_dec code            { 
-                                        if ($2 != NULL) {
-                                                tree_insert_node($1, $2);
-                                        } 
+                                        if ($2 != NULL) tree_insert_node($1, $2);
                                         $$ = $1;
-                                } ;
+                                };
 
 /* Auxiliary rules */
 
@@ -165,8 +165,8 @@ int_pos: TK_LIT_INT; // The '+' Sign was removed from the regEx to accept only p
 
 /* Function Declaration */
 
-func_dec: TK_PR_STATIC type TK_IDENTIFICADOR '(' params_dec ')' block   { if ($7 != NULL) $$ = makeASTUnaryNode(AST_FUNCAO, $3, $7); else $$ = makeASTNode(AST_FUNCAO, $3); }
-         | type TK_IDENTIFICADOR '(' params_dec ')' block               { if ($6 != NULL) $$ = makeASTUnaryNode(AST_FUNCAO, $2, $6); else $$ = makeASTNode(AST_FUNCAO, $2); };
+func_dec: TK_PR_STATIC type TK_IDENTIFICADOR '(' params_dec ')' block   { $$ = makeASTUnaryNode(AST_FUNCAO, $3, $7); }
+         | type TK_IDENTIFICADOR '(' params_dec ')' block               { $$ = makeASTUnaryNode(AST_FUNCAO, $2, $6); };
 
 params_dec: /* empty */
            | params_dec_list;
@@ -181,7 +181,13 @@ block:  '{' '}'                    { $$ = makeASTNode(AST_BLOCO, NULL); /* EMPTY
       | '{' commands '}'           { $$ = $2; };
 
 commands: command                  { $$ = $1; }
-         | command commands        { tree_insert_node($1, $2); $$ = $1; };
+         | command commands        { 
+                                        if ($1 != NULL && $2 != NULL) {
+                                                tree_insert_node($1, $2);
+                                                $$ = $1;
+                                        }
+                                        if ($1 == NULL) $$ = $2;
+                                   };
 
 /* Simple Commands */
 command:  var_dec ';'           { $$ = $1; }
@@ -194,11 +200,11 @@ command:  var_dec ';'           { $$ = $1; }
         | continue_cmd ';'      {}
         | case_cmd              {}
         | pipe_exp ';'          {}
-        | do_while ';'          {}
+        | do_while ';'          { $$ = $1; }
         | block ';'             {}
         | if_stm                { $$ = $1; }
         | foreach               {}
-        | while                 {}
+        | while                 { $$ = $1; }
         | switch                {}
         | for                   {};
 
@@ -209,30 +215,30 @@ var_dec: TK_PR_STATIC TK_PR_CONST native_type id init_var { $$ = makeASTBinaryNo
         | TK_PR_CONST native_type id init_var             { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $3, $4); }
         | native_type id init_var                         { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $2, $3); }
 
-        | TK_PR_STATIC TK_PR_CONST native_type TK_IDENTIFICADOR         { }
-        | TK_PR_STATIC native_type TK_IDENTIFICADOR                     { }
-        | TK_PR_CONST native_type TK_IDENTIFICADOR                      { }
-        | native_type TK_IDENTIFICADOR                                  { }
+        | TK_PR_STATIC TK_PR_CONST native_type TK_IDENTIFICADOR         { $$ = NULL; }
+        | TK_PR_STATIC native_type TK_IDENTIFICADOR                     { $$ = NULL; }
+        | TK_PR_CONST native_type TK_IDENTIFICADOR                      { $$ = NULL; }
+        | native_type TK_IDENTIFICADOR                                  { $$ = NULL; }
         
         /* Cannot initialize user type variables */
-        | TK_PR_STATIC TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR         { }
-        | TK_PR_STATIC TK_IDENTIFICADOR TK_IDENTIFICADOR                     { }
-        | TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR                      { }
-        | TK_IDENTIFICADOR TK_IDENTIFICADOR                                  { };
+        | TK_PR_STATIC TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR         { $$ = NULL; }
+        | TK_PR_STATIC TK_IDENTIFICADOR TK_IDENTIFICADOR                     { $$ = NULL; }
+        | TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR                      { $$ = NULL; }
+        | TK_IDENTIFICADOR TK_IDENTIFICADOR                                  { $$ = NULL; };
 
 init_var: TK_OC_LE literal      { $$ = $2; }
          | TK_OC_LE id          { $$ = $2; };
 
-literal:  int
+literal:  int                   { $$ = $1; }
         | '+' int               { $$ = $2; }
         | '-' int               { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); }
-        | float
+        | float                 { $$ = $1; }
         | '+' float             { $$ = $2; }
         | '-' float             { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); }
-        | false
-        | true
-        | char
-        | string;
+        | false                 { $$ = $1; }
+        | true                  { $$ = $1; }
+        | char                  { $$ = $1; }
+        | string                { $$ = $1; };
 
 /* Shift command - command */
 
@@ -288,9 +294,9 @@ if_stm:  TK_PR_IF '(' exp ')' TK_PR_THEN block                          { $$ = m
 
 foreach: TK_PR_FOREACH '(' TK_IDENTIFICADOR ':' exps_list ')' block;
 
-while: TK_PR_WHILE '(' exp ')' TK_PR_DO block;
+while: TK_PR_WHILE '(' exp ')' TK_PR_DO block                   { $$ = makeASTBinaryNode(AST_WHILE_DO, NULL, $3, $6); };
 
-do_while: TK_PR_DO block TK_PR_WHILE '(' exp ')';
+do_while: TK_PR_DO block TK_PR_WHILE '(' exp ')'                { $$ = makeASTBinaryNode(AST_DO_WHILE, NULL, $2, $5); };
 
 switch: TK_PR_SWITCH '(' exp ')' block;
 

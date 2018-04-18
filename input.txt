@@ -20,11 +20,10 @@ class type2 [
 static char arr[10];
 type2 arr2[100];
 
-
 // Testing from here >>>
 
 int funcao() {
-    static const int number <= 15;
+    static const int number;
 
     if (a) then {
         a = 1;
@@ -36,9 +35,18 @@ int funcao() {
 }
 
 char func1() {
-    int abc <= 10;
+    int abc <= 15;
+
+    while (a < 5) do {
+        
+    }
+
+    do {
+        a = b;
+        c = 0;
+    } while (a + b < c);
 }
 
 char func2() {
-    b = 10.5;
+
 }

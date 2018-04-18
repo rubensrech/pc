@@ -25,6 +25,8 @@ type2 arr2[100];
 int funcao() {
     static const int number;
 
+    var.campo = true && false;
+
     if (a) then {
         a = 1;
     } else {
@@ -32,10 +34,16 @@ int funcao() {
 
         }
     }
+
+    return number + 10;
 }
 
 char func1() {
     int abc <= 15;
+
+    {
+        func2(18, func(), abc);
+    };
 
     while (a < 5) do {
         

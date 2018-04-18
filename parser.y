@@ -86,6 +86,12 @@
 %type <ast>init_var
 %type <ast>while
 %type <ast>do_while
+%type <ast>return_cmd
+
+%type <ast>func_call
+%type <ast>params
+%type <ast>params_list
+%type <ast>param
 
 %type <ast>exp
 %type <ast>literal
@@ -195,13 +201,13 @@ command:  var_dec ';'           { $$ = $1; }
         | assig_cmd ';'         { $$ = $1; }
         | io_cmd ';'            {}
         | func_call ';'         {}
-        | return_cmd ';'        {}
+        | return_cmd ';'        { $$ = $1; }
         | break_cmd ';'         {}
         | continue_cmd ';'      {}
         | case_cmd              {}
         | pipe_exp ';'          {}
         | do_while ';'          { $$ = $1; }
-        | block ';'             {}
+        | block ';'             { $$ = $1; }
         | if_stm                { $$ = $1; }
         | foreach               {}
         | while                 { $$ = $1; }
@@ -258,19 +264,22 @@ io_cmd: TK_PR_INPUT exp
 
 /* Function call - command */
 
-func_call: TK_IDENTIFICADOR '(' params ')';
+func_call: id '(' params ')'    {
+                                        if ($3 != NULL) $$ = makeASTBinaryNode(AST_CHAMADA_DE_FUNCAO, NULL, $1, $3);
+                                        else $$ = makeASTUnaryNode(AST_CHAMADA_DE_FUNCAO, NULL, $1);
+                                };
 
-params: /* empty */
-       | params_list;
+params:  /* empty */                    { $$ = NULL; }
+       | params_list                    { $$ = $1; };
 
-params_list: param
-            | params_list ',' param;
+params_list: param                      { $$ = $1; }
+            | param ',' params_list     { tree_insert_node($1, $3); $$ = $1; };
         
-param: exp;
+param: exp                              { $$ = $1; };
 
 /* Return, break, continue and case - commands */
 
-return_cmd: TK_PR_RETURN exp;
+return_cmd: TK_PR_RETURN exp            { $$ = makeASTUnaryNode(AST_RETURN, NULL, $2); };
 
 break_cmd: TK_PR_BREAK;
 

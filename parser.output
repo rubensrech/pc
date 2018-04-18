@@ -137,13 +137,13 @@ Grammar
    96 io_cmd: TK_PR_INPUT exp
    97       | TK_PR_OUTPUT exps_list
 
-   98 func_call: TK_IDENTIFICADOR '(' params ')'
+   98 func_call: id '(' params ')'
 
    99 params: %empty
   100       | params_list
 
   101 params_list: param
-  102            | params_list ',' param
+  102            | param ',' params_list
 
   103 param: exp
 
@@ -291,7 +291,7 @@ TK_LIT_TRUE (296) 14
 TK_LIT_CHAR (297) 15
 TK_LIT_STRING (298) 16
 TK_IDENTIFICADOR (299) 9 17 20 31 32 33 34 36 38 39 44 45 71 72 73
-    74 75 76 77 78 91 92 98 116
+    74 75 76 77 78 91 92 116
 TOKEN_ERRO (300)
 
 
@@ -304,7 +304,7 @@ programa (66)
 code (67)
     on left: 3 4 5 6 7 8, on right: 2 6 7 8
 id (68)
-    on left: 9, on right: 10 67 68 69 70 80 93 95 138
+    on left: 9, on right: 10 67 68 69 70 80 93 95 98 138
 array (69)
     on left: 10, on right: 94 139
 int (70)
@@ -1289,12 +1289,10 @@ State 79
    78 var_dec: TK_IDENTIFICADOR . TK_IDENTIFICADOR
    91 shift_cmd: TK_IDENTIFICADOR . TK_OC_SL int_pos
    92          | TK_IDENTIFICADOR . TK_OC_SR int_pos
-   98 func_call: TK_IDENTIFICADOR . '(' params ')'
 
     TK_OC_SL          shift, and go to state 142
     TK_OC_SR          shift, and go to state 143
     TK_IDENTIFICADOR  shift, and go to state 144
-    '('               shift, and go to state 145
 
     $default  reduce using rule 9 (id)
 
@@ -1311,8 +1309,10 @@ State 81
    10 array: id . '[' exp ']'
    93 assig_cmd: id . '=' exp
    95          | id . '.' id '=' exp
+   98 func_call: id . '(' params ')'
 
-    '['  shift, and go to state 146
+    '['  shift, and go to state 145
+    '('  shift, and go to state 146
     '='  shift, and go to state 147
     '.'  shift, and go to state 148
 
@@ -1632,9 +1632,6 @@ State 111
 State 112
 
     9 id: TK_IDENTIFICADOR .
-   98 func_call: TK_IDENTIFICADOR . '(' params ')'
-
-    '('  shift, and go to state 145
 
     $default  reduce using rule 9 (id)
 
@@ -1736,9 +1733,11 @@ State 116
 State 117
 
    10 array: id . '[' exp ']'
+   98 func_call: id . '(' params ')'
   138 exp: id .
 
-    '['  shift, and go to state 146
+    '['  shift, and go to state 145
+    '('  shift, and go to state 146
 
     $default  reduce using rule 138 (exp)
 
@@ -2107,40 +2106,6 @@ State 144
 
 State 145
 
-   98 func_call: TK_IDENTIFICADOR '(' . params ')'
-
-    TK_LIT_INT        shift, and go to state 106
-    TK_LIT_FLOAT      shift, and go to state 107
-    TK_LIT_FALSE      shift, and go to state 108
-    TK_LIT_TRUE       shift, and go to state 109
-    TK_LIT_CHAR       shift, and go to state 110
-    TK_LIT_STRING     shift, and go to state 111
-    TK_IDENTIFICADOR  shift, and go to state 112
-    '-'               shift, and go to state 113
-    '!'               shift, and go to state 114
-    '('               shift, and go to state 115
-    '.'               shift, and go to state 116
-
-    $default  reduce using rule 99 (params)
-
-    id           go to state 117
-    array        go to state 118
-    int          go to state 119
-    float        go to state 120
-    false        go to state 121
-    true         go to state 122
-    char         go to state 123
-    string       go to state 124
-    func_call    go to state 125
-    params       go to state 221
-    params_list  go to state 222
-    param        go to state 223
-    pipe_exp     go to state 126
-    exp          go to state 224
-
-
-State 146
-
    10 array: id '[' . exp ']'
 
     TK_LIT_INT        shift, and go to state 106
@@ -2165,7 +2130,41 @@ State 146
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 225
+    exp        go to state 221
+
+
+State 146
+
+   98 func_call: id '(' . params ')'
+
+    TK_LIT_INT        shift, and go to state 106
+    TK_LIT_FLOAT      shift, and go to state 107
+    TK_LIT_FALSE      shift, and go to state 108
+    TK_LIT_TRUE       shift, and go to state 109
+    TK_LIT_CHAR       shift, and go to state 110
+    TK_LIT_STRING     shift, and go to state 111
+    TK_IDENTIFICADOR  shift, and go to state 112
+    '-'               shift, and go to state 113
+    '!'               shift, and go to state 114
+    '('               shift, and go to state 115
+    '.'               shift, and go to state 116
+
+    $default  reduce using rule 99 (params)
+
+    id           go to state 117
+    array        go to state 118
+    int          go to state 119
+    float        go to state 120
+    false        go to state 121
+    true         go to state 122
+    char         go to state 123
+    string       go to state 124
+    func_call    go to state 125
+    params       go to state 222
+    params_list  go to state 223
+    param        go to state 224
+    pipe_exp     go to state 126
+    exp          go to state 225
 
 
 State 147
@@ -2201,9 +2200,9 @@ State 148
 
    95 assig_cmd: id '.' . id '=' exp
 
-    TK_IDENTIFICADOR  shift, and go to state 227
+    TK_IDENTIFICADOR  shift, and go to state 112
 
-    id  go to state 228
+    id  go to state 227
 
 
 State 149
@@ -2232,7 +2231,7 @@ State 149
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 229
+    exp        go to state 228
 
 
 State 150
@@ -2248,9 +2247,9 @@ State 151
 
    70 var_dec: native_type id . init_var
 
-    TK_OC_LE  shift, and go to state 230
+    TK_OC_LE  shift, and go to state 229
 
-    init_var  go to state 231
+    init_var  go to state 230
 
 
 State 152
@@ -2306,18 +2305,20 @@ State 159
 
   110 pipe_exp: func_call TK_OC_PG . func_call
 
-    TK_IDENTIFICADOR  shift, and go to state 232
+    TK_IDENTIFICADOR  shift, and go to state 112
 
-    func_call  go to state 233
+    id         go to state 231
+    func_call  go to state 232
 
 
 State 160
 
   111 pipe_exp: func_call TK_OC_PB . func_call
 
-    TK_IDENTIFICADOR  shift, and go to state 232
+    TK_IDENTIFICADOR  shift, and go to state 112
 
-    func_call  go to state 234
+    id         go to state 231
+    func_call  go to state 233
 
 
 State 161
@@ -2352,18 +2353,20 @@ State 165
 
   112 pipe_exp: pipe_exp TK_OC_PG . func_call
 
-    TK_IDENTIFICADOR  shift, and go to state 232
+    TK_IDENTIFICADOR  shift, and go to state 112
 
-    func_call  go to state 235
+    id         go to state 231
+    func_call  go to state 234
 
 
 State 166
 
   113 pipe_exp: pipe_exp TK_OC_PB . func_call
 
-    TK_IDENTIFICADOR  shift, and go to state 232
+    TK_IDENTIFICADOR  shift, and go to state 112
 
-    func_call  go to state 236
+    id         go to state 231
+    func_call  go to state 235
 
 
 State 167
@@ -2411,7 +2414,7 @@ State 169
     '*'        shift, and go to state 185
     '/'        shift, and go to state 186
     '%'        shift, and go to state 187
-    ')'        shift, and go to state 237
+    ')'        shift, and go to state 236
 
 
 State 170
@@ -2444,14 +2447,14 @@ State 170
     '*'        shift, and go to state 185
     '/'        shift, and go to state 186
     '%'        shift, and go to state 187
-    ')'        shift, and go to state 238
+    ')'        shift, and go to state 237
 
 
 State 171
 
   118 do_while: TK_PR_DO block TK_PR_WHILE . '(' exp ')'
 
-    '('  shift, and go to state 239
+    '('  shift, and go to state 238
 
 
 State 172
@@ -2528,7 +2531,7 @@ State 174
     '*'        shift, and go to state 185
     '/'        shift, and go to state 186
     '%'        shift, and go to state 187
-    ')'        shift, and go to state 240
+    ')'        shift, and go to state 239
 
 
 State 175
@@ -2557,7 +2560,7 @@ State 175
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 241
+    exp        go to state 240
 
 
 State 176
@@ -2586,7 +2589,7 @@ State 176
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 242
+    exp        go to state 241
 
 
 State 177
@@ -2615,7 +2618,7 @@ State 177
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 243
+    exp        go to state 242
 
 
 State 178
@@ -2644,7 +2647,7 @@ State 178
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 244
+    exp        go to state 243
 
 
 State 179
@@ -2673,7 +2676,7 @@ State 179
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 245
+    exp        go to state 244
 
 
 State 180
@@ -2702,7 +2705,7 @@ State 180
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 246
+    exp        go to state 245
 
 
 State 181
@@ -2731,7 +2734,7 @@ State 181
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 247
+    exp        go to state 246
 
 
 State 182
@@ -2760,7 +2763,7 @@ State 182
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 248
+    exp        go to state 247
 
 
 State 183
@@ -2789,7 +2792,7 @@ State 183
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 249
+    exp        go to state 248
 
 
 State 184
@@ -2818,7 +2821,7 @@ State 184
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 250
+    exp        go to state 249
 
 
 State 185
@@ -2847,7 +2850,7 @@ State 185
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 251
+    exp        go to state 250
 
 
 State 186
@@ -2876,7 +2879,7 @@ State 186
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 252
+    exp        go to state 251
 
 
 State 187
@@ -2905,7 +2908,7 @@ State 187
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 253
+    exp        go to state 252
 
 
 State 188
@@ -2934,7 +2937,7 @@ State 188
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 254
+    exp        go to state 253
 
 
 State 189
@@ -2957,16 +2960,16 @@ State 191
 
    69 var_dec: TK_PR_CONST native_type id . init_var
 
-    TK_OC_LE  shift, and go to state 230
+    TK_OC_LE  shift, and go to state 229
 
-    init_var  go to state 255
+    init_var  go to state 254
 
 
 State 192
 
    75 var_dec: TK_PR_STATIC TK_PR_CONST TK_IDENTIFICADOR . TK_IDENTIFICADOR
 
-    TK_IDENTIFICADOR  shift, and go to state 256
+    TK_IDENTIFICADOR  shift, and go to state 255
 
 
 State 193
@@ -2974,9 +2977,9 @@ State 193
    67 var_dec: TK_PR_STATIC TK_PR_CONST native_type . id init_var
    71        | TK_PR_STATIC TK_PR_CONST native_type . TK_IDENTIFICADOR
 
-    TK_IDENTIFICADOR  shift, and go to state 257
+    TK_IDENTIFICADOR  shift, and go to state 256
 
-    id  go to state 258
+    id  go to state 257
 
 
 State 194
@@ -2999,16 +3002,16 @@ State 196
 
    68 var_dec: TK_PR_STATIC native_type id . init_var
 
-    TK_OC_LE  shift, and go to state 230
+    TK_OC_LE  shift, and go to state 229
 
-    init_var  go to state 259
+    init_var  go to state 258
 
 
 State 197
 
   116 foreach: TK_PR_FOREACH '(' TK_IDENTIFICADOR . ':' exps_list ')' block
 
-    ':'  shift, and go to state 260
+    ':'  shift, and go to state 259
 
 
 State 198
@@ -3131,8 +3134,8 @@ State 213
   120 for: TK_PR_FOR '(' cmd_list . ':' exp ':' cmd_list ')' block
   122 cmd_list: cmd_list . ',' cmd
 
-    ':'  shift, and go to state 261
-    ','  shift, and go to state 262
+    ':'  shift, and go to state 260
+    ','  shift, and go to state 261
 
 
 State 214
@@ -3172,7 +3175,7 @@ State 215
     '*'        shift, and go to state 185
     '/'        shift, and go to state 186
     '%'        shift, and go to state 187
-    ')'        shift, and go to state 263
+    ')'        shift, and go to state 262
 
 
 State 216
@@ -3186,14 +3189,14 @@ State 217
 
   109 case_cmd: TK_PR_CASE '-' TK_LIT_INT . ':'
 
-    ':'  shift, and go to state 264
+    ':'  shift, and go to state 263
 
 
 State 218
 
   108 case_cmd: TK_PR_CASE '+' TK_LIT_INT . ':'
 
-    ':'  shift, and go to state 265
+    ':'  shift, and go to state 264
 
 
 State 219
@@ -3212,29 +3215,62 @@ State 220
 
 State 221
 
-   98 func_call: TK_IDENTIFICADOR '(' params . ')'
+   10 array: id '[' exp . ']'
+  140 exp: exp . '+' exp
+  141    | exp . '-' exp
+  142    | exp . '*' exp
+  143    | exp . '/' exp
+  145    | exp . TK_OC_EQ exp
+  146    | exp . TK_OC_NE exp
+  147    | exp . TK_OC_GE exp
+  148    | exp . TK_OC_LE exp
+  149    | exp . '>' exp
+  150    | exp . '<' exp
+  151    | exp . TK_OC_AND exp
+  152    | exp . TK_OC_OR exp
+  155    | exp . '%' exp
 
-    ')'  shift, and go to state 266
+    TK_OC_LE   shift, and go to state 175
+    TK_OC_GE   shift, and go to state 176
+    TK_OC_EQ   shift, and go to state 177
+    TK_OC_NE   shift, and go to state 178
+    TK_OC_AND  shift, and go to state 179
+    TK_OC_OR   shift, and go to state 180
+    '<'        shift, and go to state 181
+    '>'        shift, and go to state 182
+    '-'        shift, and go to state 183
+    '+'        shift, and go to state 184
+    '*'        shift, and go to state 185
+    '/'        shift, and go to state 186
+    '%'        shift, and go to state 187
+    ']'        shift, and go to state 265
 
 
 State 222
 
-  100 params: params_list .
-  102 params_list: params_list . ',' param
+   98 func_call: id '(' params . ')'
 
-    ','  shift, and go to state 267
-
-    $default  reduce using rule 100 (params)
+    ')'  shift, and go to state 266
 
 
 State 223
 
+  100 params: params_list .
+
+    $default  reduce using rule 100 (params)
+
+
+State 224
+
   101 params_list: param .
+  102            | param . ',' params_list
+
+    ','  shift, and go to state 267
 
     $default  reduce using rule 101 (params_list)
 
 
-State 224
+State 225
 
   103 param: exp .
   140 exp: exp . '+' exp
@@ -3266,39 +3302,6 @@ State 224
     '%'        shift, and go to state 187
 
     $default  reduce using rule 103 (param)
-
-
-State 225
-
-   10 array: id '[' exp . ']'
-  140 exp: exp . '+' exp
-  141    | exp . '-' exp
-  142    | exp . '*' exp
-  143    | exp . '/' exp
-  145    | exp . TK_OC_EQ exp
-  146    | exp . TK_OC_NE exp
-  147    | exp . TK_OC_GE exp
-  148    | exp . TK_OC_LE exp
-  149    | exp . '>' exp
-  150    | exp . '<' exp
-  151    | exp . TK_OC_AND exp
-  152    | exp . TK_OC_OR exp
-  155    | exp . '%' exp
-
-    TK_OC_LE   shift, and go to state 175
-    TK_OC_GE   shift, and go to state 176
-    TK_OC_EQ   shift, and go to state 177
-    TK_OC_NE   shift, and go to state 178
-    TK_OC_AND  shift, and go to state 179
-    TK_OC_OR   shift, and go to state 180
-    '<'        shift, and go to state 181
-    '>'        shift, and go to state 182
-    '-'        shift, and go to state 183
-    '+'        shift, and go to state 184
-    '*'        shift, and go to state 185
-    '/'        shift, and go to state 186
-    '%'        shift, and go to state 187
-    ']'        shift, and go to state 268
 
 
 State 226
@@ -3337,19 +3340,12 @@ State 226
 
 State 227
 
-    9 id: TK_IDENTIFICADOR .
+   95 assig_cmd: id '.' id . '=' exp
 
-    $default  reduce using rule 9 (id)
+    '='  shift, and go to state 268
 
 
 State 228
-
-   95 assig_cmd: id '.' id . '=' exp
-
-    '='  shift, and go to state 269
-
-
-State 229
 
    94 assig_cmd: array '=' exp .
   140 exp: exp . '+' exp
@@ -3383,7 +3379,7 @@ State 229
     $default  reduce using rule 94 (assig_cmd)
 
 
-State 230
+State 229
 
    79 init_var: TK_OC_LE . literal
    80         | TK_OC_LE . id
@@ -3394,78 +3390,78 @@ State 230
     TK_LIT_TRUE       shift, and go to state 109
     TK_LIT_CHAR       shift, and go to state 110
     TK_LIT_STRING     shift, and go to state 111
-    TK_IDENTIFICADOR  shift, and go to state 227
-    '-'               shift, and go to state 270
-    '+'               shift, and go to state 271
+    TK_IDENTIFICADOR  shift, and go to state 112
+    '-'               shift, and go to state 269
+    '+'               shift, and go to state 270
 
-    id       go to state 272
-    int      go to state 273
-    float    go to state 274
-    false    go to state 275
-    true     go to state 276
-    char     go to state 277
-    string   go to state 278
-    literal  go to state 279
+    id       go to state 271
+    int      go to state 272
+    float    go to state 273
+    false    go to state 274
+    true     go to state 275
+    char     go to state 276
+    string   go to state 277
+    literal  go to state 278
 
 
-State 231
+State 230
 
    70 var_dec: native_type id init_var .
 
     $default  reduce using rule 70 (var_dec)
 
 
+State 231
+
+   98 func_call: id . '(' params ')'
+
+    '('  shift, and go to state 146
+
+
 State 232
-
-   98 func_call: TK_IDENTIFICADOR . '(' params ')'
-
-    '('  shift, and go to state 145
-
-
-State 233
 
   110 pipe_exp: func_call TK_OC_PG func_call .
 
     $default  reduce using rule 110 (pipe_exp)
 
 
-State 234
+State 233
 
   111 pipe_exp: func_call TK_OC_PB func_call .
 
     $default  reduce using rule 111 (pipe_exp)
 
 
-State 235
+State 234
 
   112 pipe_exp: pipe_exp TK_OC_PG func_call .
 
     $default  reduce using rule 112 (pipe_exp)
 
 
-State 236
+State 235
 
   113 pipe_exp: pipe_exp TK_OC_PB func_call .
 
     $default  reduce using rule 113 (pipe_exp)
 
 
-State 237
+State 236
 
   114 if_stm: TK_PR_IF '(' exp ')' . TK_PR_THEN block
   115       | TK_PR_IF '(' exp ')' . TK_PR_THEN block TK_PR_ELSE block
 
-    TK_PR_THEN  shift, and go to state 280
+    TK_PR_THEN  shift, and go to state 279
 
 
-State 238
+State 237
 
   117 while: TK_PR_WHILE '(' exp ')' . TK_PR_DO block
 
-    TK_PR_DO  shift, and go to state 281
+    TK_PR_DO  shift, and go to state 280
 
 
-State 239
+State 238
 
   118 do_while: TK_PR_DO block TK_PR_WHILE '(' . exp ')'
 
@@ -3491,17 +3487,17 @@ State 239
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 282
+    exp        go to state 281
 
 
-State 240
+State 239
 
   144 exp: '(' exp ')' .
 
     $default  reduce using rule 144 (exp)
 
 
-State 241
+State 240
 
   140 exp: exp . '+' exp
   141    | exp . '-' exp
@@ -3527,7 +3523,7 @@ State 241
     $default  reduce using rule 148 (exp)
 
 
-State 242
+State 241
 
   140 exp: exp . '+' exp
   141    | exp . '-' exp
@@ -3553,7 +3549,7 @@ State 242
     $default  reduce using rule 147 (exp)
 
 
-State 243
+State 242
 
   140 exp: exp . '+' exp
   141    | exp . '-' exp
@@ -3583,7 +3579,7 @@ State 243
     $default  reduce using rule 145 (exp)
 
 
-State 244
+State 243
 
   140 exp: exp . '+' exp
   141    | exp . '-' exp
@@ -3613,7 +3609,7 @@ State 244
     $default  reduce using rule 146 (exp)
 
 
-State 245
+State 244
 
   140 exp: exp . '+' exp
   141    | exp . '-' exp
@@ -3645,7 +3641,7 @@ State 245
     $default  reduce using rule 151 (exp)
 
 
-State 246
+State 245
 
   140 exp: exp . '+' exp
   141    | exp . '-' exp
@@ -3678,7 +3674,7 @@ State 246
     $default  reduce using rule 152 (exp)
 
 
-State 247
+State 246
 
   140 exp: exp . '+' exp
   141    | exp . '-' exp
@@ -3704,7 +3700,7 @@ State 247
     $default  reduce using rule 150 (exp)
 
 
-State 248
+State 247
 
   140 exp: exp . '+' exp
   141    | exp . '-' exp
@@ -3730,7 +3726,7 @@ State 248
     $default  reduce using rule 149 (exp)
 
 
-State 249
+State 248
 
   140 exp: exp . '+' exp
   141    | exp . '-' exp
@@ -3754,7 +3750,7 @@ State 249
     $default  reduce using rule 141 (exp)
 
 
-State 250
+State 249
 
   140 exp: exp . '+' exp
   140    | exp '+' exp .
@@ -3778,7 +3774,7 @@ State 250
     $default  reduce using rule 140 (exp)
 
 
-State 251
+State 250
 
   140 exp: exp . '+' exp
   141    | exp . '-' exp
@@ -3798,7 +3794,7 @@ State 251
     $default  reduce using rule 142 (exp)
 
 
-State 252
+State 251
 
   140 exp: exp . '+' exp
   141    | exp . '-' exp
@@ -3818,7 +3814,7 @@ State 252
     $default  reduce using rule 143 (exp)
 
 
-State 253
+State 252
 
   140 exp: exp . '+' exp
   141    | exp . '-' exp
@@ -3838,7 +3834,7 @@ State 253
     $default  reduce using rule 155 (exp)
 
 
-State 254
+State 253
 
   140 exp: exp . '+' exp
   141    | exp . '-' exp
@@ -3872,21 +3868,21 @@ State 254
     $default  reduce using rule 166 (exps_list)
 
 
-State 255
+State 254
 
    69 var_dec: TK_PR_CONST native_type id init_var .
 
     $default  reduce using rule 69 (var_dec)
 
 
-State 256
+State 255
 
    75 var_dec: TK_PR_STATIC TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR .
 
     $default  reduce using rule 75 (var_dec)
 
 
-State 257
+State 256
 
     9 id: TK_IDENTIFICADOR .
    71 var_dec: TK_PR_STATIC TK_PR_CONST native_type TK_IDENTIFICADOR .
@@ -3895,23 +3891,23 @@ State 257
     $default  reduce using rule 71 (var_dec)
 
 
-State 258
+State 257
 
    67 var_dec: TK_PR_STATIC TK_PR_CONST native_type id . init_var
 
-    TK_OC_LE  shift, and go to state 230
+    TK_OC_LE  shift, and go to state 229
 
-    init_var  go to state 283
+    init_var  go to state 282
 
 
-State 259
+State 258
 
    68 var_dec: TK_PR_STATIC native_type id init_var .
 
     $default  reduce using rule 68 (var_dec)
 
 
-State 260
+State 259
 
   116 foreach: TK_PR_FOREACH '(' TK_IDENTIFICADOR ':' . exps_list ')' block
 
@@ -3938,10 +3934,10 @@ State 260
     func_call  go to state 125
     pipe_exp   go to state 126
     exp        go to state 128
-    exps_list  go to state 284
+    exps_list  go to state 283
 
 
-State 261
+State 260
 
   120 for: TK_PR_FOR '(' cmd_list ':' . exp ':' cmd_list ')' block
 
@@ -3967,10 +3963,10 @@ State 261
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 285
+    exp        go to state 284
 
 
-State 262
+State 261
 
   122 cmd_list: cmd_list ',' . cmd
 
@@ -4011,42 +4007,49 @@ State 262
     do_while      go to state 210
     switch        go to state 211
     for           go to state 212
-    cmd           go to state 286
+    cmd           go to state 285
 
 
-State 263
+State 262
 
   119 switch: TK_PR_SWITCH '(' exp ')' . block
 
     '{'  shift, and go to state 61
 
-    block  go to state 287
+    block  go to state 286
 
 
-State 264
+State 263
 
   109 case_cmd: TK_PR_CASE '-' TK_LIT_INT ':' .
 
     $default  reduce using rule 109 (case_cmd)
 
 
-State 265
+State 264
 
   108 case_cmd: TK_PR_CASE '+' TK_LIT_INT ':' .
 
     $default  reduce using rule 108 (case_cmd)
 
 
+State 265
+
+   10 array: id '[' exp ']' .
+
+    $default  reduce using rule 10 (array)
+
+
 State 266
 
-   98 func_call: TK_IDENTIFICADOR '(' params ')' .
+   98 func_call: id '(' params ')' .
 
     $default  reduce using rule 98 (func_call)
 
 
 State 267
 
-  102 params_list: params_list ',' . param
+  102 params_list: param ',' . params_list
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -4060,28 +4063,22 @@ State 267
     '('               shift, and go to state 115
     '.'               shift, and go to state 116
 
-    id         go to state 117
-    array      go to state 118
-    int        go to state 119
-    float      go to state 120
-    false      go to state 121
-    true       go to state 122
-    char       go to state 123
-    string     go to state 124
-    func_call  go to state 125
-    param      go to state 288
-    pipe_exp   go to state 126
-    exp        go to state 224
+    id           go to state 117
+    array        go to state 118
+    int          go to state 119
+    float        go to state 120
+    false        go to state 121
+    true         go to state 122
+    char         go to state 123
+    string       go to state 124
+    func_call    go to state 125
+    params_list  go to state 287
+    param        go to state 224
+    pipe_exp     go to state 126
+    exp          go to state 225
 
 
 State 268
-
-   10 array: id '[' exp ']' .
-
-    $default  reduce using rule 10 (array)
-
-
-State 269
 
    95 assig_cmd: id '.' id '=' . exp
 
@@ -4107,10 +4104,10 @@ State 269
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 289
+    exp        go to state 288
 
 
-State 270
+State 269
 
    83 literal: '-' . int
    86        | '-' . float
@@ -4118,11 +4115,11 @@ State 270
     TK_LIT_INT    shift, and go to state 106
     TK_LIT_FLOAT  shift, and go to state 107
 
-    int    go to state 290
-    float  go to state 291
+    int    go to state 289
+    float  go to state 290
 
 
-State 271
+State 270
 
    82 literal: '+' . int
    85        | '+' . float
@@ -4130,70 +4127,79 @@ State 271
     TK_LIT_INT    shift, and go to state 106
     TK_LIT_FLOAT  shift, and go to state 107
 
-    int    go to state 292
-    float  go to state 293
+    int    go to state 291
+    float  go to state 292
 
 
-State 272
+State 271
 
    80 init_var: TK_OC_LE id .
 
     $default  reduce using rule 80 (init_var)
 
 
-State 273
+State 272
 
    81 literal: int .
 
     $default  reduce using rule 81 (literal)
 
 
-State 274
+State 273
 
    84 literal: float .
 
     $default  reduce using rule 84 (literal)
 
 
-State 275
+State 274
 
    87 literal: false .
 
     $default  reduce using rule 87 (literal)
 
 
-State 276
+State 275
 
    88 literal: true .
 
     $default  reduce using rule 88 (literal)
 
 
-State 277
+State 276
 
    89 literal: char .
 
     $default  reduce using rule 89 (literal)
 
 
-State 278
+State 277
 
    90 literal: string .
 
     $default  reduce using rule 90 (literal)
 
 
-State 279
+State 278
 
    79 init_var: TK_OC_LE literal .
 
     $default  reduce using rule 79 (init_var)
 
 
-State 280
+State 279
 
   114 if_stm: TK_PR_IF '(' exp ')' TK_PR_THEN . block
   115       | TK_PR_IF '(' exp ')' TK_PR_THEN . block TK_PR_ELSE block
+
+    '{'  shift, and go to state 61
+
+    block  go to state 293
+
+
+State 280
+
+  117 while: TK_PR_WHILE '(' exp ')' TK_PR_DO . block
 
     '{'  shift, and go to state 61
 
@@ -4201,15 +4207,6 @@ State 280
 
 
 State 281
-
-  117 while: TK_PR_WHILE '(' exp ')' TK_PR_DO . block
-
-    '{'  shift, and go to state 61
-
-    block  go to state 295
-
-
-State 282
 
   118 do_while: TK_PR_DO block TK_PR_WHILE '(' exp . ')'
   140 exp: exp . '+' exp
@@ -4239,26 +4236,26 @@ State 282
     '*'        shift, and go to state 185
     '/'        shift, and go to state 186
     '%'        shift, and go to state 187
-    ')'        shift, and go to state 296
+    ')'        shift, and go to state 295
 
 
-State 283
+State 282
 
    67 var_dec: TK_PR_STATIC TK_PR_CONST native_type id init_var .
 
     $default  reduce using rule 67 (var_dec)
 
 
-State 284
+State 283
 
   116 foreach: TK_PR_FOREACH '(' TK_IDENTIFICADOR ':' exps_list . ')' block
   166 exps_list: exps_list . ',' exp
 
-    ')'  shift, and go to state 297
+    ')'  shift, and go to state 296
     ','  shift, and go to state 188
 
 
-State 285
+State 284
 
   120 for: TK_PR_FOR '(' cmd_list ':' exp . ':' cmd_list ')' block
   140 exp: exp . '+' exp
@@ -4288,31 +4285,31 @@ State 285
     '*'        shift, and go to state 185
     '/'        shift, and go to state 186
     '%'        shift, and go to state 187
-    ':'        shift, and go to state 298
+    ':'        shift, and go to state 297
 
 
-State 286
+State 285
 
   122 cmd_list: cmd_list ',' cmd .
 
     $default  reduce using rule 122 (cmd_list)
 
 
-State 287
+State 286
 
   119 switch: TK_PR_SWITCH '(' exp ')' block .
 
     $default  reduce using rule 119 (switch)
 
 
-State 288
+State 287
 
-  102 params_list: params_list ',' param .
+  102 params_list: param ',' params_list .
 
     $default  reduce using rule 102 (params_list)
 
 
-State 289
+State 288
 
    95 assig_cmd: id '.' id '=' exp .
   140 exp: exp . '+' exp
@@ -4346,68 +4343,68 @@ State 289
     $default  reduce using rule 95 (assig_cmd)
 
 
-State 290
+State 289
 
    83 literal: '-' int .
 
     $default  reduce using rule 83 (literal)
 
 
-State 291
+State 290
 
    86 literal: '-' float .
 
     $default  reduce using rule 86 (literal)
 
 
-State 292
+State 291
 
    82 literal: '+' int .
 
     $default  reduce using rule 82 (literal)
 
 
-State 293
+State 292
 
    85 literal: '+' float .
 
     $default  reduce using rule 85 (literal)
 
 
-State 294
+State 293
 
   114 if_stm: TK_PR_IF '(' exp ')' TK_PR_THEN block .
   115       | TK_PR_IF '(' exp ')' TK_PR_THEN block . TK_PR_ELSE block
 
-    TK_PR_ELSE  shift, and go to state 299
+    TK_PR_ELSE  shift, and go to state 298
 
     $default  reduce using rule 114 (if_stm)
 
 
-State 295
+State 294
 
   117 while: TK_PR_WHILE '(' exp ')' TK_PR_DO block .
 
     $default  reduce using rule 117 (while)
 
 
-State 296
+State 295
 
   118 do_while: TK_PR_DO block TK_PR_WHILE '(' exp ')' .
 
     $default  reduce using rule 118 (do_while)
 
 
-State 297
+State 296
 
   116 foreach: TK_PR_FOREACH '(' TK_IDENTIFICADOR ':' exps_list ')' . block
 
     '{'  shift, and go to state 61
 
-    block  go to state 300
+    block  go to state 299
 
 
-State 298
+State 297
 
   120 for: TK_PR_FOR '(' cmd_list ':' exp ':' . cmd_list ')' block
 
@@ -4448,52 +4445,52 @@ State 298
     do_while      go to state 210
     switch        go to state 211
     for           go to state 212
-    cmd_list      go to state 301
+    cmd_list      go to state 300
     cmd           go to state 214
 
 
-State 299
+State 298
 
   115 if_stm: TK_PR_IF '(' exp ')' TK_PR_THEN block TK_PR_ELSE . block
 
     '{'  shift, and go to state 61
 
-    block  go to state 302
+    block  go to state 301
 
 
-State 300
+State 299
 
   116 foreach: TK_PR_FOREACH '(' TK_IDENTIFICADOR ':' exps_list ')' block .
 
     $default  reduce using rule 116 (foreach)
 
 
-State 301
+State 300
 
   120 for: TK_PR_FOR '(' cmd_list ':' exp ':' cmd_list . ')' block
   122 cmd_list: cmd_list . ',' cmd
 
-    ')'  shift, and go to state 303
-    ','  shift, and go to state 262
+    ')'  shift, and go to state 302
+    ','  shift, and go to state 261
 
 
-State 302
+State 301
 
   115 if_stm: TK_PR_IF '(' exp ')' TK_PR_THEN block TK_PR_ELSE block .
 
     $default  reduce using rule 115 (if_stm)
 
 
-State 303
+State 302
 
   120 for: TK_PR_FOR '(' cmd_list ':' exp ':' cmd_list ')' . block
 
     '{'  shift, and go to state 61
 
-    block  go to state 304
+    block  go to state 303
 
 
-State 304
+State 303
 
   120 for: TK_PR_FOR '(' cmd_list ':' exp ':' cmd_list ')' block .
 

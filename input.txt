@@ -1,0 +1,44 @@
+// New Type Definition
+class type [
+    private int campo1:
+    public char campo2
+];
+
+// Global Variables Declaration
+int pid;
+string str;
+static type var;
+static type2 arr[20];
+
+// Type def
+class type2 [
+    private int campo1:
+    protected char campo2
+];
+
+// Array Declaration
+static char arr[10];
+type2 arr2[100];
+
+
+// Testing from here >>>
+
+int funcao() {
+    static const int number <= 15;
+
+    if (a) then {
+        a = 1;
+    } else {
+        if (b) then {
+
+        }
+    }
+}
+
+char func1() {
+    int abc <= 10;
+}
+
+char func2() {
+    b = 10.5;
+}

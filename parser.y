@@ -73,46 +73,60 @@
 
 %error-verbose
 
-/*
 %type <ast>programa
 %type <ast>code
 %type <ast>func_dec
 %type <ast>block
 %type <ast>commands
-
 %type <ast>command
 
-%type <ast>exp
+%type<ast>if_stm
 %type <ast>assig_cmd
-*/
-
-%type <ast>programa
-%type <ast>code
-%type <ast>func_dec
-%type <ast>block
-%type <ast>commands
-%type <ast>command
 %type <ast>var_dec
 %type <ast>init_var
+
+%type <ast>exp
 %type <ast>literal
+
+%type <ast>int
+%type <ast>float
+%type <ast>true
+%type <ast>false
+%type <ast>char
+%type <ast>string
+
+%type <ast>array
 %type <ast>id
 
 %%
 /* Regras (e ações) da gramática */
 
-programa: /* empty */  {}
-        | code { $$ = makeASTUnaryNode(AST_PROGRAMA, NULL, $1); };
+programa: /* empty */   { }
+         | code         { $$ = makeASTUnaryNode(AST_PROGRAMA, NULL, $1); };
 
-code: type_def ';'              { $$ = NULL; }
+code:  type_def ';'             { $$ = NULL; }
      | global_def ';'           { $$ = NULL; }
      | func_dec                 { $$ = $1; }
-     | code type_def ';'    { $$ = $1; }
-     | code global_def ';'  { $$ = $1; }
-     | code func_dec        { if ($1 != NULL) { tree_insert_node($1, $2); } $$ = $1; } ;
+     | type_def ';' code        { $$ = $3; }
+     | global_def ';' code      { $$ = $3; }
+     | func_dec code            { 
+                                        if ($2 != NULL) {
+                                                tree_insert_node($1, $2);
+                                        } 
+                                        $$ = $1;
+                                } ;
 
-/* Auxiliary rule - Add ID to AST */
+/* Auxiliary rules */
 
-id: TK_IDENTIFICADOR    { $$ = makeASTNode(AST_IDENTIFICADOR, $1); };
+id: TK_IDENTIFICADOR            { $$ = makeASTNode(AST_IDENTIFICADOR, $1); };
+array: id '[' exp ']'           { $$ = makeASTBinaryNode(AST_VETOR_INDEXADO, NULL, $1, $3); };
+
+int: TK_LIT_INT                 { $$ = makeASTNode(AST_LITERAL, $1); };
+float: TK_LIT_FLOAT             { $$ = makeASTNode(AST_LITERAL, $1); };
+false: TK_LIT_FALSE             { $$ = makeASTNode(AST_LITERAL, $1); };
+true: TK_LIT_TRUE               { $$ = makeASTNode(AST_LITERAL, $1); };
+char: TK_LIT_CHAR               { $$ = makeASTNode(AST_LITERAL, $1); };
+string: TK_LIT_STRING           { $$ = makeASTNode(AST_LITERAL, $1); };
 
 /* New Type Declaration */
         
@@ -151,8 +165,8 @@ int_pos: TK_LIT_INT; // The '+' Sign was removed from the regEx to accept only p
 
 /* Function Declaration */
 
-func_dec: TK_PR_STATIC type TK_IDENTIFICADOR '(' params_dec ')' block   { $$ = makeASTUnaryNode(AST_FUNCAO, $3, $7); }
-         | type TK_IDENTIFICADOR '(' params_dec ')' block               { $$ = makeASTUnaryNode(AST_FUNCAO, $2, $6); };
+func_dec: TK_PR_STATIC type TK_IDENTIFICADOR '(' params_dec ')' block   { if ($7 != NULL) $$ = makeASTUnaryNode(AST_FUNCAO, $3, $7); else $$ = makeASTNode(AST_FUNCAO, $3); }
+         | type TK_IDENTIFICADOR '(' params_dec ')' block               { if ($6 != NULL) $$ = makeASTUnaryNode(AST_FUNCAO, $2, $6); else $$ = makeASTNode(AST_FUNCAO, $2); };
 
 params_dec: /* empty */
            | params_dec_list;
@@ -163,16 +177,16 @@ params_dec_list: param_dec
 param_dec: TK_PR_CONST type TK_IDENTIFICADOR
           | type TK_IDENTIFICADOR;
 
-block: '{' '}'                     {  }
+block:  '{' '}'                    { $$ = makeASTNode(AST_BLOCO, NULL); /* EMPTY BLOCK?? */ }
       | '{' commands '}'           { $$ = $2; };
 
 commands: command                  { $$ = $1; }
-         | commands command        { tree_insert_node($1, $2); $$ = $1; };
+         | command commands        { tree_insert_node($1, $2); $$ = $1; };
 
 /* Simple Commands */
-command: var_dec ';'            { $$ = $1; }
+command:  var_dec ';'           { $$ = $1; }
         | shift_cmd ';'         {}
-        | assig_cmd ';'         {}
+        | assig_cmd ';'         { $$ = $1; }
         | io_cmd ';'            {}
         | func_call ';'         {}
         | return_cmd ';'        {}
@@ -182,7 +196,7 @@ command: var_dec ';'            { $$ = $1; }
         | pipe_exp ';'          {}
         | do_while ';'          {}
         | block ';'             {}
-        | if_stm                {}
+        | if_stm                { $$ = $1; }
         | foreach               {}
         | while                 {}
         | switch                {}
@@ -201,24 +215,24 @@ var_dec: TK_PR_STATIC TK_PR_CONST native_type id init_var { $$ = makeASTBinaryNo
         | native_type TK_IDENTIFICADOR                                  { }
         
         /* Cannot initialize user type variables */
-        | TK_PR_STATIC TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR    { }
-        | TK_PR_STATIC TK_IDENTIFICADOR TK_IDENTIFICADOR                { }
-        | TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR                 { }
-        | TK_IDENTIFICADOR TK_IDENTIFICADOR                             { };
+        | TK_PR_STATIC TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR         { }
+        | TK_PR_STATIC TK_IDENTIFICADOR TK_IDENTIFICADOR                     { }
+        | TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR                      { }
+        | TK_IDENTIFICADOR TK_IDENTIFICADOR                                  { };
 
-init_var: TK_OC_LE literal                     { $$ = $2; }
-         | TK_OC_LE id                         { $$ = $2; };
+init_var: TK_OC_LE literal      { $$ = $2; }
+         | TK_OC_LE id          { $$ = $2; };
 
-literal: TK_LIT_INT             { $$ = makeASTNode(AST_LITERAL, $1); }
-        | '+' TK_LIT_INT        { $$ = makeASTNode(AST_LITERAL, $2); }
-        | '-' TK_LIT_INT        { $$ = makeASTNode(AST_LITERAL, $2); /* add signal!! */ }
-        | TK_LIT_FLOAT          { $$ = makeASTNode(AST_LITERAL, $1); }
-        | '+' TK_LIT_FLOAT      { $$ = makeASTNode(AST_LITERAL, $2); }
-        | '-' TK_LIT_FLOAT      { $$ = makeASTNode(AST_LITERAL, $2); /* add signal!! */ }
-        | TK_LIT_FALSE          { $$ = makeASTNode(AST_LITERAL, $1); }
-        | TK_LIT_TRUE           { $$ = makeASTNode(AST_LITERAL, $1); }
-        | TK_LIT_CHAR           { $$ = makeASTNode(AST_LITERAL, $1); }
-        | TK_LIT_STRING         { $$ = makeASTNode(AST_LITERAL, $1); };
+literal:  int
+        | '+' int               { $$ = $2; }
+        | '-' int               { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); }
+        | float
+        | '+' float             { $$ = $2; }
+        | '-' float             { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); }
+        | false
+        | true
+        | char
+        | string;
 
 /* Shift command - command */
 
@@ -227,9 +241,9 @@ shift_cmd: TK_IDENTIFICADOR TK_OC_SL int_pos
 
 /* Assignment - command */
 
-assig_cmd: TK_IDENTIFICADOR '=' exp
-          | TK_IDENTIFICADOR '[' exp ']' '=' exp
-          | TK_IDENTIFICADOR '.' TK_IDENTIFICADOR '=' exp;
+assig_cmd: id '=' exp                   { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $3); }
+          | array '=' exp               { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $3); }
+          | id '.' id '=' exp           { $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $5); };
 
 /* Input and output - command */
 
@@ -269,8 +283,8 @@ pipe_exp: func_call TK_OC_PG func_call
 
 /* Flow Control - Commands */
 
-if_stm: TK_PR_IF '(' exp ')' TK_PR_THEN block;
-       | TK_PR_IF '(' exp ')' TK_PR_THEN block TK_PR_ELSE block;
+if_stm:  TK_PR_IF '(' exp ')' TK_PR_THEN block                          { $$ = makeASTBinaryNode(AST_IF_ELSE, NULL, $3, $6); }
+       | TK_PR_IF '(' exp ')' TK_PR_THEN block TK_PR_ELSE block         { $$ = makeASTTernaryNode(AST_IF_ELSE, NULL, $3, $6, $8);  };
 
 foreach: TK_PR_FOREACH '(' TK_IDENTIFICADOR ':' exps_list ')' block;
 
@@ -285,7 +299,7 @@ for: TK_PR_FOR '(' cmd_list ':' exp ':' cmd_list ')' block;
 cmd_list: cmd
          | cmd_list ',' cmd;
 
-cmd:    var_dec
+cmd:      var_dec
         | shift_cmd
         | assig_cmd
         | block
@@ -303,33 +317,33 @@ cmd:    var_dec
 
 /* Expressions */
 
-exp: TK_IDENTIFICADOR                           
-    | TK_IDENTIFICADOR '[' exp ']'
-    | exp '+' exp
-    | exp '-' exp
-    | exp '*' exp
-    | exp '/' exp
-    | '(' exp ')'
-    | exp TK_OC_EQ exp
-    | exp TK_OC_NE exp
-    | exp TK_OC_GE 
-    | exp TK_OC_LE exp
-    | exp '>' exp
-    | exp '<' exp
-    | exp TK_OC_AND exp
-    | exp TK_OC_OR exp
-    | func_call
-    | pipe_exp
-    | exp '%' exp
-    | '!' exp
-    | '.'
-    | '-' exp // Accepts negative numbers
-    | TK_LIT_INT
-    | TK_LIT_FLOAT
-    | TK_LIT_STRING
-    | TK_LIT_CHAR
-    | TK_LIT_TRUE
-    | TK_LIT_FALSE;
+exp:  id                        { $$ = $1; }         
+    | array                     { $$ = $1; }
+    | exp '+' exp               { $$ = makeASTBinaryNode(AST_ARIM_SOMA, NULL, $1, $3); }
+    | exp '-' exp               { $$ = makeASTBinaryNode(AST_ARIM_SUBTRACAO, NULL, $1, $3); }
+    | exp '*' exp               { $$ = makeASTBinaryNode(AST_ARIM_MULTIPLICACAO, NULL, $1, $3); }
+    | exp '/' exp               { $$ = makeASTBinaryNode(AST_ARIM_DIVISAO, NULL, $1, $3); }
+    | '(' exp ')'               { $$ = $2; }
+    | exp TK_OC_EQ exp          { $$ = makeASTBinaryNode(AST_LOGICO_COMP_IGUAL, NULL, $1, $3); }
+    | exp TK_OC_NE exp          { $$ = makeASTBinaryNode(AST_LOGICO_COMP_DIF, NULL, $1, $3); }
+    | exp TK_OC_GE exp          { $$ = makeASTBinaryNode(AST_LOGICO_COMP_GE, NULL, $1, $3); }
+    | exp TK_OC_LE exp          { $$ = makeASTBinaryNode(AST_LOGICO_COMP_LE, NULL, $1, $3); }
+    | exp '>' exp               { $$ = makeASTBinaryNode(AST_LOGICO_COMP_G, NULL, $1, $3); }
+    | exp '<' exp               { $$ = makeASTBinaryNode(AST_LOGICO_COMP_L, NULL, $1, $3); }
+    | exp TK_OC_AND exp         { $$ = makeASTBinaryNode(AST_LOGICO_E, NULL, $1, $3); }
+    | exp TK_OC_OR exp          { $$ = makeASTBinaryNode(AST_LOGICO_OU, NULL, $1, $3); }
+    | func_call                 {}
+    | pipe_exp                  {}
+    | exp '%' exp               {}
+    | '!' exp                   { $$ = makeASTUnaryNode(AST_LOGICO_COMP_NEGACAO, NULL, $2); }
+    | '.'                       {}
+    | '-' exp                   { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); }
+    | int                       { $$ = $1; }
+    | float                     { $$ = $1; }
+    | string                    { $$ = $1; }
+    | char                      { $$ = $1; }
+    | true                      { $$ = $1; }
+    | false                     { $$ = $1; };
 
 exps_list: exp
           | exps_list ',' exp;

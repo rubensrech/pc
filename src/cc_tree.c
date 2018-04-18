@@ -17,6 +17,9 @@
 #include <stdlib.h>
 
 #include "cc_tree.h"
+#include "cc_misc.h"
+#include "cc_gv.h"
+#include "cc_ast.h"
 
 extern FILE *intfp;
 void *comp_tree_last = NULL;
@@ -25,6 +28,9 @@ void *comp_tree_last = NULL;
 
 comp_tree_t* tree_new(void){
 	comp_tree_t *tree = tree_make_node(NULL);
+	// ----- gv -----
+	gv_init(GV_OUT_FILE);
+	// ----- -- -----
 	return tree;
 }
 
@@ -37,9 +43,13 @@ void tree_free(comp_tree_t *tree){
 		free(tree);
 		tree = ptr;
 	} while(ptr != NULL);
+
+	// ----- gv -----
+	// gv_close();
+	// ----- -- -----
 }
 
-comp_tree_t* tree_make_node(void *value){
+comp_tree_t* tree_make_node(void *value) {
 	comp_tree_t *node = malloc(sizeof(comp_tree_t));
 	if (!node)
 		ERRO("Failed to allocate memory for tree node");
@@ -50,6 +60,27 @@ comp_tree_t* tree_make_node(void *value){
 	node->last = NULL;
 	node->next = NULL;
 	node->prev = NULL;
+
+	// ----- gv -----
+	if (value != NULL) {
+		AstNodeInfo *info = (AstNodeInfo*)value;
+		char *name = NULL;
+
+		if (info->tokenInfo != NULL) {
+			switch (info->type) {
+				case AST_LITERAL:
+				case AST_IDENTIFICADOR:
+				case AST_FUNCAO:
+					name = (info->tokenInfo)->lexeme;
+					break;
+				default: break;
+			}
+		}
+
+		gv_declare(info->type, node, name);
+	}
+	// ----- -- -----
+
 	return node;
 }
 
@@ -68,6 +99,10 @@ void tree_insert_node(comp_tree_t *tree, comp_tree_t *node){
 		tree->last = node;
 	}
 	++tree->childnodes;
+
+	// ----- gv -----
+	gv_connect(tree, node);
+	// ----- -- -----
 
 	fprintf (intfp, "node_%p [label=\"\"]\n", tree);
 	fprintf (intfp, "node_%p [label=\"\"]\n", node);

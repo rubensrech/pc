@@ -35,7 +35,7 @@ int funcao() {
         }
     }
 
-    return number + 10;
+    return number % funcao();
 }
 
 char func1() {

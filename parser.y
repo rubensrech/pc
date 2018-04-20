@@ -350,9 +350,9 @@ exp:  id                        { $$ = $1; }
     | exp '<' exp               { $$ = makeASTBinaryNode(AST_LOGICO_COMP_L, NULL, $1, $3); }
     | exp TK_OC_AND exp         { $$ = makeASTBinaryNode(AST_LOGICO_E, NULL, $1, $3); }
     | exp TK_OC_OR exp          { $$ = makeASTBinaryNode(AST_LOGICO_OU, NULL, $1, $3); }
-    | func_call                 {}
+    | func_call                 { $$ = $1; }
     | pipe_exp                  {}
-    | exp '%' exp               {}
+    | exp '%' exp               { $$ = makeASTBinaryNode(AST_ARIM_MOD, NULL, $1, $3); }
     | '!' exp                   { $$ = makeASTUnaryNode(AST_LOGICO_COMP_NEGACAO, NULL, $2); }
     | '.'                       {}
     | '-' exp                   { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); }

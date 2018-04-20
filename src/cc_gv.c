@@ -45,7 +45,7 @@ static inline void __gv_test_valid_ast_pointer (const char *function_name, const
 
 static inline char *__gv_description_from_type (int tipo)
 {
-  switch (tipo){
+  switch (tipo) {
   case AST_PROGRAMA: return "programa";
   case AST_IF_ELSE: return "ifelse";
   case AST_DO_WHILE: return "dowhile";
@@ -59,6 +59,7 @@ static inline char *__gv_description_from_type (int tipo)
   case AST_ARIM_SUBTRACAO: return "-";
   case AST_ARIM_MULTIPLICACAO: return "*";
   case AST_ARIM_DIVISAO: return "/";
+  case AST_ARIM_MOD: return "%";
   case AST_ARIM_INVERSAO: return "-";
   case AST_LOGICO_E: return "&&";
   case AST_LOGICO_OU: return "||";
@@ -75,6 +76,7 @@ static inline char *__gv_description_from_type (int tipo)
   case AST_SHIFT_RIGHT: return ">>";
 
   default:
+    printf("%d\n", tipo);
     fprintf (stderr, "%s: tipo provided is invalid here\n", __FUNCTION__);
     abort();
   }
@@ -184,6 +186,7 @@ void gv_declare (const int tipo, const void *pointer, char *name)
   case AST_ARIM_MULTIPLICACAO:
   case AST_ARIM_DIVISAO:
   case AST_ARIM_INVERSAO:
+  case AST_ARIM_MOD:
   case AST_LOGICO_E:
   case AST_LOGICO_OU:
   case AST_LOGICO_COMP_DIF:

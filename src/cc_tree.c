@@ -60,6 +60,7 @@ comp_tree_t* tree_make_node(void *value) {
 	node->last = NULL;
 	node->next = NULL;
 	node->prev = NULL;
+	node->list_next = NULL;
 
 	// ----- gv -----
 	if (value != NULL) {
@@ -82,6 +83,24 @@ comp_tree_t* tree_make_node(void *value) {
 	// ----- -- -----
 
 	return node;
+}
+
+void tree_set_list_next_node(comp_tree_t *tree, comp_tree_t *node) {
+	if (tree == NULL)
+		ERRO("Cannot insert node, tree is null");
+	if (node == NULL)
+		ERRO("Cannot insert node, node is null");
+
+	tree->list_next = node;
+
+	// ----- gv -----
+	gv_connect(tree, node);
+	// ----- -- -----
+
+	fprintf (intfp, "node_%p [label=\"\"]\n", tree);
+	fprintf (intfp, "node_%p [label=\"\"]\n", node);
+	fprintf (intfp, "node_%p -> node_%p\n", tree, node);
+	comp_tree_last = tree;
 }
 
 void tree_insert_node(comp_tree_t *tree, comp_tree_t *node){

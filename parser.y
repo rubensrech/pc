@@ -118,7 +118,7 @@ code:  type_def ';'             { $$ = NULL; }
      | type_def ';' code        { $$ = $3; }
      | global_def ';' code      { $$ = $3; }
      | func_dec code            { 
-                                        if ($2 != NULL) tree_insert_node($1, $2);
+                                        if ($2 != NULL) tree_set_list_next_node($1, $2);
                                         $$ = $1;
                                 };
 
@@ -189,7 +189,7 @@ block:  '{' '}'                    { $$ = makeASTNode(AST_BLOCO, NULL); /* EMPTY
 commands: command                  { $$ = $1; }
          | command commands        { 
                                         if ($1 != NULL && $2 != NULL) {
-                                                tree_insert_node($1, $2);
+                                                tree_set_list_next_node($1, $2);
                                                 $$ = $1;
                                         }
                                         if ($1 == NULL) $$ = $2;
@@ -273,7 +273,10 @@ params:  /* empty */                    { $$ = NULL; }
        | params_list                    { $$ = $1; };
 
 params_list: param                      { $$ = $1; }
-            | param ',' params_list     { tree_insert_node($1, $3); $$ = $1; };
+            | param ',' params_list     {
+                                                tree_set_list_next_node($1, $3);
+                                                $$ = $1;
+                                        };
         
 param: exp                              { $$ = $1; };
 

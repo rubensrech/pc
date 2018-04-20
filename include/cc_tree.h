@@ -28,6 +28,7 @@ typedef struct comp_tree {
 	int childnodes;
 	struct comp_tree *first,*last;
 	struct comp_tree *next,*prev;
+	struct comp_tree *list_next;
 } comp_tree_t;
 
 /* Funções: a seguir segue a lista de funções da API cc_tree */
@@ -89,5 +90,14 @@ comp_tree_t* tree_make_ternary_node(void *value, comp_tree_t* node1, comp_tree_t
  * exibe os ponteiros dos atributos value.
  */
 void tree_debug_print(comp_tree_t *tree);
+
+
+
+/*
+ * Função: tree_set_list_next_node, define o proximo nodeo de uma
+ * lista, em um contexto em que tree é um elemento de uma lista e
+ * node deve ser o elemento seguinte a tree
+ */
+void tree_set_list_next_node(comp_tree_t *tree, comp_tree_t *node);
 
 #endif //CC_TREE_H_

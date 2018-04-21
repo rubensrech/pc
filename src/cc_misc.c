@@ -171,11 +171,13 @@ TokenInfo *addSymbolsTable(int tokenType) {
   // info->lexeke must be freed later
   info->lexeme = token;
 
-  // Hash already contais same key => remove old entry
-  if (dict_get(symbolsTable, key) != NULL) {
-    oldInfo = dict_remove(symbolsTable, key);
-    // Update AST pointer !!!
-    freeTokenInfo(oldInfo);
+  // Hash already contais same key => update line
+  oldInfo = dict_get(symbolsTable, key);
+  if (oldInfo != NULL) {
+    oldInfo->line = num_lines;
+    free(token);
+    free(info);
+    return oldInfo;
   }
 
   // Key is duplicated (strdup) inside dict_put function

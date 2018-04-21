@@ -28,29 +28,6 @@ void yyerror (char const *mensagem)
   exit(1);
 }
 
-void teste() {
-  AstNodeInfo *sum = malloc(sizeof(struct astNodeInfo));
-  AstNodeInfo *child = malloc(sizeof(struct astNodeInfo));
-  TokenInfo *childInfo = malloc(sizeof(struct tokenInfo));
-  char val[2] = "5";
-
-  sum->type = AST_ARIM_SOMA;
-  sum->tokenInfo = NULL;
-
-  childInfo->line = 10;
-  childInfo->type = POA_LIT_INT;
-  childInfo->lexeme = val;
-  childInfo->value.intVal = 5;
-
-  child->type = AST_LITERAL;
-  child->tokenInfo = childInfo;
-
-  ast = tree_make_binary_node(sum, 
-              tree_make_node(child), 
-              tree_make_node(child));
-
-}
-
 void main_init (int argc, char **argv)
 {
   //implemente esta função com rotinas de inicialização, se necessário

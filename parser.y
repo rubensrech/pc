@@ -9,6 +9,8 @@
 #include "cc_misc.h"
 #include "cc_tree.h"
 #include "cc_ast.h"
+
+extern comp_tree_t *ast;
 }
 
 %union {
@@ -109,8 +111,8 @@
 %%
 /* Regras (e ações) da gramática */
 
-programa: /* empty */   { $$ = makeASTNode(AST_PROGRAMA, NULL); }
-         | code         { $$ = makeASTUnaryNode(AST_PROGRAMA, NULL, $1); };
+programa: /* empty */   { $$ = makeASTNode(AST_PROGRAMA, NULL); ast = $$; }
+         | code         { $$ = makeASTUnaryNode(AST_PROGRAMA, NULL, $1); ast = $$; };
 
 code:  type_def ';'             { $$ = NULL; }
      | global_def ';'           { $$ = NULL; }

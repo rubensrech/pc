@@ -89,6 +89,7 @@ extern comp_tree_t *ast;
 %type <ast>while
 %type <ast>do_while
 %type <ast>return_cmd
+%type <ast>io_cmd
 
 %type <ast>func_call
 %type <ast>params
@@ -96,6 +97,7 @@ extern comp_tree_t *ast;
 %type <ast>param
 
 %type <ast>exp
+%type <ast>exps_list
 %type <ast>literal
 
 %type <ast>int
@@ -201,8 +203,8 @@ commands: command                  { $$ = $1; }
 command:  var_dec ';'           { $$ = $1; }
         | shift_cmd ';'         {}
         | assig_cmd ';'         { $$ = $1; }
-        | io_cmd ';'            {}
-        | func_call ';'         {}
+        | io_cmd ';'            { $$ = $1; }
+        | func_call ';'         { $$ = $1; }
         | return_cmd ';'        { $$ = $1; }
         | break_cmd ';'         {}
         | continue_cmd ';'      {}
@@ -265,8 +267,8 @@ assig_cmd: id '=' exp                   { $$ = makeASTBinaryNode(AST_ATRIBUICAO,
 
 /* Input and output - command */
 
-io_cmd: TK_PR_INPUT exp
-       | TK_PR_OUTPUT exps_list;
+io_cmd: TK_PR_INPUT exp                 { $$ = makeASTUnaryNode(AST_INPUT, NULL, $2); }
+       | TK_PR_OUTPUT exps_list         { $$ = makeASTUnaryNode(AST_OUTPUT, NULL, $2); };
 
 /* Function call - command */
 
@@ -369,7 +371,10 @@ exp:  id                        { $$ = $1; }
     | true                      { $$ = $1; }
     | false                     { $$ = $1; };
 
-exps_list: exp
-          | exps_list ',' exp;
+exps_list: exp                  { $$ = $1; }
+          | exp ',' exps_list   {
+                                        tree_set_list_next_node($1, $3);
+                                        $$ = $1;
+                                };
 
 %%

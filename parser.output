@@ -226,7 +226,7 @@ Grammar
   167    | false
 
   168 exps_list: exp
-  169          | exps_list ',' exp
+  169          | exp ',' exps_list
 
 
 Terminals, with rules where they appear
@@ -1871,6 +1871,7 @@ State 128
   155    | exp . TK_OC_OR exp
   158    | exp . '%' exp
   168 exps_list: exp .
+  169          | exp . ',' exps_list
 
     TK_OC_LE   shift, and go to state 175
     TK_OC_GE   shift, and go to state 176
@@ -1885,6 +1886,7 @@ State 128
     '*'        shift, and go to state 185
     '/'        shift, and go to state 186
     '%'        shift, and go to state 187
+    ','        shift, and go to state 188
 
     $default  reduce using rule 168 (exps_list)
 
@@ -1892,9 +1894,6 @@ State 128
 State 129
 
   100 io_cmd: TK_PR_OUTPUT exps_list .
-  169 exps_list: exps_list . ',' exp
-
-    ','  shift, and go to state 188
 
     $default  reduce using rule 100 (io_cmd)
 
@@ -2924,7 +2923,7 @@ State 187
 
 State 188
 
-  169 exps_list: exps_list ',' . exp
+  169 exps_list: exp ',' . exps_list
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -2948,7 +2947,8 @@ State 188
     string     go to state 124
     func_call  go to state 125
     pipe_exp   go to state 126
-    exp        go to state 255
+    exp        go to state 128
+    exps_list  go to state 255
 
 
 State 189
@@ -3906,34 +3906,7 @@ State 254
 
 State 255
 
-  143 exp: exp . '+' exp
-  144    | exp . '-' exp
-  145    | exp . '*' exp
-  146    | exp . '/' exp
-  148    | exp . TK_OC_EQ exp
-  149    | exp . TK_OC_NE exp
-  150    | exp . TK_OC_GE exp
-  151    | exp . TK_OC_LE exp
-  152    | exp . '>' exp
-  153    | exp . '<' exp
-  154    | exp . TK_OC_AND exp
-  155    | exp . TK_OC_OR exp
-  158    | exp . '%' exp
-  169 exps_list: exps_list ',' exp .
-
-    TK_OC_LE   shift, and go to state 175
-    TK_OC_GE   shift, and go to state 176
-    TK_OC_EQ   shift, and go to state 177
-    TK_OC_NE   shift, and go to state 178
-    TK_OC_AND  shift, and go to state 179
-    TK_OC_OR   shift, and go to state 180
-    '<'        shift, and go to state 181
-    '>'        shift, and go to state 182
-    '-'        shift, and go to state 183
-    '+'        shift, and go to state 184
-    '*'        shift, and go to state 185
-    '/'        shift, and go to state 186
-    '%'        shift, and go to state 187
+  169 exps_list: exp ',' exps_list .
 
     $default  reduce using rule 169 (exps_list)
 
@@ -4389,10 +4362,8 @@ State 286
 State 287
 
   119 foreach: TK_PR_FOREACH '(' TK_IDENTIFICADOR ':' exps_list . ')' block
-  169 exps_list: exps_list . ',' exp
 
     ')'  shift, and go to state 301
-    ','  shift, and go to state 188
 
 
 State 288

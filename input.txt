@@ -47,7 +47,8 @@ char func1() {
     };
 
     while (a < 5) do {
-        
+        //a << 5;
+        // b >> 2;
     }
 
     do {

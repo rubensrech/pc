@@ -90,6 +90,7 @@ extern comp_tree_t *ast;
 %type <ast>do_while
 %type <ast>return_cmd
 %type <ast>io_cmd
+%type <ast>shift_cmd
 
 %type <ast>func_call
 %type <ast>params
@@ -99,6 +100,7 @@ extern comp_tree_t *ast;
 %type <ast>exp
 %type <ast>exps_list
 %type <ast>literal
+%type <ast>int_pos
 
 %type <ast>int
 %type <ast>float
@@ -165,13 +167,11 @@ global_def: global_var
 global_var: TK_PR_STATIC type TK_IDENTIFICADOR
          | type TK_IDENTIFICADOR;
 
-global_arr: TK_PR_STATIC type TK_IDENTIFICADOR '[' int_pos ']'
-         | type TK_IDENTIFICADOR '[' int_pos ']';
+global_arr: TK_PR_STATIC type TK_IDENTIFICADOR '[' TK_LIT_INT ']'
+         | type TK_IDENTIFICADOR '[' TK_LIT_INT ']';
 
 type: native_type
      | TK_IDENTIFICADOR; // Detects user created types
-
-int_pos: TK_LIT_INT; // The '+' Sign was removed from the regEx to accept only positive numbers with TK_LIT_INT
 
 /* Function Declaration */
 
@@ -201,7 +201,7 @@ commands: command                  { $$ = $1; }
 
 /* Simple Commands */
 command:  var_dec ';'           { $$ = $1; }
-        | shift_cmd ';'         {}
+        | shift_cmd ';'         { $$ = $1; }
         | assig_cmd ';'         { $$ = $1; }
         | io_cmd ';'            { $$ = $1; }
         | func_call ';'         { $$ = $1; }
@@ -252,8 +252,11 @@ literal:  int                   { $$ = $1; }
 
 /* Shift command - command */
 
-shift_cmd: TK_IDENTIFICADOR TK_OC_SL int_pos
-          | TK_IDENTIFICADOR TK_OC_SR int_pos;
+shift_cmd: id TK_OC_SL int_pos    { $$ = makeASTBinaryNode(AST_SHIFT_LEFT, NULL, $1, $3); }
+          | id TK_OC_SR int_pos   { $$ = makeASTBinaryNode(AST_SHIFT_RIGHT, NULL, $1, $3); };
+
+// The '+' sign was removed from the regEx to accept only positive numbers with TK_LIT_INT
+int_pos: TK_LIT_INT     { $$ = makeASTNode(AST_LITERAL, $1); }; 
 
 /* Assignment - command */
 
@@ -261,6 +264,7 @@ assig_cmd: id '=' exp                   { $$ = makeASTBinaryNode(AST_ATRIBUICAO,
           | array '=' exp               { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $3); }
           | id '.' id '=' exp           { $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $5); }
 
+          /* Accept unary operator (+) => e.g.: a = +15  */
           | id '=' '+' exp              { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4); }
           | array '=' '+' exp           { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4); }
           | id '.' id '=' '+' exp       { $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $6); };

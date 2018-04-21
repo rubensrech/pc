@@ -27,6 +27,10 @@ int funcao() {
 
     var.campo = true && false;
 
+    break;
+    continue;
+    case -5:
+
     if (a) then {
         a = +1;
     } else {

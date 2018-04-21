@@ -74,6 +74,9 @@ static inline char *__gv_description_from_type (int tipo)
   case AST_CHAMADA_DE_FUNCAO: return "call";
   case AST_SHIFT_LEFT: return "<<";
   case AST_SHIFT_RIGHT: return ">>";
+  case AST_BREAK: return "break";
+  case AST_CONTINUE: return "continue";
+  case AST_CASE: return "case";
 
   default:
     printf("%d\n", tipo);
@@ -200,6 +203,9 @@ void gv_declare (const int tipo, const void *pointer, char *name)
   case AST_CHAMADA_DE_FUNCAO:
   case AST_SHIFT_LEFT:
   case AST_SHIFT_RIGHT:
+  case AST_BREAK:
+  case AST_CONTINUE:
+  case AST_CASE:
     if (name){
       fprintf (stderr, "%s: name should be NULL\n", __FUNCTION__);
       abort();

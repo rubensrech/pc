@@ -91,6 +91,9 @@ extern comp_tree_t *ast;
 %type <ast>return_cmd
 %type <ast>io_cmd
 %type <ast>shift_cmd
+%type <ast>break_cmd
+%type <ast>continue_cmd
+%type <ast>case_cmd
 
 %type <ast>func_call
 %type <ast>params
@@ -100,9 +103,9 @@ extern comp_tree_t *ast;
 %type <ast>exp
 %type <ast>exps_list
 %type <ast>literal
-%type <ast>int_pos
 
 %type <ast>int
+%type <ast>int_neg
 %type <ast>float
 %type <ast>true
 %type <ast>false
@@ -134,6 +137,7 @@ id: TK_IDENTIFICADOR            { $$ = makeASTNode(AST_IDENTIFICADOR, $1); };
 array: id '[' exp ']'           { $$ = makeASTBinaryNode(AST_VETOR_INDEXADO, NULL, $1, $3); };
 
 int: TK_LIT_INT                 { $$ = makeASTNode(AST_LITERAL, $1); };
+int_neg: '-' int                { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); };
 float: TK_LIT_FLOAT             { $$ = makeASTNode(AST_LITERAL, $1); };
 false: TK_LIT_FALSE             { $$ = makeASTNode(AST_LITERAL, $1); };
 true: TK_LIT_TRUE               { $$ = makeASTNode(AST_LITERAL, $1); };
@@ -206,8 +210,8 @@ command:  var_dec ';'           { $$ = $1; }
         | io_cmd ';'            { $$ = $1; }
         | func_call ';'         { $$ = $1; }
         | return_cmd ';'        { $$ = $1; }
-        | break_cmd ';'         {}
-        | continue_cmd ';'      {}
+        | break_cmd ';'         { $$ = $1; }
+        | continue_cmd ';'      { $$ = $1; }
         | case_cmd              {}
         | pipe_exp ';'          {}
         | do_while ';'          { $$ = $1; }
@@ -241,7 +245,7 @@ init_var: TK_OC_LE literal      { $$ = $2; }
 
 literal:  int                   { $$ = $1; }
         | '+' int               { $$ = $2; }
-        | '-' int               { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); }
+        | int_neg               { $$ = $1; }
         | float                 { $$ = $1; }
         | '+' float             { $$ = $2; }
         | '-' float             { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); }
@@ -252,11 +256,8 @@ literal:  int                   { $$ = $1; }
 
 /* Shift command - command */
 
-shift_cmd: id TK_OC_SL int_pos    { $$ = makeASTBinaryNode(AST_SHIFT_LEFT, NULL, $1, $3); }
-          | id TK_OC_SR int_pos   { $$ = makeASTBinaryNode(AST_SHIFT_RIGHT, NULL, $1, $3); };
-
-// The '+' sign was removed from the regEx to accept only positive numbers with TK_LIT_INT
-int_pos: TK_LIT_INT     { $$ = makeASTNode(AST_LITERAL, $1); }; 
+shift_cmd: id TK_OC_SL int              { $$ = makeASTBinaryNode(AST_SHIFT_LEFT, NULL, $1, $3); }
+          | id TK_OC_SR int             { $$ = makeASTBinaryNode(AST_SHIFT_RIGHT, NULL, $1, $3); };
 
 /* Assignment - command */
 
@@ -296,13 +297,13 @@ param: exp                              { $$ = $1; };
 
 return_cmd: TK_PR_RETURN exp            { $$ = makeASTUnaryNode(AST_RETURN, NULL, $2); };
 
-break_cmd: TK_PR_BREAK;
+break_cmd: TK_PR_BREAK                  { $$ = makeASTNode(AST_BREAK, NULL); };
 
-continue_cmd: TK_PR_CONTINUE;
+continue_cmd: TK_PR_CONTINUE            { $$ = makeASTNode(AST_CONTINUE, NULL); };
 
-case_cmd: TK_PR_CASE TK_LIT_INT ':'
-        | TK_PR_CASE '+' TK_LIT_INT ':'
-        | TK_PR_CASE '-' TK_LIT_INT ':';
+case_cmd: TK_PR_CASE int ':'            { $$ = makeASTUnaryNode(AST_CASE, NULL, $2); }
+        | TK_PR_CASE '+' int ':'        { $$ = makeASTUnaryNode(AST_CASE, NULL, $3); }
+        | TK_PR_CASE int_neg ':'        { $$ = makeASTUnaryNode(AST_CASE, NULL, $2); };
 
 /* Pipes - command */
 

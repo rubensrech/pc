@@ -28,14 +28,14 @@ int funcao() {
     var.campo = true && false;
 
     if (a) then {
-        a = 1;
+        a = +1;
     } else {
         if (b) then {
 
         }
     }
 
-    return number % funcao();
+    return number % funcao_();
 }
 
 char func1() {

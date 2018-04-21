@@ -174,6 +174,7 @@ TokenInfo *addSymbolsTable(int tokenType) {
   // Hash already contais same key => remove old entry
   if (dict_get(symbolsTable, key) != NULL) {
     oldInfo = dict_remove(symbolsTable, key);
+    // Update AST pointer !!!
     freeTokenInfo(oldInfo);
   }
 

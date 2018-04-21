@@ -255,7 +255,11 @@ shift_cmd: TK_IDENTIFICADOR TK_OC_SL int_pos
 
 assig_cmd: id '=' exp                   { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $3); }
           | array '=' exp               { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $3); }
-          | id '.' id '=' exp           { $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $5); };
+          | id '.' id '=' exp           { $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $5); }
+
+          | id '=' '+' exp              { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4); }
+          | array '=' '+' exp           { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4); }
+          | id '.' id '=' '+' exp       { $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $6); };
 
 /* Input and output - command */
 

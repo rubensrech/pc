@@ -97,6 +97,7 @@ extern comp_tree_t *ast;
 %type <ast>switch
 %type <ast>foreach
 %type <ast>for
+%type <ast>pipe_exp
 
 %type <ast>func_call
 %type <ast>params
@@ -218,7 +219,7 @@ command:  var_dec ';'           { $$ = $1; }
         | break_cmd ';'         { $$ = $1; }
         | continue_cmd ';'      { $$ = $1; }
         | case_cmd              { $$ = $1; }
-        | pipe_exp ';'          {}
+        | pipe_exp ';'          { $$ = $1; }
         | do_while ';'          { $$ = $1; }
         | block ';'             { $$ = $1; }
         | if_stm                { $$ = $1; }
@@ -312,10 +313,10 @@ case_cmd: TK_PR_CASE int ':'            { $$ = makeASTUnaryNode(AST_CASE, NULL, 
 
 /* Pipes - command */
 
-pipe_exp: func_call TK_OC_PG func_call
-         | func_call TK_OC_PB func_call
-         | pipe_exp TK_OC_PG func_call
-         | pipe_exp TK_OC_PB func_call;
+pipe_exp: func_call TK_OC_PG func_call          { $$ = makeASTBinaryNode(AST_PIPE_G, NULL, $1, $3); }
+         | func_call TK_OC_PB func_call         { $$ = makeASTBinaryNode(AST_PIPE_B, NULL, $1, $3); }
+         | pipe_exp TK_OC_PG func_call          { $$ = makeASTBinaryNode(AST_PIPE_G, NULL, $1, $3); }
+         | pipe_exp TK_OC_PB func_call          { $$ = makeASTBinaryNode(AST_PIPE_B, NULL, $1, $3); };
 
 /* Flow Control - Commands */
 
@@ -346,7 +347,7 @@ cmd:      var_dec                       { $$ = $1; }
         | return_cmd                    { $$ = $1; }
         | break_cmd                     { $$ = $1; }
         | continue_cmd                  { $$ = $1; }
-        | pipe_exp                      {}
+        | pipe_exp                      { $$ = $1; }
         | if_stm                        { $$ = $1; }
         | foreach                       { $$ = $1; }
         | while                         { $$ = $1; }
@@ -372,7 +373,7 @@ exp:  id                        { $$ = $1; }
     | exp TK_OC_AND exp         { $$ = makeASTBinaryNode(AST_LOGICO_E, NULL, $1, $3); }
     | exp TK_OC_OR exp          { $$ = makeASTBinaryNode(AST_LOGICO_OU, NULL, $1, $3); }
     | func_call                 { $$ = $1; }
-    | pipe_exp                  {}
+    | pipe_exp                  { $$ = $1; }
     | exp '%' exp               { $$ = makeASTBinaryNode(AST_ARIM_MOD, NULL, $1, $3); }
     | '!' exp                   { $$ = makeASTUnaryNode(AST_LOGICO_COMP_NEGACAO, NULL, $2); }
     | '.'                       { $$ = makeASTNode(AST_DOT_PARAM, NULL); }

@@ -46,4 +46,6 @@
 
 #define AST_ARIM_MOD            36
 #define AST_DOT_PARAM           37
+#define AST_PIPE_G              38
+#define AST_PIPE_B              39
 #endif

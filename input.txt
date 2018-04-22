@@ -27,9 +27,12 @@ int funcao() {
 
     var.campo = true && false;
 
-    break;
-    continue;
-    case -5:
+    switch (a+5) {
+        case -5:
+            break;
+        case +10:
+            continue;
+    }
 
     if (a) then {
         a = +1;
@@ -51,8 +54,8 @@ char func1() {
     };
 
     while (a < 5) do {
-        //a << 5;
-        // b >> 2;
+        a << 5;
+        b >> 2;
     }
 
     do {
@@ -62,5 +65,13 @@ char func1() {
 }
 
 char func2() {
+    foreach (arr : a - b, b + c) {
 
+    }
+
+    for (int i <= 0, a = b : i < 10 : i = i + 1, a = 2*b) {
+        
+    }
+
+    // f() %>% g(., a) %|% z(.) %|% i(.);
 }

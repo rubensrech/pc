@@ -33,6 +33,7 @@ comp_tree_t *makeASTNode(int type, TokenInfo *token);
 comp_tree_t *makeASTUnaryNode(int type, TokenInfo *token, comp_tree_t *node1);
 comp_tree_t *makeASTBinaryNode(int type, TokenInfo *token, comp_tree_t *node1, comp_tree_t *node2);
 comp_tree_t *makeASTTernaryNode(int type, TokenInfo *token, comp_tree_t *node1, comp_tree_t *node2, comp_tree_t *node3);
+comp_tree_t *makeASTQuaternaryNode(int type, TokenInfo *token, comp_tree_t *node1, comp_tree_t *node2, comp_tree_t *node3, comp_tree_t *node4);
 
 void freeTokenInfo(TokenInfo *info);
 void freeSymbolsTable();

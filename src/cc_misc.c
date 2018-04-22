@@ -179,3 +179,12 @@ comp_tree_t *makeASTTernaryNode(int type, TokenInfo *token, comp_tree_t *node1, 
   tree_insert_node(newnode, node3);
 	return newnode;
 }
+
+comp_tree_t *makeASTQuaternaryNode(int type, TokenInfo *token, comp_tree_t *node1, comp_tree_t *node2, comp_tree_t *node3, comp_tree_t *node4) {
+  comp_tree_t *newnode = makeASTNode(type, token);
+	tree_insert_node(newnode, node1);
+  tree_insert_node(newnode, node2);
+  tree_insert_node(newnode, node3);
+  tree_insert_node(newnode, node4);
+	return newnode;
+}

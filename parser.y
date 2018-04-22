@@ -94,6 +94,9 @@ extern comp_tree_t *ast;
 %type <ast>break_cmd
 %type <ast>continue_cmd
 %type <ast>case_cmd
+%type <ast>switch
+%type <ast>foreach
+%type <ast>for
 
 %type <ast>func_call
 %type <ast>params
@@ -103,6 +106,8 @@ extern comp_tree_t *ast;
 %type <ast>exp
 %type <ast>exps_list
 %type <ast>literal
+%type <ast>cmd_list
+%type <ast>cmd
 
 %type <ast>int
 %type <ast>int_neg
@@ -212,15 +217,15 @@ command:  var_dec ';'           { $$ = $1; }
         | return_cmd ';'        { $$ = $1; }
         | break_cmd ';'         { $$ = $1; }
         | continue_cmd ';'      { $$ = $1; }
-        | case_cmd              {}
+        | case_cmd              { $$ = $1; }
         | pipe_exp ';'          {}
         | do_while ';'          { $$ = $1; }
         | block ';'             { $$ = $1; }
         | if_stm                { $$ = $1; }
-        | foreach               {}
+        | foreach               { $$ = $1; }
         | while                 { $$ = $1; }
-        | switch                {}
-        | for                   {};
+        | switch                { $$ = $1; }
+        | for                   { $$ = $1; };
 
 /* Local Variables Declaration - command */
 
@@ -317,34 +322,37 @@ pipe_exp: func_call TK_OC_PG func_call
 if_stm:  TK_PR_IF '(' exp ')' TK_PR_THEN block                          { $$ = makeASTBinaryNode(AST_IF_ELSE, NULL, $3, $6); }
        | TK_PR_IF '(' exp ')' TK_PR_THEN block TK_PR_ELSE block         { $$ = makeASTTernaryNode(AST_IF_ELSE, NULL, $3, $6, $8);  };
 
-foreach: TK_PR_FOREACH '(' TK_IDENTIFICADOR ':' exps_list ')' block;
+foreach: TK_PR_FOREACH '(' id ':' exps_list ')' block                   { $$ = makeASTTernaryNode(AST_FOREACH, NULL, $3, $5, $7); };
 
 while: TK_PR_WHILE '(' exp ')' TK_PR_DO block                   { $$ = makeASTBinaryNode(AST_WHILE_DO, NULL, $3, $6); };
 
 do_while: TK_PR_DO block TK_PR_WHILE '(' exp ')'                { $$ = makeASTBinaryNode(AST_DO_WHILE, NULL, $2, $5); };
 
-switch: TK_PR_SWITCH '(' exp ')' block;
+switch: TK_PR_SWITCH '(' exp ')' block                          { $$ = makeASTBinaryNode(AST_SWITCH, NULL, $3, $5); };
 
-for: TK_PR_FOR '(' cmd_list ':' exp ':' cmd_list ')' block;
+for: TK_PR_FOR '(' cmd_list ':' exp ':' cmd_list ')' block      { $$ = makeASTQuaternaryNode(AST_FOR, NULL, $3, $5, $7, $9); };
 
-cmd_list: cmd
-         | cmd_list ',' cmd;
+cmd_list: cmd                           { $$ = $1; }
+         | cmd ',' cmd_list             {
+                                                tree_set_list_next_node($1, $3);
+                                                $$ = $1;  
+                                        };
 
-cmd:      var_dec
-        | shift_cmd
-        | assig_cmd
-        | block
-        | func_call
-        | return_cmd
-        | break_cmd
-        | continue_cmd
-        | pipe_exp
-        | if_stm
-        | foreach
-        | while
-        | do_while
-        | switch
-        | for;
+cmd:      var_dec                       { $$ = $1; }
+        | shift_cmd                     { $$ = $1; }
+        | assig_cmd                     { $$ = $1; }
+        | block                         { $$ = $1; }
+        | func_call                     { $$ = $1; }
+        | return_cmd                    { $$ = $1; }
+        | break_cmd                     { $$ = $1; }
+        | continue_cmd                  { $$ = $1; }
+        | pipe_exp                      {}
+        | if_stm                        { $$ = $1; }
+        | foreach                       { $$ = $1; }
+        | while                         { $$ = $1; }
+        | do_while                      { $$ = $1; }
+        | switch                        { $$ = $1; }
+        | for                           { $$ = $1; };
 
 /* Expressions */
 
@@ -367,7 +375,7 @@ exp:  id                        { $$ = $1; }
     | pipe_exp                  {}
     | exp '%' exp               { $$ = makeASTBinaryNode(AST_ARIM_MOD, NULL, $1, $3); }
     | '!' exp                   { $$ = makeASTUnaryNode(AST_LOGICO_COMP_NEGACAO, NULL, $2); }
-    | '.'                       {}
+    | '.'                       { $$ = makeASTNode(AST_DOT_PARAM); }
     | '-' exp                   { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); }
     | int                       { $$ = $1; }
     | float                     { $$ = $1; }

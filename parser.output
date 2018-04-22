@@ -168,7 +168,7 @@ Grammar
   117 if_stm: TK_PR_IF '(' exp ')' TK_PR_THEN block
   118       | TK_PR_IF '(' exp ')' TK_PR_THEN block TK_PR_ELSE block
 
-  119 foreach: TK_PR_FOREACH '(' TK_IDENTIFICADOR ':' exps_list ')' block
+  119 foreach: TK_PR_FOREACH '(' id ':' exps_list ')' block
 
   120 while: TK_PR_WHILE '(' exp ')' TK_PR_DO block
 
@@ -179,7 +179,7 @@ Grammar
   123 for: TK_PR_FOR '(' cmd_list ':' exp ':' cmd_list ')' block
 
   124 cmd_list: cmd
-  125         | cmd_list ',' cmd
+  125         | cmd ',' cmd_list
 
   126 cmd: var_dec
   127    | shift_cmd
@@ -294,7 +294,7 @@ TK_LIT_TRUE (296) 15
 TK_LIT_CHAR (297) 16
 TK_LIT_STRING (298) 17
 TK_IDENTIFICADOR (299) 9 18 21 32 33 34 35 37 38 39 44 45 71 72 73
-    74 75 76 77 78 119
+    74 75 76 77 78
 TOKEN_ERRO (300)
 
 
@@ -307,7 +307,8 @@ programa (66)
 code (67)
     on left: 3 4 5 6 7 8, on right: 2 6 7 8
 id (68)
-    on left: 9, on right: 10 67 68 69 70 80 91 92 93 95 96 98 101 141
+    on left: 9, on right: 10 67 68 69 70 80 91 92 93 95 96 98 101 119
+    141
 array (69)
     on left: 10, on right: 94 97 142
 int (70)
@@ -1231,7 +1232,7 @@ State 71
 
 State 72
 
-  119 foreach: TK_PR_FOREACH . '(' TK_IDENTIFICADOR ':' exps_list ')' block
+  119 foreach: TK_PR_FOREACH . '(' id ':' exps_list ')' block
 
     '('  shift, and go to state 135
 
@@ -1976,9 +1977,11 @@ State 134
 
 State 135
 
-  119 foreach: TK_PR_FOREACH '(' . TK_IDENTIFICADOR ':' exps_list ')' block
+  119 foreach: TK_PR_FOREACH '(' . id ':' exps_list ')' block
 
-    TK_IDENTIFICADOR  shift, and go to state 197
+    TK_IDENTIFICADOR  shift, and go to state 111
+
+    id  go to state 197
 
 
 State 136
@@ -3023,7 +3026,7 @@ State 196
 
 State 197
 
-  119 foreach: TK_PR_FOREACH '(' TK_IDENTIFICADOR . ':' exps_list ')' block
+  119 foreach: TK_PR_FOREACH '(' id . ':' exps_list ')' block
 
     ':'  shift, and go to state 262
 
@@ -3146,15 +3149,16 @@ State 212
 State 213
 
   123 for: TK_PR_FOR '(' cmd_list . ':' exp ':' cmd_list ')' block
-  125 cmd_list: cmd_list . ',' cmd
 
     ':'  shift, and go to state 263
-    ','  shift, and go to state 264
 
 
 State 214
 
   124 cmd_list: cmd .
+  125         | cmd . ',' cmd_list
+
+    ','  shift, and go to state 264
 
     $default  reduce using rule 124 (cmd_list)
 
@@ -3963,7 +3967,7 @@ State 261
 
 State 262
 
-  119 foreach: TK_PR_FOREACH '(' TK_IDENTIFICADOR ':' . exps_list ')' block
+  119 foreach: TK_PR_FOREACH '(' id ':' . exps_list ')' block
 
     TK_LIT_INT        shift, and go to state 105
     TK_LIT_FLOAT      shift, and go to state 106
@@ -4022,7 +4026,7 @@ State 263
 
 State 264
 
-  125 cmd_list: cmd_list ',' . cmd
+  125 cmd_list: cmd ',' . cmd_list
 
     TK_PR_INT         shift, and go to state 1
     TK_PR_FLOAT       shift, and go to state 2
@@ -4061,7 +4065,8 @@ State 264
     do_while      go to state 210
     switch        go to state 211
     for           go to state 212
-    cmd           go to state 290
+    cmd_list      go to state 290
+    cmd           go to state 214
 
 
 State 265
@@ -4372,7 +4377,7 @@ State 287
 
 State 288
 
-  119 foreach: TK_PR_FOREACH '(' TK_IDENTIFICADOR ':' exps_list . ')' block
+  119 foreach: TK_PR_FOREACH '(' id ':' exps_list . ')' block
 
     ')'  shift, and go to state 301
 
@@ -4412,7 +4417,7 @@ State 289
 
 State 290
 
-  125 cmd_list: cmd_list ',' cmd .
+  125 cmd_list: cmd ',' cmd_list .
 
     $default  reduce using rule 125 (cmd_list)
 
@@ -4541,7 +4546,7 @@ State 300
 
 State 301
 
-  119 foreach: TK_PR_FOREACH '(' TK_IDENTIFICADOR ':' exps_list ')' . block
+  119 foreach: TK_PR_FOREACH '(' id ':' exps_list ')' . block
 
     '{'  shift, and go to state 60
 
@@ -4638,7 +4643,7 @@ State 304
 
 State 305
 
-  119 foreach: TK_PR_FOREACH '(' TK_IDENTIFICADOR ':' exps_list ')' block .
+  119 foreach: TK_PR_FOREACH '(' id ':' exps_list ')' block .
 
     $default  reduce using rule 119 (foreach)
 
@@ -4646,10 +4651,8 @@ State 305
 State 306
 
   123 for: TK_PR_FOR '(' cmd_list ':' exp ':' cmd_list . ')' block
-  125 cmd_list: cmd_list . ',' cmd
 
     ')'  shift, and go to state 308
-    ','  shift, and go to state 264
 
 
 State 307

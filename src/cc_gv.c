@@ -80,6 +80,7 @@ static inline char *__gv_description_from_type (int tipo)
   case AST_SWITCH: return "switch";
   case AST_FOREACH: return "foreach";
   case AST_FOR: return "for";
+  case AST_DOT_PARAM: return ".";
 
   default:
     printf("%d\n", tipo);
@@ -212,6 +213,7 @@ void gv_declare (const int tipo, const void *pointer, char *name)
   case AST_SWITCH:
   case AST_FOREACH:
   case AST_FOR:
+  case AST_DOT_PARAM:
     if (name){
       fprintf (stderr, "%s: name should be NULL\n", __FUNCTION__);
       abort();

@@ -375,7 +375,7 @@ exp:  id                        { $$ = $1; }
     | pipe_exp                  {}
     | exp '%' exp               { $$ = makeASTBinaryNode(AST_ARIM_MOD, NULL, $1, $3); }
     | '!' exp                   { $$ = makeASTUnaryNode(AST_LOGICO_COMP_NEGACAO, NULL, $2); }
-    | '.'                       { $$ = makeASTNode(AST_DOT_PARAM); }
+    | '.'                       { $$ = makeASTNode(AST_DOT_PARAM, NULL); }
     | '-' exp                   { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); }
     | int                       { $$ = $1; }
     | float                     { $$ = $1; }

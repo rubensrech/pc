@@ -45,4 +45,5 @@
 #define AST_SWITCH              35
 
 #define AST_ARIM_MOD            36
+#define AST_DOT_PARAM           37
 #endif

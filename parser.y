@@ -230,10 +230,10 @@ command:  var_dec ';'           { $$ = $1; }
 
 /* Local Variables Declaration - command */
 
-var_dec: TK_PR_STATIC TK_PR_CONST native_type id init_var { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $4, $5); }
-        | TK_PR_STATIC native_type id init_var            { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $3, $4); }
-        | TK_PR_CONST native_type id init_var             { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $3, $4); }
-        | native_type id init_var                         { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $2, $3); }
+var_dec: TK_PR_STATIC TK_PR_CONST native_type id init_var { $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $4, $5); }
+        | TK_PR_STATIC native_type id init_var            { $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $3, $4); }
+        | TK_PR_CONST native_type id init_var             { $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $3, $4); }
+        | native_type id init_var                         { $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $2, $3); }
 
         | TK_PR_STATIC TK_PR_CONST native_type TK_IDENTIFICADOR         { $$ = NULL; }
         | TK_PR_STATIC native_type TK_IDENTIFICADOR                     { $$ = NULL; }

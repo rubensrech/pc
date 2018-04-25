@@ -83,6 +83,7 @@ static inline char *__gv_description_from_type (int tipo)
   case AST_DOT_PARAM: return ".";
   case AST_PIPE_B: return "%|%";
   case AST_PIPE_G: return "%>%";
+  case AST_INICIALIZACAO: return "<=";
 
   default:
     printf("%d\n", tipo);
@@ -218,6 +219,7 @@ void gv_declare (const int tipo, const void *pointer, char *name)
   case AST_DOT_PARAM:
   case AST_PIPE_B:
   case AST_PIPE_G:
+  case AST_INICIALIZACAO:
     if (name){
       fprintf (stderr, "%s: name should be NULL\n", __FUNCTION__);
       abort();

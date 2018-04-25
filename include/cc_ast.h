@@ -48,4 +48,5 @@
 #define AST_DOT_PARAM           37
 #define AST_PIPE_G              38
 #define AST_PIPE_B              39
+#define AST_INICIALIZACAO       40
 #endif

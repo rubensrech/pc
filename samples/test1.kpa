@@ -1,0 +1,38 @@
+class Pessoa [
+    private string name:
+    public int age
+];
+
+Pessoa user;
+Pessoa friend[10];
+
+void func () {
+    int a;
+    a = f() %>% g(., a) %|% z(.);
+
+    if (a && false) then {
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
+// Func declaration
+int main(const char c) {
+    int number <= 10;
+
+    number << 2;
+    number >> 4;
+
+    user.age = number * 2;
+
+    switch (age) {
+    case 10:
+        return age < number;
+        break;
+    case 20:
+        return age + number;
+        break;
+    }
+
+}

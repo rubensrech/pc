@@ -1,0 +1,19 @@
+int main() {
+    int n;
+    input n;
+    return fibonacci(n);
+}
+
+int fibonacci(int n) {
+    int fst <= 0;
+    int snd <= 1;
+    int i;
+    int soma;
+
+    for (i = 0: i < n: i = i + 1) {
+        soma = fst + snd;
+        fst = snd;
+        snd = soma;
+        output soma;
+    }
+}

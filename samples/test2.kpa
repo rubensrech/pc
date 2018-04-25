@@ -1,0 +1,18 @@
+int main () {
+     // Foreach
+    foreach (arr : a - b, b + c) {
+        a = a + b + c;
+    }
+
+    // While
+    while (a < 5) do {
+        a = 10 * a - 1;
+    }
+
+    // Do-While
+    do {
+        a = b;
+        c = 0;
+    } while (a + b < c);
+
+}

@@ -28,9 +28,6 @@ void *comp_tree_last = NULL;
 
 comp_tree_t* tree_new(void){
 	comp_tree_t *tree = tree_make_node(NULL);
-	// ----- gv -----
-	gv_init(GV_OUT_FILE);
-	// ----- -- -----
 	return tree;
 }
 
@@ -43,10 +40,6 @@ void tree_free(comp_tree_t *tree){
 		free(tree);
 		tree = ptr;
 	} while(ptr != NULL);
-
-	// ----- gv -----
-	// gv_close();
-	// ----- -- -----
 }
 
 comp_tree_t* tree_make_node(void *value) {

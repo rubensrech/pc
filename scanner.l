@@ -8,7 +8,7 @@
 
 %{
 #include "parser.h" //arquivo automaticamente gerado pelo bison
-#include "cc_misc.h"
+#include "cc_table.h"
 
 int num_lines = 1;
 %}
@@ -61,7 +61,7 @@ public      return TK_PR_PUBLIC;
 protected   return TK_PR_PROTECTED;
 
 true        { yylval.valor_lexico = addSymbolsTable(POA_LIT_BOOL); return TK_LIT_TRUE; }
-false       { yylval.valor_lexico =addSymbolsTable(POA_LIT_BOOL); return TK_LIT_FALSE; }
+false       { yylval.valor_lexico = addSymbolsTable(POA_LIT_BOOL); return TK_LIT_FALSE; }
 
 {ID}            { yylval.valor_lexico = addSymbolsTable(POA_IDENT); return TK_IDENTIFICADOR; }
 

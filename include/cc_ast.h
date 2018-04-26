@@ -3,8 +3,10 @@
 
   Este arquivo contém as constantes para os tipos dos nós da AST.
 */
+
 #ifndef __CC_AST_H
 #define __CC_AST_H
+
 #define AST_PROGRAMA             0
 #define AST_FUNCAO               1
 //Comandos
@@ -49,4 +51,25 @@
 #define AST_PIPE_G              38
 #define AST_PIPE_B              39
 #define AST_INICIALIZACAO       40
+
+#define GV_OUT_FILE "saida.dot"
+
+#include "cc_tree.h"
+#include "cc_table.h"
+
+typedef struct astNodeInfo {
+  int type;
+  TokenInfo *tokenInfo;
+} AstNodeInfo;
+
+void initAST();
+void freeAST();
+void freeASTSubTree(comp_tree_t *tree);
+comp_tree_t *makeASTNode(int type, TokenInfo *token);
+comp_tree_t *makeASTUnaryNode(int type, TokenInfo *token, comp_tree_t *node1);
+comp_tree_t *makeASTBinaryNode(int type, TokenInfo *token, comp_tree_t *node1, comp_tree_t *node2);
+comp_tree_t *makeASTTernaryNode(int type, TokenInfo *token, comp_tree_t *node1, comp_tree_t *node2, comp_tree_t *node3);
+comp_tree_t *makeASTQuaternaryNode(int type, TokenInfo *token, comp_tree_t *node1, comp_tree_t *node2, comp_tree_t *node3, comp_tree_t *node4);
+
+
 #endif

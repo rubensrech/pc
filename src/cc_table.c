@@ -1,0 +1,119 @@
+#include <stdlib.h>
+#include <string.h>
+#include "cc_table.h"
+#include "main.h"
+
+extern char *yytext;
+extern int num_lines;
+
+comp_dict_t *symbolsTable;
+
+void initSymbolsTable() {
+    symbolsTable = dict_new();
+}
+
+void freeSymbolsTable() {
+  int i;
+  struct comp_dict_item *entry, *next;
+  TokenInfo *info;
+
+  for (i = 0; i < symbolsTable->size; i++) {
+    entry = symbolsTable->data[i];
+      while (entry != NULL) {
+        next = entry->next;
+        info = dict_remove(symbolsTable, entry->key);
+        freeTokenInfo(info);
+        entry = next;
+      }
+  }
+
+  dict_free(symbolsTable);
+}
+
+void freeTokenInfo(TokenInfo *info) {
+  free(info->lexeme);
+  free(info);
+}
+
+void removeQuotes(char *token) {
+  int i;
+  if (token[0] == '\'' || token[0] == '"') {
+    token[strlen(token)-1] = '\0';
+    for (i = 0; i < strlen(token); i++) {
+      token[i] = token[i+1];
+    }
+  }
+}
+
+TokenInfo *addSymbolsTable(int tokenType) {
+  TokenInfo *info = malloc(sizeof(struct tokenInfo));
+  TokenInfo *oldInfo;
+  char key[MAX_HASH_KEY_SIZE+1];
+  char *token;
+  
+  token = strdup(yytext);
+  
+  info->line = num_lines;
+  info->type = tokenType;
+
+  // Get token real value
+  switch (tokenType) {
+    case POA_LIT_STRING:
+      removeQuotes(token);
+      info->value.strVal = token;
+      break;
+    case POA_LIT_CHAR:
+      removeQuotes(token);
+      info->value.charVal = token[0];
+      break;
+    case POA_IDENT:
+      info->value.strVal = token;
+      break;
+    case POA_LIT_BOOL:
+      info->value.boolVal = !strcmp(token, "true");
+      break;
+    case POA_LIT_FLOAT:
+      info->value.floatVal = atof(token);
+      break;
+    case POA_LIT_INT:
+      info->value.intVal = atoi(token);
+      break;
+  }
+
+  // Generate hash table key (TOKEN $$ TYPE)
+  snprintf(key, MAX_HASH_KEY_SIZE, "%s $$ %d", token, tokenType);
+
+  // info->lexeke must be freed later
+  info->lexeme = token;
+
+  // Hash already contais same key => update line
+  oldInfo = dict_get(symbolsTable, key);
+  if (oldInfo != NULL) {
+    oldInfo->line = num_lines;
+    free(token);
+    free(info);
+    return oldInfo;
+  }
+
+  // Key is duplicated (strdup) inside dict_put function
+  return (TokenInfo*)dict_put(symbolsTable, key, info);
+}
+
+void printSymbolsTable() {
+    int i;
+    struct comp_dict_item *entry;
+    TokenInfo *info;
+    char token[MAX_HASH_KEY_SIZE];
+
+    for (i = 0; i < symbolsTable->size; i++) {
+        entry = symbolsTable->data[i];
+            while (entry != NULL) {
+                info = entry->value;
+
+                sscanf(entry->key, "%s $$ %*d", token);
+                cc_dict_etapa_2_print_entrada(token, info->line, info->type);
+        
+                entry = entry->next;
+        }
+    }
+}

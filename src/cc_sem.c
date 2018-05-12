@@ -2,21 +2,23 @@
 #include "cc_sem.h"
 
 void setIdDataType(TokenInfo *id, int dataType) {
-    if (id->dataType == DATATYPE_UNDEF) {
-        id->dataType = dataType;
-    } else {
+    // Check id is already declared (tried to redeclare)
+    if (id->dataType != DATATYPE_UNDEF) {
         printf("Semantic error (already declared) - line %d\n", getLineNumber());
         exit(IKS_ERROR_DECLARED);
+    } else {
+        id->dataType = dataType;
     }
 }
 
 void setIdNodeDataType(comp_tree_t *node, int dataType) {
     AstNodeInfo *nodeInfo = node->value;
-    if (nodeInfo->tokenInfo->dataType == DATATYPE_UNDEF) {
-        nodeInfo->tokenInfo->dataType = dataType;
-    } else {
+    // Check id is already declared (tried to redeclare)
+    if (nodeInfo->tokenInfo->dataType != DATATYPE_UNDEF) {
         printf("Semantic error (already declared) - line %d\n", getLineNumber());
         exit(IKS_ERROR_DECLARED);
+    } else {
+        nodeInfo->tokenInfo->dataType = dataType;
     }
 }
 
@@ -29,10 +31,13 @@ int getASTNodeTokenDataType(comp_tree_t *node) {
     return nodeInfo->tokenInfo->dataType;
 }
 
-int checkDataTypeMatching(int idDataType, int litDataType) {
-    if (idDataType != litDataType) {
+void checkDataTypeMatching(int idDataType, int initDataType) {
+    // Check declaration for var init with id, ex: int a <= b;
+    if (initDataType == DATATYPE_UNDEF) {
+        printf("Semantic error (undeclared) - line %d\n", getLineNumber());
+        exit(IKS_ERROR_UNDECLARED);
+    } else  if (idDataType != initDataType) {
         printf("Semantic error (incompatible types) - line %d\n", getLineNumber());
         exit(IKS_ERROR_INCOMP_TYPES);
     }
-    return 1;
 }

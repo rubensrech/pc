@@ -25,4 +25,4 @@ void setIdNodeDataType(comp_tree_t *node, int dataType);
 
 int getASTNodeTokenDataType(comp_tree_t *node);
 
-int checkDataTypeMatching(int idDataType, int litDataType);
+void checkDataTypeMatching(int idDataType, int litDataType);

@@ -230,29 +230,29 @@ command:  var_dec ';'           { $$ = $1; }
 
 var_dec: TK_PR_STATIC TK_PR_CONST native_type id init_var {
                                                                 $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $4, $5);
-                                                                setIdNodeDataType($4, $3);
+                                                                setIdNodeDataType($4, $3); // also checks redeclaration 
                                                                 checkDataTypeMatching($3, getASTNodeTokenDataType($5));
                                                           }
         | TK_PR_STATIC native_type id init_var            {
                                                                 $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $3, $4);
-                                                                setIdNodeDataType($3, $2);
+                                                                setIdNodeDataType($3, $2); // also checks redeclaration 
                                                                 checkDataTypeMatching($2, getASTNodeTokenDataType($4));
                                                           }
         | TK_PR_CONST native_type id init_var             {
                                                                 $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $3, $4);
-                                                                setIdNodeDataType($3, $2);
+                                                                setIdNodeDataType($3, $2); // also checks redeclaration
                                                                 checkDataTypeMatching($2, getASTNodeTokenDataType($4));
                                                           }
         | native_type id init_var                         { 
                                                                 $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $2, $3);
-                                                                setIdNodeDataType($2, $1);
+                                                                setIdNodeDataType($2, $1); // also checks redeclaration
                                                                 checkDataTypeMatching($1, getASTNodeTokenDataType($3));
                                                           }
  
-        | TK_PR_STATIC TK_PR_CONST native_type TK_IDENTIFICADOR         { $$ = NULL; setIdDataType($4, $3); }
-        | TK_PR_STATIC native_type TK_IDENTIFICADOR                     { $$ = NULL; setIdDataType($3, $2); }
-        | TK_PR_CONST native_type TK_IDENTIFICADOR                      { $$ = NULL; setIdDataType($3, $2); }
-        | native_type TK_IDENTIFICADOR                                  { $$ = NULL; setIdDataType($2, $1); }
+        | TK_PR_STATIC TK_PR_CONST native_type TK_IDENTIFICADOR         { $$ = NULL; setIdDataType($4, $3); /* also checks redeclaration */ }
+        | TK_PR_STATIC native_type TK_IDENTIFICADOR                     { $$ = NULL; setIdDataType($3, $2); /* also checks redeclaration */ }
+        | TK_PR_CONST native_type TK_IDENTIFICADOR                      { $$ = NULL; setIdDataType($3, $2); /* also checks redeclaration */ }
+        | native_type TK_IDENTIFICADOR                                  { $$ = NULL; setIdDataType($2, $1); /* also checks redeclaration */ }
         
         /* Cannot initialize user type variables */
         | TK_PR_STATIC TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR         { $$ = NULL; }
@@ -261,7 +261,7 @@ var_dec: TK_PR_STATIC TK_PR_CONST native_type id init_var {
         | TK_IDENTIFICADOR TK_IDENTIFICADOR                                  { $$ = NULL; };
 
 init_var: TK_OC_LE literal      { $$ = $2; }
-         | TK_OC_LE id          { $$ = $2; /* Check id is declared */ };
+         | TK_OC_LE id          { $$ = $2; checkIdNodeDeclared($2); };
 
 literal:  int                   { $$ = $1; }
         | '+' int               { $$ = $2; }
@@ -276,17 +276,17 @@ literal:  int                   { $$ = $1; }
 
 /* Shift command - command */
 
-shift_cmd: id TK_OC_SL int              { $$ = makeASTBinaryNode(AST_SHIFT_LEFT, NULL, $1, $3); }
-          | id TK_OC_SR int             { $$ = makeASTBinaryNode(AST_SHIFT_RIGHT, NULL, $1, $3); };
+shift_cmd: id TK_OC_SL int              { $$ = makeASTBinaryNode(AST_SHIFT_LEFT, NULL, $1, $3); checkIdNodeDeclared($1); }
+          | id TK_OC_SR int             { $$ = makeASTBinaryNode(AST_SHIFT_RIGHT, NULL, $1, $3); checkIdNodeDeclared($1); };
 
 /* Assignment - command */
 
-assig_cmd: id '=' exp                   { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $3); }
-          | array '=' exp               { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $3); }
+assig_cmd: id '=' exp                   { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $3); checkIdNodeDeclared($1); }
+          | array '=' exp               { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $3);  }
           | id '.' id '=' exp           { $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $5); }
 
           /* Accept unary operator (+) => e.g.: a = +15  */
-          | id '=' '+' exp              { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4); }
+          | id '=' '+' exp              { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4); checkIdNodeDeclared($1); }
           | array '=' '+' exp           { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4); }
           | id '.' id '=' '+' exp       { $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $6); };
 
@@ -337,7 +337,10 @@ pipe_exp: func_call TK_OC_PG func_call          { $$ = makeASTBinaryNode(AST_PIP
 if_stm:  TK_PR_IF '(' exp ')' TK_PR_THEN block                          { $$ = makeASTBinaryNode(AST_IF_ELSE, NULL, $3, $6); }
        | TK_PR_IF '(' exp ')' TK_PR_THEN block TK_PR_ELSE block         { $$ = makeASTTernaryNode(AST_IF_ELSE, NULL, $3, $6, $8);  };
 
-foreach: TK_PR_FOREACH '(' id ':' exps_list ')' block                   { $$ = makeASTTernaryNode(AST_FOREACH, NULL, $3, $5, $7); };
+foreach: TK_PR_FOREACH '(' id ':' exps_list ')' block                   {
+                                                                                $$ = makeASTTernaryNode(AST_FOREACH, NULL, $3, $5, $7);
+                                                                                checkIdNodeDeclared($3);
+                                                                        };
 
 while: TK_PR_WHILE '(' exp ')' TK_PR_DO block                   { $$ = makeASTBinaryNode(AST_WHILE_DO, NULL, $3, $6); };
 
@@ -371,7 +374,7 @@ cmd:      var_dec                       { $$ = $1; }
 
 /* Expressions */
 
-exp:  id                        { $$ = $1; }         
+exp:  id                        { $$ = $1; checkIdNodeDeclared($1); }         
     | array                     { $$ = $1; }
     | exp '+' exp               { $$ = makeASTBinaryNode(AST_ARIM_SOMA, NULL, $1, $3); }
     | exp '-' exp               { $$ = makeASTBinaryNode(AST_ARIM_SUBTRACAO, NULL, $1, $3); }

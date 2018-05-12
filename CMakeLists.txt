@@ -12,6 +12,7 @@ ADD_EXECUTABLE(main
   ${BISON_parser_OUTPUTS}
   src/main.c
   src/cc_misc.c
+  src/cc_sem.c
   src/cc_gv.c
   src/cc_dict.c
   src/cc_list.c

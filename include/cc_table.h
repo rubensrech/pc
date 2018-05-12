@@ -5,6 +5,13 @@
 
 #define MAX_HASH_KEY_SIZE 1000
 
+#define DATATYPE_UNDEF    0
+#define DATATYPE_FLOAT    1
+#define DATATYPE_INT      2
+#define DATATYPE_BOOL     3
+#define DATATYPE_STRING   4
+#define DATATYPE_CHAR     5
+
 typedef struct tokenInfo {
     int line;
     int type;
@@ -16,6 +23,7 @@ typedef struct tokenInfo {
       int boolVal;
       char *strVal;  
     } value;
+    int dataType;
 } TokenInfo;
 
 void initSymbolsTable();

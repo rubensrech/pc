@@ -34,11 +34,11 @@ ID              [_a-zA-Z][a-zA-Z0-9_]*
 <comment>\n		           ++num_lines;     /* count lines inside multi-line comments */
 <comment>"*"+"/"	       BEGIN(INITIAL);
 
-int         return TK_PR_INT;
-float       return TK_PR_FLOAT;
-bool        return TK_PR_BOOL;
-char        return TK_PR_CHAR;
-string      return TK_PR_STRING;
+int         { yylval.dataType = DATATYPE_INT; return TK_PR_INT; }
+float       { yylval.dataType = DATATYPE_FLOAT; return TK_PR_FLOAT; }
+bool        { yylval.dataType = DATATYPE_BOOL; return TK_PR_BOOL; }
+char        { yylval.dataType = DATATYPE_CHAR; return TK_PR_CHAR; }
+string      { yylval.dataType = DATATYPE_STRING; return TK_PR_STRING; }
 if          return TK_PR_IF;
 then        return TK_PR_THEN;
 else        return TK_PR_ELSE;
@@ -60,8 +60,8 @@ private     return TK_PR_PRIVATE;
 public      return TK_PR_PUBLIC;
 protected   return TK_PR_PROTECTED;
 
-true        { yylval.valor_lexico = addSymbolsTable(POA_LIT_BOOL); return TK_LIT_TRUE; }
-false       { yylval.valor_lexico = addSymbolsTable(POA_LIT_BOOL); return TK_LIT_FALSE; }
+true            { yylval.valor_lexico = addSymbolsTable(POA_LIT_BOOL); return TK_LIT_TRUE; }
+false           { yylval.valor_lexico = addSymbolsTable(POA_LIT_BOOL); return TK_LIT_FALSE; }
 
 {ID}            { yylval.valor_lexico = addSymbolsTable(POA_IDENT); return TK_IDENTIFICADOR; }
 

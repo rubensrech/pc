@@ -61,22 +61,28 @@ TokenInfo *addSymbolsTable(int tokenType) {
     case POA_LIT_STRING:
       removeQuotes(token);
       info->value.strVal = token;
+      info->dataType = DATATYPE_STRING;
       break;
     case POA_LIT_CHAR:
       removeQuotes(token);
       info->value.charVal = token[0];
+      info->dataType = DATATYPE_CHAR;
       break;
     case POA_IDENT:
       info->value.strVal = token;
+      info->dataType = DATATYPE_UNDEF;
       break;
     case POA_LIT_BOOL:
       info->value.boolVal = !strcmp(token, "true");
+      info->dataType = DATATYPE_BOOL;
       break;
     case POA_LIT_FLOAT:
       info->value.floatVal = atof(token);
+      info->dataType = DATATYPE_FLOAT;
       break;
     case POA_LIT_INT:
       info->value.intVal = atoi(token);
+      info->dataType = DATATYPE_INT;
       break;
   }
 

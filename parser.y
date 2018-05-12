@@ -9,6 +9,7 @@
 #include "cc_misc.h"
 #include "cc_tree.h"
 #include "cc_ast.h"
+#include "cc_sem.h"
 
 extern comp_tree_t *ast;
 }
@@ -16,14 +17,15 @@ extern comp_tree_t *ast;
 %union {
    TokenInfo *valor_lexico;
    comp_tree_t *ast;
+   int dataType;
 }
 
 /* Declaração dos tokens da linguagem */
-%token TK_PR_INT
-%token TK_PR_FLOAT
-%token TK_PR_BOOL
-%token TK_PR_CHAR
-%token TK_PR_STRING
+%token <dataType>TK_PR_INT
+%token <dataType>TK_PR_FLOAT
+%token <dataType>TK_PR_BOOL
+%token <dataType>TK_PR_CHAR
+%token <dataType>TK_PR_STRING
 %token TK_PR_IF
 %token TK_PR_THEN
 %token TK_PR_ELSE
@@ -81,8 +83,7 @@ extern comp_tree_t *ast;
 %type <ast>block
 %type <ast>commands
 %type <ast>command
-
-%type<ast>if_stm
+%type <ast>if_stm
 %type <ast>assig_cmd
 %type <ast>var_dec
 %type <ast>init_var
@@ -98,18 +99,15 @@ extern comp_tree_t *ast;
 %type <ast>foreach
 %type <ast>for
 %type <ast>pipe_exp
-
 %type <ast>func_call
 %type <ast>params
 %type <ast>params_list
 %type <ast>param
-
 %type <ast>exp
 %type <ast>exps_list
 %type <ast>literal
 %type <ast>cmd_list
 %type <ast>cmd
-
 %type <ast>int
 %type <ast>int_neg
 %type <ast>float
@@ -117,9 +115,10 @@ extern comp_tree_t *ast;
 %type <ast>false
 %type <ast>char
 %type <ast>string
-
 %type <ast>array
 %type <ast>id
+
+%type <dataType>native_type
 
 %%
 /* Regras (e ações) da gramática */
@@ -141,7 +140,6 @@ code:  type_def ';'             { $$ = NULL; }
 
 id: TK_IDENTIFICADOR            { $$ = makeASTNode(AST_IDENTIFICADOR, $1); };
 array: id '[' exp ']'           { $$ = makeASTBinaryNode(AST_VETOR_INDEXADO, NULL, $1, $3); };
-
 int: TK_LIT_INT                 { $$ = makeASTNode(AST_LITERAL, $1); };
 int_neg: '-' int                { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); };
 float: TK_LIT_FLOAT             { $$ = makeASTNode(AST_LITERAL, $1); };
@@ -163,11 +161,11 @@ type_def_camp_enc: TK_PR_PROTECTED
                   | TK_PR_PRIVATE
                   | TK_PR_PUBLIC;
 
-native_type: TK_PR_INT
-            | TK_PR_FLOAT
-            | TK_PR_CHAR
-            | TK_PR_BOOL
-            | TK_PR_STRING;
+native_type: TK_PR_INT          { $$ = $1; }
+            | TK_PR_FLOAT       { $$ = $1; }
+            | TK_PR_CHAR        { $$ = $1; }
+            | TK_PR_BOOL        { $$ = $1; }
+            | TK_PR_STRING      { $$ = $1; };
 
 /* Global Variables Declaration */
 
@@ -197,7 +195,7 @@ params_dec_list: param_dec
 param_dec: TK_PR_CONST type TK_IDENTIFICADOR
           | type TK_IDENTIFICADOR;
 
-block:  '{' '}'                    { $$ = makeASTNode(AST_BLOCO, NULL); /* EMPTY BLOCK?? */ }
+block:  '{' '}'                    { $$ = makeASTNode(AST_BLOCO, NULL); }
       | '{' commands '}'           { $$ = $2; };
 
 commands: command                  { $$ = $1; }
@@ -230,15 +228,31 @@ command:  var_dec ';'           { $$ = $1; }
 
 /* Local Variables Declaration - command */
 
-var_dec: TK_PR_STATIC TK_PR_CONST native_type id init_var { $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $4, $5); }
-        | TK_PR_STATIC native_type id init_var            { $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $3, $4); }
-        | TK_PR_CONST native_type id init_var             { $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $3, $4); }
-        | native_type id init_var                         { $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $2, $3); }
-
-        | TK_PR_STATIC TK_PR_CONST native_type TK_IDENTIFICADOR         { $$ = NULL; }
-        | TK_PR_STATIC native_type TK_IDENTIFICADOR                     { $$ = NULL; }
-        | TK_PR_CONST native_type TK_IDENTIFICADOR                      { $$ = NULL; }
-        | native_type TK_IDENTIFICADOR                                  { $$ = NULL; }
+var_dec: TK_PR_STATIC TK_PR_CONST native_type id init_var {
+                                                                $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $4, $5);
+                                                                setIdNodeDataType($4, $3);
+                                                                checkDataTypeMatching($3, getASTNodeTokenDataType($5));
+                                                          }
+        | TK_PR_STATIC native_type id init_var            {
+                                                                $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $3, $4);
+                                                                setIdNodeDataType($3, $2);
+                                                                checkDataTypeMatching($2, getASTNodeTokenDataType($4));
+                                                          }
+        | TK_PR_CONST native_type id init_var             {
+                                                                $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $3, $4);
+                                                                setIdNodeDataType($3, $2);
+                                                                checkDataTypeMatching($2, getASTNodeTokenDataType($4));
+                                                          }
+        | native_type id init_var                         { 
+                                                                $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $2, $3);
+                                                                setIdNodeDataType($2, $1);
+                                                                checkDataTypeMatching($1, getASTNodeTokenDataType($3));
+                                                          }
+ 
+        | TK_PR_STATIC TK_PR_CONST native_type TK_IDENTIFICADOR         { $$ = NULL; setIdDataType($4, $3); }
+        | TK_PR_STATIC native_type TK_IDENTIFICADOR                     { $$ = NULL; setIdDataType($3, $2); }
+        | TK_PR_CONST native_type TK_IDENTIFICADOR                      { $$ = NULL; setIdDataType($3, $2); }
+        | native_type TK_IDENTIFICADOR                                  { $$ = NULL; setIdDataType($2, $1); }
         
         /* Cannot initialize user type variables */
         | TK_PR_STATIC TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR         { $$ = NULL; }
@@ -247,7 +261,7 @@ var_dec: TK_PR_STATIC TK_PR_CONST native_type id init_var { $$ = makeASTBinaryNo
         | TK_IDENTIFICADOR TK_IDENTIFICADOR                                  { $$ = NULL; };
 
 init_var: TK_OC_LE literal      { $$ = $2; }
-         | TK_OC_LE id          { $$ = $2; };
+         | TK_OC_LE id          { $$ = $2; /* Check id is declared */ };
 
 literal:  int                   { $$ = $1; }
         | '+' int               { $$ = $2; }

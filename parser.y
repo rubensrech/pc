@@ -194,8 +194,12 @@ global_var: TK_PR_STATIC type TK_IDENTIFICADOR          {       setIdDataType($3
                                                                 }
                                                         };
 
-global_arr: TK_PR_STATIC type TK_IDENTIFICADOR '[' TK_LIT_INT ']'
-         | type TK_IDENTIFICADOR '[' TK_LIT_INT ']';
+global_arr: TK_PR_STATIC type TK_IDENTIFICADOR '[' TK_LIT_INT ']'       {       setIdDataType($3, $2);
+                                                                                setIdType($3, ARRAY_ID);
+                                                                        }
+         | type TK_IDENTIFICADOR '[' TK_LIT_INT ']'                     {       setIdDataType($2, $1);
+                                                                                setIdType($2, ARRAY_ID);
+                                                                        };
 
 /* Function Declaration */
 
@@ -357,9 +361,10 @@ io_cmd: TK_PR_INPUT exp                 { $$ = makeASTUnaryNode(AST_INPUT, NULL,
 
 /* Function call - command */
 
-func_call: id '(' params ')'    {
-                                        if ($3 != NULL) $$ = makeASTBinaryNode(AST_CHAMADA_DE_FUNCAO, NULL, $1, $3);
+func_call: id '(' params ')'    {       if ($3 != NULL) $$ = makeASTBinaryNode(AST_CHAMADA_DE_FUNCAO, NULL, $1, $3);
                                         else $$ = makeASTUnaryNode(AST_CHAMADA_DE_FUNCAO, NULL, $1);
+                                        checkIdNodeDeclared($1);
+                                        checkIdNodeUsedAs(FUNC_ID, $1);
                                 };
 
 params:  /* empty */                    { $$ = NULL; }

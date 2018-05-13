@@ -29,3 +29,6 @@ void checkDataTypeMatching(int idDataType, int litDataType);
 
 void checkIdDeclared(TokenInfo *id);
 void checkIdNodeDeclared(comp_tree_t *node);
+
+void throwSemanticError(const char *errorMsg, int errorCode);
+TokenInfo *searchIdInGlobalScope(char *id); 

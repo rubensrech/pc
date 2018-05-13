@@ -1,11 +1,13 @@
 #include <stdlib.h>
 #include "cc_sem.h"
 
+int scope = 0;
+int scope_uniq = 0;
+
 void setIdDataType(TokenInfo *id, int dataType) {
     // Check id is already declared (tried to redeclare)
     if (id->dataType != DATATYPE_UNDEF) {
-        printf("Semantic error (already declared) - line %d\n", getLineNumber());
-        exit(IKS_ERROR_DECLARED);
+        throwSemanticError("Identifier redeclaration", IKS_ERROR_DECLARED);
     } else {
         id->dataType = dataType;
     }
@@ -27,24 +29,37 @@ int getASTNodeTokenDataType(comp_tree_t *node) {
 }
 
 void checkDataTypeMatching(int idDataType, int initDataType) {
-    // Check declaration for var init with id, ex: int a <= b;
-    /*if (initDataType == DATATYPE_UNDEF) {
-        printf("Semantic error (undeclared) - line %d\n", getLineNumber());
-        exit(IKS_ERROR_UNDECLARED);
-    } else*/  if (idDataType != initDataType) {
-        printf("Semantic error (incompatible types) - line %d\n", getLineNumber());
-        exit(IKS_ERROR_INCOMP_TYPES);
+    if (idDataType != initDataType) {
+        throwSemanticError("Incompatitle types", IKS_ERROR_INCOMP_TYPES);
     }
 }
 
 void checkIdDeclared(TokenInfo *id) {
+    TokenInfo *globalId;
+    // Check id declared in current scope
     if (id->dataType == DATATYPE_UNDEF) {
-        printf("Semantic error (undeclared) - line %d\n", getLineNumber());
-        exit(IKS_ERROR_UNDECLARED);
+        // Check id declared in global scope
+        globalId = searchIdInGlobalScope(id->lexeme);
+        if (globalId != NULL) {
+            // Found in global scope -> set id as defined
+            id->dataType = globalId->dataType;
+        } else {
+            throwSemanticError("Undeclared identifier", IKS_ERROR_UNDECLARED);
+        }
     }
 }
 
 void checkIdNodeDeclared(comp_tree_t *node) {
     AstNodeInfo *nodeInfo = node->value;
     checkIdDeclared(nodeInfo->tokenInfo);
+}
+
+void throwSemanticError(const char *errorMsg, int errorCode) {
+    printf("Semantic error: %s - on line %d\n", errorMsg, getLineNumber());
+    exit(errorCode);
+}
+
+TokenInfo *searchIdInGlobalScope(char *id) {
+    const int globalScope = 0;
+    return lookUpForIdInSymbolsTable(id, globalScope);
 }

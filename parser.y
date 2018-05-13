@@ -12,6 +12,8 @@
 #include "cc_sem.h"
 
 extern comp_tree_t *ast;
+extern int scope;
+extern int scope_uniq;
 }
 
 %union {
@@ -80,6 +82,7 @@ extern comp_tree_t *ast;
 %type <ast>programa
 %type <ast>code
 %type <ast>func_dec
+%type <valor_lexico>func_id
 %type <ast>block
 %type <ast>commands
 %type <ast>command
@@ -169,22 +172,28 @@ native_type: TK_PR_INT          { $$ = $1; }
 
 /* Global Variables Declaration */
 
+type: native_type
+     | TK_IDENTIFICADOR; // User created types
+
 global_def: global_var
            | global_arr;
 
 global_var: TK_PR_STATIC type TK_IDENTIFICADOR
-         | type TK_IDENTIFICADOR;
+         | type TK_IDENTIFICADOR                        {};
 
 global_arr: TK_PR_STATIC type TK_IDENTIFICADOR '[' TK_LIT_INT ']'
          | type TK_IDENTIFICADOR '[' TK_LIT_INT ']';
 
-type: native_type
-     | TK_IDENTIFICADOR; // Detects user created types
-
 /* Function Declaration */
 
-func_dec: TK_PR_STATIC type TK_IDENTIFICADOR '(' params_dec ')' block   { $$ = makeASTUnaryNode(AST_FUNCAO, $3, $7); }
-         | type TK_IDENTIFICADOR '(' params_dec ')' block               { $$ = makeASTUnaryNode(AST_FUNCAO, $2, $6); };
+func_dec: func_id '(' params_dec ')' block      {
+                                                        $$ = makeASTUnaryNode(AST_FUNCAO, $1, $5);
+                                                        // Scope ended -> back to global scope
+                                                        scope = 0;
+                                                };
+
+func_id: TK_PR_STATIC type TK_IDENTIFICADOR   { $$ = $3; scope_uniq++; scope = scope_uniq; }
+        | type TK_IDENTIFICADOR               { $$ = $2; scope_uniq++; scope = scope_uniq; };
 
 params_dec: /* empty */
            | params_dec_list;
@@ -228,37 +237,30 @@ command:  var_dec ';'           { $$ = $1; }
 
 /* Local Variables Declaration - command */
 
-var_dec: TK_PR_STATIC TK_PR_CONST native_type id init_var {
-                                                                $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $4, $5);
-                                                                setIdNodeDataType($4, $3); // also checks redeclaration 
-                                                                checkDataTypeMatching($3, getASTNodeTokenDataType($5));
-                                                          }
-        | TK_PR_STATIC native_type id init_var            {
-                                                                $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $3, $4);
-                                                                setIdNodeDataType($3, $2); // also checks redeclaration 
-                                                                checkDataTypeMatching($2, getASTNodeTokenDataType($4));
-                                                          }
-        | TK_PR_CONST native_type id init_var             {
-                                                                $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $3, $4);
-                                                                setIdNodeDataType($3, $2); // also checks redeclaration
-                                                                checkDataTypeMatching($2, getASTNodeTokenDataType($4));
-                                                          }
-        | native_type id init_var                         { 
-                                                                $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $2, $3);
-                                                                setIdNodeDataType($2, $1); // also checks redeclaration
-                                                                checkDataTypeMatching($1, getASTNodeTokenDataType($3));
-                                                          }
- 
-        | TK_PR_STATIC TK_PR_CONST native_type TK_IDENTIFICADOR         { $$ = NULL; setIdDataType($4, $3); /* also checks redeclaration */ }
-        | TK_PR_STATIC native_type TK_IDENTIFICADOR                     { $$ = NULL; setIdDataType($3, $2); /* also checks redeclaration */ }
-        | TK_PR_CONST native_type TK_IDENTIFICADOR                      { $$ = NULL; setIdDataType($3, $2); /* also checks redeclaration */ }
-        | native_type TK_IDENTIFICADOR                                  { $$ = NULL; setIdDataType($2, $1); /* also checks redeclaration */ }
+var_dec:
+        /* Declarations with init value (only native types) */
+        var_dec_mods native_type id init_var   { 
+                                                        $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $3, $4);
+                                                        setIdNodeDataType($3, $2); // also checks redeclaration
+                                                        checkDataTypeMatching($2, getASTNodeTokenDataType($3));
+                                                }
+        | native_type id init_var               {
+                                                        $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $2, $3);
+                                                        setIdNodeDataType($2, $1); // also checks redeclaration
+                                                        checkDataTypeMatching($1, getASTNodeTokenDataType($2));
+                                                }
+
+        /* Native type declarations with no init value */
+        | var_dec_mods native_type TK_IDENTIFICADOR     { $$ = NULL; setIdDataType($3, $2); /* also checks redeclaration */ }
+        | native_type TK_IDENTIFICADOR                  { $$ = NULL; setIdDataType($2, $1); /* also checks redeclaration */ }
         
         /* Cannot initialize user type variables */
-        | TK_PR_STATIC TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR         { $$ = NULL; }
-        | TK_PR_STATIC TK_IDENTIFICADOR TK_IDENTIFICADOR                     { $$ = NULL; }
-        | TK_PR_CONST TK_IDENTIFICADOR TK_IDENTIFICADOR                      { $$ = NULL; }
-        | TK_IDENTIFICADOR TK_IDENTIFICADOR                                  { $$ = NULL; };
+        | var_dec_mods TK_IDENTIFICADOR TK_IDENTIFICADOR      { $$ = NULL; }
+        | TK_IDENTIFICADOR TK_IDENTIFICADOR                   { $$ = NULL; };
+
+var_dec_mods: TK_PR_STATIC
+             | TK_PR_CONST
+             | TK_PR_STATIC TK_PR_CONST;
 
 init_var: TK_OC_LE literal      { $$ = $2; }
          | TK_OC_LE id          { $$ = $2; checkIdNodeDeclared($2); };

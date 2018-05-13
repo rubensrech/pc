@@ -24,10 +24,12 @@ typedef struct tokenInfo {
       char *strVal;  
     } value;
     int dataType;
+    int scope;
 } TokenInfo;
 
 void initSymbolsTable();
 TokenInfo *addSymbolsTable(int tokenType);
+TokenInfo *lookUpForIdInSymbolsTable(char *id, int scope);
 void freeTokenInfo(TokenInfo *info);
 void freeSymbolsTable();
 void printSymbolsTable();

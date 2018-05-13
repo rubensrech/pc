@@ -5,6 +5,7 @@
 
 extern char *yytext;
 extern int num_lines;
+extern int scope;
 
 comp_dict_t *symbolsTable;
 
@@ -55,8 +56,9 @@ TokenInfo *addSymbolsTable(int tokenType) {
   
   info->line = num_lines;
   info->type = tokenType;
+  info->scope = scope;
 
-  // Get token real value
+  // Get token value
   switch (tokenType) {
     case POA_LIT_STRING:
       removeQuotes(token);
@@ -86,8 +88,14 @@ TokenInfo *addSymbolsTable(int tokenType) {
       break;
   }
 
-  // Generate hash table key (TOKEN $$ TYPE)
-  snprintf(key, MAX_HASH_KEY_SIZE, "%s $$ %d", token, tokenType);
+  if (tokenType == POA_IDENT) {
+    // Unique table entry for id in current scope
+    // Generate hash table key (TOKEN $$ TYPE && SCOPE)
+    snprintf(key, MAX_HASH_KEY_SIZE, "%s $$ %d $$ %d", token, tokenType, scope);
+  } else {
+    // Generate hash table key (TOKEN $$ TYPE)
+    snprintf(key, MAX_HASH_KEY_SIZE, "%s $$ %d", token, tokenType);
+  }
 
   // info->lexeke must be freed later
   info->lexeme = token;
@@ -103,6 +111,17 @@ TokenInfo *addSymbolsTable(int tokenType) {
 
   // Key is duplicated (strdup) inside dict_put function
   return (TokenInfo*)dict_put(symbolsTable, key, info);
+}
+
+TokenInfo *lookUpForIdInSymbolsTable(char *id, int scope) {
+  TokenInfo *tokenInfo;
+  char key[MAX_HASH_KEY_SIZE+1];
+  
+  // Generate hash table key (TOKEN $$ TYPE && SCOPE)
+  snprintf(key, MAX_HASH_KEY_SIZE, "%s $$ %d $$ %d", id, POA_IDENT, scope);
+
+  tokenInfo = dict_get(symbolsTable, key);
+  return tokenInfo;
 }
 
 void printSymbolsTable() {

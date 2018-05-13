@@ -9,8 +9,10 @@
 %{
 #include "parser.h" //arquivo automaticamente gerado pelo bison
 #include "cc_table.h"
+#include "cc_sem.h"
 
 int num_lines = 1;
+extern int scope;
 %}
 
 /* Removed the rule for integers and flot with signs in front of them */
@@ -63,7 +65,10 @@ protected   return TK_PR_PROTECTED;
 true            { yylval.valor_lexico = addSymbolsTable(POA_LIT_BOOL); return TK_LIT_TRUE; }
 false           { yylval.valor_lexico = addSymbolsTable(POA_LIT_BOOL); return TK_LIT_FALSE; }
 
-{ID}            { yylval.valor_lexico = addSymbolsTable(POA_IDENT); return TK_IDENTIFICADOR; }
+{ID}            {
+                  yylval.valor_lexico = addSymbolsTable(POA_IDENT);
+                  return TK_IDENTIFICADOR;
+                }
 
 {LIT_INTEGER}   { yylval.valor_lexico = addSymbolsTable(POA_LIT_INT); return TK_LIT_INT; }
 {LIT_FLOAT}     { yylval.valor_lexico = addSymbolsTable(POA_LIT_FLOAT); return TK_LIT_FLOAT; }

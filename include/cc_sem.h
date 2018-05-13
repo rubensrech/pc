@@ -3,18 +3,34 @@
 #include "cc_ast.h"
 #include "cc_misc.h"
 
-#define IKS_SUCCESS                 0 //caso não houver nenhum tipo de erro
+#define MAX_ERROR_MSG_SIZE          100
 
+/* Data types */
+#define DATATYPE_NONE               -1  // used for user type name identifier
+#define DATATYPE_UNDEF              0
+#define DATATYPE_FLOAT              1
+#define DATATYPE_INT                2
+#define DATATYPE_BOOL               3
+#define DATATYPE_STRING             4
+#define DATATYPE_CHAR               5
+
+/* Identifiers types */
+#define ID_TYPE_UNDEF               0 // still not defined
+#define VAR_ID                      1 // int ID;
+#define ARRAY_ID                    2 // int ID[exp];
+#define USER_TYPE_ID                4 // Pessoa ID;
+#define USER_TYPE_ID_FIELD          5 // pessoa.ID = exp;
+
+/* Semantic errors */
+#define IKS_SUCCESS                 0 //caso não houver nenhum tipo de erro
 /* Verificação de declarações */
 #define IKS_ERROR_UNDECLARED        1 //identificador não declarado
 #define IKS_ERROR_DECLARED          2 //identificador já declarado
-
 /* Uso correto de identificadores */
 #define IKS_ERROR_VARIABLE          3 //identificador deve ser utilizado como variável
 #define IKS_ERROR_VECTOR            4 //identificador deve ser utilizado como vetor
 #define IKS_ERROR_FUNCTION          5 //identificador deve ser utilizado como função
-#define IKS_ERROR_INCOMP_TYPES      12 //identificador utilizado com tipo incompatível    
-
+#define IKS_ERROR_INCOMP_TYPES      12 //identificador utilizado com tipo incompatível
 /* Argumentos e parâmetros */
 #define IKS_ERROR_MISSING_ARGS      9  //faltam argumentos 
 #define IKS_ERROR_EXCESS_ARGS       10 //sobram argumentos 
@@ -30,5 +46,8 @@ void checkDataTypeMatching(int idDataType, int litDataType);
 void checkIdDeclared(TokenInfo *id);
 void checkIdNodeDeclared(comp_tree_t *node);
 
-void throwSemanticError(const char *errorMsg, int errorCode);
+void setIdType(TokenInfo *id, int idType);
+void setIdNodeIdType(comp_tree_t *node, int idType);
+
+void throwSemanticError(char *errorMsg, int errorCode);
 TokenInfo *searchIdInGlobalScope(char *id); 

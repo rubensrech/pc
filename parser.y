@@ -122,6 +122,7 @@ extern int scope_uniq;
 %type <ast>id
 
 %type <dataType>native_type
+%type <dataType>type
 
 %%
 /* Regras (e ações) da gramática */
@@ -172,14 +173,26 @@ native_type: TK_PR_INT          { $$ = $1; }
 
 /* Global Variables Declaration */
 
-type: native_type
-     | TK_IDENTIFICADOR; // User created types
+type: native_type               { $$ = $1; }
+     | TK_IDENTIFICADOR         { $$ = DATATYPE_NONE; /* Missing: check $2 is user type name */ };
 
 global_def: global_var
            | global_arr;
 
-global_var: TK_PR_STATIC type TK_IDENTIFICADOR
-         | type TK_IDENTIFICADOR                        {};
+global_var: TK_PR_STATIC type TK_IDENTIFICADOR          { 
+                                                                if ($2 == DATATYPE_NONE) {
+                                                                        setIdType($3, USER_TYPE_ID);
+                                                                } else {
+                                                                        setIdType($3, VAR_ID);
+                                                                } 
+                                                        }
+           | type TK_IDENTIFICADOR                      {
+                                                                if ($1 == DATATYPE_NONE) {
+                                                                        setIdType($2, USER_TYPE_ID);
+                                                                } else {
+                                                                        setIdType($2, VAR_ID);
+                                                                }
+                                                        };
 
 global_arr: TK_PR_STATIC type TK_IDENTIFICADOR '[' TK_LIT_INT ']'
          | type TK_IDENTIFICADOR '[' TK_LIT_INT ']';
@@ -241,22 +254,40 @@ var_dec:
         /* Declarations with init value (only native types) */
         var_dec_mods native_type id init_var   { 
                                                         $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $3, $4);
-                                                        setIdNodeDataType($3, $2); // also checks redeclaration
+                                                        setIdNodeIdType($3, VAR_ID); // also checks redeclaration
+                                                        setIdNodeDataType($3, $2);
                                                         checkDataTypeMatching($2, getASTNodeTokenDataType($3));
                                                 }
         | native_type id init_var               {
                                                         $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $2, $3);
-                                                        setIdNodeDataType($2, $1); // also checks redeclaration
+                                                        setIdNodeIdType($2, VAR_ID); // also checks redeclaration
+                                                        setIdNodeDataType($2, $1);
                                                         checkDataTypeMatching($1, getASTNodeTokenDataType($2));
                                                 }
 
         /* Native type declarations with no init value */
-        | var_dec_mods native_type TK_IDENTIFICADOR     { $$ = NULL; setIdDataType($3, $2); /* also checks redeclaration */ }
-        | native_type TK_IDENTIFICADOR                  { $$ = NULL; setIdDataType($2, $1); /* also checks redeclaration */ }
+        | var_dec_mods native_type TK_IDENTIFICADOR     {
+                                                                $$ = NULL;
+                                                                setIdType($3, VAR_ID); // also checks redeclaration
+                                                                setIdDataType($3, $2);
+                                                        }
+        | native_type TK_IDENTIFICADOR                  {
+                                                                $$ = NULL;
+                                                                setIdType($2, VAR_ID); // also checks redeclaration
+                                                                setIdDataType($2, $1);
+                                                        }
         
         /* Cannot initialize user type variables */
-        | var_dec_mods TK_IDENTIFICADOR TK_IDENTIFICADOR      { $$ = NULL; }
-        | TK_IDENTIFICADOR TK_IDENTIFICADOR                   { $$ = NULL; };
+        | var_dec_mods TK_IDENTIFICADOR TK_IDENTIFICADOR        {
+                                                                        $$ = NULL;
+                                                                        /* Missing: check $1 is user type name */
+                                                                        setIdType($3, USER_TYPE_ID);
+                                                                }
+        | TK_IDENTIFICADOR TK_IDENTIFICADOR                     {
+                                                                        $$ = NULL;
+                                                                        /* Missing: check $1 is user type name */
+                                                                        setIdType($2, USER_TYPE_ID);
+                                                                };
 
 var_dec_mods: TK_PR_STATIC
              | TK_PR_CONST

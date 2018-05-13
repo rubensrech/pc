@@ -4,13 +4,25 @@
 int scope = 0;
 int scope_uniq = 0;
 
+void setIdType(TokenInfo *id, int idType) {
+    char errorMsg[MAX_ERROR_MSG_SIZE];
+    // Check id is already declared (tried to redeclare)
+    if (id->idType != ID_TYPE_UNDEF) {
+        snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Identifier '%s' redeclared", id->lexeme);
+        throwSemanticError(errorMsg, IKS_ERROR_DECLARED);
+    } else {
+        id->idType = idType;
+    }
+}
+
+void setIdNodeIdType(comp_tree_t *node, int idType) {
+    AstNodeInfo *nodeInfo = node->value;
+    setIdType(nodeInfo->tokenInfo, idType);
+}
+
 void setIdDataType(TokenInfo *id, int dataType) {
     // Check id is already declared (tried to redeclare)
-    if (id->dataType != DATATYPE_UNDEF) {
-        throwSemanticError("Identifier redeclaration", IKS_ERROR_DECLARED);
-    } else {
-        id->dataType = dataType;
-    }
+    id->dataType = dataType;    
 }
 
 void setIdNodeDataType(comp_tree_t *node, int dataType) {
@@ -36,6 +48,8 @@ void checkDataTypeMatching(int idDataType, int initDataType) {
 
 void checkIdDeclared(TokenInfo *id) {
     TokenInfo *globalId;
+    char errorMsg[MAX_ERROR_MSG_SIZE];
+
     // Check id declared in current scope
     if (id->dataType == DATATYPE_UNDEF) {
         // Check id declared in global scope
@@ -44,7 +58,8 @@ void checkIdDeclared(TokenInfo *id) {
             // Found in global scope -> set id as defined
             id->dataType = globalId->dataType;
         } else {
-            throwSemanticError("Undeclared identifier", IKS_ERROR_UNDECLARED);
+            snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Undeclared identifier '%s'", id->lexeme);
+            throwSemanticError(errorMsg, IKS_ERROR_UNDECLARED);
         }
     }
 }
@@ -54,7 +69,7 @@ void checkIdNodeDeclared(comp_tree_t *node) {
     checkIdDeclared(nodeInfo->tokenInfo);
 }
 
-void throwSemanticError(const char *errorMsg, int errorCode) {
+void throwSemanticError(char *errorMsg, int errorCode) {
     printf("Semantic error: %s - on line %d\n", errorMsg, getLineNumber());
     exit(errorCode);
 }

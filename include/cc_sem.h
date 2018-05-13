@@ -6,7 +6,7 @@
 #define MAX_ERROR_MSG_SIZE          100
 
 /* Data types */
-#define DATATYPE_NONE               -1  // used for user type name identifier
+#define DATATYPE_USER_TYPE          -1  // used for user type name identifier
 #define DATATYPE_UNDEF              0
 #define DATATYPE_FLOAT              1
 #define DATATYPE_INT                2
@@ -20,6 +20,7 @@
 #define ARRAY_ID                    2 // int ID[exp];
 #define USER_TYPE_ID                4 // Pessoa ID;
 #define USER_TYPE_ID_FIELD          5 // pessoa.ID = exp;
+#define FUNC_ID                     6 // ID();
 
 /* Semantic errors */
 #define IKS_SUCCESS                 0 //caso não houver nenhum tipo de erro
@@ -31,6 +32,7 @@
 #define IKS_ERROR_VECTOR            4 //identificador deve ser utilizado como vetor
 #define IKS_ERROR_FUNCTION          5 //identificador deve ser utilizado como função
 #define IKS_ERROR_INCOMP_TYPES      12 //identificador utilizado com tipo incompatível
+#define IKS_ERROR_USER_TYPE         13 //identificador deve ser utilizado como tipo de usuário
 /* Argumentos e parâmetros */
 #define IKS_ERROR_MISSING_ARGS      9  //faltam argumentos 
 #define IKS_ERROR_EXCESS_ARGS       10 //sobram argumentos 
@@ -45,6 +47,9 @@ void checkDataTypeMatching(int idDataType, int litDataType);
 
 void checkIdDeclared(TokenInfo *id);
 void checkIdNodeDeclared(comp_tree_t *node);
+
+void checkIdUsedAs(int usedAs, TokenInfo *id);
+void checkIdNodeUsedAs(int usedAs, comp_tree_t *node);
 
 void setIdType(TokenInfo *id, int idType);
 void setIdNodeIdType(comp_tree_t *node, int idType);

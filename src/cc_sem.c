@@ -6,6 +6,7 @@ int scope_uniq = 0;
 
 void setIdType(TokenInfo *id, int idType) {
     char errorMsg[MAX_ERROR_MSG_SIZE];
+
     // Check id is already declared (tried to redeclare)
     if (id->idType != ID_TYPE_UNDEF) {
         snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Identifier '%s' redeclared", id->lexeme);
@@ -51,11 +52,12 @@ void checkIdDeclared(TokenInfo *id) {
     char errorMsg[MAX_ERROR_MSG_SIZE];
 
     // Check id declared in current scope
-    if (id->dataType == DATATYPE_UNDEF) {
+    if (id->idType == ID_TYPE_UNDEF) {
         // Check id declared in global scope
         globalId = searchIdInGlobalScope(id->lexeme);
-        if (globalId != NULL) {
+        if (globalId != NULL && globalId->idType != ID_TYPE_UNDEF) {
             // Found in global scope -> set id as defined
+            id->idType = globalId->idType;
             id->dataType = globalId->dataType;
         } else {
             snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Undeclared identifier '%s'", id->lexeme);
@@ -67,6 +69,27 @@ void checkIdDeclared(TokenInfo *id) {
 void checkIdNodeDeclared(comp_tree_t *node) {
     AstNodeInfo *nodeInfo = node->value;
     checkIdDeclared(nodeInfo->tokenInfo);
+}
+
+void checkIdUsedAs(int usedAs, TokenInfo *id) {
+    char errorMsg[MAX_ERROR_MSG_SIZE];
+
+    if (usedAs != id->idType) {
+        snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Wrong use for identifier '%s'", id->lexeme);
+
+        switch (id->idType) {
+        case VAR_ID: throwSemanticError(errorMsg, IKS_ERROR_VARIABLE); break;
+        case ARRAY_ID: throwSemanticError(errorMsg, IKS_ERROR_VECTOR); break;
+        case FUNC_ID: throwSemanticError(errorMsg, IKS_ERROR_FUNCTION); break;
+        case USER_TYPE_ID: throwSemanticError(errorMsg, IKS_ERROR_USER_TYPE); break;
+        }
+        
+    }
+}
+
+void checkIdNodeUsedAs(int usedAs, comp_tree_t *node) {
+    AstNodeInfo *nodeInfo = node->value;
+    checkIdUsedAs(usedAs, nodeInfo->tokenInfo);
 }
 
 void throwSemanticError(char *errorMsg, int errorCode) {

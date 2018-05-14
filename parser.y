@@ -14,6 +14,7 @@
 extern comp_tree_t *ast;
 extern int scope;
 extern int scope_uniq;
+extern comp_dict_t *funcTable;
 }
 
 %union {
@@ -125,6 +126,10 @@ extern int scope_uniq;
 %type <dataType>native_type
 %type <dataType>type
 
+%type <ast>params_dec
+%type <ast>params_dec_list
+%type <ast>param_dec
+
 %%
 /* Regras (e ações) da gramática */
 
@@ -226,34 +231,28 @@ func_id: TK_PR_STATIC type TK_IDENTIFICADOR     {       $$ = $3;
 
 func_header: func_id '(' params_dec ')'         { 
                                                         $$ = $1;
-                                                        // Hash Insert(FuncDescriptor)
-                                                        //      > id            ($1->lexeme)
-                                                        //      > return type   ($1->dataType)
-                                                        //      > params        ($3)
+                                                        insertFuncTable($1, $3);
                                                 };
 
-params_dec: /* empty */
-           | params_dec_list;
+params_dec: /* empty */                         { $$ = NULL; }
+           | params_dec_list                    { $$ = $1; };
 
-params_dec_list: param_dec                      { /* $$ = $1 */ }
-                | param_dec ',' params_dec_list { /* tree_set_list_next_node($1, $3); */ };
+params_dec_list: param_dec                      { $$ = $1; }
+                | param_dec ',' params_dec_list { $$ = $1; tree_set_list_next_node($1, $3); };
 
-param_dec: TK_PR_CONST type TK_IDENTIFICADOR    {       setIdDataType($3, $2);
+param_dec: param_dec_mods type TK_IDENTIFICADOR {
+                                                        $$ = makeASTNode(AST_IDENTIFICADOR, $3);
+
+                                                        setIdDataType($3, $2);
                                                         if ($2 == DATATYPE_USER_TYPE) {
                                                                 setIdType($3, USER_TYPE_ID);
                                                         } else {
                                                                 setIdType($3, VAR_ID);
                                                         } 
-                                                        /*$$ = makeUnaryNode($3)*/
-                                                }
-          | type TK_IDENTIFICADOR               {       setIdDataType($2, $1);
-                                                        if ($1 == DATATYPE_USER_TYPE) {
-                                                                setIdType($2, USER_TYPE_ID);
-                                                        } else {
-                                                                setIdType($2, VAR_ID);
-                                                        }
-                                                        /*$$ = makeUnaryNode($2)*/
                                                 };
+
+param_dec_mods: /* empty */
+                | TK_PR_CONST;
 
 block:  '{' '}'                    { $$ = makeASTNode(AST_BLOCO, NULL); }
       | '{' commands '}'           { $$ = $2; };
@@ -383,6 +382,8 @@ func_call: id '(' params ')'    {       if ($3 != NULL) $$ = makeASTBinaryNode(A
                                         else $$ = makeASTUnaryNode(AST_CHAMADA_DE_FUNCAO, NULL, $1);
                                         checkIdNodeDeclared($1);
                                         checkIdNodeUsedAs(FUNC_ID, $1);
+                                        printf("Check func call: %s\n", ((AstNodeInfo*)$1->value)->tokenInfo->lexeme);
+                                        checkFuncCall($$);
                                 };
 
 params:  /* empty */                    { $$ = NULL; }
@@ -459,6 +460,14 @@ cmd:      var_dec                       { $$ = $1; }
 
 exp:  id                        { $$ = $1; checkIdNodeDeclared($1); checkIdNodeUsedAs(VAR_ID, $1); }         
     | array                     { $$ = $1; }
+    | func_call                 { $$ = $1; }
+    | pipe_exp                  { $$ = $1; }
+    | int                       { $$ = $1; }
+    | float                     { $$ = $1; }
+    | string                    { $$ = $1; }
+    | char                      { $$ = $1; }
+    | true                      { $$ = $1; }
+    | false                     { $$ = $1; }
     | exp '+' exp               { $$ = makeASTBinaryNode(AST_ARIM_SOMA, NULL, $1, $3); }
     | exp '-' exp               { $$ = makeASTBinaryNode(AST_ARIM_SUBTRACAO, NULL, $1, $3); }
     | exp '*' exp               { $$ = makeASTBinaryNode(AST_ARIM_MULTIPLICACAO, NULL, $1, $3); }
@@ -472,18 +481,10 @@ exp:  id                        { $$ = $1; checkIdNodeDeclared($1); checkIdNodeU
     | exp '<' exp               { $$ = makeASTBinaryNode(AST_LOGICO_COMP_L, NULL, $1, $3); }
     | exp TK_OC_AND exp         { $$ = makeASTBinaryNode(AST_LOGICO_E, NULL, $1, $3); }
     | exp TK_OC_OR exp          { $$ = makeASTBinaryNode(AST_LOGICO_OU, NULL, $1, $3); }
-    | func_call                 { $$ = $1; }
-    | pipe_exp                  { $$ = $1; }
     | exp '%' exp               { $$ = makeASTBinaryNode(AST_ARIM_MOD, NULL, $1, $3); }
     | '!' exp                   { $$ = makeASTUnaryNode(AST_LOGICO_COMP_NEGACAO, NULL, $2); }
     | '.'                       { $$ = makeASTNode(AST_DOT_PARAM, NULL); }
-    | '-' exp                   { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); }
-    | int                       { $$ = $1; }
-    | float                     { $$ = $1; }
-    | string                    { $$ = $1; }
-    | char                      { $$ = $1; }
-    | true                      { $$ = $1; }
-    | false                     { $$ = $1; };
+    | '-' exp                   { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); };
 
 exps_list: exp                  { $$ = $1; }
           | exp ',' exps_list   {

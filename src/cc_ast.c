@@ -65,3 +65,7 @@ comp_tree_t *makeASTQuaternaryNode(int type, TokenInfo *token, comp_tree_t *node
     tree_insert_node(newnode, node4);
 	return newnode;
 }
+
+TokenInfo *getASTNodeTokenInfo(comp_tree_t *node) {
+    return ((AstNodeInfo *)node->value)->tokenInfo;
+}

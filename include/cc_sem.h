@@ -1,7 +1,11 @@
+#ifndef __CC_SEM_H
+#define __CC_SEM_H
+
 #include "cc_table.h"
 #include "cc_tree.h"
 #include "cc_ast.h"
 #include "cc_misc.h"
+#include "cc_dict.h"
 
 #define MAX_ERROR_MSG_SIZE          100
 
@@ -36,23 +40,40 @@
 /* Argumentos e parâmetros */
 #define IKS_ERROR_MISSING_ARGS      9  //faltam argumentos 
 #define IKS_ERROR_EXCESS_ARGS       10 //sobram argumentos 
-#define IKS_ERROR_WRONG_TYPE_ARGS   11 //argumentos incompatívei
+#define IKS_ERROR_WRONG_TYPE_ARGS   11 //argumentos incompatíveis
 
+typedef struct funcDesc {
+    char *id;
+    int returnDataType;
+    comp_tree_t *params;
+} FuncDesc;
+
+/* Data type */
 void setIdDataType(TokenInfo *id, int dataType);
 void setIdNodeDataType(comp_tree_t *node, int dataType);
-
 int getASTNodeTokenDataType(comp_tree_t *node);
-
 void checkDataTypeMatching(int idDataType, int litDataType);
 
+/* ID: Declaration and Use */
 void checkIdDeclared(TokenInfo *id);
 void checkIdNodeDeclared(comp_tree_t *node);
-
-void checkIdUsedAs(int usedAs, TokenInfo *id);
-void checkIdNodeUsedAs(int usedAs, comp_tree_t *node);
-
 void setIdType(TokenInfo *id, int idType);
 void setIdNodeIdType(comp_tree_t *node, int idType);
+void checkIdUsedAs(int usedAs, TokenInfo *id);
+void checkIdNodeUsedAs(int usedAs, comp_tree_t *node);
+TokenInfo *searchIdInGlobalScope(char *id);
 
+/* Functions */
+void initFuncTable();
+void freeFuncTable();
+void freeFuncDescriptor(FuncDesc *descriptor);
+void freeParamsList(comp_tree_t *list);
+void printFuncTable();
+void insertFuncTable(TokenInfo *idInfo, comp_tree_t *params);
+int countFuncParameters(comp_tree_t *params);
+void checkFuncCall(comp_tree_t *funcAST);
+
+/* Auxiliary */
 void throwSemanticError(char *errorMsg, int errorCode);
-TokenInfo *searchIdInGlobalScope(char *id); 
+
+#endif

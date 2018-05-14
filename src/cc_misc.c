@@ -3,6 +3,7 @@
 #include "cc_misc.h"
 #include "cc_table.h"
 #include "cc_ast.h"
+#include "cc_sem.h"
 
 extern int num_lines;
 
@@ -24,12 +25,14 @@ void yyerror (char const *mensagem)
 void main_init (int argc, char **argv) {
   initSymbolsTable();
   initAST();
+  initFuncTable();
 }
 
 void main_finalize (void) {
   // comp_print_table();
   freeSymbolsTable();
   freeAST();
+  freeFuncTable();
 }
 
 void comp_print_table (void) {

@@ -3,26 +3,11 @@
 
 int scope = 0;
 int scope_uniq = 0;
+comp_dict_t *funcTable;
 
-void setIdType(TokenInfo *id, int idType) {
-    char errorMsg[MAX_ERROR_MSG_SIZE];
-
-    // Check id is already declared (tried to redeclare)
-    if (id->idType != ID_TYPE_UNDEF) {
-        snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Identifier '%s' redeclared", id->lexeme);
-        throwSemanticError(errorMsg, IKS_ERROR_DECLARED);
-    } else {
-        id->idType = idType;
-    }
-}
-
-void setIdNodeIdType(comp_tree_t *node, int idType) {
-    AstNodeInfo *nodeInfo = node->value;
-    setIdType(nodeInfo->tokenInfo, idType);
-}
+/* Data type */
 
 void setIdDataType(TokenInfo *id, int dataType) {
-    // Check id is already declared (tried to redeclare)
     id->dataType = dataType;    
 }
 
@@ -45,6 +30,25 @@ void checkDataTypeMatching(int idDataType, int initDataType) {
     if (idDataType != initDataType) {
         throwSemanticError("Incompatitle types", IKS_ERROR_INCOMP_TYPES);
     }
+}
+
+/* ID: Declaration and Use */
+
+void setIdType(TokenInfo *id, int idType) {
+    char errorMsg[MAX_ERROR_MSG_SIZE];
+
+    // Check id is already declared (tried to redeclare)
+    if (id->idType != ID_TYPE_UNDEF) {
+        snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Identifier '%s' redeclared", id->lexeme);
+        throwSemanticError(errorMsg, IKS_ERROR_DECLARED);
+    } else {
+        id->idType = idType;
+    }
+}
+
+void setIdNodeIdType(comp_tree_t *node, int idType) {
+    AstNodeInfo *nodeInfo = node->value;
+    setIdType(nodeInfo->tokenInfo, idType);
 }
 
 void checkIdDeclared(TokenInfo *id) {
@@ -92,12 +96,135 @@ void checkIdNodeUsedAs(int usedAs, comp_tree_t *node) {
     checkIdUsedAs(usedAs, nodeInfo->tokenInfo);
 }
 
+TokenInfo *searchIdInGlobalScope(char *id) {
+    const int globalScope = 0;
+    return lookUpForIdInSymbolsTable(id, globalScope);
+}
+
+/* Functions */
+
+void initFuncTable() {
+    funcTable = dict_new();
+}
+
+void freeFuncTable() {
+    int i;
+    struct comp_dict_item *entry, *next;
+    FuncDesc *descriptor;
+
+    for (i = 0; i < funcTable->size; i++) {
+        entry = funcTable->data[i];
+        while (entry != NULL) {
+            next = entry->next;
+            descriptor = dict_remove(funcTable, entry->key);
+            freeFuncDescriptor(descriptor);
+            entry = next;
+        }
+    }
+
+    dict_free(funcTable);
+}
+
+void freeFuncDescriptor(FuncDesc *descriptor) {
+    freeParamsList(descriptor->params);
+    free(descriptor);
+}
+
+void freeParamsList(comp_tree_t *list) {
+    comp_tree_t *ptr = list;
+	if (list != NULL) {
+		freeParamsList(ptr->list_next);
+        free(list);
+    }
+}
+
+void printFuncTable() {
+    int i;
+    struct comp_dict_item *entry;
+    FuncDesc *descriptor;
+
+    printf("------ Func Table ------\n");
+
+    for (i = 0; i < funcTable->size; i++) {
+        entry = funcTable->data[i];
+        while (entry != NULL) {
+            descriptor = entry->value;
+
+            printf("> %s (params: %d, retType: %d)\n", descriptor->id, countFuncParameters(descriptor->params), descriptor->returnDataType);
+    
+            entry = entry->next;
+        }
+    }
+}
+
+void insertFuncTable(TokenInfo *idInfo, comp_tree_t *params) {
+    FuncDesc *funcDesc = malloc(sizeof(struct funcDesc));
+    char *key;
+
+    printf("Insert func dec: %s\n", idInfo->lexeme);
+
+    funcDesc->id = idInfo->lexeme;
+    funcDesc->returnDataType = idInfo->dataType;
+    funcDesc->params = params;
+
+    key = funcDesc->id;
+
+    dict_put(funcTable, key, funcDesc);
+}
+
+int countFuncParameters(comp_tree_t *params) {
+	if (params != NULL) {
+		return 1 + countFuncParameters(params->list_next);
+	} else {
+		return 0;
+	}
+}
+
+void checkFuncCall(comp_tree_t *funcAST) {
+    char errorMsg[MAX_ERROR_MSG_SIZE];
+    comp_tree_t *funcIdNode = funcAST->first;
+    comp_tree_t *funcParamsNode = funcAST->last;
+    AstNodeInfo *funcIdInfo = funcIdNode->value;
+    char *funcId = funcIdInfo->tokenInfo->lexeme;
+    int hasParams = funcAST->childnodes > 1;
+    int paramsCount = (hasParams) ? countFuncParameters(funcParamsNode) : 0;
+
+    comp_tree_t *currExpcParam, *currParam;
+    TokenInfo *currExpcParamInfo;
+
+    printf("Checking: %s, with %d param(s)\n", funcId, paramsCount);
+
+    FuncDesc *funcDesc = dict_get(funcTable, funcId);
+    if (funcDesc == NULL) {
+        snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Call to undefined func '%s'", funcId);
+        throwSemanticError(errorMsg, IKS_ERROR_UNDECLARED);
+    }
+    int expectedParamsCount = countFuncParameters(funcDesc->params);
+
+    if (paramsCount != expectedParamsCount) {
+        snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Invalid call to '%s' - expected %d, got %d param(s)", funcId, expectedParamsCount, paramsCount);
+        if (paramsCount > expectedParamsCount) {
+            throwSemanticError(errorMsg, IKS_ERROR_EXCESS_ARGS);
+        } else {
+            throwSemanticError(errorMsg, IKS_ERROR_MISSING_ARGS);
+        }
+    }
+
+    // Missing check params data type!!
+    if (expectedParamsCount > 0) {
+        currExpcParam = funcDesc->params;
+        while (currExpcParam != NULL) {
+            currExpcParamInfo = getASTNodeTokenInfo(currExpcParam);
+            // printf("> param: %s, dataType: %d\n", currExpcParamInfo->lexeme, currExpcParamInfo->dataType);
+            currExpcParam = currExpcParam->list_next;
+        }
+    }
+}
+
+/* Auxiliary */
+
 void throwSemanticError(char *errorMsg, int errorCode) {
     printf("Semantic error: %s - on line %d\n", errorMsg, getLineNumber());
     exit(errorCode);
 }
 
-TokenInfo *searchIdInGlobalScope(char *id) {
-    const int globalScope = 0;
-    return lookUpForIdInSymbolsTable(id, globalScope);
-}

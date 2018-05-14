@@ -82,6 +82,7 @@ extern int scope_uniq;
 %type <ast>programa
 %type <ast>code
 %type <ast>func_dec
+%type <valor_lexico>func_header
 %type <valor_lexico>func_id
 %type <ast>block
 %type <ast>commands
@@ -143,7 +144,11 @@ code:  type_def ';'             { $$ = NULL; }
 /* Auxiliary rules */
 
 id: TK_IDENTIFICADOR            { $$ = makeASTNode(AST_IDENTIFICADOR, $1); };
-array: id '[' exp ']'           { $$ = makeASTBinaryNode(AST_VETOR_INDEXADO, NULL, $1, $3); };
+array: id '[' exp ']'           {
+                                        $$ = makeASTBinaryNode(AST_VETOR_INDEXADO, NULL, $1, $3);
+                                        checkIdNodeDeclared($1);
+                                        checkIdNodeUsedAs(ARRAY_ID, $1);
+                                };
 int: TK_LIT_INT                 { $$ = makeASTNode(AST_LITERAL, $1); };
 int_neg: '-' int                { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); };
 float: TK_LIT_FLOAT             { $$ = makeASTNode(AST_LITERAL, $1); };
@@ -203,7 +208,7 @@ global_arr: TK_PR_STATIC type TK_IDENTIFICADOR '[' TK_LIT_INT ']'       {       
 
 /* Function Declaration */
 
-func_dec: func_id '(' params_dec ')' block      {       $$ = makeASTUnaryNode(AST_FUNCAO, $1, $5);
+func_dec: func_header block                     {       $$ = makeASTUnaryNode(AST_FUNCAO, $1, $2);
                                                         // Scope ended -> back to global scope
                                                         scope = 0;
                                                 };
@@ -219,11 +224,19 @@ func_id: TK_PR_STATIC type TK_IDENTIFICADOR     {       $$ = $3;
                                                         setIdDataType($2, $1);
                                                 };
 
+func_header: func_id '(' params_dec ')'         { 
+                                                        $$ = $1;
+                                                        // Hash Insert(FuncDescriptor)
+                                                        //      > id            ($1->lexeme)
+                                                        //      > return type   ($1->dataType)
+                                                        //      > params        ($3)
+                                                };
+
 params_dec: /* empty */
            | params_dec_list;
 
-params_dec_list: param_dec
-                | params_dec_list ',' param_dec;
+params_dec_list: param_dec                      { /* $$ = $1 */ }
+                | param_dec ',' params_dec_list { /* tree_set_list_next_node($1, $3); */ };
 
 param_dec: TK_PR_CONST type TK_IDENTIFICADOR    {       setIdDataType($3, $2);
                                                         if ($2 == DATATYPE_USER_TYPE) {
@@ -231,6 +244,7 @@ param_dec: TK_PR_CONST type TK_IDENTIFICADOR    {       setIdDataType($3, $2);
                                                         } else {
                                                                 setIdType($3, VAR_ID);
                                                         } 
+                                                        /*$$ = makeUnaryNode($3)*/
                                                 }
           | type TK_IDENTIFICADOR               {       setIdDataType($2, $1);
                                                         if ($1 == DATATYPE_USER_TYPE) {
@@ -238,6 +252,7 @@ param_dec: TK_PR_CONST type TK_IDENTIFICADOR    {       setIdDataType($3, $2);
                                                         } else {
                                                                 setIdType($2, VAR_ID);
                                                         }
+                                                        /*$$ = makeUnaryNode($2)*/
                                                 };
 
 block:  '{' '}'                    { $$ = makeASTNode(AST_BLOCO, NULL); }
@@ -313,7 +328,11 @@ var_dec_mods: TK_PR_STATIC
              | TK_PR_STATIC TK_PR_CONST;
 
 init_var: TK_OC_LE literal      { $$ = $2; }
-         | TK_OC_LE id          { $$ = $2; checkIdNodeDeclared($2); };
+         | TK_OC_LE id          {
+                                        $$ = $2;
+                                        checkIdNodeDeclared($2);
+                                        checkIdNodeUsedAs(VAR_ID, $2);
+                                };
 
 literal:  int                   { $$ = $1; }
         | '+' int               { $$ = $2; }
@@ -339,20 +358,19 @@ shift_cmd: id TK_OC_SL int              {       $$ = makeASTBinaryNode(AST_SHIFT
 
 /* Assignment - command */
 
-assig_cmd: id '=' exp                   {       $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $3);
-                                                checkIdNodeDeclared($1);
-                                                checkIdNodeUsedAs(VAR_ID, $1);
-                                        }
-          | array '=' exp               { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $3);  }
-          | id '.' id '=' exp           { $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $5); }
+assig_cmd: id '=' unary_plus exp                {       $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
+                                                        checkIdNodeDeclared($1);
+                                                        checkIdNodeUsedAs(VAR_ID, $1);
+                                                }
+          | array '=' unary_plus exp            {       $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
 
-          /* Accept unary operator (+) => e.g.: a = +15  */
-          | id '=' '+' exp              {       $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
-                                                checkIdNodeDeclared($1);
-                                                checkIdNodeUsedAs(VAR_ID, $1);
-                                        }
-          | array '=' '+' exp           { $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4); }
-          | id '.' id '=' '+' exp       { $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $6); };
+                                                }
+          | id '.' id '=' unary_plus exp        {       $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $6);
+                                                
+                                                };
+
+unary_plus: /* empty */
+           | '+';
 
 /* Input and output - command */
 
@@ -439,7 +457,7 @@ cmd:      var_dec                       { $$ = $1; }
 
 /* Expressions */
 
-exp:  id                        { $$ = $1; checkIdNodeDeclared($1); }         
+exp:  id                        { $$ = $1; checkIdNodeDeclared($1); checkIdNodeUsedAs(VAR_ID, $1); }         
     | array                     { $$ = $1; }
     | exp '+' exp               { $$ = makeASTBinaryNode(AST_ARIM_SOMA, NULL, $1, $3); }
     | exp '-' exp               { $$ = makeASTBinaryNode(AST_ARIM_SUBTRACAO, NULL, $1, $3); }

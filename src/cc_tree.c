@@ -36,6 +36,8 @@ void tree_free(comp_tree_t *tree){
 	do {
 		if (ptr->first != NULL)
 			tree_free(ptr->first);
+		if (ptr->list_next != NULL)
+            tree_free(ptr->list_next);
 		ptr = ptr->next;
 		free(tree);
 		tree = ptr;

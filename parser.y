@@ -299,12 +299,12 @@ var_dec:
         var_dec_mods native_type id init_var    {       $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $3, $4);
                                                         setIdNodeIdType($3, VAR_ID); // also checks redeclaration
                                                         setIdNodeTokenDataType($3, $2);
-                                                        checkDataTypeMatching($2, getASTNodeTokenDataType($3));
+                                                        checkDataTypeMatching($2, getASTNodeTokenDataType($3), 1);
                                                 }
         | native_type id init_var               {       $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $2, $3);
                                                         setIdNodeIdType($2, VAR_ID); // also checks redeclaration
                                                         setIdNodeTokenDataType($2, $1);
-                                                        checkDataTypeMatching($1, getASTNodeTokenDataType($2));
+                                                        checkDataTypeMatching($1, getASTNodeTokenDataType($2), 1);
                                                 }
 
         /* Native type declarations with no init value */
@@ -370,19 +370,19 @@ shift_cmd: id TK_OC_SL int              {       $$ = makeASTBinaryNode(AST_SHIFT
 assig_cmd: id '=' unary_plus exp                {       $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
                                                         checkIdNodeDeclared($1);
                                                         checkIdNodeUsedAs(VAR_ID, $1);
-                                                        checkDataTypeMatching(getASTNodeTokenDataType($1), getASTNodeDataType($4));
+                                                        checkDataTypeMatching(getASTNodeTokenDataType($1), getASTNodeDataType($4), 1);
                                                 }
           | array '=' unary_plus exp            {       $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
                                                         // Declaration check, id use as array check, set node dataType
                                                         // already done in 'array' rule
-                                                        checkDataTypeMatching(getASTNodeDataType($1), getASTNodeDataType($4));
+                                                        checkDataTypeMatching(getASTNodeDataType($1), getASTNodeDataType($4), 1);
                                                 }
           | id '.' id '=' unary_plus exp        {       $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $6);
                                                         // Incomplete
                                                         // checkIdNodeDeclared($1);
                                                         // checkIdNodeUsedAs(USER_TYPE_ID, $1);
                                                         // set $2 dataType (based on user declared types list)
-                                                        // checkDataTypeMatching(getASTNodeDataType($3), getASTNodeDataType($5));
+                                                        // checkDataTypeMatching(getASTNodeDataType($3), getASTNodeDataType($5), 1);
                                                 };
 
 unary_plus: /* empty */
@@ -400,7 +400,6 @@ func_call: id '(' params ')'    {       if ($3 != NULL) $$ = makeASTBinaryNode(A
                                         checkIdNodeDeclared($1);
                                         checkIdNodeUsedAs(FUNC_ID, $1);
                                         setNodeDataType($$, getASTNodeTokenDataType($1));
-                                        printf("Check func call: %s\n", ((AstNodeInfo*)$1->value)->tokenInfo->lexeme);
                                         checkFuncCall($$);
                                 };
 

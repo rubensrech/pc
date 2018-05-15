@@ -7,6 +7,7 @@ comp_dict_t *funcTable;
 
 /* Data type */
 
+/* > Setters */
 void setIdTokenDataType(TokenInfo *id, int dataType) {
     id->dataType = dataType;    
 }
@@ -16,6 +17,12 @@ void setIdNodeTokenDataType(comp_tree_t *node, int dataType) {
     setIdTokenDataType(nodeInfo->tokenInfo, dataType);
 }
 
+void setNodeDataType(comp_tree_t *node, int dataType) {
+    AstNodeInfo *nodeInfo = node->value;
+    nodeInfo->dataType = dataType;
+}
+
+/* > Getters */
 int getASTNodeTokenDataType(comp_tree_t *node) {
     AstNodeInfo *nodeInfo = node->value;
     // When 'node' is an AST_ARIM_INVERSAO node (ex: -5),
@@ -30,13 +37,20 @@ int getASTNodeDataType(comp_tree_t *node) {
     return ((AstNodeInfo*)node->value)->dataType;
 }
 
-void checkDataTypeMatching(int dataType1, int dataType2) {
+/* > Checks */
+int checkDataTypeMatching(int dataType1, int dataType2, int shouldThrow) {
     // MISSING FIXES!!
     int arithmeticDataTypes[2] = { DATATYPE_INT, DATATYPE_FLOAT };
+    // Allows: int <= float, float <= int
     int floatIntConversion = inArray(arithmeticDataTypes, 2, dataType1) && inArray(arithmeticDataTypes, 2, dataType2);
 
     if (!floatIntConversion && (dataType1 != dataType2)) {
-        throwSemanticError("Incompatitle types 1", IKS_ERROR_INCOMP_TYPES);
+        if (shouldThrow) {
+            throwSemanticError("Types mismatch 1", IKS_ERROR_WRONG_TYPE);
+        }
+        return 0; 
+    } else {
+        return 1;
     }
 }
 
@@ -48,7 +62,7 @@ int checkArimExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2) {
     int exp2DataType = (exp2 != NULL) ? getASTNodeDataType(exp2) : DATATYPE_INT;
 
     if (!inArray(arithmeticDataTypes, 2, exp1DataType) || !inArray(arithmeticDataTypes, 2, exp2DataType)) {
-        throwSemanticError("Incompatitle types 2", IKS_ERROR_INCOMP_TYPES);
+        throwSemanticError("Types mismatch 2", IKS_ERROR_WRONG_TYPE);
     }
 
     if (exp1DataType == DATATYPE_FLOAT || exp2DataType == DATATYPE_FLOAT)
@@ -64,7 +78,7 @@ int checkCompExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2) {
     int exp2DataType = getASTNodeDataType(exp2);
     
     if (!inArray(comparableDataTypes, 3, exp1DataType) || !inArray(comparableDataTypes, 3, exp2DataType)) {
-        throwSemanticError("Incompatitle types 4", IKS_ERROR_INCOMP_TYPES);
+        throwSemanticError("Types mismatch 4", IKS_ERROR_WRONG_TYPE);
     } 
     
     return DATATYPE_BOOL;
@@ -76,15 +90,10 @@ int checkLogicExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2) {
     int exp2DataType = (exp2 != NULL) ? getASTNodeDataType(exp2) : DATATYPE_BOOL;
 
     if (exp1DataType != DATATYPE_BOOL || exp2DataType != DATATYPE_BOOL) {
-        throwSemanticError("Incompatitle types 3", IKS_ERROR_INCOMP_TYPES);
+        throwSemanticError("Types mismatch 3", IKS_ERROR_WRONG_TYPE);
     }
 
     return DATATYPE_BOOL;
-}
-
-void setNodeDataType(comp_tree_t *node, int dataType) {
-    AstNodeInfo *nodeInfo = node->value;
-    nodeInfo->dataType = dataType;
 }
 
 /* ID: Declaration and Use */
@@ -237,24 +246,22 @@ int countFuncParameters(comp_tree_t *params) {
 
 void checkFuncCall(comp_tree_t *funcAST) {
     char errorMsg[MAX_ERROR_MSG_SIZE];
+
     comp_tree_t *funcIdNode = funcAST->first;
-    comp_tree_t *funcParamsNode = funcAST->last;
     AstNodeInfo *funcIdInfo = funcIdNode->value;
     char *funcId = funcIdInfo->tokenInfo->lexeme;
+
+    comp_tree_t *funcParamsNode = funcAST->last;
     int hasParams = funcAST->childnodes > 1;
     int paramsCount = (hasParams) ? countFuncParameters(funcParamsNode) : 0;
-
-    comp_tree_t *currExpcParam, *currParam;
-    TokenInfo *currExpcParamInfo;
-    AstNodeInfo *currParamNodeInfo;
-
-    printf("Checking: %s, with %d param(s)\n", funcId, paramsCount);
 
     FuncDesc *funcDesc = dict_get(funcTable, funcId);
     if (funcDesc == NULL) {
         snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Call to undefined func '%s'", funcId);
         throwSemanticError(errorMsg, IKS_ERROR_UNDECLARED);
     }
+
+    // Parameters count check
     int expectedParamsCount = countFuncParameters(funcDesc->params);
 
     if (paramsCount != expectedParamsCount) {
@@ -266,16 +273,28 @@ void checkFuncCall(comp_tree_t *funcAST) {
         }
     }
 
-    // Missing check params data type!!
+    // Parameters data type matching check
+    comp_tree_t *currExpcParam, *currParam;
+    TokenInfo *currExpcParamInfo;
+    AstNodeInfo *currParamNodeInfo;
+    int paramTypeMatches;
+    int currParameterCount = 0;
+
     if (expectedParamsCount > 0) {
         currExpcParam = funcDesc->params;
         currParam = funcParamsNode;
         while (currExpcParam != NULL) {
+            currParameterCount++;
             currExpcParamInfo = getASTNodeTokenInfo(currExpcParam);
             currParamNodeInfo = currParam->value;
             
-            printf("> EXPECTED => dataType: %d\n", currExpcParamInfo->dataType);
-            printf("> GOT      => dataType: %d\n", currParamNodeInfo->dataType);
+            // printf("> EXPECTED => dataType: %d\n", currExpcParamInfo->dataType);
+            // printf("> GOT      => dataType: %d\n", currParamNodeInfo->dataType);
+            paramTypeMatches = checkDataTypeMatching(currExpcParamInfo->dataType, currParamNodeInfo->dataType, 0);
+            if (!paramTypeMatches) {
+                snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Invalid call to '%s' - type mismatch on param %d", funcId, currParameterCount);
+                throwSemanticError(errorMsg, IKS_ERROR_WRONG_TYPE_ARGS);
+            }
             
             currExpcParam = currExpcParam->list_next;
             currParam = currParam->list_next;

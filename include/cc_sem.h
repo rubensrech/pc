@@ -56,6 +56,7 @@ int getASTNodeDataType(comp_tree_t *node);
 void checkDataTypeMatching(int idDataType, int litDataType);
 int checkArimExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2);
 int checkLogicExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2);
+int checkCompExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2);
 void setNodeDataType(comp_tree_t *node, int dataType);
 
 /* ID: Declaration and Use */

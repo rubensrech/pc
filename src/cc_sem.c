@@ -57,6 +57,19 @@ int checkArimExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2) {
         return DATATYPE_INT;
 }
 
+int checkCompExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2) {
+    int comparableDataTypes[3] = { DATATYPE_INT, DATATYPE_FLOAT, DATATYPE_CHAR };
+
+    int exp1DataType = getASTNodeDataType(exp1);
+    int exp2DataType = getASTNodeDataType(exp2);
+    
+    if (!inArray(comparableDataTypes, 3, exp1DataType) || !inArray(comparableDataTypes, 3, exp2DataType)) {
+        throwSemanticError("Incompatitle types 4", IKS_ERROR_INCOMP_TYPES);
+    } 
+    
+    return DATATYPE_BOOL;
+}
+
 int checkLogicExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2) {
     int exp1DataType = getASTNodeDataType(exp1);
     // Use exp2 = NULL when only exp1 matters (example: !exp)
@@ -102,7 +115,7 @@ void checkIdDeclared(TokenInfo *id) {
         // Check id declared in global scope
         globalId = searchIdInGlobalScope(id->lexeme);
         if (globalId != NULL && globalId->idType != ID_TYPE_UNDEF) {
-            // Found in global scope -> set id as defined
+            // Found in global scope -> set id as defined and set its properties
             id->idType = globalId->idType;
             id->dataType = globalId->dataType;
         } else {

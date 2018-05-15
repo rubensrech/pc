@@ -153,6 +153,7 @@ array: id '[' exp ']'           {
                                         $$ = makeASTBinaryNode(AST_VETOR_INDEXADO, NULL, $1, $3);
                                         checkIdNodeDeclared($1);
                                         checkIdNodeUsedAs(ARRAY_ID, $1);
+                                        setNodeDataType($$, getASTNodeTokenDataType($1));
                                 };
 int: TK_LIT_INT                 { $$ = makeASTNode(AST_LITERAL, $1); };
 int_neg: '-' int                { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); };
@@ -189,14 +190,14 @@ type: native_type               { $$ = $1; }
 global_def: global_var
            | global_arr;
 
-global_var: TK_PR_STATIC type TK_IDENTIFICADOR          {       setIdDataType($3, $2);
+global_var: TK_PR_STATIC type TK_IDENTIFICADOR          {       setIdTokenDataType($3, $2);
                                                                 if ($2 == DATATYPE_USER_TYPE) {
                                                                         setIdType($3, USER_TYPE_ID);
                                                                 } else {
                                                                         setIdType($3, VAR_ID);
                                                                 }
                                                         }
-           | type TK_IDENTIFICADOR                      {       setIdDataType($2, $1);
+           | type TK_IDENTIFICADOR                      {       setIdTokenDataType($2, $1);
                                                                 if ($1 == DATATYPE_USER_TYPE) {
                                                                         setIdType($2, USER_TYPE_ID);
                                                                 } else {
@@ -204,10 +205,10 @@ global_var: TK_PR_STATIC type TK_IDENTIFICADOR          {       setIdDataType($3
                                                                 }
                                                         };
 
-global_arr: TK_PR_STATIC type TK_IDENTIFICADOR '[' TK_LIT_INT ']'       {       setIdDataType($3, $2);
+global_arr: TK_PR_STATIC type TK_IDENTIFICADOR '[' TK_LIT_INT ']'       {       setIdTokenDataType($3, $2);
                                                                                 setIdType($3, ARRAY_ID);
                                                                         }
-         | type TK_IDENTIFICADOR '[' TK_LIT_INT ']'                     {       setIdDataType($2, $1);
+         | type TK_IDENTIFICADOR '[' TK_LIT_INT ']'                     {       setIdTokenDataType($2, $1);
                                                                                 setIdType($2, ARRAY_ID);
                                                                         };
 
@@ -221,12 +222,12 @@ func_dec: func_header block                     {       $$ = makeASTUnaryNode(AS
 func_id: TK_PR_STATIC type TK_IDENTIFICADOR     {       $$ = $3;
                                                         scope = ++scope_uniq; // New scope
                                                         setIdType($3, FUNC_ID);
-                                                        setIdDataType($3, $2);
+                                                        setIdTokenDataType($3, $2);
                                                 }
         | type TK_IDENTIFICADOR                 {       $$ = $2;
                                                         scope = ++scope_uniq; // New scope
                                                         setIdType($2, FUNC_ID);
-                                                        setIdDataType($2, $1);
+                                                        setIdTokenDataType($2, $1);
                                                 };
 
 func_header: func_id '(' params_dec ')'         { 
@@ -243,7 +244,7 @@ params_dec_list: param_dec                      { $$ = $1; }
 param_dec: param_dec_mods type TK_IDENTIFICADOR {
                                                         $$ = makeASTNode(AST_IDENTIFICADOR, $3);
 
-                                                        setIdDataType($3, $2);
+                                                        setIdTokenDataType($3, $2);
                                                         if ($2 == DATATYPE_USER_TYPE) {
                                                                 setIdType($3, USER_TYPE_ID);
                                                         } else {
@@ -291,35 +292,35 @@ var_dec:
         /* Declarations with init value (only native types) */
         var_dec_mods native_type id init_var    {       $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $3, $4);
                                                         setIdNodeIdType($3, VAR_ID); // also checks redeclaration
-                                                        setIdNodeDataType($3, $2);
+                                                        setIdNodeTokenDataType($3, $2);
                                                         checkDataTypeMatching($2, getASTNodeTokenDataType($3));
                                                 }
         | native_type id init_var               {       $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $2, $3);
                                                         setIdNodeIdType($2, VAR_ID); // also checks redeclaration
-                                                        setIdNodeDataType($2, $1);
+                                                        setIdNodeTokenDataType($2, $1);
                                                         checkDataTypeMatching($1, getASTNodeTokenDataType($2));
                                                 }
 
         /* Native type declarations with no init value */
         | var_dec_mods native_type TK_IDENTIFICADOR     {       $$ = NULL;
                                                                 setIdType($3, VAR_ID); // also checks redeclaration
-                                                                setIdDataType($3, $2);
+                                                                setIdTokenDataType($3, $2);
                                                         }
         | native_type TK_IDENTIFICADOR                  {       $$ = NULL;
                                                                 setIdType($2, VAR_ID); // also checks redeclaration
-                                                                setIdDataType($2, $1);
+                                                                setIdTokenDataType($2, $1);
                                                         }
         
         /* Cannot initialize user type variables */
         | var_dec_mods TK_IDENTIFICADOR TK_IDENTIFICADOR        {       $$ = NULL;
                                                                         /* Missing: check $1 is user type name */
                                                                         setIdType($3, USER_TYPE_ID);
-                                                                        setIdDataType($3, DATATYPE_USER_TYPE);
+                                                                        setIdTokenDataType($3, DATATYPE_USER_TYPE);
                                                                 }
         | TK_IDENTIFICADOR TK_IDENTIFICADOR                     {       $$ = NULL;
                                                                         /* Missing: check $1 is user type name */
                                                                         setIdType($2, USER_TYPE_ID);
-                                                                        setIdDataType($2, DATATYPE_USER_TYPE);
+                                                                        setIdTokenDataType($2, DATATYPE_USER_TYPE);
                                                                 };
 
 var_dec_mods: TK_PR_STATIC
@@ -360,9 +361,10 @@ shift_cmd: id TK_OC_SL int              {       $$ = makeASTBinaryNode(AST_SHIFT
 assig_cmd: id '=' unary_plus exp                {       $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
                                                         checkIdNodeDeclared($1);
                                                         checkIdNodeUsedAs(VAR_ID, $1);
+                                                        checkDataTypeMatching(getASTNodeTokenDataType($1), getASTNodeDataType($4));
                                                 }
           | array '=' unary_plus exp            {       $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
-
+                                                        checkDataTypeMatching(getASTNodeDataType($1), getASTNodeDataType($4));
                                                 }
           | id '.' id '=' unary_plus exp        {       $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $6);
                                                 
@@ -382,6 +384,7 @@ func_call: id '(' params ')'    {       if ($3 != NULL) $$ = makeASTBinaryNode(A
                                         else $$ = makeASTUnaryNode(AST_CHAMADA_DE_FUNCAO, NULL, $1);
                                         checkIdNodeDeclared($1);
                                         checkIdNodeUsedAs(FUNC_ID, $1);
+                                        setNodeDataType($$, getASTNodeTokenDataType($1));
                                         printf("Check func call: %s\n", ((AstNodeInfo*)$1->value)->tokenInfo->lexeme);
                                         checkFuncCall($$);
                                 };
@@ -458,9 +461,14 @@ cmd:      var_dec                       { $$ = $1; }
 
 /* Expressions */
 
-exp:  id                        { $$ = $1; checkIdNodeDeclared($1); checkIdNodeUsedAs(VAR_ID, $1); }         
+exp:  id                        {
+                                        $$ = $1;
+                                        checkIdNodeDeclared($1);
+                                        checkIdNodeUsedAs(VAR_ID, $1);
+                                }         
     | array                     { $$ = $1; }
     | func_call                 { $$ = $1; }
+
     | pipe_exp                  { $$ = $1; }
     | int                       { $$ = $1; }
     | float                     { $$ = $1; }

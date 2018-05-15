@@ -60,6 +60,7 @@
 typedef struct astNodeInfo {
   int type;
   TokenInfo *tokenInfo;
+  int dataType;
 } AstNodeInfo;
 
 void initAST();

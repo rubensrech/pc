@@ -7,13 +7,13 @@ comp_dict_t *funcTable;
 
 /* Data type */
 
-void setIdDataType(TokenInfo *id, int dataType) {
+void setIdTokenDataType(TokenInfo *id, int dataType) {
     id->dataType = dataType;    
 }
 
-void setIdNodeDataType(comp_tree_t *node, int dataType) {
+void setIdNodeTokenDataType(comp_tree_t *node, int dataType) {
     AstNodeInfo *nodeInfo = node->value;
-    setIdDataType(nodeInfo->tokenInfo, dataType);
+    setIdTokenDataType(nodeInfo->tokenInfo, dataType);
 }
 
 int getASTNodeTokenDataType(comp_tree_t *node) {
@@ -26,10 +26,20 @@ int getASTNodeTokenDataType(comp_tree_t *node) {
     return nodeInfo->tokenInfo->dataType;
 }
 
-void checkDataTypeMatching(int idDataType, int initDataType) {
-    if (idDataType != initDataType) {
+int getASTNodeDataType(comp_tree_t *node) {
+    return ((AstNodeInfo*)node->value)->dataType;
+}
+
+void checkDataTypeMatching(int dataType1, int dataType2) {
+    // MISSING FIXES!!
+    if (dataType1 != dataType2) {
         throwSemanticError("Incompatitle types", IKS_ERROR_INCOMP_TYPES);
     }
+}
+
+void setNodeDataType(comp_tree_t *node, int dataType) {
+    AstNodeInfo *nodeInfo = node->value;
+    nodeInfo->dataType = dataType;
 }
 
 /* ID: Declaration and Use */
@@ -191,6 +201,7 @@ void checkFuncCall(comp_tree_t *funcAST) {
 
     comp_tree_t *currExpcParam, *currParam;
     TokenInfo *currExpcParamInfo;
+    AstNodeInfo *currParamNodeInfo;
 
     printf("Checking: %s, with %d param(s)\n", funcId, paramsCount);
 
@@ -213,10 +224,16 @@ void checkFuncCall(comp_tree_t *funcAST) {
     // Missing check params data type!!
     if (expectedParamsCount > 0) {
         currExpcParam = funcDesc->params;
+        currParam = funcParamsNode;
         while (currExpcParam != NULL) {
             currExpcParamInfo = getASTNodeTokenInfo(currExpcParam);
-            // printf("> param: %s, dataType: %d\n", currExpcParamInfo->lexeme, currExpcParamInfo->dataType);
+            currParamNodeInfo = currParam->value;
+            
+            printf("> EXPECTED => dataType: %d\n", currExpcParamInfo->dataType);
+            printf("> GOT      => dataType: %d\n", currParamNodeInfo->dataType);
+            
             currExpcParam = currExpcParam->list_next;
+            currParam = currParam->list_next;
         }
     }
 }

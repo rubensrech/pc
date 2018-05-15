@@ -1,7 +1,8 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "cc_ast.h"
 #include "cc_gv.h"
-#include <stdio.h>
+#include "cc_sem.h"
 
 comp_tree_t *ast;
 
@@ -33,6 +34,7 @@ comp_tree_t *makeASTNode(int type, TokenInfo *token) {
     AstNodeInfo *nodeInfo = malloc(sizeof(struct astNodeInfo));
     nodeInfo->type = type;
     nodeInfo->tokenInfo = token;
+    nodeInfo->dataType = DATATYPE_UNDEF;
     return tree_make_node(nodeInfo);
 }
 

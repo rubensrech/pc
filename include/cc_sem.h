@@ -49,10 +49,12 @@ typedef struct funcDesc {
 } FuncDesc;
 
 /* Data type */
-void setIdDataType(TokenInfo *id, int dataType);
-void setIdNodeDataType(comp_tree_t *node, int dataType);
+void setIdTokenDataType(TokenInfo *id, int dataType);
+void setIdNodeTokenDataType(comp_tree_t *node, int dataType);
 int getASTNodeTokenDataType(comp_tree_t *node);
+int getASTNodeDataType(comp_tree_t *node);
 void checkDataTypeMatching(int idDataType, int litDataType);
+void setNodeDataType(comp_tree_t *node, int dataType);
 
 /* ID: Declaration and Use */
 void checkIdDeclared(TokenInfo *id);

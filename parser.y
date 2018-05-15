@@ -109,6 +109,8 @@ extern comp_dict_t *funcTable;
 %type <ast>params_list
 %type <ast>param
 %type <ast>exp
+%type <ast>arimExp
+%type <ast>logicExp
 %type <ast>exps_list
 %type <ast>literal
 %type <ast>cmd_list
@@ -155,13 +157,14 @@ array: id '[' exp ']'           {
                                         checkIdNodeUsedAs(ARRAY_ID, $1);
                                         setNodeDataType($$, getASTNodeTokenDataType($1));
                                 };
-int: TK_LIT_INT                 { $$ = makeASTNode(AST_LITERAL, $1); };
-int_neg: '-' int                { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); };
-float: TK_LIT_FLOAT             { $$ = makeASTNode(AST_LITERAL, $1); };
-false: TK_LIT_FALSE             { $$ = makeASTNode(AST_LITERAL, $1); };
-true: TK_LIT_TRUE               { $$ = makeASTNode(AST_LITERAL, $1); };
-char: TK_LIT_CHAR               { $$ = makeASTNode(AST_LITERAL, $1); };
-string: TK_LIT_STRING           { $$ = makeASTNode(AST_LITERAL, $1); };
+
+int: TK_LIT_INT                 { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_INT); };
+int_neg: '-' int                { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); setNodeDataType($$, DATATYPE_INT); };
+float: TK_LIT_FLOAT             { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_FLOAT); };
+false: TK_LIT_FALSE             { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_BOOL); };
+true: TK_LIT_TRUE               { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_BOOL); };
+char: TK_LIT_CHAR               { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_CHAR); };
+string: TK_LIT_STRING           { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_STRING); };
 
 /* New Type Declaration */
         
@@ -465,36 +468,55 @@ exp:  id                        {
                                         $$ = $1;
                                         checkIdNodeDeclared($1);
                                         checkIdNodeUsedAs(VAR_ID, $1);
+                                        setNodeDataType($$, getASTNodeTokenDataType($1));
                                 }         
     | array                     { $$ = $1; }
     | func_call                 { $$ = $1; }
-
-    | pipe_exp                  { $$ = $1; }
     | int                       { $$ = $1; }
     | float                     { $$ = $1; }
     | string                    { $$ = $1; }
     | char                      { $$ = $1; }
     | true                      { $$ = $1; }
     | false                     { $$ = $1; }
-    | exp '+' exp               { $$ = makeASTBinaryNode(AST_ARIM_SOMA, NULL, $1, $3); }
-    | exp '-' exp               { $$ = makeASTBinaryNode(AST_ARIM_SUBTRACAO, NULL, $1, $3); }
-    | exp '*' exp               { $$ = makeASTBinaryNode(AST_ARIM_MULTIPLICACAO, NULL, $1, $3); }
-    | exp '/' exp               { $$ = makeASTBinaryNode(AST_ARIM_DIVISAO, NULL, $1, $3); }
     | '(' exp ')'               { $$ = $2; }
+    | logicExp                  {       $$ = $1;
+                                        int resultDataType = checkLogicExpDataTypeMatching($$->first, $$->last);
+                                        setNodeDataType($$, resultDataType);
+                                }
+    | arimExp                   {       $$ = $1;
+                                        int resultDataType = checkArimExpDataTypeMatching($$->first, $$->last);
+                                        setNodeDataType($$, resultDataType);
+                                }
+    | '-' exp                   {       $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2);
+                                        int resultDataType = checkArimExpDataTypeMatching($2, NULL);
+                                        setNodeDataType($$, resultDataType);
+                                }
+    | '!' exp                   {       $$ = makeASTUnaryNode(AST_LOGICO_COMP_NEGACAO, NULL, $2);
+                                        int resultDataType = checkLogicExpDataTypeMatching($2, NULL);
+                                        setNodeDataType($$, resultDataType);
+                                }
+                                
+
     | exp TK_OC_EQ exp          { $$ = makeASTBinaryNode(AST_LOGICO_COMP_IGUAL, NULL, $1, $3); }
     | exp TK_OC_NE exp          { $$ = makeASTBinaryNode(AST_LOGICO_COMP_DIF, NULL, $1, $3); }
     | exp TK_OC_GE exp          { $$ = makeASTBinaryNode(AST_LOGICO_COMP_GE, NULL, $1, $3); }
     | exp TK_OC_LE exp          { $$ = makeASTBinaryNode(AST_LOGICO_COMP_LE, NULL, $1, $3); }
     | exp '>' exp               { $$ = makeASTBinaryNode(AST_LOGICO_COMP_G, NULL, $1, $3); }
     | exp '<' exp               { $$ = makeASTBinaryNode(AST_LOGICO_COMP_L, NULL, $1, $3); }
-    | exp TK_OC_AND exp         { $$ = makeASTBinaryNode(AST_LOGICO_E, NULL, $1, $3); }
-    | exp TK_OC_OR exp          { $$ = makeASTBinaryNode(AST_LOGICO_OU, NULL, $1, $3); }
-    | exp '%' exp               { $$ = makeASTBinaryNode(AST_ARIM_MOD, NULL, $1, $3); }
-    | '!' exp                   { $$ = makeASTUnaryNode(AST_LOGICO_COMP_NEGACAO, NULL, $2); }
-    | '.'                       { $$ = makeASTNode(AST_DOT_PARAM, NULL); }
-    | '-' exp                   { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); };
 
-exps_list: exp                  { $$ = $1; }
+    | pipe_exp                  { $$ = $1; }
+    | '.'                       { $$ = makeASTNode(AST_DOT_PARAM, NULL); };
+
+arimExp:  exp '+' exp           { $$ = makeASTBinaryNode(AST_ARIM_SOMA, NULL, $1, $3); }
+        | exp '-' exp           { $$ = makeASTBinaryNode(AST_ARIM_SUBTRACAO, NULL, $1, $3); }
+        | exp '/' exp           { $$ = makeASTBinaryNode(AST_ARIM_DIVISAO, NULL, $1, $3); }
+        | exp '*' exp           { $$ = makeASTBinaryNode(AST_ARIM_MULTIPLICACAO, NULL, $1, $3); }
+        | exp '%' exp           { $$ = makeASTBinaryNode(AST_ARIM_MOD, NULL, $1, $3); };
+
+logicExp:  exp TK_OC_AND exp    { $$ = makeASTBinaryNode(AST_LOGICO_E, NULL, $1, $3); }
+         | exp TK_OC_OR exp     { $$ = makeASTBinaryNode(AST_LOGICO_OU, NULL, $1, $3); };
+
+exps_list:  exp                 { $$ = $1; }
           | exp ',' exps_list   {
                                         tree_set_list_next_node($1, $3);
                                         $$ = $1;

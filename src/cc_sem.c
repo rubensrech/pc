@@ -32,9 +32,41 @@ int getASTNodeDataType(comp_tree_t *node) {
 
 void checkDataTypeMatching(int dataType1, int dataType2) {
     // MISSING FIXES!!
-    if (dataType1 != dataType2) {
-        throwSemanticError("Incompatitle types", IKS_ERROR_INCOMP_TYPES);
+    int arithmeticDataTypes[2] = { DATATYPE_INT, DATATYPE_FLOAT };
+    int floatIntConversion = inArray(arithmeticDataTypes, 2, dataType1) && inArray(arithmeticDataTypes, 2, dataType2);
+
+    if (!floatIntConversion && (dataType1 != dataType2)) {
+        throwSemanticError("Incompatitle types 1", IKS_ERROR_INCOMP_TYPES);
     }
+}
+
+int checkArimExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2) {
+    int arithmeticDataTypes[2] = { DATATYPE_INT, DATATYPE_FLOAT };
+
+    int exp1DataType = getASTNodeDataType(exp1);
+    // Use exp2 = NULL when only exp1 matters (example: - exp)
+    int exp2DataType = (exp2 != NULL) ? getASTNodeDataType(exp2) : DATATYPE_INT;
+
+    if (!inArray(arithmeticDataTypes, 2, exp1DataType) || !inArray(arithmeticDataTypes, 2, exp2DataType)) {
+        throwSemanticError("Incompatitle types 2", IKS_ERROR_INCOMP_TYPES);
+    }
+
+    if (exp1DataType == DATATYPE_FLOAT || exp2DataType == DATATYPE_FLOAT)
+        return DATATYPE_FLOAT;
+    else
+        return DATATYPE_INT;
+}
+
+int checkLogicExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2) {
+    int exp1DataType = getASTNodeDataType(exp1);
+    // Use exp2 = NULL when only exp1 matters (example: !exp)
+    int exp2DataType = (exp2 != NULL) ? getASTNodeDataType(exp2) : DATATYPE_BOOL;
+
+    if (exp1DataType != DATATYPE_BOOL || exp2DataType != DATATYPE_BOOL) {
+        throwSemanticError("Incompatitle types 3", IKS_ERROR_INCOMP_TYPES);
+    }
+
+    return DATATYPE_BOOL;
 }
 
 void setNodeDataType(comp_tree_t *node, int dataType) {
@@ -171,7 +203,7 @@ void insertFuncTable(TokenInfo *idInfo, comp_tree_t *params) {
     FuncDesc *funcDesc = malloc(sizeof(struct funcDesc));
     char *key;
 
-    printf("Insert func dec: %s\n", idInfo->lexeme);
+    // printf("Insert func dec: %s\n", idInfo->lexeme);
 
     funcDesc->id = idInfo->lexeme;
     funcDesc->returnDataType = idInfo->dataType;
@@ -243,5 +275,14 @@ void checkFuncCall(comp_tree_t *funcAST) {
 void throwSemanticError(char *errorMsg, int errorCode) {
     printf("Semantic error: %s - on line %d\n", errorMsg, getLineNumber());
     exit(errorCode);
+}
+
+int inArray(int array[], int size, int val) {
+    int i;
+    for (i = 0; i < size; i++) {
+        if (array[i] == val)
+            return 1;
+    }
+    return 0;
 }
 

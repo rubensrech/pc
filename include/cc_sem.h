@@ -54,6 +54,8 @@ void setIdNodeTokenDataType(comp_tree_t *node, int dataType);
 int getASTNodeTokenDataType(comp_tree_t *node);
 int getASTNodeDataType(comp_tree_t *node);
 void checkDataTypeMatching(int idDataType, int litDataType);
+int checkArimExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2);
+int checkLogicExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2);
 void setNodeDataType(comp_tree_t *node, int dataType);
 
 /* ID: Declaration and Use */
@@ -77,5 +79,6 @@ void checkFuncCall(comp_tree_t *funcAST);
 
 /* Auxiliary */
 void throwSemanticError(char *errorMsg, int errorCode);
+int inArray(int array[], int size, int val);
 
 #endif

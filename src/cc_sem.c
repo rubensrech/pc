@@ -55,13 +55,13 @@ int checkDataTypeMatching(int dataType1, int dataType2, int shouldThrow) {
 }
 
 int checkArimExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2) {
-    int arithmeticDataTypes[2] = { DATATYPE_INT, DATATYPE_FLOAT };
+    int arithmeticDataTypes[3] = { DATATYPE_INT, DATATYPE_FLOAT, DATATYPE_CHAR };
 
     int exp1DataType = getASTNodeDataType(exp1);
     // Use exp2 = NULL when only exp1 matters (example: - exp)
     int exp2DataType = (exp2 != NULL) ? getASTNodeDataType(exp2) : DATATYPE_INT;
 
-    if (!inArray(arithmeticDataTypes, 2, exp1DataType) || !inArray(arithmeticDataTypes, 2, exp2DataType)) {
+    if (!inArray(arithmeticDataTypes, 3, exp1DataType) || !inArray(arithmeticDataTypes, 3, exp2DataType)) {
         throwSemanticError("Types mismatch 2", IKS_ERROR_WRONG_TYPE);
     }
 

@@ -133,6 +133,8 @@ void checkIdDeclared(TokenInfo *id) {
         globalId = searchIdInGlobalScope(id->lexeme);
         if (globalId != NULL && globalId->idType != ID_TYPE_UNDEF) {
             // Found in global scope -> set id as defined and set its properties
+            // USER TYPE SEMANTIC CHECK
+            // id->userDataType = globalId->userDataType
             id->idType = globalId->idType;
             id->dataType = globalId->dataType;
         } else {

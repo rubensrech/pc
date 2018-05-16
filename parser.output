@@ -210,16 +210,16 @@ Grammar
   144    | switch
   145    | for
 
-  146 exp: id
-  147    | array
-  148    | func_call
-  149    | int
-  150    | float
-  151    | string
-  152    | char
-  153    | true
-  154    | false
-  155    | '(' exp ')'
+  146 exp: array
+  147    | func_call
+  148    | int
+  149    | float
+  150    | string
+  151    | char
+  152    | true
+  153    | false
+  154    | '(' exp ')'
+  155    | id
   156    | logicExp
   157    | arimExp
   158    | compExp
@@ -253,8 +253,8 @@ Terminals, with rules where they appear
 $end (0) 0
 '!' (33) 160
 '%' (37) 173
-'(' (40) 40 102 122 123 124 125 126 127 128 155
-')' (41) 40 102 122 123 124 125 126 127 128 155
+'(' (40) 40 102 122 123 124 125 126 127 128 154
+')' (41) 40 102 122 123 124 125 126 127 128 154
 '*' (42) 172
 '+' (43) 84 87 99 112 169
 ',' (44) 46 106 130 177
@@ -325,23 +325,23 @@ programa (66)
 code (67)
     on left: 3 4 5 6 7 8, on right: 2 6 7 8
 id (68)
-    on left: 9, on right: 10 72 73 82 93 94 95 97 102 124 146
+    on left: 9, on right: 10 72 73 82 93 94 95 97 102 124 155
 array (69)
-    on left: 10, on right: 96 147
+    on left: 10, on right: 96 146
 int (70)
-    on left: 11, on right: 12 83 84 93 94 111 112 149
+    on left: 11, on right: 12 83 84 93 94 111 112 148
 int_neg (71)
     on left: 12, on right: 85 113
 float (72)
-    on left: 13, on right: 86 87 88 150
+    on left: 13, on right: 86 87 88 149
 false (73)
-    on left: 14, on right: 89 154
+    on left: 14, on right: 89 153
 true (74)
-    on left: 15, on right: 90 153
+    on left: 15, on right: 90 152
 char (75)
-    on left: 16, on right: 91 152
+    on left: 16, on right: 91 151
 string (76)
-    on left: 17, on right: 92 151
+    on left: 17, on right: 92 150
 type_def (77)
     on left: 18, on right: 3 6
 type_def_campos (78)
@@ -397,7 +397,7 @@ unary_plus (101)
 io_cmd (102)
     on left: 100 101, on right: 58
 func_call (103)
-    on left: 102, on right: 59 114 115 116 117 118 119 135 148
+    on left: 102, on right: 59 114 115 116 117 118 119 135 147
 params (104)
     on left: 103 104, on right: 102
 params_list (105)
@@ -442,7 +442,7 @@ cmd (123)
 exp (124)
     on left: 146 147 148 149 150 151 152 153 154 155 156 157 158 159
     160 161 162, on right: 10 95 96 97 100 107 108 122 123 125 126
-    127 128 155 159 160 163 164 165 166 167 168 169 170 171 172 173
+    127 128 154 159 160 163 164 165 166 167 168 169 170 171 172 173
     174 175 176 177
 compExp (125)
     on left: 163 164 165 166 167 168, on right: 158
@@ -1708,7 +1708,7 @@ State 105
 
 State 106
 
-  155 exp: '(' . exp ')'
+  154 exp: '(' . exp ')'
 
     TK_LIT_INT        shift, and go to state 97
     TK_LIT_FLOAT      shift, and go to state 98
@@ -1753,73 +1753,73 @@ State 108
 
    10 array: id . '[' exp ']'
   102 func_call: id . '(' params ')'
-  146 exp: id .
+  155 exp: id .
 
     '['  shift, and go to state 136
     '('  shift, and go to state 137
 
-    $default  reduce using rule 146 (exp)
+    $default  reduce using rule 155 (exp)
 
 
 State 109
 
-  147 exp: array .
+  146 exp: array .
 
-    $default  reduce using rule 147 (exp)
+    $default  reduce using rule 146 (exp)
 
 
 State 110
 
-  149 exp: int .
+  148 exp: int .
 
-    $default  reduce using rule 149 (exp)
+    $default  reduce using rule 148 (exp)
 
 
 State 111
 
-  150 exp: float .
+  149 exp: float .
 
-    $default  reduce using rule 150 (exp)
+    $default  reduce using rule 149 (exp)
 
 
 State 112
 
-  154 exp: false .
-
-    $default  reduce using rule 154 (exp)
-
-
-State 113
-
-  153 exp: true .
+  153 exp: false .
 
     $default  reduce using rule 153 (exp)
 
 
-State 114
+State 113
 
-  152 exp: char .
+  152 exp: true .
 
     $default  reduce using rule 152 (exp)
 
 
-State 115
+State 114
 
-  151 exp: string .
+  151 exp: char .
 
     $default  reduce using rule 151 (exp)
+
+
+State 115
+
+  150 exp: string .
+
+    $default  reduce using rule 150 (exp)
 
 
 State 116
 
   118 pipe_pg_step0: func_call . TK_OC_PG
   119 pipe_pb_step0: func_call . TK_OC_PB
-  148 exp: func_call .
+  147 exp: func_call .
 
     TK_OC_PG  shift, and go to state 152
     TK_OC_PB  shift, and go to state 153
 
-    $default  reduce using rule 148 (exp)
+    $default  reduce using rule 147 (exp)
 
 
 State 117
@@ -2616,7 +2616,7 @@ State 180
 
 State 181
 
-  155 exp: '(' exp . ')'
+  154 exp: '(' exp . ')'
   163 compExp: exp . TK_OC_EQ exp
   164        | exp . TK_OC_NE exp
   165        | exp . TK_OC_GE exp
@@ -3689,9 +3689,9 @@ State 242
 
 State 243
 
-  155 exp: '(' exp ')' .
+  154 exp: '(' exp ')' .
 
-    $default  reduce using rule 155 (exp)
+    $default  reduce using rule 154 (exp)
 
 
 State 244

@@ -498,12 +498,7 @@ cmd:      var_dec                       { $$ = $1; }
 
 /* Expressions */
 
-exp:  id                        {       $$ = $1;
-                                        checkIdNodeDeclared($1);
-                                        checkIdNodeUsedAs(VAR_ID, $1);
-                                        setNodeDataType($$, getASTNodeTokenDataType($1));
-                                }         
-    | array                     { $$ = $1; }
+exp:  array                     { $$ = $1; }
     | func_call                 { $$ = $1; }
     | int                       { $$ = $1; }
     | float                     { $$ = $1; }
@@ -511,7 +506,12 @@ exp:  id                        {       $$ = $1;
     | char                      { $$ = $1; }
     | true                      { $$ = $1; }
     | false                     { $$ = $1; }
-    | '(' exp ')'               { $$ = $2; }
+    | '(' exp ')'               { $$ = $2; } 
+    | id                        {       $$ = $1;
+                                        checkIdNodeDeclared($1);
+                                        checkIdNodeUsedAs(VAR_ID, $1);
+                                        setNodeDataType($$, getASTNodeTokenDataType($1));
+                                }         
     | logicExp                  {       $$ = $1;
                                         int resultDataType = checkLogicExpDataTypeMatching($$->first, $$->last);
                                         setNodeDataType($$, resultDataType);
@@ -532,9 +532,11 @@ exp:  id                        {       $$ = $1;
                                         int resultDataType = checkLogicExpDataTypeMatching($2, NULL);
                                         setNodeDataType($$, resultDataType);
                                 }
-
-    | pipe_exp                  { $$ = $1; }
-    | '.'                       { $$ = makeASTNode(AST_DOT_PARAM, NULL); };
+    | pipe_exp                  {       $$ = $1;
+                                        int resultDataType = getASTNodeDataType($1->last);
+                                        setNodeDataType($$, resultDataType);
+                                }
+    | '.'                       { $$ = makeASTNode(AST_DOT_PARAM, NULL); /* Keep dataType = DATATYPE_UNDEF */ };
 
 compExp:  exp TK_OC_EQ exp      { $$ = makeASTBinaryNode(AST_LOGICO_COMP_IGUAL, NULL, $1, $3); }
         | exp TK_OC_NE exp      { $$ = makeASTBinaryNode(AST_LOGICO_COMP_DIF, NULL, $1, $3); }

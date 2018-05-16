@@ -41,12 +41,19 @@
 #define IKS_ERROR_MISSING_ARGS      9  //faltam argumentos 
 #define IKS_ERROR_EXCESS_ARGS       10 //sobram argumentos 
 #define IKS_ERROR_WRONG_TYPE_ARGS   11 //argumentos incompatíveis
+#define IKS_ERROR_WRONG_DOT_PARAM   14 //param '.' usado fora do context de pipe expression
+#define IKS_ERROR_DOT_PARAM_TYPE    15 //param '.' recebe retorno de função com tipo incompatível
 
 typedef struct funcDesc {
     char *id;
     int returnDataType;
     comp_tree_t *params;
 } FuncDesc;
+
+typedef struct pipeExpParseInfo {
+    int isParsingPipeExp;
+    int lastFuncCallRetType;
+} PipeExpParseInfo;
 
 /* Data type */
 void setIdTokenDataType(TokenInfo *id, int dataType);
@@ -77,6 +84,11 @@ void printFuncTable();
 void insertFuncTable(TokenInfo *idInfo, comp_tree_t *params);
 int countFuncParameters(comp_tree_t *params);
 void checkFuncCall(comp_tree_t *funcAST);
+
+/* Pipe Expressions */
+void setCurrParsingPipeExp(int lastFuncCallRetType);
+void endParsingPipeExp();
+int setPipeExpDotParamDataType(comp_tree_t *dotParamNode);
 
 /* Auxiliary */
 void throwSemanticError(char *errorMsg, int errorCode);

@@ -5,6 +5,14 @@ int scope = 0;
 int scope_uniq = 0;
 comp_dict_t *funcTable;
 
+PipeExpParseInfo pipeExpParseInfo = {
+                                    .isParsingPipeExp = 0,
+                                    .lastFuncCallRetType = DATATYPE_UNDEF
+                                };
+
+int analyzingPipeExp = 0;
+int pipeLastFuncRetType = DATATYPE_UNDEF;
+
 /* Data type */
 
 /* > Setters */
@@ -278,6 +286,7 @@ void checkFuncCall(comp_tree_t *funcAST) {
     TokenInfo *currExpcParamInfo;
     AstNodeInfo *currParamNodeInfo;
     int paramTypeMatches;
+    int didSetDotParamType;
     int currParameterCount = 0;
 
     if (expectedParamsCount > 0) {
@@ -287,19 +296,62 @@ void checkFuncCall(comp_tree_t *funcAST) {
             currParameterCount++;
             currExpcParamInfo = getASTNodeTokenInfo(currExpcParam);
             currParamNodeInfo = currParam->value;
+
+            // PipeExp => Set '.'(dot) param dataType
+            didSetDotParamType = setPipeExpDotParamDataType(currParam);
             
             // printf("> EXPECTED => dataType: %d\n", currExpcParamInfo->dataType);
             // printf("> GOT      => dataType: %d\n", currParamNodeInfo->dataType);
             paramTypeMatches = checkDataTypeMatching(currExpcParamInfo->dataType, currParamNodeInfo->dataType, 0);
             if (!paramTypeMatches) {
-                snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Invalid call to '%s' - type mismatch on param %d", funcId, currParameterCount);
-                throwSemanticError(errorMsg, IKS_ERROR_WRONG_TYPE_ARGS);
+                if (didSetDotParamType) {
+                    // PipeExp => invalid '.' param type
+                    snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Invalid pipe expression with '%s' - type mismatch on param %d", funcId, currParameterCount);
+                    throwSemanticError(errorMsg, IKS_ERROR_DOT_PARAM_TYPE);
+                } else {
+                    snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Invalid call to '%s' - type mismatch on param %d", funcId, currParameterCount);
+                    throwSemanticError(errorMsg, IKS_ERROR_WRONG_TYPE_ARGS);
+                }
             }
             
             currExpcParam = currExpcParam->list_next;
             currParam = currParam->list_next;
         }
     }
+}
+
+/* Pipe Expressions */
+void setCurrParsingPipeExp(int lastFuncCallRetType) {
+    pipeExpParseInfo.isParsingPipeExp = 1;
+    pipeExpParseInfo.lastFuncCallRetType = lastFuncCallRetType;
+}
+
+void endParsingPipeExp() {
+    pipeExpParseInfo.isParsingPipeExp = 0;
+    pipeExpParseInfo.lastFuncCallRetType = DATATYPE_UNDEF;
+}
+
+/*  
+ * In case currParam is pipe expression '.'(dot) param
+ *  -> Set its dataType based on last func call in pipe expression
+ *  -> Return 1, if did set dotParam dataType, else return 0 
+ */
+int setPipeExpDotParamDataType(comp_tree_t *dotParamNode) {
+    int nodeType = ((AstNodeInfo*)(dotParamNode->value))->type;
+
+    int dotDataType = pipeExpParseInfo.lastFuncCallRetType;
+    int expcParamDataType = ((AstNodeInfo*)(dotParamNode->value))->dataType;
+    int paramTypeMatches;
+
+    if (nodeType == AST_DOT_PARAM) {
+        if (pipeExpParseInfo.isParsingPipeExp) {
+            setNodeDataType(dotParamNode, dotDataType);
+            return 1;
+        } else {
+            throwSemanticError("Dot param used out of pipe expression context", IKS_ERROR_WRONG_DOT_PARAM);
+        }
+    }
+    return 0;
 }
 
 /* Auxiliary */

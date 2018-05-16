@@ -132,6 +132,11 @@ extern comp_dict_t *funcTable;
 %type <ast>params_dec_list
 %type <ast>param_dec
 
+%type <ast>pipe_pg_step0
+%type <ast>pipe_pb_step0
+%type <ast>pipe_pg_step1
+%type <ast>pipe_pb_step1
+
 %%
 /* Regras (e ações) da gramática */
 
@@ -253,11 +258,13 @@ params_dec_list: param_dec                      { $$ = $1; }
                 | param_dec ',' params_dec_list { $$ = $1; tree_set_list_next_node($1, $3); };
 
 param_dec: param_dec_mods native_type TK_IDENTIFICADOR          {
+                                                                        // CHANGE!
                                                                         $$ = makeASTNode(AST_IDENTIFICADOR, $3);
                                                                         setIdTokenDataType($3, $2);
                                                                         setIdType($3, VAR_ID);
                                                                 }
         | param_dec_mods TK_IDENTIFICADOR TK_IDENTIFICADOR      {
+                                                                        // CHANGE!
                                                                         $$ = makeASTNode(AST_IDENTIFICADOR, $3);
                                                                         setIdTokenDataType($3, DATATYPE_USER_TYPE);
                                                                         setIdType($3, USER_TYPE_ID);
@@ -307,12 +314,12 @@ var_dec:
         var_dec_mods native_type id init_var    {       $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $3, $4);
                                                         setIdNodeIdType($3, VAR_ID); // also checks redeclaration
                                                         setIdNodeTokenDataType($3, $2);
-                                                        checkDataTypeMatching($2, getASTNodeTokenDataType($3), 1);
+                                                        checkDataTypeMatching($2, getASTNodeTokenDataType($4), 1);
                                                 }
         | native_type id init_var               {       $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $2, $3);
                                                         setIdNodeIdType($2, VAR_ID); // also checks redeclaration
                                                         setIdNodeTokenDataType($2, $1);
-                                                        checkDataTypeMatching($1, getASTNodeTokenDataType($2), 1);
+                                                        checkDataTypeMatching($1, getASTNodeTokenDataType($3), 1);
                                                 }
 
         /* Native type declarations with no init value */
@@ -438,10 +445,16 @@ case_cmd: TK_PR_CASE int ':'            { $$ = makeASTUnaryNode(AST_CASE, NULL, 
 
 /* Pipes - command */
 
-pipe_exp:  func_call TK_OC_PG func_call         { $$ = makeASTBinaryNode(AST_PIPE_G, NULL, $1, $3); }
-         | func_call TK_OC_PB func_call         { $$ = makeASTBinaryNode(AST_PIPE_B, NULL, $1, $3); }
-         | pipe_exp TK_OC_PG func_call          { $$ = makeASTBinaryNode(AST_PIPE_G, NULL, $1, $3); }
-         | pipe_exp TK_OC_PB func_call          { $$ = makeASTBinaryNode(AST_PIPE_B, NULL, $1, $3); };
+pipe_exp:  pipe_pg_step0 func_call              { $$ = makeASTBinaryNode(AST_PIPE_G, NULL, $1, $2); endParsingPipeExp(); }
+         | pipe_pb_step0 func_call              { $$ = makeASTBinaryNode(AST_PIPE_B, NULL, $1, $2); endParsingPipeExp(); }
+         | pipe_pg_step1 func_call              { $$ = makeASTBinaryNode(AST_PIPE_G, NULL, $1, $2); endParsingPipeExp(); }
+         | pipe_pb_step1 func_call              { $$ = makeASTBinaryNode(AST_PIPE_B, NULL, $1, $2); endParsingPipeExp(); };
+
+pipe_pg_step0: func_call TK_OC_PG               { $$ = $1; setCurrParsingPipeExp(getASTNodeDataType($1)); };
+pipe_pb_step0: func_call TK_OC_PB               { $$ = $1; setCurrParsingPipeExp(getASTNodeDataType($1)); };
+pipe_pg_step1: pipe_exp TK_OC_PG                { $$ = $1; setCurrParsingPipeExp(getASTNodeDataType($1->last)); };
+pipe_pb_step1: pipe_exp TK_OC_PB                { $$ = $1; setCurrParsingPipeExp(getASTNodeDataType($1->last)); };
+
 
 /* Flow Control - Commands */
 

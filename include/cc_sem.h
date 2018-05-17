@@ -9,6 +9,8 @@
 
 #define MAX_ERROR_MSG_SIZE          100
 
+#define LIST_NODE_PARAM_ID             -1
+
 /* Data types */
 #define DATATYPE_USER_TYPE          -1  // used for user type name identifier
 #define DATATYPE_UNDEF              0

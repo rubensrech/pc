@@ -261,13 +261,13 @@ params_dec_list: param_dec                      { $$ = $1; }
 
 param_dec: param_dec_mods native_type TK_IDENTIFICADOR          {
                                                                         // CHANGE!
-                                                                        $$ = makeASTNode(AST_IDENTIFICADOR, $3);
+                                                                        $$ = makeASTNode(LIST_NODE_PARAM_ID, $3);
                                                                         setIdTokenDataType($3, $2);
                                                                         setIdType($3, VAR_ID);
                                                                 }
         | param_dec_mods TK_IDENTIFICADOR TK_IDENTIFICADOR      {
                                                                         // CHANGE!
-                                                                        $$ = makeASTNode(AST_IDENTIFICADOR, $3);
+                                                                        $$ = makeASTNode(LIST_NODE_PARAM_ID, $3);
                                                                         setIdTokenDataType($3, DATATYPE_USER_TYPE);
                                                                         setIdType($3, USER_TYPE_ID);
                                                                         // USER TYPE SEMANTIC CHECK

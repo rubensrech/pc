@@ -73,7 +73,9 @@ comp_tree_t* tree_make_node(void *value) {
 			}
 		}
 
-		gv_declare(info->type, node, name);
+		// Only declare to gv if node is an AST node (type >= 0)
+		if (info->type >= 0)
+			gv_declare(info->type, node, name);
 	}
 	// ----- -- -----
 
@@ -89,7 +91,10 @@ void tree_set_list_next_node(comp_tree_t *tree, comp_tree_t *node) {
 	tree->list_next = node;
 
 	// ----- gv -----
-	gv_connect(tree, node);
+	// Only connect to gv if 'tree' is an AST node (type >= 0)
+	AstNodeInfo *nodeInfo = (tree->value);
+	if (nodeInfo->type >= 0)
+		gv_connect(tree, node);
 	// ----- -- -----
 
 	fprintf (intfp, "node_%p [label=\"\"]\n", tree);
@@ -115,7 +120,10 @@ void tree_insert_node(comp_tree_t *tree, comp_tree_t *node){
 	++tree->childnodes;
 
 	// ----- gv -----
-	gv_connect(tree, node);
+	// Only connect to gv if 'tree' is an AST node (type >= 0)
+	AstNodeInfo *nodeInfo = (tree->value);
+	if (nodeInfo->type >= 0)
+		gv_connect(tree, node);
 	// ----- -- -----
 
 	fprintf (intfp, "node_%p [label=\"\"]\n", tree);

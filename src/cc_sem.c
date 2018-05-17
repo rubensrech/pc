@@ -1,17 +1,17 @@
 #include <stdlib.h>
 #include "cc_sem.h"
 
-int scope = 0;
-int scope_uniq = 0;
+ScopeInfo scopeInfo =   {
+                            .currentScopeCode = GLOBAL_SCOPE,
+                            .scopeUniqueCode = 1
+                        };
+
 comp_dict_t *funcTable;
 
 PipeExpParseInfo pipeExpParseInfo = {
-                                    .isParsingPipeExp = 0,
-                                    .lastFuncCallRetType = DATATYPE_UNDEF
-                                };
-
-int analyzingPipeExp = 0;
-int pipeLastFuncRetType = DATATYPE_UNDEF;
+                                        .isParsingPipeExp = 0,
+                                        .lastFuncCallRetType = DATATYPE_UNDEF
+                                    };
 
 /* Data type */
 
@@ -104,6 +104,21 @@ int checkLogicExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2) {
     return DATATYPE_BOOL;
 }
 
+/* Scope control */
+
+void setCurrentScopeToGlobalScope() {
+    scopeInfo.currentScopeCode = GLOBAL_SCOPE;
+}
+
+void createNewScope() {
+    scopeInfo.currentScopeCode = scopeInfo.scopeUniqueCode;
+    scopeInfo.scopeUniqueCode++;
+}
+
+int getCurrentScopeCode() {
+    return scopeInfo.currentScopeCode;
+}
+
 /* ID: Declaration and Use */
 
 void setIdType(TokenInfo *id, int idType) {
@@ -171,8 +186,7 @@ void checkIdNodeUsedAs(int usedAs, comp_tree_t *node) {
 }
 
 TokenInfo *searchIdInGlobalScope(char *id) {
-    const int globalScope = 0;
-    return lookUpForIdInSymbolsTable(id, globalScope);
+    return lookUpForIdInSymbolsTable(id, GLOBAL_SCOPE);
 }
 
 /* Functions */
@@ -265,15 +279,15 @@ void checkFuncCall(comp_tree_t *funcAST) {
     int hasParams = funcAST->childnodes > 1;
     int paramsCount = (hasParams) ? countFuncParameters(funcParamsNode) : 0;
 
+    // Get func descriptor from hash table
     FuncDesc *funcDesc = dict_get(funcTable, funcId);
     if (funcDesc == NULL) {
         snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Call to undefined func '%s'", funcId);
         throwSemanticError(errorMsg, IKS_ERROR_UNDECLARED);
     }
 
-    // Parameters count check
+    // PARAMETERS COUNT CHECK
     int expectedParamsCount = countFuncParameters(funcDesc->params);
-
     if (paramsCount != expectedParamsCount) {
         snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Invalid call to '%s' - expected %d, got %d param(s)", funcId, expectedParamsCount, paramsCount);
         if (paramsCount > expectedParamsCount) {
@@ -283,7 +297,7 @@ void checkFuncCall(comp_tree_t *funcAST) {
         }
     }
 
-    // Parameters data type matching check
+    // PARAMETERS DATA TYPE MATCHING CHECK
     comp_tree_t *currExpcParam, *currParam;
     TokenInfo *currExpcParamInfo;
     AstNodeInfo *currParamNodeInfo;

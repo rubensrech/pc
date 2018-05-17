@@ -12,7 +12,6 @@
 #include "cc_sem.h"
 
 int num_lines = 1;
-extern int scope;
 %}
 
 /* Removed the rule for integers and flot with signs in front of them */

@@ -12,8 +12,6 @@
 #include "cc_sem.h"
 
 extern comp_tree_t *ast;
-extern int scope;
-extern int scope_uniq;
 extern comp_dict_t *funcTable;
 }
 
@@ -224,12 +222,12 @@ global_arr: native_type TK_IDENTIFICADOR '[' TK_LIT_INT ']'     {
 
 func_dec: func_header block                     {       $$ = makeASTUnaryNode(AST_FUNCAO, $1, $2);
                                                         // Scope ended -> back to global scope
-                                                        scope = 0;
+                                                        setCurrentScopeToGlobalScope();
                                                         checkFuncReturnType($$);
                                                 }
         | TK_PR_STATIC func_header block        {       $$ = makeASTUnaryNode(AST_FUNCAO, $2, $3);
                                                         // Scope ended -> back to global scope
-                                                        scope = 0;
+                                                        setCurrentScopeToGlobalScope();
                                                         checkFuncReturnType($$);
                                                 };
 
@@ -238,13 +236,13 @@ func_header: func_id '(' params_dec ')'         {       $$ = $1;
                                                 };
 
 func_id: native_type TK_IDENTIFICADOR           {       $$ = $2;
-                                                        scope = ++scope_uniq; // New scope
+                                                        createNewScope();
                                                         setIdType($2, FUNC_ID);
                                                         setIdTokenDataType($2, $1);
                                                 }
         | TK_IDENTIFICADOR TK_IDENTIFICADOR     {
                                                         $$ = $2;
-                                                        scope = ++scope_uniq; // New scope
+                                                        createNewScope();
                                                         setIdType($2, FUNC_ID);
                                                         setIdTokenDataType($2, DATATYPE_USER_TYPE);
                                                         // USER TYPE SEMANTIC CHECK
@@ -260,13 +258,11 @@ params_dec_list: param_dec                      { $$ = $1; }
                 | param_dec ',' params_dec_list { $$ = $1; tree_set_list_next_node($1, $3); };
 
 param_dec: param_dec_mods native_type TK_IDENTIFICADOR          {
-                                                                        // CHANGE!
                                                                         $$ = makeASTNode(LIST_NODE_PARAM_ID, $3);
                                                                         setIdTokenDataType($3, $2);
                                                                         setIdType($3, VAR_ID);
                                                                 }
         | param_dec_mods TK_IDENTIFICADOR TK_IDENTIFICADOR      {
-                                                                        // CHANGE!
                                                                         $$ = makeASTNode(LIST_NODE_PARAM_ID, $3);
                                                                         setIdTokenDataType($3, DATATYPE_USER_TYPE);
                                                                         setIdType($3, USER_TYPE_ID);

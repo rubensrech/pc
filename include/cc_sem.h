@@ -57,6 +57,13 @@ typedef struct pipeExpParseInfo {
     int lastFuncCallRetType;
 } PipeExpParseInfo;
 
+#define GLOBAL_SCOPE    0
+
+typedef struct scopeInfo {
+    int currentScopeCode; // 0 -> global scope
+    int scopeUniqueCode;
+} ScopeInfo;
+
 /* Data type */
 void setIdTokenDataType(TokenInfo *id, int dataType);
 void setIdNodeTokenDataType(comp_tree_t *node, int dataType);
@@ -67,6 +74,11 @@ int checkArimExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2);
 int checkLogicExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2);
 int checkCompExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2);
 void setNodeDataType(comp_tree_t *node, int dataType);
+
+/* Scope control */
+void setCurrentScopeToGlobalScope();
+void createNewScope();
+int getCurrentScopeCode();
 
 /* ID: Declaration and Use */
 void checkIdDeclared(TokenInfo *id);

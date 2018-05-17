@@ -2,10 +2,11 @@
 #include <string.h>
 #include "cc_table.h"
 #include "main.h"
+#include "cc_sem.h"
+
 
 extern char *yytext;
 extern int num_lines;
-extern int scope;
 
 comp_dict_t *symbolsTable;
 
@@ -56,7 +57,7 @@ TokenInfo *addSymbolsTable(int tokenType) {
   
   info->line = num_lines;
   info->type = tokenType;
-  info->scope = scope;
+  info->scope = getCurrentScopeCode();
   info->idType = ID_TYPE_UNDEF;
 
   // Get token value
@@ -92,7 +93,7 @@ TokenInfo *addSymbolsTable(int tokenType) {
   if (tokenType == POA_IDENT) {
     // Unique table entry for id in current scope
     // Generate hash table key (TOKEN $$ TYPE && SCOPE)
-    snprintf(key, MAX_HASH_KEY_SIZE, "%s $$ %d $$ %d", token, tokenType, scope);
+    snprintf(key, MAX_HASH_KEY_SIZE, "%s $$ %d $$ %d", token, tokenType, getCurrentScopeCode());
   } else {
     // Generate hash table key (TOKEN $$ TYPE)
     snprintf(key, MAX_HASH_KEY_SIZE, "%s $$ %d", token, tokenType);

@@ -17,13 +17,13 @@ typedef struct tokenInfo {
       char *strVal;  
     } value;
     int dataType;
-    int scope;
+    char *scope;
     int idType;
 } TokenInfo;
 
 void initSymbolsTable();
 TokenInfo *addSymbolsTable(int tokenType);
-TokenInfo *lookUpForIdInSymbolsTable(char *id, int scope);
+TokenInfo *lookUpForIdInSymbolsTable(char *id, char *scope);
 void freeTokenInfo(TokenInfo *info);
 void freeSymbolsTable();
 void printSymbolsTable();

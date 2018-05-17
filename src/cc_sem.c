@@ -2,8 +2,8 @@
 #include "cc_sem.h"
 
 ScopeInfo scopeInfo =   {
-                            .currentScopeCode = GLOBAL_SCOPE,
-                            .scopeUniqueCode = 1
+                            .isCurrScopeGlobal = 1,
+                            .currScopeId = ""
                         };
 
 comp_dict_t *funcTable;
@@ -107,16 +107,20 @@ int checkLogicExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2) {
 /* Scope control */
 
 void setCurrentScopeToGlobalScope() {
-    scopeInfo.currentScopeCode = GLOBAL_SCOPE;
+    scopeInfo.isCurrScopeGlobal = 1;
 }
 
-void createNewScope() {
-    scopeInfo.currentScopeCode = scopeInfo.scopeUniqueCode;
-    scopeInfo.scopeUniqueCode++;
+void createNewScope(char *id) {
+    scopeInfo.isCurrScopeGlobal = 0;
+    scopeInfo.currScopeId = id;
 }
 
-int getCurrentScopeCode() {
-    return scopeInfo.currentScopeCode;
+char *getCurrentScope() {
+    if (scopeInfo.isCurrScopeGlobal) {
+        return GLOBAL_SCOPE_ID;
+    } else {
+        return scopeInfo.currScopeId;
+    }
 }
 
 /* ID: Declaration and Use */
@@ -186,7 +190,7 @@ void checkIdNodeUsedAs(int usedAs, comp_tree_t *node) {
 }
 
 TokenInfo *searchIdInGlobalScope(char *id) {
-    return lookUpForIdInSymbolsTable(id, GLOBAL_SCOPE);
+    return lookUpForIdInSymbolsTable(id, GLOBAL_SCOPE_ID);
 }
 
 /* Functions */
@@ -336,7 +340,7 @@ void checkFuncCall(comp_tree_t *funcAST) {
     }
 }
 
-void checkFuncReturnType(comp_tree_t *funcNode) {
+void checkFuncHasReturnCmd(comp_tree_t *funcNode) {
     char errorMsg[MAX_ERROR_MSG_SIZE];
     TokenInfo *funcIdInfo = ((AstNodeInfo *)funcNode->value)->tokenInfo;
     char *funcId = funcIdInfo->lexeme;
@@ -352,17 +356,31 @@ void checkFuncReturnType(comp_tree_t *funcNode) {
         commandNode = commandNode->list_next;
     }
 
-    if (returnNode != NULL) {
-        int expectedRetType = getASTNodeTokenDataType(funcNode);
-        int retType = getASTNodeDataType(returnNode->first);
-        int retTypesMatch = checkDataTypeMatching(expectedRetType, retType, 0);
-
-        if (!retTypesMatch) {
-            printf("Warning: Return type mismatch in function '%s'\n", funcId);
-        }        
-    } else {
-        printf("Warning: Function '%s' has no return command\n", funcId);
+    if (returnNode == NULL) {
+        snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Function '%s' has no return command", funcId);
+        throwSemanticError(errorMsg, IKS_ERROR_NO_RETURN);
     }
+}
+
+void checkFuncReturnDataType(comp_tree_t *returnNode) {
+    char errorMsg[MAX_ERROR_MSG_SIZE];
+    int retType = getASTNodeDataType(returnNode->first);
+
+    // Get func expexted return type (based on funcTable and currScope)
+    char *funcId = getCurrentScope();
+    FuncDesc *funcDesc = dict_get(funcTable, funcId);
+    if (funcDesc == NULL) {
+        snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Call to undefined func '%s'", funcId);
+        throwSemanticError(errorMsg, IKS_ERROR_UNDECLARED);
+    }
+    int expectedRetType = funcDesc->returnDataType;
+
+    int retTypesMatch = checkDataTypeMatching(expectedRetType, retType, 0);
+
+    if (!retTypesMatch) {
+        snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Return type mismatch in function '%s'", funcId);
+        throwSemanticError(errorMsg, IKS_ERROR_RETURN_TYPE);
+    }  
 }
 
 /* Pipe Expressions */

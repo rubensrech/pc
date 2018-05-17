@@ -223,12 +223,12 @@ global_arr: native_type TK_IDENTIFICADOR '[' TK_LIT_INT ']'     {
 func_dec: func_header block                     {       $$ = makeASTUnaryNode(AST_FUNCAO, $1, $2);
                                                         // Scope ended -> back to global scope
                                                         setCurrentScopeToGlobalScope();
-                                                        checkFuncReturnType($$);
+                                                        checkFuncHasReturnCmd($$);
                                                 }
         | TK_PR_STATIC func_header block        {       $$ = makeASTUnaryNode(AST_FUNCAO, $2, $3);
                                                         // Scope ended -> back to global scope
                                                         setCurrentScopeToGlobalScope();
-                                                        checkFuncReturnType($$);
+                                                        checkFuncHasReturnCmd($$);
                                                 };
 
 func_header: func_id '(' params_dec ')'         {       $$ = $1;
@@ -236,13 +236,13 @@ func_header: func_id '(' params_dec ')'         {       $$ = $1;
                                                 };
 
 func_id: native_type TK_IDENTIFICADOR           {       $$ = $2;
-                                                        createNewScope();
+                                                        createNewScope($2->lexeme);
                                                         setIdType($2, FUNC_ID);
                                                         setIdTokenDataType($2, $1);
                                                 }
         | TK_IDENTIFICADOR TK_IDENTIFICADOR     {
                                                         $$ = $2;
-                                                        createNewScope();
+                                                        createNewScope($2->lexeme);
                                                         setIdType($2, FUNC_ID);
                                                         setIdTokenDataType($2, DATATYPE_USER_TYPE);
                                                         // USER TYPE SEMANTIC CHECK
@@ -434,7 +434,9 @@ param: exp                              { $$ = $1; };
 
 /* Return, break, continue and case - commands */
 
-return_cmd: TK_PR_RETURN exp            { $$ = makeASTUnaryNode(AST_RETURN, NULL, $2); };
+return_cmd: TK_PR_RETURN exp            {       $$ = makeASTUnaryNode(AST_RETURN, NULL, $2);
+                                                checkFuncReturnDataType($$);
+                                        };
 
 break_cmd: TK_PR_BREAK                  { $$ = makeASTNode(AST_BREAK, NULL); };
 

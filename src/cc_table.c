@@ -57,7 +57,7 @@ TokenInfo *addSymbolsTable(int tokenType) {
   
   info->line = num_lines;
   info->type = tokenType;
-  info->scope = getCurrentScopeCode();
+  info->scope = getCurrentScope();
   info->idType = ID_TYPE_UNDEF;
 
   // Get token value
@@ -93,7 +93,7 @@ TokenInfo *addSymbolsTable(int tokenType) {
   if (tokenType == POA_IDENT) {
     // Unique table entry for id in current scope
     // Generate hash table key (TOKEN $$ TYPE && SCOPE)
-    snprintf(key, MAX_HASH_KEY_SIZE, "%s $$ %d $$ %d", token, tokenType, getCurrentScopeCode());
+    snprintf(key, MAX_HASH_KEY_SIZE, "%s $$ %d $$ %s", token, tokenType, getCurrentScope());
   } else {
     // Generate hash table key (TOKEN $$ TYPE)
     snprintf(key, MAX_HASH_KEY_SIZE, "%s $$ %d", token, tokenType);
@@ -115,12 +115,12 @@ TokenInfo *addSymbolsTable(int tokenType) {
   return (TokenInfo*)dict_put(symbolsTable, key, info);
 }
 
-TokenInfo *lookUpForIdInSymbolsTable(char *id, int scope) {
+TokenInfo *lookUpForIdInSymbolsTable(char *id, char *scope) {
   TokenInfo *tokenInfo;
   char key[MAX_HASH_KEY_SIZE+1];
   
   // Generate hash table key (TOKEN $$ TYPE && SCOPE)
-  snprintf(key, MAX_HASH_KEY_SIZE, "%s $$ %d $$ %d", id, POA_IDENT, scope);
+  snprintf(key, MAX_HASH_KEY_SIZE, "%s $$ %d $$ %s", id, POA_IDENT, scope);
 
   tokenInfo = dict_get(symbolsTable, key);
   return tokenInfo;

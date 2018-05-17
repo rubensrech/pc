@@ -45,6 +45,9 @@
 #define IKS_ERROR_WRONG_TYPE_ARGS   11 //argumentos incompatíveis
 #define IKS_ERROR_WRONG_DOT_PARAM   14 //param '.' usado fora do context de pipe expression
 #define IKS_ERROR_DOT_PARAM_TYPE    15 //param '.' recebe retorno de função com tipo incompatível
+/* Retorno de funções */
+#define IKS_ERROR_RETURN_TYPE       16 //função retorna expressão de tipo incompatível com sua declaração
+#define IKS_ERROR_NO_RETURN         17 //função sem return
 
 typedef struct funcDesc {
     char *id;
@@ -57,11 +60,11 @@ typedef struct pipeExpParseInfo {
     int lastFuncCallRetType;
 } PipeExpParseInfo;
 
-#define GLOBAL_SCOPE    0
+#define GLOBAL_SCOPE_ID     "#GLOBAL#"
 
 typedef struct scopeInfo {
-    int currentScopeCode; // 0 -> global scope
-    int scopeUniqueCode;
+    int isCurrScopeGlobal;
+    char *currScopeId;
 } ScopeInfo;
 
 /* Data type */
@@ -77,8 +80,8 @@ void setNodeDataType(comp_tree_t *node, int dataType);
 
 /* Scope control */
 void setCurrentScopeToGlobalScope();
-void createNewScope();
-int getCurrentScopeCode();
+void createNewScope(char *id);
+char *getCurrentScope();
 
 /* ID: Declaration and Use */
 void checkIdDeclared(TokenInfo *id);
@@ -98,7 +101,8 @@ void printFuncTable();
 void insertFuncTable(TokenInfo *idInfo, comp_tree_t *params);
 int countFuncParameters(comp_tree_t *params);
 void checkFuncCall(comp_tree_t *funcAST);
-void checkFuncReturnType(comp_tree_t *funcNode);
+void checkFuncHasReturnCmd(comp_tree_t *funcNode);
+void checkFuncReturnDataType(comp_tree_t *returnNode);
 
 /* Pipe Expressions */
 void setCurrParsingPipeExp(int lastFuncCallRetType);

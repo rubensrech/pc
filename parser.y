@@ -139,7 +139,13 @@ extern comp_dict_t *funcTable;
 /* Regras (e ações) da gramática */
 
 programa: /* empty */   { $$ = makeASTNode(AST_PROGRAMA, NULL); ast = $$; }
-         | code         { $$ = makeASTUnaryNode(AST_PROGRAMA, NULL, $1); ast = $$; };
+         | code         { 
+                                if ($1 != NULL)
+                                        $$ = makeASTUnaryNode(AST_PROGRAMA, NULL, $1);
+                                else
+                                        $$ = makeASTNode(AST_PROGRAMA, NULL);
+                                ast = $$;
+                        };
 
 code:  type_def ';'             { $$ = NULL; }
      | global_def ';'           { $$ = NULL; }

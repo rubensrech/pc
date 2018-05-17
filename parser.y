@@ -225,10 +225,12 @@ global_arr: native_type TK_IDENTIFICADOR '[' TK_LIT_INT ']'     {
 func_dec: func_header block                     {       $$ = makeASTUnaryNode(AST_FUNCAO, $1, $2);
                                                         // Scope ended -> back to global scope
                                                         scope = 0;
+                                                        checkFuncReturnType($$);
                                                 }
         | TK_PR_STATIC func_header block        {       $$ = makeASTUnaryNode(AST_FUNCAO, $2, $3);
                                                         // Scope ended -> back to global scope
                                                         scope = 0;
+                                                        checkFuncReturnType($$);
                                                 };
 
 func_header: func_id '(' params_dec ')'         {       $$ = $1;
@@ -276,8 +278,11 @@ param_dec: param_dec_mods native_type TK_IDENTIFICADOR          {
 param_dec_mods: /* empty */
                 | TK_PR_CONST;
 
-block:  '{' '}'                    { $$ = makeASTNode(AST_BLOCO, NULL); }
-      | '{' commands '}'           { $$ = $2; };
+block:  '{' '}'                 { $$ = makeASTNode(AST_BLOCO, NULL); }
+      | '{' commands '}'        {       
+                                        if ($2 == NULL) $$ = makeASTNode(AST_BLOCO, NULL);
+                                        else $$ = $2;                  
+                                };
 
 commands: command                  { $$ = $1; }
          | command commands        { 

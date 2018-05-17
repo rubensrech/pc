@@ -322,6 +322,35 @@ void checkFuncCall(comp_tree_t *funcAST) {
     }
 }
 
+void checkFuncReturnType(comp_tree_t *funcNode) {
+    char errorMsg[MAX_ERROR_MSG_SIZE];
+    TokenInfo *funcIdInfo = ((AstNodeInfo *)funcNode->value)->tokenInfo;
+    char *funcId = funcIdInfo->lexeme;
+
+    // Search for return command inside func
+    int commandType;
+    comp_tree_t *commandNode = funcNode->first;
+    comp_tree_t *returnNode = NULL;
+    while (commandNode != NULL && returnNode == NULL) {
+        commandType = ((AstNodeInfo *)commandNode->value)->type;
+        if (commandType == AST_RETURN)
+            returnNode = commandNode;
+        commandNode = commandNode->list_next;
+    }
+
+    if (returnNode != NULL) {
+        int expectedRetType = getASTNodeTokenDataType(funcNode);
+        int retType = getASTNodeDataType(returnNode->first);
+        int retTypesMatch = checkDataTypeMatching(expectedRetType, retType, 0);
+
+        if (!retTypesMatch) {
+            printf("Warning: Return type mismatch in function '%s'\n", funcId);
+        }        
+    } else {
+        printf("Warning: Function '%s' has no return command\n", funcId);
+    }
+}
+
 /* Pipe Expressions */
 void setCurrParsingPipeExp(int lastFuncCallRetType) {
     pipeExpParseInfo.isParsingPipeExp = 1;

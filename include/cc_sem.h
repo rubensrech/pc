@@ -84,6 +84,7 @@ void printFuncTable();
 void insertFuncTable(TokenInfo *idInfo, comp_tree_t *params);
 int countFuncParameters(comp_tree_t *params);
 void checkFuncCall(comp_tree_t *funcAST);
+void checkFuncReturnType(comp_tree_t *funcNode);
 
 /* Pipe Expressions */
 void setCurrParsingPipeExp(int lastFuncCallRetType);

@@ -17,6 +17,7 @@ typedef struct tokenInfo {
       char *strVal;  
     } value;
     int dataType;
+    char *userDataType;
     char *scope;
     int idType;
 } TokenInfo;

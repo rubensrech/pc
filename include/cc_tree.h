@@ -100,5 +100,16 @@ void tree_debug_print(comp_tree_t *tree);
  */
 void tree_set_list_next_node(comp_tree_t *tree, comp_tree_t *node);
 
+/*
+ * Função: list_free, libera todos os nos de uma lista
+ * construida a partir da estrutura da arvore, ou seja,
+ * utilizando apenas o campo list_next da estrutura. Os
+ * elementos value devem ser tratados externamente, 
+ * previamente ao uso desta função.
+ */
+void list_free(comp_tree_t *list);
+
+int count_list_items(comp_tree_t *list);
+
 
 #endif //CC_TREE_H_

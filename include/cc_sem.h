@@ -10,6 +10,7 @@
 #define MAX_ERROR_MSG_SIZE          100
 
 #define LIST_NODE_PARAM_ID             -1
+#define LIST_NODE_USER_TYPE_NAME       -2
 
 /* Data types */
 #define DATATYPE_USER_TYPE          -1  // used for user type name identifier
@@ -48,12 +49,21 @@
 /* Retorno de funções */
 #define IKS_ERROR_RETURN_TYPE       16 //função retorna expressão de tipo incompatível com sua declaração
 #define IKS_ERROR_NO_RETURN         17 //função sem return
+/* User types */
+#define IKS_ERROR_UNDECLARED_TYPE   18 //uso de tipo nao declarado
+#define IKS_ERROR_UNKNOWN_TYPE_FIELD 19 //uso de campo desconhecido em variavel de tipo declarado
+
 
 typedef struct funcDesc {
     char *id;
     int returnDataType;
     comp_tree_t *params;
 } FuncDesc;
+
+typedef struct userTypeDesc {
+    char *typeName;
+    comp_tree_t *fields;
+} UserTypeDesc;
 
 typedef struct pipeExpParseInfo {
     int isParsingPipeExp;
@@ -96,7 +106,6 @@ TokenInfo *searchIdInGlobalScope(char *id);
 void initFuncTable();
 void freeFuncTable();
 void freeFuncDescriptor(FuncDesc *descriptor);
-void freeParamsList(comp_tree_t *list);
 void printFuncTable();
 void insertFuncTable(TokenInfo *idInfo, comp_tree_t *params);
 int countFuncParameters(comp_tree_t *params);
@@ -109,8 +118,21 @@ void setCurrParsingPipeExp(int lastFuncCallRetType);
 void endParsingPipeExp();
 int setPipeExpDotParamDataType(comp_tree_t *dotParamNode);
 
+/* User types */
+void initUserTypesTable();
+void freeUserTypesTable();
+void freeUserTypeDescriptor(UserTypeDesc *descriptor);
+void printUserTypesTable();
+int countUserTypeFields(comp_tree_t *fields);
+void insertUserTypeTable(TokenInfo *typeNameIdInfo, comp_tree_t *fields);
+void checkUserTypeWasDeclared(TokenInfo *typeNameIdInfo);
+void setIdTokenUserDataType(TokenInfo *id, TokenInfo *typeNameId);
+void setUserTypeFieldDataType(comp_tree_t *varNode, comp_tree_t *fieldNode);
+TokenInfo *lookUpFieldInUserTypeFields(char *fieldName, comp_tree_t *fields);
+
 /* Auxiliary */
 void throwSemanticError(char *errorMsg, int errorCode);
 int inArray(int array[], int size, int val);
+TokenInfo *getTokenInfoFromIdNode(comp_tree_t *node);
 
 #endif

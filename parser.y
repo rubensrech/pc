@@ -87,6 +87,7 @@ extern comp_dict_t *funcTable;
 %type <ast>commands
 %type <ast>command
 %type <ast>if_stm
+%type <ast>if_exp
 %type <ast>assig_cmd
 %type <ast>var_dec
 %type <ast>init_var
@@ -467,21 +468,33 @@ pipe_pb_step1: pipe_exp TK_OC_PB                { $$ = $1; setCurrParsingPipeExp
 
 /* Flow Control - Commands */
 
-if_stm:  TK_PR_IF '(' exp ')' TK_PR_THEN block                          { $$ = makeASTBinaryNode(AST_IF_ELSE, NULL, $3, $6); }
-       | TK_PR_IF '(' exp ')' TK_PR_THEN block TK_PR_ELSE block         { $$ = makeASTTernaryNode(AST_IF_ELSE, NULL, $3, $6, $8);  };
+if_stm:  if_exp TK_PR_THEN block                        { $$ = makeASTBinaryNode(AST_IF_ELSE, NULL, $1, $3); }
+       | if_exp TK_PR_THEN block TK_PR_ELSE block       { $$ = makeASTTernaryNode(AST_IF_ELSE, NULL, $1, $3, $5); };
+
+if_exp: TK_PR_IF '(' exp ')'                            {       $$ = $3;
+                                                                checkExpNodeDataTypeIsBool($3);
+                                                        }
 
 foreach: TK_PR_FOREACH '(' id ':' exps_list ')' block                   {       $$ = makeASTTernaryNode(AST_FOREACH, NULL, $3, $5, $7);
                                                                                 checkIdNodeDeclared($3);
                                                                                 checkIdNodeUsedAs(VAR_ID, $3);
                                                                         };
 
-while: TK_PR_WHILE '(' exp ')' TK_PR_DO block                   { $$ = makeASTBinaryNode(AST_WHILE_DO, NULL, $3, $6); };
+while: TK_PR_WHILE '(' exp ')' TK_PR_DO block                   {       $$ = makeASTBinaryNode(AST_WHILE_DO, NULL, $3, $6);
+                                                                        checkExpNodeDataTypeIsBool($3);
+                                                                };
 
-do_while: TK_PR_DO block TK_PR_WHILE '(' exp ')'                { $$ = makeASTBinaryNode(AST_DO_WHILE, NULL, $2, $5); };
+do_while: TK_PR_DO block TK_PR_WHILE '(' exp ')'                {       $$ = makeASTBinaryNode(AST_DO_WHILE, NULL, $2, $5);
+                                                                        checkExpNodeDataTypeIsBool($5);
+                                                                };
 
-switch: TK_PR_SWITCH '(' exp ')' block                          { $$ = makeASTBinaryNode(AST_SWITCH, NULL, $3, $5); };
+switch: TK_PR_SWITCH '(' exp ')' block                          {       $$ = makeASTBinaryNode(AST_SWITCH, NULL, $3, $5);
+                                                                        checkExpNodeDataTypeIsInt($3);
+                                                                };
 
-for: TK_PR_FOR '(' cmd_list ':' exp ':' cmd_list ')' block      { $$ = makeASTQuaternaryNode(AST_FOR, NULL, $3, $5, $7, $9); };
+for: TK_PR_FOR '(' cmd_list ':' exp ':' cmd_list ')' block      {       $$ = makeASTQuaternaryNode(AST_FOR, NULL, $3, $5, $7, $9);
+                                                                        checkExpNodeDataTypeIsBool($5);
+                                                                };
 
 cmd_list: cmd                           { $$ = $1; }
          | cmd ',' cmd_list             {

@@ -104,6 +104,20 @@ int checkLogicExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2) {
     return DATATYPE_BOOL;
 }
 
+void checkExpNodeDataTypeIsBool(comp_tree_t *exp) {
+    int expDataType = getASTNodeDataType(exp);
+    if (expDataType != DATATYPE_BOOL) {
+        throwSemanticError("Expression type mismatch (expected bool)", IKS_ERROR_WRONG_TYPE);
+    }
+}
+
+void checkExpNodeDataTypeIsInt(comp_tree_t *exp) {
+    int expDataType = getASTNodeDataType(exp);
+    if (expDataType != DATATYPE_INT) {
+        throwSemanticError("Expression type mismatch (expected integer)", IKS_ERROR_WRONG_TYPE);
+    }
+}
+
 /* Scope control */
 
 void setCurrentScopeToGlobalScope() {

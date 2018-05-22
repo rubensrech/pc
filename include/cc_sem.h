@@ -38,7 +38,7 @@
 #define IKS_ERROR_VARIABLE          3 //identificador deve ser utilizado como variável
 #define IKS_ERROR_VECTOR            4 //identificador deve ser utilizado como vetor
 #define IKS_ERROR_FUNCTION          5 //identificador deve ser utilizado como função
-#define IKS_ERROR_WRONG_TYPE        12 //identificador utilizado com tipo incompatível
+#define IKS_ERROR_WRONG_TYPE        12 //tipo incompatível
 #define IKS_ERROR_USER_TYPE         13 //identificador deve ser utilizado como tipo de usuário
 /* Argumentos e parâmetros */
 #define IKS_ERROR_MISSING_ARGS      9  //faltam argumentos 
@@ -86,6 +86,8 @@ int checkDataTypeMatching(int dataType1, int dataType2, int shouldThrow);
 int checkArimExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2);
 int checkLogicExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2);
 int checkCompExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2);
+void checkExpNodeDataTypeIsBool(comp_tree_t *exp);
+void checkExpNodeDataTypeIsInt(comp_tree_t *exp);
 void setNodeDataType(comp_tree_t *node, int dataType);
 
 /* Scope control */

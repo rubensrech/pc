@@ -253,19 +253,6 @@ Grammar
 Terminals, with rules where they appear
 
 $end (0) 0
-<<<<<<< HEAD
-'!' (33) 160
-'%' (37) 173
-'(' (40) 40 102 122 123 124 125 126 127 128 154
-')' (41) 40 102 122 123 124 125 126 127 128 154
-'*' (42) 172
-'+' (43) 84 87 99 112 169
-',' (44) 46 106 130 177
-'-' (45) 12 88 159 170
-'.' (46) 97 162
-'/' (47) 171
-':' (58) 25 111 112 113 124 128
-=======
 '!' (33) 161
 '%' (37) 174
 '(' (40) 40 102 124 125 126 127 128 129 155
@@ -276,13 +263,11 @@ $end (0) 0
 '-' (45) 12 88 160 171
 '.' (46) 97 163
 '/' (47) 172
-':' (58) 20 111 112 113 125 129
->>>>>>> master
+':' (58) 25 111 112 113 125 129
 ';' (59) 3 4 6 7 55 56 57 58 59 60 61 62 64 65 66
 '<' (60) 169
 '=' (61) 95 96 97
-<<<<<<< HEAD
-'>' (62) 167
+'>' (62) 168
 '[' (91) 10 23 36 37
 ']' (93) 10 23 36 37
 '{' (123) 51 52
@@ -293,21 +278,7 @@ TK_PR_FLOAT (259) 19
 TK_PR_BOOL (260) 21
 TK_PR_CHAR (261) 20
 TK_PR_STRING (262) 22
-TK_PR_IF (263) 122 123
-=======
-'>' (62) 168
-'[' (91) 10 18 36 37
-']' (93) 10 18 36 37
-'{' (123) 51 52
-'}' (125) 51 52
-error (256)
-TK_PR_INT (258) 25
-TK_PR_FLOAT (259) 26
-TK_PR_BOOL (260) 28
-TK_PR_CHAR (261) 27
-TK_PR_STRING (262) 29
 TK_PR_IF (263) 124
->>>>>>> master
 TK_PR_THEN (264) 122 123
 TK_PR_ELSE (265) 123
 TK_PR_WHILE (266) 126 127
@@ -323,29 +294,16 @@ TK_PR_SWITCH (275) 128
 TK_PR_CASE (276) 111 112 113
 TK_PR_BREAK (277) 109
 TK_PR_CONTINUE (278) 110
-<<<<<<< HEAD
 TK_PR_CLASS (279) 23
 TK_PR_PRIVATE (280) 28
 TK_PR_PUBLIC (281) 29
 TK_PR_PROTECTED (282) 27
-TK_OC_LE (283) 81 82 166
-TK_OC_GE (284) 165
-TK_OC_EQ (285) 163
-TK_OC_NE (286) 164
-TK_OC_AND (287) 174
-TK_OC_OR (288) 175
-=======
-TK_PR_CLASS (279) 18
-TK_PR_PRIVATE (280) 23
-TK_PR_PUBLIC (281) 24
-TK_PR_PROTECTED (282) 22
 TK_OC_LE (283) 81 82 167
 TK_OC_GE (284) 166
 TK_OC_EQ (285) 164
 TK_OC_NE (286) 165
 TK_OC_AND (287) 175
 TK_OC_OR (288) 176
->>>>>>> master
 TK_OC_SL (289) 93
 TK_OC_SR (290) 94
 TK_OC_PG (291) 118 120
@@ -385,8 +343,7 @@ true (74)
 char (75)
     on left: 16, on right: 91 152
 string (76)
-<<<<<<< HEAD
-    on left: 17, on right: 92 150
+    on left: 17, on right: 92 151
 native_type (77)
     on left: 18 19 20 21 22, on right: 26 34 36 41 47 72 73 74 75
 type_def (78)
@@ -397,19 +354,6 @@ type_def_campo (80)
     on left: 26, on right: 24 25
 type_def_camp_enc (81)
     on left: 27 28 29, on right: 26
-=======
-    on left: 17, on right: 92 151
-type_def (77)
-    on left: 18, on right: 3 6
-type_def_campos (78)
-    on left: 19 20, on right: 18 20
-type_def_campo (79)
-    on left: 21, on right: 19 20
-type_def_camp_enc (80)
-    on left: 22 23 24, on right: 21
-native_type (81)
-    on left: 25 26 27 28 29, on right: 21 34 36 41 47 72 73 74 75
->>>>>>> master
 global_def (82)
     on left: 30 31 32 33, on right: 4 7
 global_var (83)
@@ -941,18 +885,14 @@ State 35
 
    36 global_arr: native_type TK_IDENTIFICADOR '[' . TK_LIT_INT ']'
 
-    TK_LIT_INT  shift, and go to state 93
+    TK_LIT_INT  shift, and go to state 94
 
 
 State 36
 
     6 code: type_def ';' code .
 
-<<<<<<< HEAD
     $default  reduce using rule 6 (code)
-=======
-    TK_LIT_INT  shift, and go to state 94
->>>>>>> master
 
 
 State 37
@@ -1539,12 +1479,7 @@ State 90
 
    23 type_def: TK_PR_CLASS TK_IDENTIFICADOR '[' type_def_campos . ']'
 
-<<<<<<< HEAD
-    ']'  shift, and go to state 171
-=======
     ']'  shift, and go to state 173
-    ':'  shift, and go to state 174
->>>>>>> master
 
 
 State 91
@@ -1552,7 +1487,7 @@ State 91
    24 type_def_campos: type_def_campo .
    25                | type_def_campo . ':' type_def_campos
 
-    ':'  shift, and go to state 172
+    ':'  shift, and go to state 174
 
     $default  reduce using rule 24 (type_def_campos)
 
@@ -2560,14 +2495,9 @@ State 174
     TK_PR_PUBLIC     shift, and go to state 88
     TK_PR_PROTECTED  shift, and go to state 89
 
-<<<<<<< HEAD
-    type_def_campos    go to state 238
-    type_def_campo     go to state 90
-    type_def_camp_enc  go to state 91
-=======
-    type_def_campo     go to state 241
+    type_def_campos    go to state 241
+    type_def_campo     go to state 91
     type_def_camp_enc  go to state 92
->>>>>>> master
 
 
 State 175

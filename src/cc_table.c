@@ -59,6 +59,7 @@ TokenInfo *addSymbolsTable(int tokenType) {
   info->type = tokenType;
   info->scope = getCurrentScope();
   info->idType = ID_TYPE_UNDEF;
+  // info->userDataType = NULL (not necessary)
 
   // Get token value
   switch (tokenType) {

@@ -26,6 +26,7 @@ void main_init (int argc, char **argv) {
   initSymbolsTable();
   initAST();
   initFuncTable();
+  initUserTypesTable();
 }
 
 void main_finalize (void) {
@@ -33,6 +34,7 @@ void main_finalize (void) {
   freeSymbolsTable();
   freeAST();
   freeFuncTable();
+  freeUserTypesTable();
 }
 
 void comp_print_table (void) {

@@ -131,6 +131,10 @@ extern comp_dict_t *funcTable;
 %type <ast>params_dec_list
 %type <ast>param_dec
 
+%type <valor_lexico>type_def_id
+%type <ast>type_def_campos
+%type <ast>type_def_campo
+
 %type <ast>pipe_pg_step0
 %type <ast>pipe_pb_step0
 %type <ast>pipe_pg_step1
@@ -176,24 +180,36 @@ true: TK_LIT_TRUE               { $$ = makeASTNode(AST_LITERAL, $1); setNodeData
 char: TK_LIT_CHAR               { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_CHAR); };
 string: TK_LIT_STRING           { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_STRING); };
 
-/* New Type Declaration */
-        
-type_def: TK_PR_CLASS TK_IDENTIFICADOR '[' type_def_campos ']'{setIdType($2, USER_TYPE_DEF);};
-
-type_def_campos: type_def_campo
-                | type_def_campos ':' type_def_campo;
-              
-type_def_campo: type_def_camp_enc native_type TK_IDENTIFICADOR;
-
-type_def_camp_enc:  TK_PR_PROTECTED
-                  | TK_PR_PRIVATE
-                  | TK_PR_PUBLIC;
-
 native_type:  TK_PR_INT         { $$ = $1; }
             | TK_PR_FLOAT       { $$ = $1; }
             | TK_PR_CHAR        { $$ = $1; }
             | TK_PR_BOOL        { $$ = $1; }
             | TK_PR_STRING      { $$ = $1; };
+
+/* New Type Declaration */
+        
+type_def: type_def_id '[' type_def_campos ']'   {
+                                                        insertUserTypeTable($1, $3);
+                                                        setCurrentScopeToGlobalScope();
+                                                };
+
+type_def_id: TK_PR_CLASS TK_IDENTIFICADOR       {
+                                                        $$ = $2;
+                                                        createNewScope($2->lexeme);    
+                                                };
+
+type_def_campos: type_def_campo                                 { $$ = $1; }
+                | type_def_campo ':' type_def_campos            { $$ = $1; tree_set_list_next_node($1, $3); };
+              
+type_def_campo: type_def_camp_enc native_type TK_IDENTIFICADOR  {
+                                                                        $$ = makeASTNode(LIST_NODE_USER_TYPE_NAME, $3);
+                                                                        setIdTokenDataType($3, $2);
+                                                                        setIdType($3, USER_TYPE_ID_FIELD);
+                                                                };
+
+type_def_camp_enc:  TK_PR_PROTECTED
+                  | TK_PR_PRIVATE
+                  | TK_PR_PUBLIC;
 
 /* Global Variables Declaration */
 
@@ -209,8 +225,12 @@ global_var: native_type TK_IDENTIFICADOR                {
           | TK_IDENTIFICADOR TK_IDENTIFICADOR           {
                                                                 setIdTokenDataType($2, DATATYPE_USER_TYPE);
                                                                 setIdType($2, USER_TYPE_ID);
-                                                                userTypeDeclarationSemanticAction($1, $2);
-                                                                
+                                                                // USER TYPE SEMANTIC CHECK 
+                                                                // check $1 is really an user declared type (based on user declared types list)
+                                                                // set $2->userDataType = $1->lexeme;
+                                                                checkUserTypeWasDeclared($1);
+                                                                setIdTokenUserDataType($2, $1);
+
                                                         };
 
 global_arr: native_type TK_IDENTIFICADOR '[' TK_LIT_INT ']'     {
@@ -220,7 +240,11 @@ global_arr: native_type TK_IDENTIFICADOR '[' TK_LIT_INT ']'     {
         | TK_IDENTIFICADOR TK_IDENTIFICADOR '[' TK_LIT_INT ']'  {
                                                                         setIdTokenDataType($2, DATATYPE_USER_TYPE);
                                                                         setIdType($2, ARRAY_ID);
-                                                                        userTypeDeclarationSemanticAction($1, $2);
+                                                                        // USER TYPE SEMANTIC CHECK
+                                                                        // check $1 is really an user declared type (based on user declared types list)
+                                                                        // set $2->userDataType = $1;
+                                                                        checkUserTypeWasDeclared($1);
+                                                                        setIdTokenUserDataType($2, $1);
                                                                 };
 /* Function Declaration */
 
@@ -249,7 +273,11 @@ func_id: native_type TK_IDENTIFICADOR           {       $$ = $2;
                                                         createNewScope($2->lexeme);
                                                         setIdType($2, FUNC_ID);
                                                         setIdTokenDataType($2, DATATYPE_USER_TYPE);
-                                                        userTypeDeclarationSemanticAction($1, $2);
+                                                        // USER TYPE SEMANTIC CHECK
+                                                        // check $1 is really an user declared type (based on user declared types list)
+                                                        // set $2->userDataType = $1;
+                                                        checkUserTypeWasDeclared($1);
+                                                        setIdTokenUserDataType($2, $1);
                                                 };
 
 
@@ -268,7 +296,11 @@ param_dec: param_dec_mods native_type TK_IDENTIFICADOR          {
                                                                         $$ = makeASTNode(LIST_NODE_PARAM_ID, $3);
                                                                         setIdTokenDataType($3, DATATYPE_USER_TYPE);
                                                                         setIdType($3, USER_TYPE_ID);
-                                                                        userTypeDeclarationSemanticAction($2, $3);
+                                                                        // USER TYPE SEMANTIC CHECK
+                                                                        // check $2 is really an user declared type (based on user declared types list)
+                                                                        // set $3->userDataType = $2;
+                                                                        checkUserTypeWasDeclared($2);
+                                                                        setIdTokenUserDataType($3, $2);
                                                                 };
 
 param_dec_mods: /* empty */
@@ -337,14 +369,20 @@ var_dec:
         | var_dec_mods TK_IDENTIFICADOR TK_IDENTIFICADOR        {       $$ = NULL;
                                                                         setIdType($3, USER_TYPE_ID);
                                                                         setIdTokenDataType($3, DATATYPE_USER_TYPE);
-                                                                        userTypeDeclarationSemanticAction($2, $3);
-
+                                                                        // USER TYPE SEMANTIC CHECK
+                                                                        // check $2 is really an user declared type (based on user declared types list)
+                                                                        // set $3->userDataType = $2;
+                                                                        checkUserTypeWasDeclared($2);
+                                                                        setIdTokenUserDataType($3, $2);
                                                                 }
         | TK_IDENTIFICADOR TK_IDENTIFICADOR                     {       $$ = NULL;
                                                                         setIdType($2, USER_TYPE_ID);
                                                                         setIdTokenDataType($2, DATATYPE_USER_TYPE);
-                                                                        userTypeDeclarationSemanticAction($1, $2);
-                                                                        
+                                                                        // USER TYPE SEMANTIC CHECK
+                                                                        // check $1 is really an user declared type (based on user declared types list)
+                                                                        // set $2->userDataType = $1;
+                                                                        checkUserTypeWasDeclared($1);
+                                                                        setIdTokenUserDataType($2, $1);
                                                                 };
 
 var_dec_mods: TK_PR_STATIC
@@ -385,19 +423,21 @@ shift_cmd: id TK_OC_SL int              {       $$ = makeASTBinaryNode(AST_SHIFT
 assig_cmd: id '=' unary_plus exp                {       $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
                                                         checkIdNodeDeclared($1);
                                                         checkIdNodeUsedAsMultiple(VAR_ID, USER_TYPE_ID, $1);
-                                                        checkDataTypeMatching(getASTNodeTokenDataType($1), getASTNodeDataType($4), 1);
+                                                        checkUserDataTypeMatching($1, $4);
                                                 }
           | array '=' unary_plus exp            {       $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
                                                         // Declaration check, id use as array check, set node dataType
                                                         // already done in 'array' rule
-                                                        checkDataTypeMatching(getASTNodeDataType($1), getASTNodeDataType($4), 1);
+                                                        checkUserDataTypeMatching($1->first, $4);
                                                 }
           | id '.' id '=' unary_plus exp        {       $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $6);
                                                         checkIdNodeDeclared($1);
                                                         checkIdNodeUsedAs(USER_TYPE_ID, $1);
                                                         // USER TYPE SEMANTIC CHECK
                                                         // set $3 dataType (based on user declared types list)
-                                                        // checkDataTypeMatching(getASTNodeDataType($3), getASTNodeDataType($5), 1);
+                                                        // checkDataTypeMatching(getASTNodeDataType($3), getASTNodeDataType($6), 1);
+                                                        setUserTypeFieldDataType($1, $3); // also check field($3) is valid
+                                                        checkDataTypeMatching(getASTNodeTokenDataType($3), getASTNodeDataType($6), 1);
                                                 };
 
 unary_plus: /* empty */
@@ -463,7 +503,7 @@ if_stm:  if_exp TK_PR_THEN block                        { $$ = makeASTBinaryNode
 
 if_exp: TK_PR_IF '(' exp ')'                            {       $$ = $3;
                                                                 checkExpNodeDataTypeIsBool($3);
-                                                        }
+                                                        };
 
 foreach: TK_PR_FOREACH '(' id ':' exps_list ')' block                   {       $$ = makeASTTernaryNode(AST_FOREACH, NULL, $3, $5, $7);
                                                                                 checkIdNodeDeclared($3);
@@ -523,6 +563,7 @@ exp:  array                     { $$ = $1; }
                                         checkIdNodeDeclared($1);
                                         checkIdNodeUsedAsMultiple(VAR_ID, USER_TYPE_ID, $1);
                                         setNodeDataType($$, getASTNodeTokenDataType($1));
+                                        setNodeUserDataType($$, getTokenInfoFromIdNode($1)->userDataType);
                                 }         
     | logicExp                  {       $$ = $1;
                                         int resultDataType = checkLogicExpDataTypeMatching($$->first, $$->last);

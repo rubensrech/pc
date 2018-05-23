@@ -44,6 +44,22 @@ void tree_free(comp_tree_t *tree){
 	} while(ptr != NULL);
 }
 
+void list_free(comp_tree_t *list) {
+	comp_tree_t *ptr = list;
+	if (list != NULL) {
+		list_free(ptr->list_next);
+        free(list);
+    }
+}
+
+int count_list_items(comp_tree_t *list) {
+	if (list != NULL) {
+		return 1 + count_list_items(list->list_next);
+	} else {
+		return 0;
+	}
+}
+
 comp_tree_t* tree_make_node(void *value) {
 	comp_tree_t *node = malloc(sizeof(comp_tree_t));
 	if (!node)

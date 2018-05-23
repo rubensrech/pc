@@ -7,12 +7,13 @@ ScopeInfo scopeInfo =   {
                             .currScopeId = ""
                         };
 
-comp_dict_t *funcTable;
-
 PipeExpParseInfo pipeExpParseInfo = {
                                         .isParsingPipeExp = 0,
                                         .lastFuncCallRetType = DATATYPE_UNDEF
                                     };
+
+comp_dict_t *funcTable;
+comp_dict_t *userTypesTable;
 
 /* Data type */
 
@@ -167,9 +168,9 @@ void checkIdDeclared(TokenInfo *id) {
         if (globalId != NULL && globalId->idType != ID_TYPE_UNDEF) {
             // Found in global scope -> set id as defined and set its properties
             // USER TYPE SEMANTIC CHECK
-            // id->userDataType = globalId->userDataType
             id->idType = globalId->idType;
             id->dataType = globalId->dataType;
+            id->userDataType = globalId->userDataType;
         } else {
             snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Undeclared identifier '%s'", id->lexeme);
             throwSemanticError(errorMsg, IKS_ERROR_UNDECLARED);
@@ -246,16 +247,8 @@ void freeFuncTable() {
 }
 
 void freeFuncDescriptor(FuncDesc *descriptor) {
-    freeParamsList(descriptor->params);
+    list_free(descriptor->params);
     free(descriptor);
-}
-
-void freeParamsList(comp_tree_t *list) {
-    comp_tree_t *ptr = list;
-	if (list != NULL) {
-		freeParamsList(ptr->list_next);
-        free(list);
-    }
 }
 
 void printFuncTable() {
@@ -293,11 +286,7 @@ void insertFuncTable(TokenInfo *idInfo, comp_tree_t *params) {
 }
 
 int countFuncParameters(comp_tree_t *params) {
-	if (params != NULL) {
-		return 1 + countFuncParameters(params->list_next);
-	} else {
-		return 0;
-	}
+	return count_list_items(params);
 }
 
 void checkFuncCall(comp_tree_t *funcAST) {
@@ -445,6 +434,155 @@ int setPipeExpDotParamDataType(comp_tree_t *dotParamNode) {
     return 0;
 }
 
+/* User types */
+
+void initUserTypesTable() {
+    userTypesTable = dict_new();
+}
+
+void freeUserTypesTable() {
+    int i;
+    struct comp_dict_item *entry, *next;
+    UserTypeDesc *descriptor;
+
+    for (i = 0; i < userTypesTable->size; i++) {
+        entry = userTypesTable->data[i];
+        while (entry != NULL) {
+            next = entry->next;
+            descriptor = dict_remove(userTypesTable, entry->key);
+            freeUserTypeDescriptor(descriptor);
+            entry = next;
+        }
+    }
+
+    dict_free(userTypesTable);
+}
+
+void freeUserTypeDescriptor(UserTypeDesc *descriptor) {
+    list_free(descriptor->fields);
+    free(descriptor);
+}
+
+void printUserTypesTable() {
+    int i;
+    struct comp_dict_item *entry;
+    UserTypeDesc *descriptor;
+
+    printf("------ User Types Table ------\n");
+
+    for (i = 0; i < userTypesTable->size; i++) {
+        entry = userTypesTable->data[i];
+        while (entry != NULL) {
+            descriptor = entry->value;
+
+            printf("> %s (fields: %d)\n", descriptor->typeName, countUserTypeFields(descriptor->fields));
+    
+            entry = entry->next;
+        }
+    }
+}
+
+int countUserTypeFields(comp_tree_t *fields) {
+	return count_list_items(fields);
+}
+
+void insertUserTypeTable(TokenInfo *typeNameIdInfo, comp_tree_t *fields) {
+    UserTypeDesc *userTypeDesc = malloc(sizeof(struct userTypeDesc));
+    char *key;
+
+    /// printf("Insert user type: %s (fields: %d)\n", typeNameIdInfo->lexeme, countUserTypeFields(fields));
+
+    userTypeDesc->typeName = typeNameIdInfo->lexeme;
+    userTypeDesc->fields = fields;
+
+    key = userTypeDesc->typeName;
+
+    dict_put(userTypesTable, key, userTypeDesc);
+}
+
+void checkUserTypeWasDeclared(TokenInfo *typeNameIdInfo) {
+    char errorMsg[MAX_ERROR_MSG_SIZE];
+    char *typeName = typeNameIdInfo->lexeme;
+    
+    UserTypeDesc *userTypeDesc = dict_get(userTypesTable, typeName);
+    if (userTypeDesc == NULL) {
+        snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Use of undeclared type '%s'", typeName);
+        throwSemanticError(errorMsg, IKS_ERROR_UNDECLARED);
+    }
+};
+
+void setIdTokenUserDataType(TokenInfo *id, TokenInfo *typeNameId) {
+    id->userDataType = typeNameId->lexeme;
+}
+
+void setUserTypeFieldDataType(comp_tree_t *varNode, comp_tree_t *fieldNode) {
+    char errorMsg[MAX_ERROR_MSG_SIZE];
+
+    TokenInfo *varId = getTokenInfoFromIdNode(varNode);
+    TokenInfo *fieldId = getTokenInfoFromIdNode(fieldNode);
+
+    char *typeName = varId->userDataType;
+    UserTypeDesc *userTypeDesc = dict_get(userTypesTable, typeName);
+
+    char *fieldName = fieldId->lexeme;
+    TokenInfo *typeDecField = lookUpFieldInUserTypeFields(fieldName, userTypeDesc->fields);
+    if (typeDecField == NULL) {
+        // Field not found in type declaration fields
+        snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Use of unknown field '%s' in var '%s' of type '%s'", fieldName, varId->lexeme, typeName);
+        throwSemanticError(errorMsg, IKS_ERROR_UNKNOWN_TYPE_FIELD);
+    }
+
+    // Set 'fieldId' ("fieldNode->tokenInfo") data type based on 'typeDecField'
+    setIdTokenDataType(fieldId, typeDecField->dataType);
+}
+
+TokenInfo *lookUpFieldInUserTypeFields(char *fieldName, comp_tree_t *fields) {
+    comp_tree_t *currField = fields;
+    TokenInfo *currFieldInfo = getTokenInfoFromIdNode(currField);
+
+    while (strcmp(fieldName, currFieldInfo->lexeme) != 0) {
+        currField = currField->list_next;
+        if (currField != NULL) {
+            currFieldInfo = getTokenInfoFromIdNode(currField);
+        } else {
+            // Field not found
+            break;
+        }
+    }
+
+    if (strcmp(fieldName, currFieldInfo->lexeme) == 0) {
+        return currFieldInfo;
+    }
+
+    return NULL;
+}
+
+void setNodeUserDataType(comp_tree_t *node, char *userDataType) {
+    AstNodeInfo *nodeInfo = node->value;
+    nodeInfo->userDataType = userDataType;
+}
+
+void checkUserDataTypeMatching(comp_tree_t *idNode, comp_tree_t *expNode) {
+    char errorMsg[MAX_ERROR_MSG_SIZE];
+
+    TokenInfo *id = getTokenInfoFromIdNode(idNode);
+    AstNodeInfo *expInfo = expNode->value;
+
+    int idDataType = id->dataType;
+    int expDataType = getASTNodeDataType(expNode);
+
+    checkDataTypeMatching(idDataType, expDataType, 1);
+
+    // Data types matched
+    if (idDataType == DATATYPE_USER_TYPE && expDataType == DATATYPE_USER_TYPE) {
+        // Check user data type matching
+        if (strcmp(id->userDataType, expInfo->userDataType) != 0) {
+            snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Types mismatch: expected '%s', got '%s'", id->userDataType, expInfo->userDataType);
+            throwSemanticError(errorMsg, IKS_ERROR_WRONG_TYPE);
+        }
+    }
+}
+
 /* Auxiliary */
 
 void throwSemanticError(char *errorMsg, int errorCode) {
@@ -461,12 +599,8 @@ int inArray(int array[], int size, int val) {
     return 0;
 }
 
-void userTypeDeclarationSemanticAction(TokenInfo *id1, TokenInfo *id2){
-    TokenInfo *idFromTable = searchIdInGlobalScope(id1->lexeme);
-    if(idFromTable != NULL  && idFromTable->idType != USER_TYPE_DEF){
-        throwSemanticError("User Type Not Declared", IKS_ERROR_UNDECLARED);
-    }
-    id2->userDataType = strdup(id1->lexeme);
-
-    // printf("%d [%s] %d %d %s\n", id2->line, id2->value, id2->type, id2->dataType, id2->userDataType);
+TokenInfo *getTokenInfoFromIdNode(comp_tree_t *node) {
+    AstNodeInfo *nodeInfo = node->value;
+    return nodeInfo->tokenInfo;
 }
+

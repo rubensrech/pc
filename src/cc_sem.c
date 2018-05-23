@@ -278,6 +278,7 @@ void insertFuncTable(TokenInfo *idInfo, comp_tree_t *params) {
 
     funcDesc->id = idInfo->lexeme;
     funcDesc->returnDataType = idInfo->dataType;
+    funcDesc->returnUserDataType = idInfo->userDataType;
     funcDesc->params = params;
 
     key = funcDesc->id;
@@ -393,11 +394,21 @@ void checkFuncReturnDataType(comp_tree_t *returnNode) {
     int expectedRetType = funcDesc->returnDataType;
 
     int retTypesMatch = checkDataTypeMatching(expectedRetType, retType, 0);
-
     if (!retTypesMatch) {
         snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Return type mismatch in function '%s'", funcId);
         throwSemanticError(errorMsg, IKS_ERROR_RETURN_TYPE);
-    }  
+    }
+
+    // Check user data type matching
+    if (expectedRetType == DATATYPE_USER_TYPE && retType == DATATYPE_USER_TYPE) {
+        AstNodeInfo *expInfo = returnNode->first->value;
+        char *retUserType = expInfo->userDataType;
+        char *expectedRetUserType = funcDesc->returnUserDataType;
+        if (strcmp(retUserType, expectedRetUserType) != 0) {
+            snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Return type mismatch in function '%s': expected '%s', got '%s'", funcId, expectedRetUserType, retUserType);
+            throwSemanticError(errorMsg, IKS_ERROR_RETURN_TYPE);
+        }
+    }
 }
 
 /* Pipe Expressions */

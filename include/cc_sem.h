@@ -58,6 +58,7 @@
 typedef struct funcDesc {
     char *id;
     int returnDataType;
+    char *returnUserDataType;
     comp_tree_t *params;
 } FuncDesc;
 

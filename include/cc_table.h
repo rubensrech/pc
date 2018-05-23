@@ -20,7 +20,6 @@ typedef struct tokenInfo {
     char *userDataType;
     char *scope;
     int idType;
-    char *userDataType;
 } TokenInfo;
 
 void initSymbolsTable();

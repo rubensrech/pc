@@ -220,9 +220,7 @@ global_arr: native_type TK_IDENTIFICADOR '[' TK_LIT_INT ']'     {
         | TK_IDENTIFICADOR TK_IDENTIFICADOR '[' TK_LIT_INT ']'  {
                                                                         setIdTokenDataType($2, DATATYPE_USER_TYPE);
                                                                         setIdType($2, ARRAY_ID);
-                                                                        // USER TYPE SEMANTIC CHECK
-                                                                        // check $1 is really an user declared type (based on user declared types list)
-                                                                        // set $2->userDataType = $1;
+                                                                        userTypeSemanticAction($1, $2);
                                                                 };
 /* Function Declaration */
 

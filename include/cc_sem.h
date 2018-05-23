@@ -115,7 +115,7 @@ void endParsingPipeExp();
 int setPipeExpDotParamDataType(comp_tree_t *dotParamNode);
 
 /* User Declared Types */
-void userTypeSemanticAction(TokenInfo *id1, TokenInfo *id2);
+void userTypeDeclarationSemanticAction(TokenInfo *id1, TokenInfo *id2);
 void setUserType(TokenInfo *id1, TokenInfo *id2);
 
 /* Auxiliary */

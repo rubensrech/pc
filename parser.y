@@ -209,7 +209,7 @@ global_var: native_type TK_IDENTIFICADOR                {
           | TK_IDENTIFICADOR TK_IDENTIFICADOR           {
                                                                 setIdTokenDataType($2, DATATYPE_USER_TYPE);
                                                                 setIdType($2, USER_TYPE_ID);
-                                                                userTypeSemanticAction($1, $2);
+                                                                userTypeDeclarationSemanticAction($1, $2);
                                                                 
                                                         };
 
@@ -220,7 +220,7 @@ global_arr: native_type TK_IDENTIFICADOR '[' TK_LIT_INT ']'     {
         | TK_IDENTIFICADOR TK_IDENTIFICADOR '[' TK_LIT_INT ']'  {
                                                                         setIdTokenDataType($2, DATATYPE_USER_TYPE);
                                                                         setIdType($2, ARRAY_ID);
-                                                                        userTypeSemanticAction($1, $2);
+                                                                        userTypeDeclarationSemanticAction($1, $2);
                                                                 };
 /* Function Declaration */
 
@@ -249,7 +249,7 @@ func_id: native_type TK_IDENTIFICADOR           {       $$ = $2;
                                                         createNewScope($2->lexeme);
                                                         setIdType($2, FUNC_ID);
                                                         setIdTokenDataType($2, DATATYPE_USER_TYPE);
-                                                        userTypeSemanticAction($1, $2);
+                                                        userTypeDeclarationSemanticAction($1, $2);
                                                 };
 
 
@@ -268,7 +268,7 @@ param_dec: param_dec_mods native_type TK_IDENTIFICADOR          {
                                                                         $$ = makeASTNode(LIST_NODE_PARAM_ID, $3);
                                                                         setIdTokenDataType($3, DATATYPE_USER_TYPE);
                                                                         setIdType($3, USER_TYPE_ID);
-                                                                        userTypeSemanticAction($2, $3);
+                                                                        userTypeDeclarationSemanticAction($2, $3);
                                                                 };
 
 param_dec_mods: /* empty */
@@ -337,17 +337,14 @@ var_dec:
         | var_dec_mods TK_IDENTIFICADOR TK_IDENTIFICADOR        {       $$ = NULL;
                                                                         setIdType($3, USER_TYPE_ID);
                                                                         setIdTokenDataType($3, DATATYPE_USER_TYPE);
-                                                                        // USER TYPE SEMANTIC CHECK
-                                                                        // check $2 is really an user declared type (based on user declared types list)
-                                                                        // set $3->userDataType = $2;
+                                                                        userTypeDeclarationSemanticAction($2, $3);
 
                                                                 }
         | TK_IDENTIFICADOR TK_IDENTIFICADOR                     {       $$ = NULL;
                                                                         setIdType($2, USER_TYPE_ID);
                                                                         setIdTokenDataType($2, DATATYPE_USER_TYPE);
-                                                                        // USER TYPE SEMANTIC CHECK
-                                                                        // check $1 is really an user declared type (based on user declared types list)
-                                                                        // set $2->userDataType = $1;
+                                                                        userTypeDeclarationSemanticAction($1, $2);
+                                                                        
                                                                 };
 
 var_dec_mods: TK_PR_STATIC

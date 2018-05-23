@@ -268,9 +268,7 @@ param_dec: param_dec_mods native_type TK_IDENTIFICADOR          {
                                                                         $$ = makeASTNode(LIST_NODE_PARAM_ID, $3);
                                                                         setIdTokenDataType($3, DATATYPE_USER_TYPE);
                                                                         setIdType($3, USER_TYPE_ID);
-                                                                        // USER TYPE SEMANTIC CHECK
-                                                                        // check $2 is really an user declared type (based on user declared types list)
-                                                                        // set $3->userDataType = $2;
+                                                                        userTypeSemanticAction($2, $3);
                                                                 };
 
 param_dec_mods: /* empty */

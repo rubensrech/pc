@@ -12,9 +12,10 @@ type a;
 type3 b;
 type c[12];
 
+static type d;
 
 
 type f(char a){
-
-    return 0;
+    const type b;
+    return b;
 }

@@ -47,7 +47,6 @@ int getASTNodeDataType(comp_tree_t *node) {
 
 /* > Checks */
 int checkDataTypeMatching(int dataType1, int dataType2, int shouldThrow) {
-    // MISSING FIXES!!
     int arithmeticDataTypes[2] = { DATATYPE_INT, DATATYPE_FLOAT };
     // Allows: int <= float, float <= int
     int floatIntConversion = inArray(arithmeticDataTypes, 2, dataType1) && inArray(arithmeticDataTypes, 2, dataType2);
@@ -201,6 +200,20 @@ void checkIdUsedAs(int usedAs, TokenInfo *id) {
 void checkIdNodeUsedAs(int usedAs, comp_tree_t *node) {
     AstNodeInfo *nodeInfo = node->value;
     checkIdUsedAs(usedAs, nodeInfo->tokenInfo);
+}
+
+void checkIdUsedAsMultiple(int usedAs1, int usedAs2, TokenInfo *id) {
+    char errorMsg[MAX_ERROR_MSG_SIZE];
+
+    if (id->idType != usedAs1 && id->idType != usedAs2) {
+        snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Wrong use for identifier '%s'", id->lexeme);
+        throwSemanticError(errorMsg, IKS_ERROR_VARIABLE);
+    }
+}
+
+void checkIdNodeUsedAsMultiple(int usedAs1, int usedAs2, comp_tree_t *node) {
+    AstNodeInfo *nodeInfo = node->value;
+    checkIdUsedAsMultiple(usedAs1, usedAs2, nodeInfo->tokenInfo);
 }
 
 TokenInfo *searchIdInGlobalScope(char *id) {

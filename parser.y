@@ -394,7 +394,7 @@ shift_cmd: id TK_OC_SL int              {       $$ = makeASTBinaryNode(AST_SHIFT
 
 assig_cmd: id '=' unary_plus exp                {       $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
                                                         checkIdNodeDeclared($1);
-                                                        checkIdNodeUsedAs(VAR_ID, $1);
+                                                        checkIdNodeUsedAsMultiple(VAR_ID, USER_TYPE_ID, $1);
                                                         checkDataTypeMatching(getASTNodeTokenDataType($1), getASTNodeDataType($4), 1);
                                                 }
           | array '=' unary_plus exp            {       $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
@@ -531,7 +531,7 @@ exp:  array                     { $$ = $1; }
     | '(' exp ')'               { $$ = $2; } 
     | id                        {       $$ = $1;
                                         checkIdNodeDeclared($1);
-                                        checkIdNodeUsedAs(VAR_ID, $1);
+                                        checkIdNodeUsedAsMultiple(VAR_ID, USER_TYPE_ID, $1);
                                         setNodeDataType($$, getASTNodeTokenDataType($1));
                                 }         
     | logicExp                  {       $$ = $1;

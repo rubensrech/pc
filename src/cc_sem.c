@@ -205,6 +205,20 @@ void checkIdNodeUsedAs(int usedAs, comp_tree_t *node) {
     checkIdUsedAs(usedAs, nodeInfo->tokenInfo);
 }
 
+void checkIdUsedNotAs(int usedNotAs, TokenInfo *id) {
+    char errorMsg[MAX_ERROR_MSG_SIZE];
+
+    if (id->idType == usedNotAs) {
+        snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Wrong use for identifier '%s'", id->lexeme);
+        throwSemanticError(errorMsg, IKS_ERROR_VARIABLE);
+    }
+}
+
+void checkIdNodeUsedNotAs(int usedNotAs, comp_tree_t *node) {
+    AstNodeInfo *nodeInfo = node->value;
+    checkIdUsedNotAs(usedNotAs, nodeInfo->tokenInfo);
+}
+
 TokenInfo *searchIdInGlobalScope(char *id) {
     return lookUpForIdInSymbolsTable(id, GLOBAL_SCOPE_ID);
 }
@@ -477,7 +491,7 @@ void insertUserTypeTable(TokenInfo *typeNameIdInfo, comp_tree_t *fields) {
     UserTypeDesc *userTypeDesc = malloc(sizeof(struct userTypeDesc));
     char *key;
 
-    printf("Insert user type: %s (fields: %d)\n", typeNameIdInfo->lexeme, countUserTypeFields(fields));
+    /// printf("Insert user type: %s (fields: %d)\n", typeNameIdInfo->lexeme, countUserTypeFields(fields));
 
     userTypeDesc->typeName = typeNameIdInfo->lexeme;
     userTypeDesc->fields = fields;

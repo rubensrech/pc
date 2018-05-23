@@ -234,6 +234,8 @@ global_arr: native_type TK_IDENTIFICADOR '[' TK_LIT_INT ']'     {
                                                                         // USER TYPE SEMANTIC CHECK
                                                                         // check $1 is really an user declared type (based on user declared types list)
                                                                         // set $2->userDataType = $1;
+                                                                        checkUserTypeWasDeclared($1);
+                                                                        setIdTokenUserDataType($2, $1);
                                                                 };
 /* Function Declaration */
 
@@ -425,7 +427,7 @@ assig_cmd: id '=' unary_plus exp                {       $$ = makeASTBinaryNode(A
                                                         // USER TYPE SEMANTIC CHECK
                                                         // set $3 dataType (based on user declared types list)
                                                         // checkDataTypeMatching(getASTNodeDataType($3), getASTNodeDataType($6), 1);
-                                                        setUserTypeFieldDataType($1, $3);
+                                                        setUserTypeFieldDataType($1, $3); // also check field($3) is valid
                                                         checkDataTypeMatching(getASTNodeTokenDataType($3), getASTNodeDataType($6), 1);
                                                 };
 
@@ -492,7 +494,7 @@ if_stm:  if_exp TK_PR_THEN block                        { $$ = makeASTBinaryNode
 
 if_exp: TK_PR_IF '(' exp ')'                            {       $$ = $3;
                                                                 checkExpNodeDataTypeIsBool($3);
-                                                        }
+                                                        };
 
 foreach: TK_PR_FOREACH '(' id ':' exps_list ')' block                   {       $$ = makeASTTernaryNode(AST_FOREACH, NULL, $3, $5, $7);
                                                                                 checkIdNodeDeclared($3);
@@ -550,7 +552,7 @@ exp:  array                     { $$ = $1; }
     | '(' exp ')'               { $$ = $2; } 
     | id                        {       $$ = $1;
                                         checkIdNodeDeclared($1);
-                                        checkIdNodeUsedAs(VAR_ID, $1);
+                                        checkIdNodeUsedNotAs(ARRAY_ID, $1);
                                         setNodeDataType($$, getASTNodeTokenDataType($1));
                                 }         
     | logicExp                  {       $$ = $1;

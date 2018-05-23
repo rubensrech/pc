@@ -102,6 +102,8 @@ void setIdType(TokenInfo *id, int idType);
 void setIdNodeIdType(comp_tree_t *node, int idType);
 void checkIdUsedAs(int usedAs, TokenInfo *id);
 void checkIdNodeUsedAs(int usedAs, comp_tree_t *node);
+void checkIdUsedNotAs(int usedNotAs, TokenInfo *id);
+void checkIdNodeUsedNotAs(int usedNotAs, comp_tree_t *node);
 TokenInfo *searchIdInGlobalScope(char *id);
 
 /* Functions */

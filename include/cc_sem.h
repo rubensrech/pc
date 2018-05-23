@@ -102,8 +102,8 @@ void setIdType(TokenInfo *id, int idType);
 void setIdNodeIdType(comp_tree_t *node, int idType);
 void checkIdUsedAs(int usedAs, TokenInfo *id);
 void checkIdNodeUsedAs(int usedAs, comp_tree_t *node);
-void checkIdUsedNotAs(int usedNotAs, TokenInfo *id);
-void checkIdNodeUsedNotAs(int usedNotAs, comp_tree_t *node);
+void checkIdUsedAsMultiple(int usedAs1, int usedAs2, TokenInfo *id);
+void checkIdNodeUsedAsMultiple(int usedAs1, int usedAs2, comp_tree_t *node);
 TokenInfo *searchIdInGlobalScope(char *id);
 
 /* Functions */
@@ -133,6 +133,8 @@ void checkUserTypeWasDeclared(TokenInfo *typeNameIdInfo);
 void setIdTokenUserDataType(TokenInfo *id, TokenInfo *typeNameId);
 void setUserTypeFieldDataType(comp_tree_t *varNode, comp_tree_t *fieldNode);
 TokenInfo *lookUpFieldInUserTypeFields(char *fieldName, comp_tree_t *fields);
+void setNodeUserDataType(comp_tree_t *node, char *userDataType);
+void checkUserDataTypeMatching(comp_tree_t *node1, comp_tree_t *node2);
 
 /* Auxiliary */
 void throwSemanticError(char *errorMsg, int errorCode);

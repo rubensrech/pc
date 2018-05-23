@@ -49,7 +49,6 @@ int getASTNodeDataType(comp_tree_t *node) {
 
 /* > Checks */
 int checkDataTypeMatching(int dataType1, int dataType2, int shouldThrow) {
-    // MISSING FIXES!!
     int arithmeticDataTypes[2] = { DATATYPE_INT, DATATYPE_FLOAT };
     // Allows: int <= float, float <= int
     int floatIntConversion = inArray(arithmeticDataTypes, 2, dataType1) && inArray(arithmeticDataTypes, 2, dataType2);
@@ -205,18 +204,18 @@ void checkIdNodeUsedAs(int usedAs, comp_tree_t *node) {
     checkIdUsedAs(usedAs, nodeInfo->tokenInfo);
 }
 
-void checkIdUsedNotAs(int usedNotAs, TokenInfo *id) {
+void checkIdUsedAsMultiple(int usedAs1, int usedAs2, TokenInfo *id) {
     char errorMsg[MAX_ERROR_MSG_SIZE];
 
-    if (id->idType == usedNotAs) {
+    if (id->idType != usedAs1 && id->idType != usedAs2) {
         snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Wrong use for identifier '%s'", id->lexeme);
         throwSemanticError(errorMsg, IKS_ERROR_VARIABLE);
     }
 }
 
-void checkIdNodeUsedNotAs(int usedNotAs, comp_tree_t *node) {
+void checkIdNodeUsedAsMultiple(int usedAs1, int usedAs2, comp_tree_t *node) {
     AstNodeInfo *nodeInfo = node->value;
-    checkIdUsedNotAs(usedNotAs, nodeInfo->tokenInfo);
+    checkIdUsedAsMultiple(usedAs1, usedAs2, nodeInfo->tokenInfo);
 }
 
 TokenInfo *searchIdInGlobalScope(char *id) {
@@ -556,6 +555,32 @@ TokenInfo *lookUpFieldInUserTypeFields(char *fieldName, comp_tree_t *fields) {
     }
 
     return NULL;
+}
+
+void setNodeUserDataType(comp_tree_t *node, char *userDataType) {
+    AstNodeInfo *nodeInfo = node->value;
+    nodeInfo->userDataType = userDataType;
+}
+
+void checkUserDataTypeMatching(comp_tree_t *idNode, comp_tree_t *expNode) {
+    char errorMsg[MAX_ERROR_MSG_SIZE];
+
+    TokenInfo *id = getTokenInfoFromIdNode(idNode);
+    AstNodeInfo *expInfo = expNode->value;
+
+    int idDataType = id->dataType;
+    int expDataType = getASTNodeDataType(expNode);
+
+    checkDataTypeMatching(idDataType, expDataType, 1);
+
+    // Data types matched
+    if (idDataType == DATATYPE_USER_TYPE && expDataType == DATATYPE_USER_TYPE) {
+        // Check user data type matching
+        if (strcmp(id->userDataType, expInfo->userDataType) != 0) {
+            snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Types mismatch: expected '%s', got '%s'", id->userDataType, expInfo->userDataType);
+            throwSemanticError(errorMsg, IKS_ERROR_WRONG_TYPE);
+        }
+    }
 }
 
 /* Auxiliary */

@@ -131,6 +131,7 @@ extern comp_dict_t *funcTable;
 %type <ast>params_dec_list
 %type <ast>param_dec
 
+%type <valor_lexico>type_def_id
 %type <ast>type_def_campos
 %type <ast>type_def_campo
 
@@ -187,7 +188,15 @@ native_type:  TK_PR_INT         { $$ = $1; }
 
 /* New Type Declaration */
         
-type_def: TK_PR_CLASS TK_IDENTIFICADOR '[' type_def_campos ']'  { insertUserTypeTable($2, $4); };
+type_def: type_def_id '[' type_def_campos ']'   {
+                                                        insertUserTypeTable($1, $3);
+                                                        setCurrentScopeToGlobalScope();
+                                                };
+
+type_def_id: TK_PR_CLASS TK_IDENTIFICADOR       {
+                                                        $$ = $2;
+                                                        createNewScope($2->lexeme);    
+                                                };
 
 type_def_campos: type_def_campo                                 { $$ = $1; }
                 | type_def_campo ':' type_def_campos            { $$ = $1; tree_set_list_next_node($1, $3); };
@@ -413,13 +422,13 @@ shift_cmd: id TK_OC_SL int              {       $$ = makeASTBinaryNode(AST_SHIFT
 
 assig_cmd: id '=' unary_plus exp                {       $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
                                                         checkIdNodeDeclared($1);
-                                                        checkIdNodeUsedAs(VAR_ID, $1);
-                                                        checkDataTypeMatching(getASTNodeTokenDataType($1), getASTNodeDataType($4), 1);
+                                                        checkIdNodeUsedAsMultiple(VAR_ID, USER_TYPE_ID, $1);
+                                                        checkUserDataTypeMatching($1, $4);
                                                 }
           | array '=' unary_plus exp            {       $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
                                                         // Declaration check, id use as array check, set node dataType
                                                         // already done in 'array' rule
-                                                        checkDataTypeMatching(getASTNodeDataType($1), getASTNodeDataType($4), 1);
+                                                        checkUserDataTypeMatching($1->first, $4);
                                                 }
           | id '.' id '=' unary_plus exp        {       $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $6);
                                                         checkIdNodeDeclared($1);
@@ -552,8 +561,9 @@ exp:  array                     { $$ = $1; }
     | '(' exp ')'               { $$ = $2; } 
     | id                        {       $$ = $1;
                                         checkIdNodeDeclared($1);
-                                        checkIdNodeUsedNotAs(ARRAY_ID, $1);
+                                        checkIdNodeUsedAsMultiple(VAR_ID, USER_TYPE_ID, $1);
                                         setNodeDataType($$, getASTNodeTokenDataType($1));
+                                        setNodeUserDataType($$, getTokenInfoFromIdNode($1)->userDataType);
                                 }         
     | logicExp                  {       $$ = $1;
                                         int resultDataType = checkLogicExpDataTypeMatching($$->first, $$->last);

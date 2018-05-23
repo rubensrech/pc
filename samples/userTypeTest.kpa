@@ -1,0 +1,20 @@
+class type [
+    private int c:
+    public char d
+];
+
+class type3 [
+    private char a:
+    public int b
+];
+
+type a;
+type3 b;
+type c[12];
+
+
+
+type f(char a){
+
+    return 0;
+}

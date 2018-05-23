@@ -249,9 +249,7 @@ func_id: native_type TK_IDENTIFICADOR           {       $$ = $2;
                                                         createNewScope($2->lexeme);
                                                         setIdType($2, FUNC_ID);
                                                         setIdTokenDataType($2, DATATYPE_USER_TYPE);
-                                                        // USER TYPE SEMANTIC CHECK
-                                                        // check $1 is really an user declared type (based on user declared types list)
-                                                        // set $2->userDataType = $1;
+                                                        userTypeSemanticAction($1, $2);
                                                 };
 
 

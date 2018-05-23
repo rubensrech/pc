@@ -326,6 +326,8 @@ void checkFuncCall(comp_tree_t *funcAST) {
     int paramTypeMatches;
     int didSetDotParamType;
     int currParameterCount = 0;
+    int dotArgsFound = 0;
+    int nodeType;
 
     if (expectedParamsCount > 0) {
         currExpcParam = funcDesc->params;
@@ -337,6 +339,10 @@ void checkFuncCall(comp_tree_t *funcAST) {
 
             // PipeExp => Set '.'(dot) param dataType
             didSetDotParamType = setPipeExpDotParamDataType(currParam);
+            nodeType = ((AstNodeInfo*)(currParam->value))->type;
+            if (nodeType == AST_DOT_PARAM) {
+                dotArgsFound++;   
+            }
             
             // printf("> EXPECTED => dataType: %d\n", currExpcParamInfo->dataType);
             // printf("> GOT      => dataType: %d\n", currParamNodeInfo->dataType);
@@ -355,6 +361,11 @@ void checkFuncCall(comp_tree_t *funcAST) {
             currExpcParam = currExpcParam->list_next;
             currParam = currParam->list_next;
         }
+        // End checking func arguments
+        if (pipeExpParseInfo.isParsingPipeExp && dotArgsFound == 0) {
+            snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Invalid call to '%s' - '.' not found in pipe expression", funcId);
+            throwSemanticError(errorMsg, IKS_ERROR_DOT_PARAM_MISS);
+        } 
     }
 }
 

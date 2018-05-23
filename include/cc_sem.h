@@ -47,6 +47,7 @@
 #define IKS_ERROR_WRONG_TYPE_ARGS   11 //argumentos incompatíveis
 #define IKS_ERROR_WRONG_DOT_PARAM   14 //param '.' usado fora do context de pipe expression
 #define IKS_ERROR_DOT_PARAM_TYPE    15 //param '.' recebe retorno de função com tipo incompatível
+#define IKS_ERROR_DOT_PARAM_MISS    20 //param '.' não encontrado em chamada de func dentro de pipe
 /* Retorno de funções */
 #define IKS_ERROR_RETURN_TYPE       16 //função retorna expressão de tipo incompatível com sua declaração
 #define IKS_ERROR_NO_RETURN         17 //função sem return

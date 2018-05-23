@@ -1,0 +1,31 @@
+class Pessoa [
+    private string nome:
+    private int idade:
+    private float altura:
+    private float peso:
+    private char sexo
+];
+
+class Carro [
+    private string nome:
+    public string marca:
+    protected float potencia:
+    private int airbas
+];
+
+Carro hb20;
+Pessoa dono;
+Carro carros[12];
+
+static Carro hillux;
+
+Pessoa novaPessoa(char sexo){
+    Pessoa p;
+    Carro c;
+
+    // Fields in declared types
+    // p.sexo = 5;
+    // p.nomes = "Joao";
+
+    return p;
+}

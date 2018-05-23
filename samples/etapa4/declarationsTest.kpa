@@ -1,0 +1,32 @@
+class Pessoa [
+    private string nome:
+    private int idade
+];
+
+int number;
+// char number;
+
+char alpha[26];
+
+int fibonacci(int n) {
+    int number;        // return type matchinfg
+    return number;
+}
+
+int main() {
+    Pessoa joao;
+    int n;
+
+    alpha[2] = 'c';     // type mactching
+
+    // Redeclarations / Undeclared
+    // char n;
+    // undeclared = 5;
+
+    // Right use of IDs
+    // int b <= main;
+    // joao[2] = 5;
+    // alpha = 'a';
+
+    return 4;
+}

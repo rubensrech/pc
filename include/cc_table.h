@@ -19,6 +19,7 @@ typedef struct tokenInfo {
     int dataType;
     char *scope;
     int idType;
+    char *userDataType;
 } TokenInfo;
 
 void initSymbolsTable();

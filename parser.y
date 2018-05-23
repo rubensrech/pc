@@ -178,7 +178,7 @@ string: TK_LIT_STRING           { $$ = makeASTNode(AST_LITERAL, $1); setNodeData
 
 /* New Type Declaration */
         
-type_def: TK_PR_CLASS TK_IDENTIFICADOR '[' type_def_campos ']';
+type_def: TK_PR_CLASS TK_IDENTIFICADOR '[' type_def_campos ']'{setIdType($2, USER_TYPE_DEF);};
 
 type_def_campos: type_def_campo
                 | type_def_campos ':' type_def_campo;
@@ -209,9 +209,8 @@ global_var: native_type TK_IDENTIFICADOR                {
           | TK_IDENTIFICADOR TK_IDENTIFICADOR           {
                                                                 setIdTokenDataType($2, DATATYPE_USER_TYPE);
                                                                 setIdType($2, USER_TYPE_ID);
-                                                                // USER TYPE SEMANTIC CHECK 
-                                                                // check $1 is really an user declared type (based on user declared types list)
-                                                                // set $2->userDataType = $1->lexeme;
+                                                                userTypeSemanticAction($1, $2);
+                                                                
                                                         };
 
 global_arr: native_type TK_IDENTIFICADOR '[' TK_LIT_INT ']'     {

@@ -27,6 +27,7 @@
 #define USER_TYPE_ID                4 // Pessoa ID;
 #define USER_TYPE_ID_FIELD          5 // pessoa.ID = exp;
 #define FUNC_ID                     6 // ID();
+#define USER_TYPE_DEF               7 // ID used for user defined types
 
 /* Semantic errors */
 #define IKS_SUCCESS                 0 //caso não houver nenhum tipo de erro
@@ -112,6 +113,10 @@ void checkFuncReturnDataType(comp_tree_t *returnNode);
 void setCurrParsingPipeExp(int lastFuncCallRetType);
 void endParsingPipeExp();
 int setPipeExpDotParamDataType(comp_tree_t *dotParamNode);
+
+/* User Declared Types */
+void userTypeSemanticAction(TokenInfo *id1, TokenInfo *id2);
+void setUserType(TokenInfo *id1, TokenInfo *id2);
 
 /* Auxiliary */
 void throwSemanticError(char *errorMsg, int errorCode);

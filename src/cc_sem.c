@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "cc_sem.h"
 
 ScopeInfo scopeInfo =   {
@@ -460,3 +461,14 @@ int inArray(int array[], int size, int val) {
     return 0;
 }
 
+void userTypeSemanticAction(TokenInfo *id1, TokenInfo *id2){
+    TokenInfo *idFromTable = searchIdInGlobalScope(id1->lexeme);
+    if(idFromTable != NULL  && idFromTable->idType != USER_TYPE_DEF){
+        throwSemanticError("User Type Not Declared", IKS_ERROR_UNDECLARED);
+    }
+    id2->userDataType = strdup(id1->lexeme);
+
+    printf("%d [%s] %d %d %s\n", id2->line, id2->value, id2->type, id2->dataType, id2->userDataType);
+
+
+}

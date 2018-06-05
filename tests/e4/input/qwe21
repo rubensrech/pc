@@ -1,0 +1,20 @@
+//A lista de argumentos fornecidos em uma chamada de função deve ser
+//verificada contra a lista de parâmetros formais na declaração da
+//mesma função.  Cada chamada de função deve prover um argumento para
+//cada parâmetro, e ter o seu tipo compatível. A compatibilidade de
+//tipos da linguagem é aquela da linguagem C, aceitando conversão
+//implícita por estreitamento e alargamento.
+//ERROR: argumentos incompatíveis
+//CODE: IKS_ERROR_WRONG_TYPE_ARGS
+int g(int a, int b, int c)
+{
+
+}
+
+int f()
+{
+  int x;
+  int y;
+  string z;
+  g(x, y, z);
+}

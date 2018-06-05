@@ -1,0 +1,16 @@
+//A lista de argumentos fornecidos em uma chamada de função deve ser verificada contra a lista de parâmetros formais na declaração da mesma função.
+//ERROR: sobra argumentos
+//CODE: IKS_ERROR_EXCESS_ARGS
+int g(int a, int b, int c)
+{
+
+}
+
+int f()
+{
+  int x;
+  int y;
+  int z;
+  int w;
+  g(x, y, z, w);
+}

@@ -1,0 +1,4 @@
+! timeout 6
+! output ignore
+! expect return 9
+$ ./tests/scripts/valgrindtest ./main ./tests/e4/input/qwe19

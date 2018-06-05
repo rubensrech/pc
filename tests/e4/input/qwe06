@@ -1,0 +1,7 @@
+//Todos os identificadores devem ter sido declarados no momento do seu uso, seja como variável, como vetor ou como função.
+//ERROR: função não declarada
+//CODE: IKS_ERROR_UNDECLARED
+int f()
+{
+  g();
+}

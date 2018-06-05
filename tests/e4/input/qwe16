@@ -1,0 +1,11 @@
+//Variáveis somente podem ser usadas sem indexação
+//Variáveis que são de tipo de usuário devem obedecer as regras impostas na declaração do respectivo tipo.
+//ERROR: uso incorreto
+//CODE: IKS_ERROR_VARIABLE
+class ASL_t [ int a ];
+int f()
+{
+  ASL_t xis;
+  int a;
+  a = xis;
+}

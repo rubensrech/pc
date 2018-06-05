@@ -1,0 +1,8 @@
+//Variáveis somente podem ser usadas sem indexação
+//ERROR: uso incorreto
+//CODE: IKS_ERROR_VECTOR
+int f()
+{
+  int v[10];
+  v();
+}

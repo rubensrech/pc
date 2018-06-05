@@ -1,0 +1,8 @@
+//Essa verificação de declaração prévia deve considerar o escopo da linguagem.
+//ERROR: variável já declarada
+//CODE: IKS_ERROR_DECLARED
+int f()
+{
+  int a;
+  int a;
+}

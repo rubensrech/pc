@@ -1,0 +1,7 @@
+//Todos os identificadores devem ter sido declarados no momento do seu uso
+//Essa verificação de declaração prévia deve considerar o escopo da linguagem.
+int f()
+{
+  int a;
+  a = 3;
+}

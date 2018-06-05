@@ -1,0 +1,14 @@
+//A lista de argumentos fornecidos em uma chamada de função deve ser verificada contra a lista de parâmetros formais na declaração da mesma função.
+//ERROR: faltam argumentos
+//CODE: IKS_ERROR_MISSING_ARGS
+int g(int a, int b, int c)
+{
+
+}
+
+int f()
+{
+  int x;
+  int y;
+  g(x, y);
+}

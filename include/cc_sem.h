@@ -8,6 +8,7 @@
 #include "cc_dict.h"
 
 #define MAX_ERROR_MSG_SIZE          100
+#define ENABLE_RETURN_CHECK         0
 
 #define LIST_NODE_PARAM_ID             -1
 #define LIST_NODE_USER_TYPE_NAME       -2

@@ -387,7 +387,8 @@ void checkFuncHasReturnCmd(comp_tree_t *funcNode) {
 
     if (returnNode == NULL) {
         snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Function '%s' has no return command", funcId);
-        throwSemanticError(errorMsg, IKS_ERROR_NO_RETURN);
+        if (ENABLE_RETURN_CHECK)
+            throwSemanticError(errorMsg, IKS_ERROR_NO_RETURN);
     }
 }
 
@@ -407,7 +408,8 @@ void checkFuncReturnDataType(comp_tree_t *returnNode) {
     int retTypesMatch = checkDataTypeMatching(expectedRetType, retType, 0);
     if (!retTypesMatch) {
         snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Return type mismatch in function '%s'", funcId);
-        throwSemanticError(errorMsg, IKS_ERROR_RETURN_TYPE);
+        if (ENABLE_RETURN_CHECK)
+            throwSemanticError(errorMsg, IKS_ERROR_RETURN_TYPE);
     }
 
     // Check user data type matching
@@ -417,9 +419,10 @@ void checkFuncReturnDataType(comp_tree_t *returnNode) {
         char *expectedRetUserType = funcDesc->returnUserDataType;
         if (strcmp(retUserType, expectedRetUserType) != 0) {
             snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Return type mismatch in function '%s': expected '%s', got '%s'", funcId, expectedRetUserType, retUserType);
-            throwSemanticError(errorMsg, IKS_ERROR_RETURN_TYPE);
+            if (ENABLE_RETURN_CHECK)
+                throwSemanticError(errorMsg, IKS_ERROR_RETURN_TYPE);
         }
-    }
+    }  
 }
 
 /* Pipe Expressions */

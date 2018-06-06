@@ -10,9 +10,12 @@
 #include "cc_tree.h"
 #include "cc_ast.h"
 #include "cc_sem.h"
+#include "cc_cod.h"
 
 extern comp_tree_t *ast;
 extern comp_dict_t *funcTable;
+extern int l_offset;
+extern int g_offset;
 }
 
 %union {
@@ -145,11 +148,13 @@ extern comp_dict_t *funcTable;
 
 programa: /* empty */   { $$ = makeASTNode(AST_PROGRAMA, NULL); ast = $$; }
          | code         { 
-                                if ($1 != NULL)
-                                        $$ = makeASTUnaryNode(AST_PROGRAMA, NULL, $1);
-                                else
-                                        $$ = makeASTNode(AST_PROGRAMA, NULL);
+                                // > AST
+                                if ($1 != NULL) $$ = makeASTUnaryNode(AST_PROGRAMA, NULL, $1);
+                                else $$ = makeASTNode(AST_PROGRAMA, NULL);
                                 ast = $$;
+                                // > Code
+                                printf("Global offset: %d\n", g_offset);
+                                printf("Local offset: %d\n", l_offset);
                         };
 
 code:  type_def ';'             { $$ = NULL; }
@@ -219,18 +224,18 @@ global_def: TK_PR_STATIC global_var
            | global_arr;
 
 global_var: native_type TK_IDENTIFICADOR                {
+                                                                // > Semantic
                                                                 setIdTokenDataType($2, $1);
                                                                 setIdType($2, VAR_ID);
+                                                                // > Code
+                                                                g_offset += getSizeOf($1);
                                                         }
           | TK_IDENTIFICADOR TK_IDENTIFICADOR           {
+                                                                // > Semantic
                                                                 setIdTokenDataType($2, DATATYPE_USER_TYPE);
                                                                 setIdType($2, USER_TYPE_ID);
-                                                                // USER TYPE SEMANTIC CHECK 
-                                                                // check $1 is really an user declared type (based on user declared types list)
-                                                                // set $2->userDataType = $1->lexeme;
                                                                 checkUserTypeWasDeclared($1);
                                                                 setIdTokenUserDataType($2, $1);
-
                                                         };
 
 global_arr: native_type TK_IDENTIFICADOR '[' TK_LIT_INT ']'     {
@@ -344,25 +349,45 @@ command:  var_dec ';'           { $$ = $1; }
 
 var_dec:
         /* Declarations with init value (only native types) */
-        var_dec_mods native_type id init_var    {       $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $3, $4);
+        var_dec_mods native_type id init_var    {       
+                                                        // > AST
+                                                        $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $3, $4);
+                                                        // > Semantic
                                                         setIdNodeIdType($3, VAR_ID); // also checks redeclaration
                                                         setIdNodeTokenDataType($3, $2);
                                                         checkDataTypeMatching($2, getASTNodeTokenDataType($4), 1);
+                                                        // > Code
+                                                        l_offset += getSizeOf($2);
                                                 }
-        | native_type id init_var               {       $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $2, $3);
+        | native_type id init_var               {       
+                                                        // > AST
+                                                        $$ = makeASTBinaryNode(AST_INICIALIZACAO, NULL, $2, $3);
+                                                        // > Semantic
                                                         setIdNodeIdType($2, VAR_ID); // also checks redeclaration
                                                         setIdNodeTokenDataType($2, $1);
                                                         checkDataTypeMatching($1, getASTNodeTokenDataType($3), 1);
+                                                        // > Code
+                                                        l_offset += getSizeOf($1);
                                                 }
 
         /* Native type declarations with no init value */
-        | var_dec_mods native_type TK_IDENTIFICADOR     {       $$ = NULL;
+        | var_dec_mods native_type TK_IDENTIFICADOR     {       
+                                                                // > AST
+                                                                $$ = NULL;
+                                                                // > Semantic
                                                                 setIdType($3, VAR_ID); // also checks redeclaration
                                                                 setIdTokenDataType($3, $2);
+                                                                // > Code
+                                                                l_offset += getSizeOf($2);
                                                         }
-        | native_type TK_IDENTIFICADOR                  {       $$ = NULL;
+        | native_type TK_IDENTIFICADOR                  {       
+                                                                // > AST
+                                                                $$ = NULL;
+                                                                // > Semantic
                                                                 setIdType($2, VAR_ID); // also checks redeclaration
                                                                 setIdTokenDataType($2, $1);
+                                                                // > Code
+                                                                l_offset += getSizeOf($1);
                                                         }
         
         /* Cannot initialize user type variables */

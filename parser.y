@@ -153,8 +153,8 @@ programa: /* empty */   { $$ = makeASTNode(AST_PROGRAMA, NULL); ast = $$; }
                                 else $$ = makeASTNode(AST_PROGRAMA, NULL);
                                 ast = $$;
                                 // > Code
-                                printf("Global offset: %d\n", g_offset);
-                                printf("Local offset: %d\n", l_offset);
+                                //printf("Global offset: %d\n", g_offset);
+                                //printf("Local offset: %d\n", l_offset);
                         };
 
 code:  type_def ';'             { $$ = NULL; }
@@ -421,12 +421,12 @@ init_var: TK_OC_LE literal      { $$ = $2; }
                                         checkIdNodeUsedAs(VAR_ID, $2);
                                 };
 
-literal:  int                   { $$ = $1; }
-        | '+' int               { $$ = $2; }
-        | int_neg               { $$ = $1; }
+literal:  int                   { $$ = $1; generateCode($1); }
+        | '+' int               { $$ = $2; generateCode($2); }
+        | int_neg               { $$ = $1; generateCode($1); }
         | float                 { $$ = $1; }
         | '+' float             { $$ = $2; }
-        | '-' float             { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); }
+        | '-' float             { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); setNodeDataType($$, DATATYPE_FLOAT); }
         | false                 { $$ = $1; }
         | true                  { $$ = $1; }
         | char                  { $$ = $1; }

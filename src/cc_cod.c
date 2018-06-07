@@ -25,8 +25,14 @@ int getSizeOf(int type) {
 void generateCode(comp_tree_t *node) {
     AstNodeInfo *info = node->value;
     switch (info->type) {
+    // Literals
     case AST_LITERAL: generateLiteralCode(node); break;
     case AST_ARIM_INVERSAO: generateLiteralCode(node); break;
+    // Arithmetic
+    case AST_ARIM_SOMA: generateArimCode(node, "add"); break;
+    case AST_ARIM_SUBTRACAO: generateArimCode(node, "sub"); break;
+    case AST_ARIM_DIVISAO: generateArimCode(node, "div"); break;
+    case AST_ARIM_MULTIPLICACAO: generateArimCode(node, "mult"); break;
     }
 }
 
@@ -54,5 +60,22 @@ void generateLiteralCode(comp_tree_t *node) {
     }
 
     nodeInfo->code = code;
+    nodeInfo->resultReg = reg;
+    printf("%s", code);
+}
+
+void generateArimCode(comp_tree_t *node, const char *op) {
+    AstNodeInfo *nodeInfo = node->value;
+    AstNodeInfo *fstOpInfo = node->first->value;
+    AstNodeInfo *sndOpInfo = node->last->value;
+    int maxCodeSize = 30;
+    char *code = malloc(maxCodeSize);
+    int resultReg = generateTempReg();
+    int fstOpReg = fstOpInfo->resultReg;
+    int sndOpReg = sndOpInfo->resultReg;
+
+    snprintf(code, maxCodeSize, "%s r%d, r%d => r%d\n", op, fstOpReg, sndOpReg, resultReg);
+    nodeInfo->code = code;
+    nodeInfo->resultReg = resultReg;
     printf("%s", code);
 }

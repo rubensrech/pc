@@ -62,7 +62,9 @@ typedef struct astNodeInfo {
   TokenInfo *tokenInfo;
   int dataType;
   char *userDataType;
+  // > Code
   char *code;
+  int resultReg;
 } AstNodeInfo;
 
 void initAST();

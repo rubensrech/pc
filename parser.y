@@ -577,7 +577,7 @@ cmd:      var_dec                       { $$ = $1; }
 
 exp:  array                     { $$ = $1; }
     | func_call                 { $$ = $1; }
-    | int                       { $$ = $1; }
+    | int                       { $$ = $1; generateCode($1); }
     | float                     { $$ = $1; }
     | string                    { $$ = $1; }
     | char                      { $$ = $1; }
@@ -594,9 +594,14 @@ exp:  array                     { $$ = $1; }
                                         int resultDataType = checkLogicExpDataTypeMatching($$->first, $$->last);
                                         setNodeDataType($$, resultDataType);
                                 }
-    | arimExp                   {       $$ = $1;
+    | arimExp                   {       
+                                        // > AST
+                                        $$ = $1;
+                                        // > Semantic
                                         int resultDataType = checkArimExpDataTypeMatching($$->first, $$->last);
                                         setNodeDataType($$, resultDataType);
+                                        // > Code
+                                        generateCode($1);
                                 }
     | compExp                   {       $$ = $1;
                                         int resultDataType = checkCompExpDataTypeMatching($$->first, $$->last);

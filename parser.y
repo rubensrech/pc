@@ -244,7 +244,7 @@ global_var: native_type TK_IDENTIFICADOR                {
                                                                 setIdType($2, VAR_ID);
                                                                 // > Code
                                                                 setTokenGlobalVarOffset($2);
-                                                                printf("// Declared global var: %s (offset0: %d)\n", $2->lexeme, g_offset);
+                                                                printf("// Declared global var: %s (offset: %d)\n", $2->lexeme, g_offset);
                                                                 g_offset += getSizeOf($1);                                                                        
                                                         }
           | TK_IDENTIFICADOR TK_IDENTIFICADOR           {
@@ -256,8 +256,13 @@ global_var: native_type TK_IDENTIFICADOR                {
                                                         };
 
 global_arr: native_type TK_IDENTIFICADOR '[' TK_LIT_INT ']'     {
+                                                                        // > Semantic 
                                                                         setIdTokenDataType($2, $1);
                                                                         setIdType($2, ARRAY_ID);
+                                                                        // > Code
+                                                                        setTokenGlobalVarOffset($2);
+                                                                        printf("// Declared global array: %s (offset: %d, size: %d)\n", $2->lexeme, g_offset, $4->value.intVal);
+                                                                        g_offset += getSizeOf($1) * $4->value.intVal;    
                                                                 }
         | TK_IDENTIFICADOR TK_IDENTIFICADOR '[' TK_LIT_INT ']'  {
                                                                         setIdTokenDataType($2, DATATYPE_USER_TYPE);
@@ -601,7 +606,12 @@ cmd:      var_dec                       { $$ = $1; }
 
 /* Expressions */
 
-exp:  array                     { $$ = $1; }
+exp:  array                     {
+                                        // > AST
+                                        $$ = $1;
+                                        // > Code
+                                        generateCode($$);
+                                }
     | func_call                 { $$ = $1; }
     | int                       { $$ = $1; }
     | float                     { $$ = $1; }

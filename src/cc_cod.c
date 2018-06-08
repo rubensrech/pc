@@ -12,8 +12,8 @@ int generateTempReg() {
     return tempReg++;
 }
 
-int getSizeOf(int type) {
-    switch (type) {
+int getSizeOf(int dataType) {
+    switch (dataType) {
         case DATATYPE_FLOAT: return 4;
         case DATATYPE_INT: return 4;
         case DATATYPE_BOOL: return 0;       // ??
@@ -36,6 +36,7 @@ void generateCode(comp_tree_t *node) {
     case AST_ARIM_MULTIPLICACAO: generateArithCode(node, "mult"); break;
     // Variables
     case AST_IDENTIFICADOR: generateLoadVarCode(node); break;
+    case AST_VETOR_INDEXADO: generateLoadArrayVarCode(node); break;
     case AST_ATRIBUICAO: generateAssignCode(node);
     }
 }
@@ -106,17 +107,6 @@ void setTokenGlobalVarOffset(TokenInfo *idInfo) {
     idInfo->offset = g_offset;
 }
 
-int getNodeVarAddr(comp_tree_t *node) {
-    AstNodeInfo *nodeInfo = node->value;
-    if (nodeInfo->type == AST_IDENTIFICADOR) {
-        TokenInfo *idInfo = nodeInfo->tokenInfo;
-        return idInfo->offset;
-    } else if (nodeInfo->type == AST_VETOR_INDEXADO) {
-        // TO-DO
-        return -1;
-    }
-    return -1;
-}
 
 void generateLoadVarCode(comp_tree_t *idNode) {
     AstNodeInfo *nodeInfo = idNode->value;
@@ -124,8 +114,8 @@ void generateLoadVarCode(comp_tree_t *idNode) {
     int maxCodeSize = 30;
     char *code = malloc(maxCodeSize);
     int resultReg = generateTempReg();
-    int varAddr = getNodeVarAddr(idNode);
-    
+    int varAddr = idInfo->offset;
+
     if (strcmp(idInfo->scope, "#GLOBAL#") == 0)
         snprintf(code, maxCodeSize, "loadAI rbss, %d => r%d\n", idInfo->offset, resultReg);
     else
@@ -133,6 +123,43 @@ void generateLoadVarCode(comp_tree_t *idNode) {
 
     nodeInfo->code = code;
     nodeInfo->resultReg = resultReg;
+    printf("%s", code);
+}
+
+void generateLoadArrayVarCode(comp_tree_t *arrNode) {
+    comp_tree_t *idNode = arrNode->first;
+    comp_tree_t *indexNode = idNode->next;
+    AstNodeInfo *arrInfo = arrNode->value;
+    AstNodeInfo *idInfo = idNode->value;
+    AstNodeInfo *indexInfo = indexNode->value;
+    TokenInfo *idToken = idInfo->tokenInfo;  
+
+    int maxCodeSize = 90;
+    char *code = malloc(maxCodeSize);
+    int resultReg = generateTempReg();
+
+    char multCode[30];
+    int typeSize = getSizeOf(idToken->dataType);
+    int indexReg = indexInfo->resultReg;
+    int multReg = generateTempReg();
+    // multReg = i * w => offset inside array
+    snprintf(multCode, 30, "multI r%d, %d => r%d\n", indexReg, typeSize, multReg);
+
+    char sumCode[30];
+    int varBase = idToken->offset;
+    int addrReg = generateTempReg();
+    // addrReg = base + (i * w) => relative address (offset from rbss/rfp)
+    snprintf(sumCode, 30, "addI r%d, %d => r%d\n", multReg, varBase, addrReg);
+    
+
+    if (strcmp(idToken->scope, "#GLOBAL#") == 0) {
+        snprintf(code, maxCodeSize, "%s%sloadAO rbss, r%d => r%d\n", multCode, sumCode, addrReg, resultReg);
+    } else {
+        snprintf(code, maxCodeSize, "%s%sloadAO rfp, r%d => r%d\n", multCode, sumCode, addrReg, resultReg);
+    }
+
+    arrInfo->code = code;
+    arrInfo->resultReg = resultReg;
     printf("%s", code);
 }
 
@@ -165,7 +192,7 @@ void generateSimpleVarAssignCode(comp_tree_t *node) {
     char *code = malloc(maxCodeSize);
 
     int expValue = expInfo->resultReg;
-    int varAddr = getNodeVarAddr(idNode);
+    int varAddr = idToken->offset;
     
     if (strcmp(idToken->scope, "#GLOBAL#") == 0)
         snprintf(code, maxCodeSize, "storeAI r%d => rbss, %d\n", expValue, varAddr);

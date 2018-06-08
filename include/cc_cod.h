@@ -11,4 +11,7 @@ void generateArithCode(comp_tree_t *node, const char *op);
 
 void setNodeLocalVarOffset(comp_tree_t *idNode);
 void setTokenLocalVarOffset(TokenInfo *idInfo);
+
+void setTokenGlobalVarOffset(TokenInfo *idInfo);
+
 void generateLoadVarCode(comp_tree_t *idNode);

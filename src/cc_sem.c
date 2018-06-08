@@ -167,10 +167,13 @@ void checkIdDeclared(TokenInfo *id) {
         globalId = searchIdInGlobalScope(id->lexeme);
         if (globalId != NULL && globalId->idType != ID_TYPE_UNDEF) {
             // Found in global scope -> set id as defined and set its properties
-            // USER TYPE SEMANTIC CHECK
+            // Inherit/load global attributes
+            id->scope = globalId->scope;
+
             id->idType = globalId->idType;
             id->dataType = globalId->dataType;
             id->userDataType = globalId->userDataType;
+            id->offset = globalId->offset;
         } else {
             snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Undeclared identifier '%s'", id->lexeme);
             throwSemanticError(errorMsg, IKS_ERROR_UNDECLARED);

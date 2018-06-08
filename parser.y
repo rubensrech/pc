@@ -237,11 +237,13 @@ global_def: TK_PR_STATIC global_var
            | TK_PR_STATIC global_arr
            | global_arr;
 
+/* > VAR DECLARATION */
 global_var: native_type TK_IDENTIFICADOR                {
                                                                 // > Semantic
                                                                 setIdTokenDataType($2, $1);
                                                                 setIdType($2, VAR_ID);
                                                                 // > Code
+                                                                setTokenGlobalVarOffset($2);
                                                                 g_offset += getSizeOf($1);
                                                         }
           | TK_IDENTIFICADOR TK_IDENTIFICADOR           {
@@ -361,6 +363,7 @@ command:  var_dec ';'           { $$ = $1; }
 
 /* Local Variables Declaration - command */
 
+/* VAR DECLARATION */
 var_dec:
         /* Declarations with init value (only native types) */
         var_dec_mods native_type id init_var    {       

@@ -21,6 +21,8 @@ typedef struct tokenInfo {
     char *scope;
     int idType;
     // > Code
+    // IF YOU ARE ADDING ATTRS HERE -> REMEMBER TO:
+    // UPDATE checkIdDeclared FUNCTION (THAT LOADS GLOBAL ID ATTRS TO LOCAL ID)
     int offset;
 } TokenInfo;
 

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "cc_cod.h"
 #include "cc_sem.h"
 
@@ -100,14 +101,21 @@ void setTokenLocalVarOffset(TokenInfo *idInfo) {
     idInfo->offset = l_offset;
 }
 
+void setTokenGlobalVarOffset(TokenInfo *idInfo) {
+    idInfo->offset = g_offset;
+}
+
 void generateLoadVarCode(comp_tree_t *idNode) {
     AstNodeInfo *nodeInfo = idNode->value;
     TokenInfo *idInfo = nodeInfo->tokenInfo;  
     int maxCodeSize = 30;
     char *code = malloc(maxCodeSize);
     int resultReg = generateTempReg();
-
-    snprintf(code, maxCodeSize, "loadAI rfp, %d => r%d\n", idInfo->offset, resultReg);
+    
+    if (strcmp(idInfo->scope, "#GLOBAL#") == 0)
+        snprintf(code, maxCodeSize, "loadAI rbss, %d => r%d\n", idInfo->offset, resultReg);
+    else
+        snprintf(code, maxCodeSize, "loadAI rfp, %d => r%d\n", idInfo->offset, resultReg);
 
     nodeInfo->code = code;
     nodeInfo->resultReg = resultReg;

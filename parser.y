@@ -177,8 +177,22 @@ array: id '[' exp ']'           {
                                         setNodeDataType($$, getASTNodeTokenDataType($1));
                                 };
 
-int: TK_LIT_INT                 { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_INT); };
-int_neg: '-' int                { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); setNodeDataType($$, DATATYPE_INT); };
+int: TK_LIT_INT                 {
+                                        // > AST
+                                        $$ = makeASTNode(AST_LITERAL, $1);
+                                        // > Semantic
+                                        setNodeDataType($$, DATATYPE_INT);
+                                        // > Code
+                                        generateCode($$);
+                                };
+int_neg: '-' int                {
+                                        // > AST
+                                        $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2);
+                                        // > Semantic
+                                        setNodeDataType($$, DATATYPE_INT);
+                                        // > Code
+                                        generateCode($$);
+                                };
 float: TK_LIT_FLOAT             { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_FLOAT); };
 false: TK_LIT_FALSE             { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_BOOL); };
 true: TK_LIT_TRUE               { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_BOOL); };
@@ -421,9 +435,9 @@ init_var: TK_OC_LE literal      { $$ = $2; }
                                         checkIdNodeUsedAs(VAR_ID, $2);
                                 };
 
-literal:  int                   { $$ = $1; generateCode($1); }
-        | '+' int               { $$ = $2; generateCode($2); }
-        | int_neg               { $$ = $1; generateCode($1); }
+literal:  int                   { $$ = $1; }
+        | '+' int               { $$ = $2; }
+        | int_neg               { $$ = $1; }
         | float                 { $$ = $1; }
         | '+' float             { $$ = $2; }
         | '-' float             { $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2); setNodeDataType($$, DATATYPE_FLOAT); }
@@ -577,7 +591,7 @@ cmd:      var_dec                       { $$ = $1; }
 
 exp:  array                     { $$ = $1; }
     | func_call                 { $$ = $1; }
-    | int                       { $$ = $1; generateCode($1); }
+    | int                       { $$ = $1; }
     | float                     { $$ = $1; }
     | string                    { $$ = $1; }
     | char                      { $$ = $1; }
@@ -601,15 +615,20 @@ exp:  array                     { $$ = $1; }
                                         int resultDataType = checkArimExpDataTypeMatching($$->first, $$->last);
                                         setNodeDataType($$, resultDataType);
                                         // > Code
-                                        generateCode($1);
+                                        generateCode($$);
                                 }
     | compExp                   {       $$ = $1;
                                         int resultDataType = checkCompExpDataTypeMatching($$->first, $$->last);
                                         setNodeDataType($$, resultDataType);
                                 }
-    | '-' exp                   {       $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2);
+    | '-' exp                   {       
+                                        // > AST
+                                        $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2);
+                                        // > Semantic
                                         int resultDataType = checkArimExpDataTypeMatching($2, NULL);
                                         setNodeDataType($$, resultDataType);
+                                        // > Code
+                                        generateCode($$);
                                 }
     | '!' exp                   {       $$ = makeASTUnaryNode(AST_LOGICO_COMP_NEGACAO, NULL, $2);
                                         int resultDataType = checkLogicExpDataTypeMatching($2, NULL);

@@ -37,7 +37,7 @@ void generateCode(comp_tree_t *node) {
     // Variables
     case AST_IDENTIFICADOR: generateLoadVarCode(node); break;
     case AST_VETOR_INDEXADO: generateLoadArrayVarCode(node); break;
-    case AST_ATRIBUICAO: generateAssignCode(node);
+    case AST_ATRIBUICAO: generateAssignCode(node); break;
     }
 }
 
@@ -126,17 +126,15 @@ void generateLoadVarCode(comp_tree_t *idNode) {
     printf("%s", code);
 }
 
-void generateLoadArrayVarCode(comp_tree_t *arrNode) {
+char *getArrayAddrGeneratorCode(comp_tree_t *arrNode, int addrReg) {
     comp_tree_t *idNode = arrNode->first;
     comp_tree_t *indexNode = idNode->next;
-    AstNodeInfo *arrInfo = arrNode->value;
     AstNodeInfo *idInfo = idNode->value;
     AstNodeInfo *indexInfo = indexNode->value;
     TokenInfo *idToken = idInfo->tokenInfo;  
 
-    int maxCodeSize = 90;
+    int maxCodeSize = 60;
     char *code = malloc(maxCodeSize);
-    int resultReg = generateTempReg();
 
     char multCode[30];
     int typeSize = getSizeOf(idToken->dataType);
@@ -147,16 +145,33 @@ void generateLoadArrayVarCode(comp_tree_t *arrNode) {
 
     char sumCode[30];
     int varBase = idToken->offset;
-    int addrReg = generateTempReg();
     // addrReg = base + (i * w) => relative address (offset from rbss/rfp)
     snprintf(sumCode, 30, "addI r%d, %d => r%d\n", multReg, varBase, addrReg);
+
+    snprintf(code, maxCodeSize, "%s%s", multCode, sumCode);
+    return code;
+}
+
+void generateLoadArrayVarCode(comp_tree_t *arrNode) {
+    comp_tree_t *idNode = arrNode->first;
+    AstNodeInfo *arrInfo = arrNode->value;
+    AstNodeInfo *idInfo = idNode->value;
+    TokenInfo *idToken = idInfo->tokenInfo;  
+
+    int maxCodeSize = 120;
+    char *code = malloc(maxCodeSize);
+    int resultReg = generateTempReg();
     
+    int addrReg = generateTempReg();
+    char *addrCode = getArrayAddrGeneratorCode(arrNode, addrReg);
 
     if (strcmp(idToken->scope, "#GLOBAL#") == 0) {
-        snprintf(code, maxCodeSize, "%s%sloadAO rbss, r%d => r%d\n", multCode, sumCode, addrReg, resultReg);
+        snprintf(code, maxCodeSize, "%sloadAO rbss, r%d => r%d\n", addrCode, addrReg, resultReg);
     } else {
-        snprintf(code, maxCodeSize, "%s%sloadAO rfp, r%d => r%d\n", multCode, sumCode, addrReg, resultReg);
+        snprintf(code, maxCodeSize, "%sloadAO rfp, r%d => r%d\n", addrCode, addrReg, resultReg);
     }
+
+    free(addrCode);
 
     arrInfo->code = code;
     arrInfo->resultReg = resultReg;
@@ -175,8 +190,7 @@ void generateAssignCode(comp_tree_t *node) {
             // TO-DO
         }
     } else if (destInfo->type == AST_VETOR_INDEXADO) {
-        // Assigning to array
-        // TO-DO
+        generateArrayVarAssignCode(node);
     }
 }
 
@@ -198,6 +212,33 @@ void generateSimpleVarAssignCode(comp_tree_t *node) {
         snprintf(code, maxCodeSize, "storeAI r%d => rbss, %d\n", expValue, varAddr);
     else
         snprintf(code, maxCodeSize, "storeAI r%d => rfp, %d\n", expValue, varAddr);
+
+    nodeInfo->code = code;
+    printf("%s", code);
+}
+
+void generateArrayVarAssignCode(comp_tree_t *node) {
+    comp_tree_t *arrNode = node->first;
+    comp_tree_t *idNode = arrNode->first;
+    comp_tree_t *expNode = arrNode->next;
+    AstNodeInfo *nodeInfo = node->value;
+    AstNodeInfo *idInfo = idNode->value;
+    AstNodeInfo *expInfo = expNode->value;
+    TokenInfo *idToken = idInfo->tokenInfo;
+
+    int maxCodeSize = 120; 
+    char *code = malloc(maxCodeSize);
+
+    int expValueReg = expInfo->resultReg;
+    int addrReg = generateTempReg();
+    char *addrCode = getArrayAddrGeneratorCode(arrNode, addrReg);
+    
+    if (strcmp(idToken->scope, "#GLOBAL#") == 0)
+        snprintf(code, maxCodeSize, "%sstoreAO r%d => rbss, r%d\n", addrCode, expValueReg, addrReg);
+    else
+        snprintf(code, maxCodeSize, "%sstoreAO r%d => rfp, r%d\n", addrCode, expValueReg, addrReg);
+
+    free(addrCode);
 
     nodeInfo->code = code;
     printf("%s", code);

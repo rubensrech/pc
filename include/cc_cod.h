@@ -14,7 +14,10 @@ void setTokenLocalVarOffset(TokenInfo *idInfo);
 void setTokenGlobalVarOffset(TokenInfo *idInfo);
 
 void generateLoadVarCode(comp_tree_t *idNode);
+
+char *getArrayAddrGeneratorCode(comp_tree_t *arrNode, int addrReg);
 void generateLoadArrayVarCode(comp_tree_t *arrNode);
 
 void generateAssignCode(comp_tree_t *node);
 void generateSimpleVarAssignCode(comp_tree_t *node);
+void generateArrayVarAssignCode(comp_tree_t *node);

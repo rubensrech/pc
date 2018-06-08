@@ -481,10 +481,14 @@ assig_cmd: id '=' unary_plus exp                {
                                                         // > Code
                                                         generateCode($$);
                                                 }
-          | array '=' unary_plus exp            {       $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
-                                                        // Declaration check, id use as array check, set node dataType
-                                                        // already done in 'array' rule
+          | array '=' unary_plus exp            {       
+                                                        // > AST
+                                                        $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
+                                                        // > Semantic
+                                                        // Declaration check, id use as array check, set node dataType => already done in 'array' rule
                                                         checkUserDataTypeMatching($1->first, $4);
+                                                        // > Code
+                                                        generateCode($$);
                                                 }
           | id '.' id '=' unary_plus exp        {       $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $6);
                                                         checkIdNodeDeclared($1);

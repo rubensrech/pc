@@ -244,7 +244,8 @@ global_var: native_type TK_IDENTIFICADOR                {
                                                                 setIdType($2, VAR_ID);
                                                                 // > Code
                                                                 setTokenGlobalVarOffset($2);
-                                                                g_offset += getSizeOf($1);
+                                                                printf("// Declared global var: %s (offset0: %d)\n", $2->lexeme, g_offset);
+                                                                g_offset += getSizeOf($1);                                                                        
                                                         }
           | TK_IDENTIFICADOR TK_IDENTIFICADOR           {
                                                                 // > Semantic
@@ -362,8 +363,7 @@ command:  var_dec ';'           { $$ = $1; }
         | for                   { $$ = $1; };
 
 /* Local Variables Declaration - command */
-
-/* VAR DECLARATION */
+/* > VAR DECLARATION */
 var_dec:
         /* Declarations with init value (only native types) */
         var_dec_mods native_type id init_var    {       
@@ -466,10 +466,15 @@ shift_cmd: id TK_OC_SL int              {       $$ = makeASTBinaryNode(AST_SHIFT
 
 /* Assignment - command */
 
-assig_cmd: id '=' unary_plus exp                {       $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
+assig_cmd: id '=' unary_plus exp                {
+                                                        // > AST
+                                                        $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
+                                                        // > Semantic
                                                         checkIdNodeDeclared($1);
                                                         checkIdNodeUsedAsMultiple(VAR_ID, USER_TYPE_ID, $1);
                                                         checkUserDataTypeMatching($1, $4);
+                                                        // > Code
+                                                        generateCode($$);
                                                 }
           | array '=' unary_plus exp            {       $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
                                                         // Declaration check, id use as array check, set node dataType

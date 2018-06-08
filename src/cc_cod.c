@@ -36,6 +36,7 @@ void generateCode(comp_tree_t *node) {
     case AST_ARIM_MULTIPLICACAO: generateArithCode(node, "mult"); break;
     // Variables
     case AST_IDENTIFICADOR: generateLoadVarCode(node); break;
+    case AST_ATRIBUICAO: generateAssignCode(node);
     }
 }
 
@@ -105,12 +106,25 @@ void setTokenGlobalVarOffset(TokenInfo *idInfo) {
     idInfo->offset = g_offset;
 }
 
+int getNodeVarAddr(comp_tree_t *node) {
+    AstNodeInfo *nodeInfo = node->value;
+    if (nodeInfo->type == AST_IDENTIFICADOR) {
+        TokenInfo *idInfo = nodeInfo->tokenInfo;
+        return idInfo->offset;
+    } else if (nodeInfo->type == AST_VETOR_INDEXADO) {
+        // TO-DO
+        return -1;
+    }
+    return -1;
+}
+
 void generateLoadVarCode(comp_tree_t *idNode) {
     AstNodeInfo *nodeInfo = idNode->value;
     TokenInfo *idInfo = nodeInfo->tokenInfo;  
     int maxCodeSize = 30;
     char *code = malloc(maxCodeSize);
     int resultReg = generateTempReg();
+    int varAddr = getNodeVarAddr(idNode);
     
     if (strcmp(idInfo->scope, "#GLOBAL#") == 0)
         snprintf(code, maxCodeSize, "loadAI rbss, %d => r%d\n", idInfo->offset, resultReg);
@@ -119,5 +133,45 @@ void generateLoadVarCode(comp_tree_t *idNode) {
 
     nodeInfo->code = code;
     nodeInfo->resultReg = resultReg;
+    printf("%s", code);
+}
+
+void generateAssignCode(comp_tree_t *node) {
+    AstNodeInfo *destInfo = node->first->value;
+    AstNodeInfo *sndChildInfo = node->first->next->value;
+
+    if (destInfo->type == AST_IDENTIFICADOR) {
+        if (sndChildInfo->type != AST_IDENTIFICADOR) {
+            generateSimpleVarAssignCode(node);
+        } else {
+            // Assigning to user type var
+            // TO-DO
+        }
+    } else if (destInfo->type == AST_VETOR_INDEXADO) {
+        // Assigning to array
+        // TO-DO
+    }
+}
+
+void generateSimpleVarAssignCode(comp_tree_t *node) {
+    comp_tree_t *idNode = node->first;
+    comp_tree_t *expNode = idNode->next;
+    AstNodeInfo *nodeInfo = node->value;
+    AstNodeInfo *idInfo = idNode->value;
+    AstNodeInfo *expInfo = expNode->value;
+    TokenInfo *idToken = idInfo->tokenInfo;
+
+    int maxCodeSize = 30; 
+    char *code = malloc(maxCodeSize);
+
+    int expValue = expInfo->resultReg;
+    int varAddr = getNodeVarAddr(idNode);
+    
+    if (strcmp(idToken->scope, "#GLOBAL#") == 0)
+        snprintf(code, maxCodeSize, "storeAI r%d => rbss, %d\n", expValue, varAddr);
+    else
+        snprintf(code, maxCodeSize, "storeAI r%d => rfp, %d\n", expValue, varAddr);
+
+    nodeInfo->code = code;
     printf("%s", code);
 }

@@ -371,6 +371,7 @@ var_dec:
                                                         setIdNodeTokenDataType($3, $2);
                                                         checkDataTypeMatching($2, getASTNodeTokenDataType($4), 1);
                                                         // > Code
+                                                        setNodeLocalVarOffset($3);
                                                         l_offset += getSizeOf($2);
                                                 }
         | native_type id init_var               {       
@@ -381,6 +382,7 @@ var_dec:
                                                         setIdNodeTokenDataType($2, $1);
                                                         checkDataTypeMatching($1, getASTNodeTokenDataType($3), 1);
                                                         // > Code
+                                                        setNodeLocalVarOffset($2);
                                                         l_offset += getSizeOf($1);
                                                 }
 
@@ -392,6 +394,7 @@ var_dec:
                                                                 setIdType($3, VAR_ID); // also checks redeclaration
                                                                 setIdTokenDataType($3, $2);
                                                                 // > Code
+                                                                setTokenLocalVarOffset($3);
                                                                 l_offset += getSizeOf($2);
                                                         }
         | native_type TK_IDENTIFICADOR                  {       
@@ -401,6 +404,7 @@ var_dec:
                                                                 setIdType($2, VAR_ID); // also checks redeclaration
                                                                 setIdTokenDataType($2, $1);
                                                                 // > Code
+                                                                setTokenLocalVarOffset($2);
                                                                 l_offset += getSizeOf($1);
                                                         }
         
@@ -598,11 +602,16 @@ exp:  array                     { $$ = $1; }
     | true                      { $$ = $1; }
     | false                     { $$ = $1; }
     | '(' exp ')'               { $$ = $2; } 
-    | id                        {       $$ = $1;
+    | id                        {       
+                                        // > AST
+                                        $$ = $1;
+                                        // > Semantic
                                         checkIdNodeDeclared($1);
                                         checkIdNodeUsedAsMultiple(VAR_ID, USER_TYPE_ID, $1);
                                         setNodeDataType($$, getASTNodeTokenDataType($1));
                                         setNodeUserDataType($$, getTokenInfoFromIdNode($1)->userDataType);
+                                        // > Code
+                                        generateCode($$);
                                 }         
     | logicExp                  {       $$ = $1;
                                         int resultDataType = checkLogicExpDataTypeMatching($$->first, $$->last);

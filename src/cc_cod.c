@@ -33,6 +33,8 @@ void generateCode(comp_tree_t *node) {
     case AST_ARIM_SUBTRACAO: generateArithCode(node, "sub"); break;
     case AST_ARIM_DIVISAO: generateArithCode(node, "div"); break;
     case AST_ARIM_MULTIPLICACAO: generateArithCode(node, "mult"); break;
+    // Variables
+    case AST_IDENTIFICADOR: generateLoadVarCode(node); break;
     }
 }
 
@@ -53,6 +55,8 @@ void generateLiteralCode(comp_tree_t *node) {
     nodeInfo->resultReg = reg;
     printf("%s", code);
 }
+
+// > Arithmetic
 
 void generateArithInvertCode(comp_tree_t *node) {
     AstNodeInfo *nodeInfo = node->value;
@@ -80,6 +84,31 @@ void generateArithCode(comp_tree_t *node, const char *op) {
     int sndOpReg = sndOpInfo->resultReg;
 
     snprintf(code, maxCodeSize, "%s r%d, r%d => r%d\n", op, fstOpReg, sndOpReg, resultReg);
+    nodeInfo->code = code;
+    nodeInfo->resultReg = resultReg;
+    printf("%s", code);
+}
+
+// > Variables
+
+void setNodeLocalVarOffset(comp_tree_t *idNode) {
+    TokenInfo *idInfo = getTokenInfoFromIdNode(idNode);
+    idInfo->offset = l_offset;
+}
+
+void setTokenLocalVarOffset(TokenInfo *idInfo) {
+    idInfo->offset = l_offset;
+}
+
+void generateLoadVarCode(comp_tree_t *idNode) {
+    AstNodeInfo *nodeInfo = idNode->value;
+    TokenInfo *idInfo = nodeInfo->tokenInfo;  
+    int maxCodeSize = 30;
+    char *code = malloc(maxCodeSize);
+    int resultReg = generateTempReg();
+
+    snprintf(code, maxCodeSize, "loadAI rfp, %d => r%d\n", idInfo->offset, resultReg);
+
     nodeInfo->code = code;
     nodeInfo->resultReg = resultReg;
     printf("%s", code);

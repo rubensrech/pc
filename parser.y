@@ -153,8 +153,7 @@ programa: /* empty */   { $$ = makeASTNode(AST_PROGRAMA, NULL); ast = $$; }
                                 else $$ = makeASTNode(AST_PROGRAMA, NULL);
                                 ast = $$;
                                 // > Code
-                                //printf("Global offset: %d\n", g_offset);
-                                //printf("Local offset: %d\n", l_offset);
+                                printFullCode();
                         };
 
 code:  type_def ';'             { $$ = NULL; }
@@ -344,8 +343,7 @@ commands: command                  { $$ = $1; }
                                         if ($1 != NULL && $2 != NULL) {
                                                 tree_set_list_next_node($1, $2);
                                                 $$ = $1;
-                                        }
-                                        if ($1 == NULL) $$ = $2;
+                                        } else if ($1 == NULL) $$ = $2;
                                    };
 
 /* Simple Commands */
@@ -635,9 +633,13 @@ exp:  array                     {
                                         // > Code
                                         generateCode($$);
                                 }         
-    | logicExp                  {       $$ = $1;
+    | logicExp                  {       
+                                        // > AST
+                                        $$ = $1;
+                                        // > Semantic
                                         int resultDataType = checkLogicExpDataTypeMatching($$->first, $$->last);
                                         setNodeDataType($$, resultDataType);
+                                        // > Code
                                 }
     | arimExp                   {       
                                         // > AST
@@ -648,9 +650,14 @@ exp:  array                     {
                                         // > Code
                                         generateCode($$);
                                 }
-    | compExp                   {       $$ = $1;
+    | compExp                   {       
+                                        // > AST
+                                        $$ = $1;
+                                        // > Semantic
                                         int resultDataType = checkCompExpDataTypeMatching($$->first, $$->last);
                                         setNodeDataType($$, resultDataType);
+                                        // > Code
+                                        generateCode($$);
                                 }
     | '-' exp                   {       
                                         // > AST

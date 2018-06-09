@@ -1,13 +1,26 @@
+#include <gmodule.h>
 #include "cc_ast.h"
 
+// > Code list
+void printCodeItem(gpointer codeItem, gpointer extra);
+void printFullCode();
+
+// > General
+void replace_str(char *str, char *orig, char *rep);
 int getSizeOf(int type);
 int generateTempReg();
+int remendo();
+
+// > Code generating
 
 void generateCode(comp_tree_t *node);
+
+void generateCompCode(comp_tree_t *node, const char *relOp);
+
 void generateLiteralCode(comp_tree_t *node);
+
 void generateArithInvertCode(comp_tree_t *node);
 void generateArithCode(comp_tree_t *node, const char *op);
-
 
 void setNodeLocalVarOffset(comp_tree_t *idNode);
 void setTokenLocalVarOffset(TokenInfo *idInfo);

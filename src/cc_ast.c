@@ -36,6 +36,10 @@ comp_tree_t *makeASTNode(int type, TokenInfo *token) {
     nodeInfo->tokenInfo = token;
     nodeInfo->dataType = DATATYPE_UNDEF;
     // nodeInfo->userDataType = NULL (not necessary)
+    // nodeInfo->code = NULL (not necessary)
+    // nodeInfo->resultReg = 0 (not necessary)
+    nodeInfo->trueList = NULL;
+    nodeInfo->falseList = NULL;
     return tree_make_node(nodeInfo);
 }
 

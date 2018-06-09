@@ -54,6 +54,7 @@
 
 #define GV_OUT_FILE "saida.dot"
 
+#include <gmodule.h>
 #include "cc_tree.h"
 #include "cc_table.h"
 
@@ -65,6 +66,8 @@ typedef struct astNodeInfo {
   // > Code
   char *code;
   int resultReg;
+  GSList *trueList;
+  GSList *falseList;
 } AstNodeInfo;
 
 void initAST();
@@ -77,5 +80,7 @@ comp_tree_t *makeASTTernaryNode(int type, TokenInfo *token, comp_tree_t *node1, 
 comp_tree_t *makeASTQuaternaryNode(int type, TokenInfo *token, comp_tree_t *node1, comp_tree_t *node2, comp_tree_t *node3, comp_tree_t *node4);
 
 TokenInfo *getASTNodeTokenInfo(comp_tree_t *node);
+
+void printASTCode();
 
 #endif

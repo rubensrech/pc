@@ -570,6 +570,7 @@ if_stm:  if_exp TK_PR_THEN block                        { $$ = makeASTBinaryNode
 
 if_exp: TK_PR_IF '(' exp ')'                            {       $$ = $3;
                                                                 checkExpNodeDataTypeIsBool($3);
+                                                                printNodeCodeList($$); //>>>>>>>
                                                         };
 
 foreach: TK_PR_FOREACH '(' id ':' exps_list ')' block                   {       $$ = makeASTTernaryNode(AST_FOREACH, NULL, $3, $5, $7);
@@ -649,6 +650,7 @@ exp:  array                     {
                                         int resultDataType = checkLogicExpDataTypeMatching($$->first, $$->last);
                                         setNodeDataType($$, resultDataType);
                                         // > Code
+                                        generateCode($$);
                                 }
     | arimExp                   {       
                                         // > AST

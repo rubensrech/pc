@@ -334,31 +334,53 @@ void generateArrayVarAssignCode(comp_tree_t *node) {
 // > Logic
 
 void generateCompCode(comp_tree_t *node, const char *relOp) {
-    /*AstNodeInfo *nodeInfo = node->value;
+    AstNodeInfo *nodeInfo = node->value;
     AstNodeInfo *fstOpInfo = node->first->value;
     AstNodeInfo *sndOpInfo = node->last->value;
 
-    int maxCodeSize = 60;
-    char *code = malloc(maxCodeSize);
+    int maxCodeSize = 30;
+    GSList *codeList = fstOpInfo->code;
+    codeList = g_slist_concat(codeList, sndOpInfo->code);
+
+    char *cmpCode = malloc(maxCodeSize);
     int resultReg = generateTempReg();
     int fstOpReg = fstOpInfo->resultReg;
     int sndOpReg = sndOpInfo->resultReg;
 
-    char *cbrCode = malloc(30);
+    snprintf(cmpCode, maxCodeSize, "%s r%d, r%d -> r%d\n", relOp, fstOpReg, sndOpReg, resultReg);
+    codeList = g_slist_append(codeList, cmpCode);
+
+    char *cbrCode = malloc(maxCodeSize);
     int x = remendo();
     int y = remendo();
-
     snprintf(cbrCode, 30, "cbr r%d -> #%d, #%d\n", resultReg, x, y);
-    snprintf(code, maxCodeSize, "%s r%d, r%d -> r%d\n%s", relOp, fstOpReg, sndOpReg, resultReg, cbrCode);
+    codeList = g_slist_append(codeList, cbrCode);
 
-    nodeInfo->code = code;
+    nodeInfo->code = codeList;
     nodeInfo->resultReg = resultReg;
     nodeInfo->trueList = g_slist_append(nodeInfo->trueList, GINT_TO_POINTER(x));
     nodeInfo->falseList = g_slist_append(nodeInfo->falseList, GINT_TO_POINTER(y));
-
-    // codeList = g_slist_append(codeList, code);*/
 }
 
 void generateLogicCode(comp_tree_t *node, const char *op) {
+    AstNodeInfo *nodeInfo = node->value;
+    AstNodeInfo *fstOpInfo = node->first->value;
+    AstNodeInfo *sndOpInfo = node->last->value;
 
+    int maxCodeSize = 10;
+    GSList *codeList = fstOpInfo->code;
+
+    char *labelCode = malloc(maxCodeSize);
+    int x = generateLabel();
+    snprintf(labelCode, maxCodeSize, "L%d: ", x);
+    codeList = g_slist_append(codeList, labelCode);
+
+    codeList = g_slist_concat(codeList, sndOpInfo->code);
+
+    printf(">>>>>>>>>>>>>%s\n", op);
+    printf("true: %d %d\n", g_slist_length(sndOpInfo->trueList), g_slist_length(fstOpInfo->trueList));
+    printf("false: %d %d\n", g_slist_length(sndOpInfo->falseList), g_slist_length(fstOpInfo->falseList));
+    printf(">>>>>>>>>>>>>\n");
+
+    nodeInfo->code = codeList;    
 }

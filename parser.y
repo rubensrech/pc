@@ -153,7 +153,8 @@ programa: /* empty */   { $$ = makeASTNode(AST_PROGRAMA, NULL); ast = $$; }
                                 else $$ = makeASTNode(AST_PROGRAMA, NULL);
                                 ast = $$;
                                 // > Code
-                                printFullCode();
+                                inheritCodeList($$, $1);
+                                printNodeCodeList($$);
                         };
 
 code:  type_def ';'             { $$ = NULL; }
@@ -274,10 +275,15 @@ global_arr: native_type TK_IDENTIFICADOR '[' TK_LIT_INT ']'     {
                                                                 };
 /* Function Declaration */
 
-func_dec: func_header block                     {       $$ = makeASTUnaryNode(AST_FUNCAO, $1, $2);
+func_dec: func_header block                     {
+                                                        // > AST
+                                                        $$ = makeASTUnaryNode(AST_FUNCAO, $1, $2);
+                                                        // > Semantic
                                                         // Scope ended -> back to global scope
                                                         setCurrentScopeToGlobalScope();
                                                         checkFuncHasReturnCmd($$);
+                                                        // > Code
+                                                        inheritCodeList($$, $2);
                                                 }
         | TK_PR_STATIC func_header block        {       $$ = makeASTUnaryNode(AST_FUNCAO, $2, $3);
                                                         // Scope ended -> back to global scope
@@ -335,14 +341,17 @@ param_dec_mods: /* empty */
 block:  '{' '}'                 { $$ = makeASTNode(AST_BLOCO, NULL); }
       | '{' commands '}'        {       
                                         if ($2 == NULL) $$ = makeASTNode(AST_BLOCO, NULL);
-                                        else $$ = $2;                  
+                                        else $$ = $2;
                                 };
 
 commands: command                  { $$ = $1; }
          | command commands        { 
                                         if ($1 != NULL && $2 != NULL) {
+                                                // > AST
                                                 tree_set_list_next_node($1, $2);
                                                 $$ = $1;
+                                                // > Code
+                                                cmdsCodeListConcat($1, $2);
                                         } else if ($1 == NULL) $$ = $2;
                                    };
 

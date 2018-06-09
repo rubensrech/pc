@@ -7,8 +7,8 @@ int l_offset = 0;
 int g_offset = 0;
 
 int tempReg = 0;
-
-GSList *codeList = NULL;
+int remendoNum = 0;
+int label = 0;
 
 // > Code list
 
@@ -16,8 +16,21 @@ void printCodeItem(gpointer codeItem, gpointer extra) {
     printf("%s", codeItem);
 }
 
-void printFullCode() {
+void printCodeList(GSList *codeList) {
      g_slist_foreach(codeList, printCodeItem, NULL);
+}
+
+void printNodeCodeList(comp_tree_t *node) {
+    if (node == NULL) return;
+    AstNodeInfo *nodeInfo = node->value;
+    printCodeList(nodeInfo->code);
+}
+
+void inheritCodeList(comp_tree_t *to, comp_tree_t *from) {
+    AstNodeInfo *toInfo = to->value;
+    AstNodeInfo *fromInfo = from->value;
+    
+    toInfo->code = fromInfo->code;
 }
 
 // > General
@@ -41,7 +54,10 @@ int generateTempReg() {
     return tempReg++;
 }
 
-int remendoNum = 0;
+int generateLabel() {
+    return label++;
+}
+
 int remendo() {
     return remendoNum++;
 }
@@ -56,6 +72,15 @@ int getSizeOf(int dataType) {
         default: return 0;
     }
 }
+
+void cmdsCodeListConcat(comp_tree_t *cmd1, comp_tree_t *cmd2) {
+    AstNodeInfo *cmd1Info = cmd1->value;
+    AstNodeInfo *cmd2Info = cmd2->value;
+
+    cmd1Info->code = g_slist_concat(cmd1Info->code, cmd2Info->code);
+}
+
+// > Code generating
 
 void generateCode(comp_tree_t *node) {
     AstNodeInfo *info = node->value;
@@ -79,36 +104,11 @@ void generateCode(comp_tree_t *node) {
     case AST_LOGICO_COMP_LE: generateCompCode(node, "cmp_LE"); break;
     case AST_LOGICO_COMP_G: generateCompCode(node, "cmp_GT"); break;
     case AST_LOGICO_COMP_L: generateCompCode(node, "cmp_LT"); break;
+    // Logic
+    case AST_LOGICO_E: generateLogicCode(node, "and"); break;
+    case AST_LOGICO_OU: generateLogicCode(node, "or"); break;
     }
 }
-
-void generateCompCode(comp_tree_t *node, const char *relOp) {
-    AstNodeInfo *nodeInfo = node->value;
-    AstNodeInfo *fstOpInfo = node->first->value;
-    AstNodeInfo *sndOpInfo = node->last->value;
-
-    int maxCodeSize = 60;
-    char *code = malloc(maxCodeSize);
-    int resultReg = generateTempReg();
-    int fstOpReg = fstOpInfo->resultReg;
-    int sndOpReg = sndOpInfo->resultReg;
-
-    char *cbrCode = malloc(30);
-    int x = remendo();
-    int y = remendo();
-
-    snprintf(cbrCode, 30, "cbr r%d -> #%d, #%d\n", resultReg, x, y);
-    snprintf(code, maxCodeSize, "%s r%d, r%d -> r%d\n%s", relOp, fstOpReg, sndOpReg, resultReg, cbrCode);
-
-    nodeInfo->code = code;
-    nodeInfo->resultReg = resultReg;
-    nodeInfo->trueList = g_slist_append(nodeInfo->trueList, GINT_TO_POINTER(x));
-    nodeInfo->falseList = g_slist_append(nodeInfo->falseList, GINT_TO_POINTER(y));
-
-    codeList = g_slist_append(codeList, code);
-}
-
-
 
 void generateLiteralCode(comp_tree_t *node) {
     AstNodeInfo *nodeInfo = node->value;
@@ -123,9 +123,8 @@ void generateLiteralCode(comp_tree_t *node) {
         default: break;
     }
 
-    nodeInfo->code = code;
+    nodeInfo->code = g_slist_append(nodeInfo->code, code);
     nodeInfo->resultReg = reg;
-    codeList = g_slist_append(codeList, code);
 }
 
 // > Arithmetic
@@ -133,32 +132,39 @@ void generateLiteralCode(comp_tree_t *node) {
 void generateArithInvertCode(comp_tree_t *node) {
     AstNodeInfo *nodeInfo = node->value;
     AstNodeInfo *expInfo = node->first->value;
+
+    GSList *codeList = expInfo->code;
     int maxCodeSize = 30;
     char *code = malloc(maxCodeSize);
     int resultReg = generateTempReg();
     int expReg = expInfo->resultReg;
 
     snprintf(code, maxCodeSize, "multI r%d, -1 => r%d\n", expReg, resultReg);
-
-    nodeInfo->code = code;
-    nodeInfo->resultReg = resultReg;
     codeList = g_slist_append(codeList, code);
+
+    nodeInfo->code = codeList;
+    nodeInfo->resultReg = resultReg;
 }
 
 void generateArithCode(comp_tree_t *node, const char *op) {
     AstNodeInfo *nodeInfo = node->value;
     AstNodeInfo *fstOpInfo = node->first->value;
     AstNodeInfo *sndOpInfo = node->last->value;
+
     int maxCodeSize = 30;
+    GSList *codeList = fstOpInfo->code;
+    if (sndOpInfo->code != NULL) codeList = g_slist_concat(codeList, sndOpInfo->code);
+
     char *code = malloc(maxCodeSize);
     int resultReg = generateTempReg();
     int fstOpReg = fstOpInfo->resultReg;
     int sndOpReg = sndOpInfo->resultReg;
 
     snprintf(code, maxCodeSize, "%s r%d, r%d => r%d\n", op, fstOpReg, sndOpReg, resultReg);
-    nodeInfo->code = code;
-    nodeInfo->resultReg = resultReg;
     codeList = g_slist_append(codeList, code);
+    
+    nodeInfo->code = codeList;
+    nodeInfo->resultReg = resultReg;
 }
 
 // > Variables
@@ -189,35 +195,36 @@ void generateLoadVarCode(comp_tree_t *idNode) {
     else
         snprintf(code, maxCodeSize, "loadAI rfp, %d => r%d\n", idInfo->offset, resultReg);
 
-    nodeInfo->code = code;
+    nodeInfo->code = g_slist_append(nodeInfo->code, code);
     nodeInfo->resultReg = resultReg;
-    codeList = g_slist_append(codeList, code);
+    // codeList = g_slist_append(codeList, code);
 }
 
-char *getArrayAddrGeneratorCode(comp_tree_t *arrNode, int addrReg) {
+GSList *getArrayAddrGeneratorCode(comp_tree_t *arrNode, int addrReg) {
     comp_tree_t *idNode = arrNode->first;
     comp_tree_t *indexNode = idNode->next;
     AstNodeInfo *idInfo = idNode->value;
     AstNodeInfo *indexInfo = indexNode->value;
     TokenInfo *idToken = idInfo->tokenInfo;  
 
-    int maxCodeSize = 60;
-    char *code = malloc(maxCodeSize);
+    int maxCodeSize = 30;
+    GSList *codeList = indexInfo->code;
 
-    char multCode[30];
+    char *multCode = malloc(maxCodeSize);
     int typeSize = getSizeOf(idToken->dataType);
     int indexReg = indexInfo->resultReg;
     int multReg = generateTempReg();
     // multReg = i * w => offset inside array
-    snprintf(multCode, 30, "multI r%d, %d => r%d\n", indexReg, typeSize, multReg);
+    snprintf(multCode, maxCodeSize, "multI r%d, %d => r%d\n", indexReg, typeSize, multReg);
+    codeList = g_slist_append(codeList, multCode);
 
-    char sumCode[30];
+    char *sumCode = malloc(maxCodeSize);
     int varBase = idToken->offset;
     // addrReg = base + (i * w) => relative address (offset from rbss/rfp)
-    snprintf(sumCode, 30, "addI r%d, %d => r%d\n", multReg, varBase, addrReg);
-
-    snprintf(code, maxCodeSize, "%s%s", multCode, sumCode);
-    return code;
+    snprintf(sumCode, maxCodeSize, "addI r%d, %d => r%d\n", multReg, varBase, addrReg);
+    codeList = g_slist_append(codeList, sumCode);
+    
+    return codeList;
 }
 
 void generateLoadArrayVarCode(comp_tree_t *arrNode) {
@@ -226,24 +233,28 @@ void generateLoadArrayVarCode(comp_tree_t *arrNode) {
     AstNodeInfo *idInfo = idNode->value;
     TokenInfo *idToken = idInfo->tokenInfo;  
 
-    int maxCodeSize = 120;
+    int maxCodeSize = 30;
     char *code = malloc(maxCodeSize);
     int resultReg = generateTempReg();
+
+    GSList *codeList;
     
     int addrReg = generateTempReg();
-    char *addrCode = getArrayAddrGeneratorCode(arrNode, addrReg);
+    GSList *addrCode = getArrayAddrGeneratorCode(arrNode, addrReg);
+    codeList = addrCode;
 
     if (strcmp(idToken->scope, "#GLOBAL#") == 0) {
-        snprintf(code, maxCodeSize, "%sloadAO rbss, r%d => r%d\n", addrCode, addrReg, resultReg);
+        snprintf(code, maxCodeSize, "loadAO rbss, r%d => r%d\n", addrReg, resultReg);
     } else {
-        snprintf(code, maxCodeSize, "%sloadAO rfp, r%d => r%d\n", addrCode, addrReg, resultReg);
+        snprintf(code, maxCodeSize, "loadAO rfp, r%d => r%d\n", addrReg, resultReg);
     }
 
-    free(addrCode);
-
-    arrInfo->code = code;
-    arrInfo->resultReg = resultReg;
     codeList = g_slist_append(codeList, code);
+    // free(addrCode);
+
+    arrInfo->code = codeList;
+    arrInfo->resultReg = resultReg;
+    // codeList = g_slist_append(codeList, code);
 }
 
 // > Assignment
@@ -272,6 +283,8 @@ void generateSimpleVarAssignCode(comp_tree_t *node) {
     AstNodeInfo *expInfo = expNode->value;
     TokenInfo *idToken = idInfo->tokenInfo;
 
+    GSList *codeList = expInfo->code;
+
     int maxCodeSize = 30; 
     char *code = malloc(maxCodeSize);
 
@@ -283,8 +296,9 @@ void generateSimpleVarAssignCode(comp_tree_t *node) {
     else
         snprintf(code, maxCodeSize, "storeAI r%d => rfp, %d\n", expValue, varAddr);
 
-    nodeInfo->code = code;
     codeList = g_slist_append(codeList, code);
+
+    nodeInfo->code = codeList;
 }
 
 void generateArrayVarAssignCode(comp_tree_t *node) {
@@ -296,21 +310,55 @@ void generateArrayVarAssignCode(comp_tree_t *node) {
     AstNodeInfo *expInfo = expNode->value;
     TokenInfo *idToken = idInfo->tokenInfo;
 
-    int maxCodeSize = 120; 
+    int maxCodeSize = 30; 
     char *code = malloc(maxCodeSize);
+    GSList *codeList;
 
     int expValueReg = expInfo->resultReg;
     int addrReg = generateTempReg();
-    char *addrCode = getArrayAddrGeneratorCode(arrNode, addrReg);
+    GSList *addrCode = getArrayAddrGeneratorCode(arrNode, addrReg);
+
+    codeList = addrCode;
+    codeList = g_slist_concat(codeList, expInfo->code);
     
     if (strcmp(idToken->scope, "#GLOBAL#") == 0)
-        snprintf(code, maxCodeSize, "%sstoreAO r%d => rbss, r%d\n", addrCode, expValueReg, addrReg);
+        snprintf(code, maxCodeSize, "storeAO r%d => rbss, r%d\n", expValueReg, addrReg);
     else
-        snprintf(code, maxCodeSize, "%sstoreAO r%d => rfp, r%d\n", addrCode, expValueReg, addrReg);
+        snprintf(code, maxCodeSize, "storeAO r%d => rfp, r%d\n", expValueReg, addrReg);
 
-    free(addrCode);
-
-    nodeInfo->code = code;
     codeList = g_slist_append(codeList, code);
+
+    nodeInfo->code = codeList;
 }
 
+// > Logic
+
+void generateCompCode(comp_tree_t *node, const char *relOp) {
+    /*AstNodeInfo *nodeInfo = node->value;
+    AstNodeInfo *fstOpInfo = node->first->value;
+    AstNodeInfo *sndOpInfo = node->last->value;
+
+    int maxCodeSize = 60;
+    char *code = malloc(maxCodeSize);
+    int resultReg = generateTempReg();
+    int fstOpReg = fstOpInfo->resultReg;
+    int sndOpReg = sndOpInfo->resultReg;
+
+    char *cbrCode = malloc(30);
+    int x = remendo();
+    int y = remendo();
+
+    snprintf(cbrCode, 30, "cbr r%d -> #%d, #%d\n", resultReg, x, y);
+    snprintf(code, maxCodeSize, "%s r%d, r%d -> r%d\n%s", relOp, fstOpReg, sndOpReg, resultReg, cbrCode);
+
+    nodeInfo->code = code;
+    nodeInfo->resultReg = resultReg;
+    nodeInfo->trueList = g_slist_append(nodeInfo->trueList, GINT_TO_POINTER(x));
+    nodeInfo->falseList = g_slist_append(nodeInfo->falseList, GINT_TO_POINTER(y));
+
+    // codeList = g_slist_append(codeList, code);*/
+}
+
+void generateLogicCode(comp_tree_t *node, const char *op) {
+
+}

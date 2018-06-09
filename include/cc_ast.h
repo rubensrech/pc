@@ -64,8 +64,8 @@ typedef struct astNodeInfo {
   int dataType;
   char *userDataType;
   // > Code
-  char *code;
   int resultReg;
+  GSList *code;
   GSList *trueList;
   GSList *falseList;
 } AstNodeInfo;

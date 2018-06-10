@@ -58,8 +58,11 @@ int generateLabel() {
     return label++;
 }
 
-int remendo() {
-    return remendoNum++;
+char *remendo() {
+    char *tmp = malloc(10);
+    snprintf(tmp, 10, "#%d", remendoNum);
+    remendoNum++;
+    return tmp;
 }
 
 int getSizeOf(int dataType) {
@@ -350,11 +353,23 @@ void generateCompCode(comp_tree_t *node, const char *relOp) {
     snprintf(cmpCode, maxCodeSize, "%s r%d, r%d -> r%d\n", relOp, fstOpReg, sndOpReg, resultReg);
     codeList = g_slist_append(codeList, cmpCode);
 
-    char *cbrCode = malloc(maxCodeSize);
-    int x = remendo();
-    int y = remendo();
-    snprintf(cbrCode, 30, "cbr r%d -> #%d, #%d\n", resultReg, x, y);
-    codeList = g_slist_append(codeList, cbrCode);
+    char *cbrCode0 = malloc(maxCodeSize);
+    snprintf(cbrCode0, maxCodeSize, "cbr r%d -> ", resultReg);
+    codeList = g_slist_append(codeList, cbrCode0);
+
+    char *x = remendo();
+    codeList = g_slist_append(codeList, x);
+
+    char *cbrCodeComma = malloc(2);
+    strcpy(cbrCodeComma, ", ");
+    codeList = g_slist_append(codeList, cbrCodeComma);
+
+    char *y = remendo();
+    codeList = g_slist_append(codeList, y);
+
+    char *cbrCodeLineBreak = malloc(1);
+    strcpy(cbrCodeLineBreak, "\n");
+    codeList = g_slist_append(codeList, cbrCodeLineBreak);
 
     nodeInfo->code = codeList;
     nodeInfo->resultReg = resultReg;
@@ -378,6 +393,8 @@ void generateLogicCode(comp_tree_t *node, const char *op) {
     codeList = g_slist_concat(codeList, sndOpInfo->code);
 
     printf(">>>>>>>>>>>>>%s\n", op);
+    // strcpy(fstOpInfo->trueList->data, "L0");
+    // printf("remendos TRUE: %s\n", fstOpInfo->trueList->data);
     printf("true: %d %d\n", g_slist_length(sndOpInfo->trueList), g_slist_length(fstOpInfo->trueList));
     printf("false: %d %d\n", g_slist_length(sndOpInfo->falseList), g_slist_length(fstOpInfo->falseList));
     printf(">>>>>>>>>>>>>\n");

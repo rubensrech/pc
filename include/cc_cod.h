@@ -11,7 +11,7 @@ void inheritCodeList(comp_tree_t *to, comp_tree_t *from);
 void replace_str(char *str, char *orig, char *rep);
 int getSizeOf(int type);
 int generateTempReg();
-int remendo();
+char *remendo();
 int generateLabel();
 
 void cmdsCodeListConcat(comp_tree_t *cmd1, comp_tree_t *cmd2);

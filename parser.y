@@ -581,16 +581,23 @@ if_exp: TK_PR_IF '(' exp ')'                            {
                                                                 checkExpNodeDataTypeIsBool($3);
                                                         };
 
-foreach: TK_PR_FOREACH '(' id ':' exps_list ')' block                   {       $$ = makeASTTernaryNode(AST_FOREACH, NULL, $3, $5, $7);
-                                                                                checkIdNodeDeclared($3);
-                                                                                checkIdNodeUsedAs(VAR_ID, $3);
-                                                                        };
+foreach: TK_PR_FOREACH '(' id ':' exps_list ')' block   {       
+                                                                $$ = makeASTTernaryNode(AST_FOREACH, NULL, $3, $5, $7);
+                                                                checkIdNodeDeclared($3);
+                                                                checkIdNodeUsedAs(VAR_ID, $3);
+                                                        };
 
-while: TK_PR_WHILE '(' exp ')' TK_PR_DO block                   {       $$ = makeASTBinaryNode(AST_WHILE_DO, NULL, $3, $6);
-                                                                        checkExpNodeDataTypeIsBool($3);
-                                                                };
+while: TK_PR_WHILE '(' exp ')' TK_PR_DO block           {
+                                                                // > AST
+                                                                $$ = makeASTBinaryNode(AST_WHILE_DO, NULL, $3, $6);
+                                                                // > Semantic
+                                                                checkExpNodeDataTypeIsBool($3);
+                                                                // > Code
+                                                                generateCode($$);
+                                                        };
 
-do_while: TK_PR_DO block TK_PR_WHILE '(' exp ')'                {       $$ = makeASTBinaryNode(AST_DO_WHILE, NULL, $2, $5);
+do_while: TK_PR_DO block TK_PR_WHILE '(' exp ')'                {
+                                                                        $$ = makeASTBinaryNode(AST_DO_WHILE, NULL, $2, $5);
                                                                         checkExpNodeDataTypeIsBool($5);
                                                                 };
 

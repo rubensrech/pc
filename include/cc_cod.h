@@ -49,3 +49,4 @@ void generateLogicCode(comp_tree_t *node, const char *op);
 
 void generateIfCode(comp_tree_t *node);
 void generateIfElseCode(comp_tree_t *node);
+void generateWhileCode(comp_tree_t *node);

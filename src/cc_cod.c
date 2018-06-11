@@ -413,6 +413,25 @@ void generateIfCode(comp_tree_t *node) {
         return;
     }
     
+    AstNodeInfo *nodeInfo = node->value;
+    AstNodeInfo *expInfo = node->first->value;
+    AstNodeInfo *ifInfo = node->last->value;
+
+    int trueLabel = generateLabel();
+    int nextLabel = generateLabel();
+
+    char *trueLabelCode = generateLabelCode(trueLabel);
+    char *nextLabelCode = generateLabelCode(nextLabel);
+
+    patchUpLabelHoles(expInfo->trueHoles, trueLabel);
+    patchUpLabelHoles(expInfo->falseHoles, nextLabel);
+
+    GSList *codeList = expInfo->code;   // S.code = B.code    
+    codeList = g_slist_append(codeList, trueLabelCode); // S.code += "Ltrue: "
+    codeList = g_slist_concat(codeList, ifInfo->code); // S.code += S1.code
+    codeList = g_slist_append(codeList, nextLabelCode); // S.code += "Lnext: "
+
+    nodeInfo->code = codeList;
 }
 
 void generateIfElseCode(comp_tree_t *node) {

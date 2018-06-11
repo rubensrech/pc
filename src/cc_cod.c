@@ -120,6 +120,7 @@ void generateCode(comp_tree_t *node) {
     // Control Flow
     case AST_IF_ELSE: generateIfCode(node); break;
     case AST_WHILE_DO: generateWhileCode(node); break;
+    case AST_DO_WHILE: generateDoWhileCode(node); break;
     }
 }
 
@@ -496,11 +497,35 @@ void generateWhileCode(comp_tree_t *node) {
     patchUpLabelHoles(expInfo->trueHoles, trueLabel);
     patchUpLabelHoles(expInfo->falseHoles, nextLabel);
 
-    GSList *codeList = g_slist_append(codeList, beginLabelCode); // S.code = "Lbegin: "
+    GSList *codeList = NULL;
+    codeList = g_slist_append(codeList, beginLabelCode);    // S.code = "Lbegin: "
     codeList = g_slist_concat(codeList, expInfo->code);     // S.code += B.code    
     codeList = g_slist_append(codeList, trueLabelCode);     // S.code += "Ltrue: "
     codeList = g_slist_concat(codeList, blockInfo->code);   // S.code += S1.code
     codeList = g_slist_append(codeList, jmpCode);           // S.code += "jumpI -> Lbegin"
+    codeList = g_slist_append(codeList, nextLabelCode);     // S.code += "Lnext: "
+
+    nodeInfo->code = codeList;
+}
+
+void generateDoWhileCode(comp_tree_t *node) {    
+    AstNodeInfo *nodeInfo = node->value;
+    AstNodeInfo *blockInfo = node->first->value;
+    AstNodeInfo *expInfo = node->last->value;
+
+    int beginLabel = generateLabel();
+    int nextLabel = generateLabel();
+
+    char *beginLabelCode = generateLabelCode(beginLabel);
+    char *nextLabelCode = generateLabelCode(nextLabel);
+
+    patchUpLabelHoles(expInfo->trueHoles, beginLabel);
+    patchUpLabelHoles(expInfo->falseHoles, nextLabel);
+
+    GSList *codeList = NULL;
+    codeList = g_slist_append(codeList, beginLabelCode);    // S.code = "Lbegin: "
+    codeList = g_slist_concat(codeList, blockInfo->code);   // S.code += S1.code
+    codeList = g_slist_concat(codeList, expInfo->code);     // S.code += B.code
     codeList = g_slist_append(codeList, nextLabelCode);     // S.code += "Lnext: "
 
     nodeInfo->code = codeList;

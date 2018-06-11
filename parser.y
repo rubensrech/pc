@@ -596,10 +596,14 @@ while: TK_PR_WHILE '(' exp ')' TK_PR_DO block           {
                                                                 generateCode($$);
                                                         };
 
-do_while: TK_PR_DO block TK_PR_WHILE '(' exp ')'                {
-                                                                        $$ = makeASTBinaryNode(AST_DO_WHILE, NULL, $2, $5);
-                                                                        checkExpNodeDataTypeIsBool($5);
-                                                                };
+do_while: TK_PR_DO block TK_PR_WHILE '(' exp ')'        {
+                                                                // > AST
+                                                                $$ = makeASTBinaryNode(AST_DO_WHILE, NULL, $2, $5);
+                                                                // > Semantic
+                                                                checkExpNodeDataTypeIsBool($5);
+                                                                // > Code
+                                                                generateCode($$);
+                                                        };
 
 switch: TK_PR_SWITCH '(' exp ')' block                          {       $$ = makeASTBinaryNode(AST_SWITCH, NULL, $3, $5);
                                                                         checkExpNodeDataTypeIsInt($3);

@@ -565,12 +565,21 @@ pipe_pb_step1: pipe_exp TK_OC_PB                { $$ = $1; setCurrParsingPipeExp
 
 /* Flow Control - Commands */
 
-if_stm:  if_exp TK_PR_THEN block                        { $$ = makeASTBinaryNode(AST_IF_ELSE, NULL, $1, $3); }
-       | if_exp TK_PR_THEN block TK_PR_ELSE block       { $$ = makeASTTernaryNode(AST_IF_ELSE, NULL, $1, $3, $5); };
+if_stm:  if_exp TK_PR_THEN block                        {
+                                                                // > AST
+                                                                $$ = makeASTBinaryNode(AST_IF_ELSE, NULL, $1, $3);
+                                                                // > Code
+                                                        }
+       | if_exp TK_PR_THEN block TK_PR_ELSE block       {       
+                                                                // > AST
+                                                                $$ = makeASTTernaryNode(AST_IF_ELSE, NULL, $1, $3, $5);
+                                                                // > Code
+                                                                printNodeCodeList($1);
+                                                        };
 
-if_exp: TK_PR_IF '(' exp ')'                            {       $$ = $3;
+if_exp: TK_PR_IF '(' exp ')'                            {       
+                                                                $$ = $3;
                                                                 checkExpNodeDataTypeIsBool($3);
-                                                                printNodeCodeList($$); //>>>>>>>
                                                         };
 
 foreach: TK_PR_FOREACH '(' id ':' exps_list ')' block                   {       $$ = makeASTTernaryNode(AST_FOREACH, NULL, $3, $5, $7);

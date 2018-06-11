@@ -373,8 +373,21 @@ void generateCompCode(comp_tree_t *node, const char *relOp) {
 
     nodeInfo->code = codeList;
     nodeInfo->resultReg = resultReg;
-    nodeInfo->trueList = g_slist_append(nodeInfo->trueList, GINT_TO_POINTER(x));
-    nodeInfo->falseList = g_slist_append(nodeInfo->falseList, GINT_TO_POINTER(y));
+    nodeInfo->trueList = g_slist_append(nodeInfo->trueList, x);
+    nodeInfo->falseList = g_slist_append(nodeInfo->falseList, y);
+}
+
+void remendarLogicLabel(gpointer buraco, gpointer label) {
+    char *buracoStr = buraco;
+    char *labelStr = label;
+    strcpy(buracoStr, labelStr);
+}
+
+void remendarLogicLabels(GSList *buracos, int labelNumber) {
+    char *label = malloc(10);
+    snprintf(label, 10, "L%d", labelNumber);
+    g_slist_foreach(buracos, remendarLogicLabel, label);
+    free(label);
 }
 
 void generateLogicCode(comp_tree_t *node, const char *op) {
@@ -383,21 +396,39 @@ void generateLogicCode(comp_tree_t *node, const char *op) {
     AstNodeInfo *sndOpInfo = node->last->value;
 
     int maxCodeSize = 10;
-    GSList *codeList = fstOpInfo->code;
+    GSList *codeList = fstOpInfo->code; // B.code = B1.code
 
     char *labelCode = malloc(maxCodeSize);
     int x = generateLabel();
     snprintf(labelCode, maxCodeSize, "L%d: ", x);
-    codeList = g_slist_append(codeList, labelCode);
+    codeList = g_slist_append(codeList, labelCode); // B.code += "Lx: "
 
-    codeList = g_slist_concat(codeList, sndOpInfo->code);
+    codeList = g_slist_concat(codeList, sndOpInfo->code); // B.code += B2.code
+    
+    switch (nodeInfo->type) {
+    case AST_LOGICO_E:
+        remendarLogicLabels(fstOpInfo->trueList, x);
+        // B.trueList = B2.trueList
+        nodeInfo->trueList = sndOpInfo->trueList;
+        // B.falseList = concat(B1.falseList, B2.falseList)
+        nodeInfo->falseList = g_slist_concat(fstOpInfo->falseList, sndOpInfo->falseList);
+        break;
+    case AST_LOGICO_OU:
+        remendarLogicLabels(fstOpInfo->falseList, x);
+        // B.falseList = B2.falseList
+        nodeInfo->falseList = sndOpInfo->falseList;
+        // B.trueList = concat(B1.trueList, B2.trueList)
+        nodeInfo->trueList = g_slist_concat(fstOpInfo->trueList, sndOpInfo->trueList);
+        break;
+    default: break;
+    }
 
     printf(">>>>>>>>>>>>>%s\n", op);
-    // strcpy(fstOpInfo->trueList->data, "L0");
-    // printf("remendos TRUE: %s\n", fstOpInfo->trueList->data);
-    printf("true: %d %d\n", g_slist_length(sndOpInfo->trueList), g_slist_length(fstOpInfo->trueList));
-    printf("false: %d %d\n", g_slist_length(sndOpInfo->falseList), g_slist_length(fstOpInfo->falseList));
-    printf(">>>>>>>>>>>>>\n");
-
+    printf("True: ");
+    printCodeList(nodeInfo->trueList);
+    printf("\nFalse: ");
+    printCodeList(nodeInfo->falseList);
+    printf("\n>>>>>>>>>>>>>\n");
+    
     nodeInfo->code = codeList;    
 }

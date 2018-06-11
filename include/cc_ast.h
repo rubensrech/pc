@@ -66,8 +66,8 @@ typedef struct astNodeInfo {
   // > Code
   int resultReg;
   GSList *code;
-  GSList *trueList;
-  GSList *falseList;
+  GSList *trueHoles;
+  GSList *falseHoles;
 } AstNodeInfo;
 
 void initAST();

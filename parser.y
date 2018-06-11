@@ -569,12 +569,14 @@ if_stm:  if_exp TK_PR_THEN block                        {
                                                                 // > AST
                                                                 $$ = makeASTBinaryNode(AST_IF_ELSE, NULL, $1, $3);
                                                                 // > Code
+                                                                generateCode($$);
                                                         }
        | if_exp TK_PR_THEN block TK_PR_ELSE block       {       
                                                                 // > AST
                                                                 $$ = makeASTTernaryNode(AST_IF_ELSE, NULL, $1, $3, $5);
                                                                 // > Code
-                                                                printNodeCodeList($1);
+                                                                generateCode($$);
+                                                                printNodeCodeList($$);
                                                         };
 
 if_exp: TK_PR_IF '(' exp ')'                            {       

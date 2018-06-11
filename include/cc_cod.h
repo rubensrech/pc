@@ -13,6 +13,7 @@ int getSizeOf(int type);
 int generateTempReg();
 char *remendo();
 int generateLabel();
+char *generateLabelCode(int labelNumber);
 
 void cmdsCodeListConcat(comp_tree_t *cmd1, comp_tree_t *cmd2);
 
@@ -40,3 +41,8 @@ void generateArrayVarAssignCode(comp_tree_t *node);
 
 void generateCompCode(comp_tree_t *node, const char *relOp);
 void generateLogicCode(comp_tree_t *node, const char *op);
+void remendarLogicLabel(gpointer buraco, gpointer label);
+void remendarLogicLabels(GSList *buracos, int labelNumber);
+
+void generateIfCode(comp_tree_t *node);
+void generateIfElseCode(comp_tree_t *node);

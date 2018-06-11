@@ -58,6 +58,12 @@ int generateLabel() {
     return label++;
 }
 
+char *generateLabelCode(int labelNumber) {
+    char *labelCode = malloc(10);
+    snprintf(labelCode, 10, "L%d: ", labelNumber);
+    return labelCode;
+}
+
 char *remendo() {
     char *tmp = malloc(10);
     snprintf(tmp, 10, "#%d", remendoNum);
@@ -110,6 +116,8 @@ void generateCode(comp_tree_t *node) {
     // Logic
     case AST_LOGICO_E: generateLogicCode(node, "and"); break;
     case AST_LOGICO_OU: generateLogicCode(node, "or"); break;
+    // Control Flow
+    case AST_IF_ELSE: generateIfCode(node); break;
     }
 }
 
@@ -423,12 +431,52 @@ void generateLogicCode(comp_tree_t *node, const char *op) {
     default: break;
     }
 
-    printf(">>>>>>>>>>>>>%s\n", op);
-    printf("True: ");
-    printCodeList(nodeInfo->trueList);
-    printf("\nFalse: ");
-    printCodeList(nodeInfo->falseList);
-    printf("\n>>>>>>>>>>>>>\n");
+    // printf(">>>>>>>>>>>>>%s\n", op);
+    // printf("True: ");
+    // printCodeList(nodeInfo->trueList);
+    // printf("\nFalse: ");
+    // printCodeList(nodeInfo->falseList);
+    // printf("\n>>>>>>>>>>>>>\n");
     
     nodeInfo->code = codeList;    
+}
+
+// > Control flow
+
+void generateIfCode(comp_tree_t *node) {
+    if (node->childnodes == 3) {
+        generateIfElseCode(node);
+        return;
+    }
+    
+}
+
+void generateIfElseCode(comp_tree_t *node) {
+    AstNodeInfo *nodeInfo = node->value;
+    AstNodeInfo *expInfo = node->first->value;
+    AstNodeInfo *ifInfo = node->first->next->value;
+    AstNodeInfo *elseInfo = node->last->value;
+
+    int trueLabel = generateLabel();
+    int falseLabel = generateLabel();
+    int nextLabel = generateLabel();
+
+    char *trueLabelCode = generateLabelCode(trueLabel);
+    char *falseLabelCode = generateLabelCode(falseLabel);
+    char *nextLabelCode = generateLabelCode(nextLabel);
+    char *jmpCode = malloc(30);
+    snprintf(jmpCode, 30, "jumpI -> L%d\n", nextLabel);
+
+    remendarLogicLabels(expInfo->trueList, trueLabel);
+    remendarLogicLabels(expInfo->falseList, falseLabel);
+
+    GSList *codeList = expInfo->code;   // S.code = B.code    
+    codeList = g_slist_append(codeList, trueLabelCode); // S.code += "Ltrue: "
+    codeList = g_slist_concat(codeList, ifInfo->code); // S.code += S1.code
+    codeList = g_slist_append(codeList, jmpCode); // S.code += "jumpI -> S.next"
+    codeList = g_slist_append(codeList, falseLabelCode); // S.code += "Lfalse: "
+    codeList = g_slist_concat(codeList, elseInfo->code); // S.code += S2.code
+    codeList = g_slist_append(codeList, nextLabelCode); // S.code += "Lnext: "
+
+    nodeInfo->code = codeList;
 }

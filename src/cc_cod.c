@@ -182,6 +182,18 @@ void generateArithCode(comp_tree_t *node, const char *op) {
 
 // > Variables
 
+void allocNewGlobalVar(int dataType) {
+    g_offset += getSizeOf(dataType);
+}
+
+void allocNewGlobalArray(int dataType, int length) {
+    g_offset += getSizeOf(dataType) * length;
+}
+
+void allocNewLocalVar(int dataType) {
+    l_offset += getSizeOf(dataType);
+}
+
 void setNodeLocalVarOffset(comp_tree_t *idNode) {
     TokenInfo *idInfo = getTokenInfoFromIdNode(idNode);
     idInfo->offset = l_offset;

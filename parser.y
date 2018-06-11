@@ -14,8 +14,6 @@
 
 extern comp_tree_t *ast;
 extern comp_dict_t *funcTable;
-extern int l_offset;
-extern int g_offset;
 }
 
 %union {
@@ -244,8 +242,7 @@ global_var: native_type TK_IDENTIFICADOR                {
                                                                 setIdType($2, VAR_ID);
                                                                 // > Code
                                                                 setTokenGlobalVarOffset($2);
-                                                                printf("// Declared global var: %s (offset: %d)\n", $2->lexeme, g_offset);
-                                                                g_offset += getSizeOf($1);                                                                        
+                                                                allocNewGlobalVar($1);
                                                         }
           | TK_IDENTIFICADOR TK_IDENTIFICADOR           {
                                                                 // > Semantic
@@ -261,8 +258,7 @@ global_arr: native_type TK_IDENTIFICADOR '[' TK_LIT_INT ']'     {
                                                                         setIdType($2, ARRAY_ID);
                                                                         // > Code
                                                                         setTokenGlobalVarOffset($2);
-                                                                        printf("// Declared global array: %s (offset: %d, size: %d)\n", $2->lexeme, g_offset, $4->value.intVal);
-                                                                        g_offset += getSizeOf($1) * $4->value.intVal;    
+                                                                        allocNewGlobalArray($1, $4->value.intVal);
                                                                 }
         | TK_IDENTIFICADOR TK_IDENTIFICADOR '[' TK_LIT_INT ']'  {
                                                                         setIdTokenDataType($2, DATATYPE_USER_TYPE);
@@ -387,7 +383,7 @@ var_dec:
                                                         checkDataTypeMatching($2, getASTNodeTokenDataType($4), 1);
                                                         // > Code
                                                         setNodeLocalVarOffset($3);
-                                                        l_offset += getSizeOf($2);
+                                                        allocNewLocalVar($2);    
                                                 }
         | native_type id init_var               {       
                                                         // > AST
@@ -398,7 +394,7 @@ var_dec:
                                                         checkDataTypeMatching($1, getASTNodeTokenDataType($3), 1);
                                                         // > Code
                                                         setNodeLocalVarOffset($2);
-                                                        l_offset += getSizeOf($1);
+                                                        allocNewLocalVar($1);
                                                 }
 
         /* Native type declarations with no init value */
@@ -410,7 +406,7 @@ var_dec:
                                                                 setIdTokenDataType($3, $2);
                                                                 // > Code
                                                                 setTokenLocalVarOffset($3);
-                                                                l_offset += getSizeOf($2);
+                                                                allocNewLocalVar($2);
                                                         }
         | native_type TK_IDENTIFICADOR                  {       
                                                                 // > AST
@@ -420,7 +416,7 @@ var_dec:
                                                                 setIdTokenDataType($2, $1);
                                                                 // > Code
                                                                 setTokenLocalVarOffset($2);
-                                                                l_offset += getSizeOf($1);
+                                                                allocNewLocalVar($1);
                                                         }
         
         /* Cannot initialize user type variables */

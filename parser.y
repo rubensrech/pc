@@ -576,7 +576,6 @@ if_stm:  if_exp TK_PR_THEN block                        {
                                                                 $$ = makeASTTernaryNode(AST_IF_ELSE, NULL, $1, $3, $5);
                                                                 // > Code
                                                                 generateCode($$);
-                                                                printNodeCodeList($$);
                                                         };
 
 if_exp: TK_PR_IF '(' exp ')'                            {       

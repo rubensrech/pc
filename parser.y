@@ -383,7 +383,8 @@ var_dec:
                                                         checkDataTypeMatching($2, getASTNodeTokenDataType($4), 1);
                                                         // > Code
                                                         setNodeLocalVarOffset($3);
-                                                        allocNewLocalVar($2);    
+                                                        allocNewLocalVar($2);
+                                                        generateCode($$);
                                                 }
         | native_type id init_var               {       
                                                         // > AST
@@ -395,6 +396,7 @@ var_dec:
                                                         // > Code
                                                         setNodeLocalVarOffset($2);
                                                         allocNewLocalVar($1);
+                                                        generateCode($$);
                                                 }
 
         /* Native type declarations with no init value */

@@ -106,6 +106,7 @@ void generateCode(comp_tree_t *node) {
     case AST_IDENTIFICADOR: generateLoadVarCode(node); break;
     case AST_VETOR_INDEXADO: generateLoadArrayVarCode(node); break;
     case AST_ATRIBUICAO: generateAssignCode(node); break;
+    case AST_INICIALIZACAO: generateAssignCode(node); break;
     // Comparison
     case AST_LOGICO_COMP_IGUAL: generateCompCode(node, "cmp_EQ"); break;
     case AST_LOGICO_COMP_DIF: generateCompCode(node, "cmp_NE"); break;

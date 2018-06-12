@@ -11,6 +11,7 @@ int hole = 0;
 int label = 0;
 
 GSList *breakHoles = NULL;
+GSList *continueHoles = NULL;
 
 // > Code list
 
@@ -84,12 +85,24 @@ void patchUpLabelHole(gpointer hole, gpointer label) {
     strcpy(holePtr, labelStr);
 }
 
-void patchUpBreakHoles(int labelNumber) {
-    if (g_slist_length(breakHoles) > 0) {
+int patchUpBreakHoles(int labelNumber) {
+    int holesToPatchUp = g_slist_length(breakHoles);
+    if (holesToPatchUp > 0) {
         patchUpLabelHoles(breakHoles, labelNumber);
         g_slist_free(breakHoles);
         breakHoles = NULL;
     }
+    return holesToPatchUp;
+}
+
+int patchUpContinueHoles(int labelNumber) {
+    int holesToPatchUp = g_slist_length(continueHoles);
+    if (holesToPatchUp > 0) {
+        patchUpLabelHoles(continueHoles, labelNumber);
+        g_slist_free(continueHoles);
+        continueHoles = NULL;
+    }
+    return holesToPatchUp;
 } 
 
 void cmdsCodeListConcat(comp_tree_t *cmd1, comp_tree_t *cmd2) {
@@ -132,7 +145,8 @@ void generateCode(comp_tree_t *node) {
     case AST_WHILE_DO: generateWhileCode(node); break;
     case AST_DO_WHILE: generateDoWhileCode(node); break;
     case AST_FOR: generateForCode(node); break;
-    case AST_BREAK: generateBreakCode(node); break;
+    case AST_BREAK: generateBreakContinueCode(node); break;
+    case AST_CONTINUE: generateBreakContinueCode(node); break;
     }
 }
 
@@ -509,6 +523,7 @@ void generateWhileCode(comp_tree_t *node) {
     patchUpLabelHoles(expInfo->trueHoles, trueLabel);
     patchUpLabelHoles(expInfo->falseHoles, nextLabel);
     patchUpBreakHoles(nextLabel);
+    patchUpContinueHoles(beginLabel);
 
     GSList *codeList = NULL;
     codeList = g_slist_append(codeList, beginLabelCode);    // S.code = "Lbegin: "
@@ -528,17 +543,27 @@ void generateDoWhileCode(comp_tree_t *node) {
 
     int beginLabel = generateLabel();
     int nextLabel = generateLabel();
+    int continueLabel;
+    int hasContinueJmp = g_slist_length(continueHoles);
 
     char *beginLabelCode = generateLabelCode(beginLabel);
     char *nextLabelCode = generateLabelCode(nextLabel);
+    char *continueLabelCode;
 
     patchUpLabelHoles(expInfo->trueHoles, beginLabel);
     patchUpLabelHoles(expInfo->falseHoles, nextLabel);
     patchUpBreakHoles(nextLabel);
 
+    if (hasContinueJmp) {
+        continueLabel = generateLabel();
+        continueLabelCode = generateLabelCode(continueLabel);
+        patchUpContinueHoles(continueLabel);
+    }
+
     GSList *codeList = NULL;
     codeList = g_slist_append(codeList, beginLabelCode);    // S.code = "Lbegin: "
     codeList = g_slist_concat(codeList, blockInfo->code);   // S.code += S1.code
+    if (hasContinueJmp) codeList = g_slist_append(codeList, continueLabelCode);    // S.code = "Lcontinue: "
     codeList = g_slist_concat(codeList, expInfo->code);     // S.code += B.code
     codeList = g_slist_append(codeList, nextLabelCode);     // S.code += "Lnext: "
 
@@ -555,22 +580,32 @@ void generateForCode(comp_tree_t *node) {
     int beginLabel = generateLabel();
     int trueLabel = generateLabel();
     int nextLabel = generateLabel();
+    int continueLabel;
+    int hasContinueJmp = g_slist_length(continueHoles);
 
     char *beginLabelCode = generateLabelCode(beginLabel);
     char *trueLabelCode = generateLabelCode(trueLabel);
     char *nextLabelCode = generateLabelCode(nextLabel);
     char *jmpCode = malloc(30);
     snprintf(jmpCode, 30, "jumpI -> L%d\n", beginLabel);
+    char *continueLabelCode;
 
     patchUpLabelHoles(expInfo->trueHoles, trueLabel);
     patchUpLabelHoles(expInfo->falseHoles, nextLabel);
     patchUpBreakHoles(nextLabel);
+
+    if (hasContinueJmp) {
+        continueLabel = generateLabel();
+        continueLabelCode = generateLabelCode(continueLabel);
+        patchUpContinueHoles(continueLabel);
+    }
 
     GSList *codeList = cmds1Info->code;                     // S.code = cmds1.code
     codeList = g_slist_append(codeList, beginLabelCode);    // S.code += "Lbegin: "
     codeList = g_slist_concat(codeList, expInfo->code);     // S.code += B.code
     codeList = g_slist_append(codeList, trueLabelCode);     // S.code += "Ltrue: "
     codeList = g_slist_concat(codeList, blockInfo->code);   // S.code += block.code
+    if (hasContinueJmp) codeList = g_slist_append(codeList, continueLabelCode);    // S.code = "Lcontinue: "
     codeList = g_slist_concat(codeList, cmds2Info->code);   // S.code += cmds2.code
     codeList = g_slist_append(codeList, jmpCode);           // S.code += "jumpI -> Lbegin"
     codeList = g_slist_append(codeList, nextLabelCode);     // S.code += "Lnext: "
@@ -578,7 +613,7 @@ void generateForCode(comp_tree_t *node) {
     nodeInfo->code = codeList;
 }
 
-void generateBreakCode(comp_tree_t *node) {
+void generateBreakContinueCode(comp_tree_t *node) {
     AstNodeInfo *nodeInfo = node->value;
     
     int maxCodeSize = 20;
@@ -594,10 +629,16 @@ void generateBreakCode(comp_tree_t *node) {
     codeList = g_slist_append(codeList, jmpLabelHole);
     codeList = g_slist_append(codeList, lineBreak);
     
-    breakHoles = g_slist_append(breakHoles, jmpLabelHole);
-
+    switch (nodeInfo->type) {
+    case AST_BREAK: breakHoles = g_slist_append(breakHoles, jmpLabelHole); break;
+    case AST_CONTINUE: continueHoles = g_slist_append(continueHoles, jmpLabelHole); break;
+    default: return;
+    }
     nodeInfo->code = codeList;
 }
+
+
+
 
 void test(comp_tree_t *node) {
     AstNodeInfo *nodeInfo = node->value;

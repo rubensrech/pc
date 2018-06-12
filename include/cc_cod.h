@@ -8,7 +8,6 @@ void printNodeCodeList(comp_tree_t *node);
 void inheritCodeList(comp_tree_t *to, comp_tree_t *from);
 
 // > General
-void replace_str(char *str, char *orig, char *rep);
 int getSizeOf(int type);
 int generateTempReg();
 char *generateLabelHole();
@@ -16,7 +15,8 @@ int generateLabel();
 char *generateLabelCode(int labelNumber);
 void patchUpLabelHoles(GSList *holes, int labelNumber);
 void patchUpLabelHole(gpointer hole, gpointer label);
-void patchUpBreakHoles(int labelNumber);
+int patchUpBreakHoles(int labelNumber);
+int patchUpContinueHoles(int labelNumber);
 
 void cmdsCodeListConcat(comp_tree_t *cmd1, comp_tree_t *cmd2);
 
@@ -53,6 +53,7 @@ void generateIfElseCode(comp_tree_t *node);
 void generateWhileCode(comp_tree_t *node);
 void generateDoWhileCode(comp_tree_t *node);
 void generateForCode(comp_tree_t *node);
-void generateBreakCode(comp_tree_t *node);
+void generateBreakContinueCode(comp_tree_t *node);
+
 
 void test(comp_tree_t *node);

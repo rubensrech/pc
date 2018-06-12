@@ -84,6 +84,7 @@ static inline char *__gv_description_from_type (int tipo)
   case AST_PIPE_B: return "%|%";
   case AST_PIPE_G: return "%>%";
   case AST_INICIALIZACAO: return "<=";
+  case AST_USER_VAR: return "_._";
 
   default:
     printf("%d\n", tipo);
@@ -220,6 +221,7 @@ void gv_declare (const int tipo, const void *pointer, char *name)
   case AST_PIPE_B:
   case AST_PIPE_G:
   case AST_INICIALIZACAO:
+  case AST_USER_VAR:
     if (name){
       fprintf (stderr, "%s: name should be NULL\n", __FUNCTION__);
       abort();

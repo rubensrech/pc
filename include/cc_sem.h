@@ -104,6 +104,7 @@ void createNewScope(char *id);
 char *getCurrentScope();
 
 /* ID: Declaration and Use */
+int getIdNodeIdType(comp_tree_t *node);
 void checkIdDeclared(TokenInfo *id);
 void checkIdNodeDeclared(comp_tree_t *node);
 void setIdType(TokenInfo *id, int idType);

@@ -125,6 +125,7 @@ extern comp_dict_t *funcTable;
 %type <ast>string
 %type <ast>array
 %type <ast>id
+%type <ast>user_var
 
 %type <dataType>native_type
 
@@ -152,7 +153,7 @@ programa: /* empty */   { $$ = makeASTNode(AST_PROGRAMA, NULL); ast = $$; }
                                 ast = $$;
                                 // > Code
                                 inheritCodeList($$, $1);
-                                printNodeCodeList($$);
+                                // printNodeCodeList($$);
                         };
 
 code:  type_def ';'             { $$ = NULL; }
@@ -169,10 +170,22 @@ code:  type_def ';'             { $$ = NULL; }
 
 id: TK_IDENTIFICADOR            { $$ = makeASTNode(AST_IDENTIFICADOR, $1); };
 array: id '[' exp ']'           {
+                                        // > AST
                                         $$ = makeASTBinaryNode(AST_VETOR_INDEXADO, NULL, $1, $3);
+                                        // > Semantic
                                         checkIdNodeDeclared($1);
                                         checkIdNodeUsedAs(ARRAY_ID, $1);
                                         setNodeDataType($$, getASTNodeTokenDataType($1));
+                                };
+user_var: id '.' id        {
+                                        // > AST
+                                        $$ = makeASTBinaryNode(AST_USER_VAR, NULL, $1, $3);
+                                        // > Semantic
+                                        checkIdNodeDeclared($1);
+                                        checkIdNodeUsedAs(USER_TYPE_ID, $1);
+                                        setUserTypeFieldDataType($1, $3); // also check field($3) is valid
+                                        setNodeDataType($$, getASTNodeTokenDataType($3));
+                                        setNodeUserDataType($$, getTokenInfoFromIdNode($1)->userDataType);
                                 };
 
 int: TK_LIT_INT                 {
@@ -468,35 +481,37 @@ shift_cmd: id TK_OC_SL int              {       $$ = makeASTBinaryNode(AST_SHIFT
 
 /* Assignment - command */
 
-assig_cmd: id '=' unary_plus exp                {
-                                                        // > AST
-                                                        $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
-                                                        // > Semantic
-                                                        checkIdNodeDeclared($1);
-                                                        checkIdNodeUsedAsMultiple(VAR_ID, USER_TYPE_ID, $1);
-                                                        checkUserDataTypeMatching($1, $4);
-                                                        // > Code
-                                                        generateCode($$);
-                                                }
-          | array '=' unary_plus exp            {       
-                                                        // > AST
-                                                        $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
-                                                        // > Semantic
-                                                        // Declaration check, id use as array check, set node dataType => already done in 'array' rule
-                                                        checkUserDataTypeMatching($1->first, $4);
-                                                        // > Code
-                                                        generateCode($$);
-                                                }
-          | id '.' id '=' unary_plus exp        {       
-                                                        $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $6);
-                                                        checkIdNodeDeclared($1);
-                                                        checkIdNodeUsedAs(USER_TYPE_ID, $1);
-                                                        setUserTypeFieldDataType($1, $3); // also check field($3) is valid
-                                                        checkDataTypeMatching(getASTNodeTokenDataType($3), getASTNodeDataType($6), 1);
-                                                };
+assig_cmd: id '=' un_plus exp           {
+                                                // > AST
+                                                $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
+                                                // > Semantic
+                                                checkIdNodeDeclared($1);
+                                                checkIdNodeUsedAs(getIdNodeIdType($1), $4);
+                                                checkUserDataTypeMatching($1, $4);
+                                                // > Code
+                                                generateCode($$);
+                                        }
+          | array '=' un_plus exp       {
+                                                // > AST
+                                                $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
+                                                // > Semantic
+                                                checkIdNodeUsedAs(ARRAY_ID, $4);
+                                                // Declaration check, id use as array check, set node dataType => already done in 'array' rule
+                                                checkUserDataTypeMatching($1->first, $4);
+                                                // > Code
+                                                generateCode($$);
+                                        }
+          | user_var '=' un_plus exp    {       
+                                                // > AST
+                                                $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
+                                                // > Semantic
+                                                checkIdNodeUsedAs(ARRAY_ID, $4);
+                                                // Declaration check, id use as user type check, set node dataType => already done in 'user_var' rule
+                                                checkDataTypeMatching(getASTNodeDataType($1), getASTNodeDataType($4), 1);
+                                        };
 
-unary_plus: /* empty */
-           | '+';
+un_plus: /* empty */
+        | '+';
 
 /* Input and output - command */
 
@@ -546,6 +561,7 @@ continue_cmd: TK_PR_CONTINUE    {
                                         // > Semantic
                                         checkContinueIsValid();
                                         // > Code
+                                        generateCode($$);
                                 };
 
 case_cmd: TK_PR_CASE int ':'            { $$ = makeASTUnaryNode(AST_CASE, NULL, $2); }
@@ -670,6 +686,20 @@ exp:  array                     {
                                         // > Code
                                         generateCode($$);
                                 }
+    | user_var                  {
+                                        // > AST
+                                        $$ = $1;
+                                }
+    | id                        {       
+                                        // > AST
+                                        $$ = $1;
+                                        // > Semantic
+                                        checkIdNodeDeclared($1);
+                                        setNodeDataType($$, getASTNodeTokenDataType($1));
+                                        setNodeUserDataType($$, getTokenInfoFromIdNode($1)->userDataType);
+                                        // > Code
+                                        generateCode($$);
+                                }  
     | func_call                 { $$ = $1; }
     | int                       { $$ = $1; }
     | float                     { $$ = $1; }
@@ -677,18 +707,7 @@ exp:  array                     {
     | char                      { $$ = $1; }
     | true                      { $$ = $1; }
     | false                     { $$ = $1; }
-    | '(' exp ')'               { $$ = $2; } 
-    | id                        {       
-                                        // > AST
-                                        $$ = $1;
-                                        // > Semantic
-                                        checkIdNodeDeclared($1);
-                                        checkIdNodeUsedAsMultiple(VAR_ID, USER_TYPE_ID, $1);
-                                        setNodeDataType($$, getASTNodeTokenDataType($1));
-                                        setNodeUserDataType($$, getTokenInfoFromIdNode($1)->userDataType);
-                                        // > Code
-                                        generateCode($$);
-                                }         
+    | '(' exp ')'               { $$ = $2; }        
     | logicExp                  {       
                                         // > AST
                                         $$ = $1;

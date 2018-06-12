@@ -143,6 +143,11 @@ char *getCurrentScope() {
 
 /* ID: Declaration and Use */
 
+int getIdNodeIdType(comp_tree_t *node) {
+    TokenInfo *tokenInfo = getTokenInfoFromIdNode(node);
+    return tokenInfo->idType;
+}
+
 void setIdType(TokenInfo *id, int idType) {
     char errorMsg[MAX_ERROR_MSG_SIZE];
 
@@ -189,6 +194,9 @@ void checkIdNodeDeclared(comp_tree_t *node) {
 }
 
 void checkIdUsedAs(int usedAs, TokenInfo *id) {
+    // In case 'exp' is not an id (e.g. its an arith exp)
+    if (id == NULL) return;
+
     char errorMsg[MAX_ERROR_MSG_SIZE];
 
     if (usedAs != id->idType) {

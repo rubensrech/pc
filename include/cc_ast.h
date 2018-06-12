@@ -51,6 +51,7 @@
 #define AST_PIPE_G              38
 #define AST_PIPE_B              39
 #define AST_INICIALIZACAO       40
+#define AST_USER_VAR            41 // id.id
 
 #define GV_OUT_FILE "saida.dot"
 

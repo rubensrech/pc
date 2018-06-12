@@ -263,9 +263,6 @@ global_arr: native_type TK_IDENTIFICADOR '[' TK_LIT_INT ']'     {
         | TK_IDENTIFICADOR TK_IDENTIFICADOR '[' TK_LIT_INT ']'  {
                                                                         setIdTokenDataType($2, DATATYPE_USER_TYPE);
                                                                         setIdType($2, ARRAY_ID);
-                                                                        // USER TYPE SEMANTIC CHECK
-                                                                        // check $1 is really an user declared type (based on user declared types list)
-                                                                        // set $2->userDataType = $1;
                                                                         checkUserTypeWasDeclared($1);
                                                                         setIdTokenUserDataType($2, $1);
                                                                 };
@@ -281,17 +278,24 @@ func_dec: func_header block                     {
                                                         // > Code
                                                         inheritCodeList($$, $2);
                                                 }
-        | TK_PR_STATIC func_header block        {       $$ = makeASTUnaryNode(AST_FUNCAO, $2, $3);
+        | TK_PR_STATIC func_header block        {       
+                                                        // > AST
+                                                        $$ = makeASTUnaryNode(AST_FUNCAO, $2, $3);
+                                                        // > Semantic
                                                         // Scope ended -> back to global scope
                                                         setCurrentScopeToGlobalScope();
                                                         checkFuncHasReturnCmd($$);
+                                                        // > Code
+                                                        inheritCodeList($$, $3);
                                                 };
 
-func_header: func_id '(' params_dec ')'         {       $$ = $1;
+func_header: func_id '(' params_dec ')'         {       
+                                                        $$ = $1;
                                                         insertFuncTable($1, $3);
                                                 };
 
-func_id: native_type TK_IDENTIFICADOR           {       $$ = $2;
+func_id: native_type TK_IDENTIFICADOR           {       
+                                                        $$ = $2;
                                                         createNewScope($2->lexeme);
                                                         setIdType($2, FUNC_ID);
                                                         setIdTokenDataType($2, $1);
@@ -301,9 +305,6 @@ func_id: native_type TK_IDENTIFICADOR           {       $$ = $2;
                                                         createNewScope($2->lexeme);
                                                         setIdType($2, FUNC_ID);
                                                         setIdTokenDataType($2, DATATYPE_USER_TYPE);
-                                                        // USER TYPE SEMANTIC CHECK
-                                                        // check $1 is really an user declared type (based on user declared types list)
-                                                        // set $2->userDataType = $1;
                                                         checkUserTypeWasDeclared($1);
                                                         setIdTokenUserDataType($2, $1);
                                                 };
@@ -324,9 +325,6 @@ param_dec: param_dec_mods native_type TK_IDENTIFICADOR          {
                                                                         $$ = makeASTNode(LIST_NODE_PARAM_ID, $3);
                                                                         setIdTokenDataType($3, DATATYPE_USER_TYPE);
                                                                         setIdType($3, USER_TYPE_ID);
-                                                                        // USER TYPE SEMANTIC CHECK
-                                                                        // check $2 is really an user declared type (based on user declared types list)
-                                                                        // set $3->userDataType = $2;
                                                                         checkUserTypeWasDeclared($2);
                                                                         setIdTokenUserDataType($3, $2);
                                                                 };
@@ -425,18 +423,12 @@ var_dec:
         | var_dec_mods TK_IDENTIFICADOR TK_IDENTIFICADOR        {       $$ = NULL;
                                                                         setIdType($3, USER_TYPE_ID);
                                                                         setIdTokenDataType($3, DATATYPE_USER_TYPE);
-                                                                        // USER TYPE SEMANTIC CHECK
-                                                                        // check $2 is really an user declared type (based on user declared types list)
-                                                                        // set $3->userDataType = $2;
                                                                         checkUserTypeWasDeclared($2);
                                                                         setIdTokenUserDataType($3, $2);
                                                                 }
         | TK_IDENTIFICADOR TK_IDENTIFICADOR                     {       $$ = NULL;
                                                                         setIdType($2, USER_TYPE_ID);
                                                                         setIdTokenDataType($2, DATATYPE_USER_TYPE);
-                                                                        // USER TYPE SEMANTIC CHECK
-                                                                        // check $1 is really an user declared type (based on user declared types list)
-                                                                        // set $2->userDataType = $1;
                                                                         checkUserTypeWasDeclared($1);
                                                                         setIdTokenUserDataType($2, $1);
                                                                 };
@@ -495,12 +487,10 @@ assig_cmd: id '=' unary_plus exp                {
                                                         // > Code
                                                         generateCode($$);
                                                 }
-          | id '.' id '=' unary_plus exp        {       $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $6);
+          | id '.' id '=' unary_plus exp        {       
+                                                        $$ = makeASTTernaryNode(AST_ATRIBUICAO, NULL, $1, $3, $6);
                                                         checkIdNodeDeclared($1);
                                                         checkIdNodeUsedAs(USER_TYPE_ID, $1);
-                                                        // USER TYPE SEMANTIC CHECK
-                                                        // set $3 dataType (based on user declared types list)
-                                                        // checkDataTypeMatching(getASTNodeDataType($3), getASTNodeDataType($6), 1);
                                                         setUserTypeFieldDataType($1, $3); // also check field($3) is valid
                                                         checkDataTypeMatching(getASTNodeTokenDataType($3), getASTNodeDataType($6), 1);
                                                 };
@@ -536,13 +526,22 @@ param: exp                              { $$ = $1; };
 
 /* Return, break, continue and case - commands */
 
-return_cmd: TK_PR_RETURN exp            {       $$ = makeASTUnaryNode(AST_RETURN, NULL, $2);
-                                                checkFuncReturnDataType($$);
-                                        };
+return_cmd: TK_PR_RETURN exp    {
+                                        $$ = makeASTUnaryNode(AST_RETURN, NULL, $2);
+                                        checkFuncReturnDataType($$);
+                                };
 
-break_cmd: TK_PR_BREAK                  { $$ = makeASTNode(AST_BREAK, NULL); };
+break_cmd: TK_PR_BREAK          {
+                                        // > AST
+                                        $$ = makeASTNode(AST_BREAK, NULL);
+                                        // > Code
+                                };
 
-continue_cmd: TK_PR_CONTINUE            { $$ = makeASTNode(AST_CONTINUE, NULL); };
+continue_cmd: TK_PR_CONTINUE    {
+                                        // > AST
+                                        $$ = makeASTNode(AST_CONTINUE, NULL);
+                                        // > Code
+                                };
 
 case_cmd: TK_PR_CASE int ':'            { $$ = makeASTUnaryNode(AST_CASE, NULL, $2); }
         | TK_PR_CASE '+' int ':'        { $$ = makeASTUnaryNode(AST_CASE, NULL, $3); }

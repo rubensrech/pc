@@ -501,6 +501,12 @@ void generateWhileCode(comp_tree_t *node) {
     patchUpLabelHoles(expInfo->trueHoles, trueLabel);
     patchUpLabelHoles(expInfo->falseHoles, nextLabel);
 
+    if (g_slist_length(breakHoles) > 0) {
+        patchUpLabelHoles(breakHoles, nextLabel);
+        g_slist_free(breakHoles);
+        breakHoles = NULL;
+    }
+
     GSList *codeList = NULL;
     codeList = g_slist_append(codeList, beginLabelCode);    // S.code = "Lbegin: "
     codeList = g_slist_concat(codeList, expInfo->code);     // S.code += B.code    
@@ -525,6 +531,12 @@ void generateDoWhileCode(comp_tree_t *node) {
 
     patchUpLabelHoles(expInfo->trueHoles, beginLabel);
     patchUpLabelHoles(expInfo->falseHoles, nextLabel);
+
+    if (g_slist_length(breakHoles) > 0) {
+        patchUpLabelHoles(breakHoles, nextLabel);
+        g_slist_free(breakHoles);
+        breakHoles = NULL;
+    }
 
     GSList *codeList = NULL;
     codeList = g_slist_append(codeList, beginLabelCode);    // S.code = "Lbegin: "
@@ -559,7 +571,6 @@ void generateForCode(comp_tree_t *node) {
         patchUpLabelHoles(breakHoles, nextLabel);
         g_slist_free(breakHoles);
         breakHoles = NULL;
-        // printf("FOR: break holes = %d\n", g_slist_length(breakHoles));
     }
 
     GSList *codeList = cmds1Info->code;                     // S.code = cmds1.code
@@ -589,14 +600,13 @@ void generateBreakCode(comp_tree_t *node) {
     codeList = g_slist_append(codeList, jmpCode);
     codeList = g_slist_append(codeList, jmpLabelHole);
     codeList = g_slist_append(codeList, lineBreak);
-
+    
     breakHoles = g_slist_append(breakHoles, jmpLabelHole);
-    // printf("BREAK: break holes = %d\n", g_slist_length(breakHoles));
 
     nodeInfo->code = codeList;
 }
 
 void test(comp_tree_t *node) {
     AstNodeInfo *nodeInfo = node->value;
-    printf("%d\n", g_slist_length(nodeInfo->breakHoles));
+    
 }

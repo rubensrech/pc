@@ -121,6 +121,7 @@ void generateCode(comp_tree_t *node) {
     case AST_IF_ELSE: generateIfCode(node); break;
     case AST_WHILE_DO: generateWhileCode(node); break;
     case AST_DO_WHILE: generateDoWhileCode(node); break;
+    case AST_FOR: generateForCode(node); break;
     }
 }
 
@@ -508,7 +509,7 @@ void generateWhileCode(comp_tree_t *node) {
     nodeInfo->code = codeList;
 }
 
-void generateDoWhileCode(comp_tree_t *node) {    
+void generateDoWhileCode(comp_tree_t *node) {
     AstNodeInfo *nodeInfo = node->value;
     AstNodeInfo *blockInfo = node->first->value;
     AstNodeInfo *expInfo = node->last->value;
@@ -526,6 +527,38 @@ void generateDoWhileCode(comp_tree_t *node) {
     codeList = g_slist_append(codeList, beginLabelCode);    // S.code = "Lbegin: "
     codeList = g_slist_concat(codeList, blockInfo->code);   // S.code += S1.code
     codeList = g_slist_concat(codeList, expInfo->code);     // S.code += B.code
+    codeList = g_slist_append(codeList, nextLabelCode);     // S.code += "Lnext: "
+
+    nodeInfo->code = codeList;
+}
+
+void generateForCode(comp_tree_t *node) {
+    AstNodeInfo *nodeInfo = node->value;
+    AstNodeInfo *cmds1Info = node->first->value;              // 1st child
+    AstNodeInfo *expInfo = node->first->next->value;          // 2nd child
+    AstNodeInfo *cmds2Info = node->first->next->next->value;  // 3rd child
+    AstNodeInfo *blockInfo = node->last->value;               // 4th child (last)
+
+    int beginLabel = generateLabel();
+    int trueLabel = generateLabel();
+    int nextLabel = generateLabel();
+
+    char *beginLabelCode = generateLabelCode(beginLabel);
+    char *trueLabelCode = generateLabelCode(trueLabel);
+    char *nextLabelCode = generateLabelCode(nextLabel);
+    char *jmpCode = malloc(30);
+    snprintf(jmpCode, 30, "jumpI -> L%d\n", beginLabel);
+
+    patchUpLabelHoles(expInfo->trueHoles, trueLabel);
+    patchUpLabelHoles(expInfo->falseHoles, nextLabel);
+
+    GSList *codeList = cmds1Info->code;                     // S.code = cmds1.code
+    codeList = g_slist_append(codeList, beginLabelCode);    // S.code += "Lbegin: "
+    codeList = g_slist_concat(codeList, expInfo->code);     // S.code += B.code
+    codeList = g_slist_append(codeList, trueLabelCode);     // S.code += "Ltrue: "
+    codeList = g_slist_concat(codeList, blockInfo->code);   // S.code += block.code
+    codeList = g_slist_concat(codeList, cmds2Info->code);   // S.code += cmds2.code
+    codeList = g_slist_append(codeList, jmpCode);           // S.code += "jumpI -> Lbegin"
     codeList = g_slist_append(codeList, nextLabelCode);     // S.code += "Lnext: "
 
     nodeInfo->code = codeList;

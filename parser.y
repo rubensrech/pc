@@ -609,14 +609,22 @@ switch: TK_PR_SWITCH '(' exp ')' block                          {       $$ = mak
                                                                         checkExpNodeDataTypeIsInt($3);
                                                                 };
 
-for: TK_PR_FOR '(' cmd_list ':' exp ':' cmd_list ')' block      {       $$ = makeASTQuaternaryNode(AST_FOR, NULL, $3, $5, $7, $9);
+for: TK_PR_FOR '(' cmd_list ':' exp ':' cmd_list ')' block      {       
+                                                                        // > AST
+                                                                        $$ = makeASTQuaternaryNode(AST_FOR, NULL, $3, $5, $7, $9);
+                                                                        // > Semantic
                                                                         checkExpNodeDataTypeIsBool($5);
+                                                                        // > Code
+                                                                        generateCode($$);
                                                                 };
 
 cmd_list: cmd                           { $$ = $1; }
          | cmd ',' cmd_list             {
+                                                // > AST
                                                 tree_set_list_next_node($1, $3);
                                                 $$ = $1;  
+                                                // > Code
+                                                cmdsCodeListConcat($1, $3);
                                         };
 
 cmd:      var_dec                       { $$ = $1; }

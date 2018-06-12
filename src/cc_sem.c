@@ -172,7 +172,6 @@ void checkIdDeclared(TokenInfo *id) {
             // Found in global scope -> set id as defined and set its properties
             // Inherit/load global attributes
             id->scope = globalId->scope;
-
             id->idType = globalId->idType;
             id->dataType = globalId->dataType;
             id->userDataType = globalId->userDataType;
@@ -200,8 +199,7 @@ void checkIdUsedAs(int usedAs, TokenInfo *id) {
         case ARRAY_ID: throwSemanticError(errorMsg, IKS_ERROR_VECTOR); break;
         case FUNC_ID: throwSemanticError(errorMsg, IKS_ERROR_FUNCTION); break;
         case USER_TYPE_ID: throwSemanticError(errorMsg, IKS_ERROR_USER_TYPE); break;
-        }
-        
+        } 
     }
 }
 
@@ -215,7 +213,13 @@ void checkIdUsedAsMultiple(int usedAs1, int usedAs2, TokenInfo *id) {
 
     if (id->idType != usedAs1 && id->idType != usedAs2) {
         snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Wrong use for identifier '%s'", id->lexeme);
-        throwSemanticError(errorMsg, IKS_ERROR_VARIABLE);
+        
+        switch (id->idType) {
+        case VAR_ID: throwSemanticError(errorMsg, IKS_ERROR_VARIABLE); break;
+        case ARRAY_ID: throwSemanticError(errorMsg, IKS_ERROR_VECTOR); break;
+        case FUNC_ID: throwSemanticError(errorMsg, IKS_ERROR_FUNCTION); break;
+        case USER_TYPE_ID: throwSemanticError(errorMsg, IKS_ERROR_USER_TYPE); break;
+        }
     }
 }
 

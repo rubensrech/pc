@@ -12,6 +12,9 @@ PipeExpParseInfo pipeExpParseInfo = {
                                         .lastFuncCallRetType = DATATYPE_UNDEF
                                     };
 
+int isParsingLoop = 0;
+int isParsingSwitch = 0;
+
 comp_dict_t *funcTable;
 comp_dict_t *userTypesTable;
 
@@ -632,3 +635,32 @@ TokenInfo *getTokenInfoFromIdNode(comp_tree_t *node) {
     return nodeInfo->tokenInfo;
 }
 
+/* Break / Continue */
+
+void enteredLoop() {
+    isParsingLoop++;
+}
+
+void leftLoop() {
+    isParsingLoop--;
+}
+
+void enteredSwitch() {
+    isParsingSwitch++;
+}
+
+void leftSwitch() {
+    isParsingSwitch--;
+}
+
+void checkBreakIsValid() {
+    if (!isParsingLoop && !isParsingSwitch) {
+        throwSemanticError("'break' statement not in loop or switch statement", IKS_ERROR_INVALID_BREAK);
+    }
+}
+
+void checkContinueIsValid() {
+    if (!isParsingLoop) {
+        throwSemanticError("'continue' statement not in loop", IKS_ERROR_INVALID_CONTINUE);
+    }
+}

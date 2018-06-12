@@ -55,6 +55,10 @@
 /* User types */
 #define IKS_ERROR_UNDECLARED_TYPE   18 //uso de tipo nao declarado
 #define IKS_ERROR_UNKNOWN_TYPE_FIELD 19 //uso de campo desconhecido em variavel de tipo declarado
+/* Break / continue */
+#define IKS_ERROR_INVALID_BREAK     21 // uso de break fora de loop ou switch
+#define IKS_ERROR_INVALID_CONTINUE  22 // uso de continue fora de loop
+
 
 
 typedef struct funcDesc {
@@ -144,5 +148,13 @@ void checkUserDataTypeMatching(comp_tree_t *node1, comp_tree_t *node2);
 void throwSemanticError(char *errorMsg, int errorCode);
 int inArray(int array[], int size, int val);
 TokenInfo *getTokenInfoFromIdNode(comp_tree_t *node);
+
+/* Break / Continue */
+void enteredLoop();
+void leftLoop();
+void enteredSwitch();
+void leftSwitch();
+void checkBreakIsValid();
+void checkContinueIsValid();
 
 #endif

@@ -534,6 +534,8 @@ return_cmd: TK_PR_RETURN exp    {
 break_cmd: TK_PR_BREAK          {
                                         // > AST
                                         $$ = makeASTNode(AST_BREAK, NULL);
+                                        // > Semantic
+                                        checkBreakIsValid();
                                         // > Code
                                         generateCode($$);
                                 };
@@ -541,6 +543,8 @@ break_cmd: TK_PR_BREAK          {
 continue_cmd: TK_PR_CONTINUE    {
                                         // > AST
                                         $$ = makeASTNode(AST_CONTINUE, NULL);
+                                        // > Semantic
+                                        checkContinueIsValid();
                                         // > Code
                                 };
 
@@ -581,42 +585,57 @@ if_exp: TK_PR_IF '(' exp ')'                            {
                                                                 checkExpNodeDataTypeIsBool($3);
                                                         };
 
-foreach: TK_PR_FOREACH '(' id ':' exps_list ')' block   {       
+foreach: foreach_begin '(' id ':' exps_list ')' block   {       
+                                                                // > AST
                                                                 $$ = makeASTTernaryNode(AST_FOREACH, NULL, $3, $5, $7);
+                                                                // > Semantic
                                                                 checkIdNodeDeclared($3);
                                                                 checkIdNodeUsedAs(VAR_ID, $3);
+                                                                leftLoop();
                                                         };
 
-while: TK_PR_WHILE '(' exp ')' TK_PR_DO block           {
+while: while_begin '(' exp ')' TK_PR_DO block           {
                                                                 // > AST
                                                                 $$ = makeASTBinaryNode(AST_WHILE_DO, NULL, $3, $6);
                                                                 // > Semantic
                                                                 checkExpNodeDataTypeIsBool($3);
+                                                                leftLoop();
                                                                 // > Code
                                                                 generateCode($$);
                                                         };
 
-do_while: TK_PR_DO block TK_PR_WHILE '(' exp ')'        {
+do_while: do_while_begin block TK_PR_WHILE '(' exp ')'        {
                                                                 // > AST
                                                                 $$ = makeASTBinaryNode(AST_DO_WHILE, NULL, $2, $5);
                                                                 // > Semantic
                                                                 checkExpNodeDataTypeIsBool($5);
+                                                                leftLoop();
+                                                                // > Code
+                                                                generateCode($$);
+                                                        };
+for: for_begin '(' cmd_list':'exp':'cmd_list ')' block  {       
+                                                                // > AST
+                                                                $$ = makeASTQuaternaryNode(AST_FOR, NULL, $3, $5, $7, $9);
+                                                                // > Semantic
+                                                                checkExpNodeDataTypeIsBool($5);
+                                                                leftLoop();
                                                                 // > Code
                                                                 generateCode($$);
                                                         };
 
-switch: TK_PR_SWITCH '(' exp ')' block                          {       $$ = makeASTBinaryNode(AST_SWITCH, NULL, $3, $5);
-                                                                        checkExpNodeDataTypeIsInt($3);
-                                                                };
+switch: switch_begin '(' exp ')' block                  {
+                                                                // > AST
+                                                                $$ = makeASTBinaryNode(AST_SWITCH, NULL, $3, $5);
+                                                                // > Semantic
+                                                                checkExpNodeDataTypeIsInt($3);
+                                                                leftSwitch();
+                                                        };
 
-for: TK_PR_FOR '(' cmd_list ':' exp ':' cmd_list ')' block      {       
-                                                                        // > AST
-                                                                        $$ = makeASTQuaternaryNode(AST_FOR, NULL, $3, $5, $7, $9);
-                                                                        // > Semantic
-                                                                        checkExpNodeDataTypeIsBool($5);
-                                                                        // > Code
-                                                                        generateCode($$);
-                                                                };
+foreach_begin: TK_PR_FOREACH    { enteredLoop(); };
+while_begin: TK_PR_WHILE        { enteredLoop(); };
+do_while_begin: TK_PR_DO        { enteredLoop(); };
+for_begin: TK_PR_FOR            { enteredLoop(); };
+switch_begin: TK_PR_SWITCH      { enteredSwitch(); };
 
 cmd_list: cmd                           { $$ = $1; }
          | cmd ',' cmd_list             {

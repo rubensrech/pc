@@ -84,6 +84,14 @@ void patchUpLabelHole(gpointer hole, gpointer label) {
     strcpy(holePtr, labelStr);
 }
 
+void patchUpBreakHoles(int labelNumber) {
+    if (g_slist_length(breakHoles) > 0) {
+        patchUpLabelHoles(breakHoles, labelNumber);
+        g_slist_free(breakHoles);
+        breakHoles = NULL;
+    }
+} 
+
 void cmdsCodeListConcat(comp_tree_t *cmd1, comp_tree_t *cmd2) {
     AstNodeInfo *cmd1Info = cmd1->value;
     AstNodeInfo *cmd2Info = cmd2->value;
@@ -500,12 +508,7 @@ void generateWhileCode(comp_tree_t *node) {
 
     patchUpLabelHoles(expInfo->trueHoles, trueLabel);
     patchUpLabelHoles(expInfo->falseHoles, nextLabel);
-
-    if (g_slist_length(breakHoles) > 0) {
-        patchUpLabelHoles(breakHoles, nextLabel);
-        g_slist_free(breakHoles);
-        breakHoles = NULL;
-    }
+    patchUpBreakHoles(nextLabel);
 
     GSList *codeList = NULL;
     codeList = g_slist_append(codeList, beginLabelCode);    // S.code = "Lbegin: "
@@ -531,12 +534,7 @@ void generateDoWhileCode(comp_tree_t *node) {
 
     patchUpLabelHoles(expInfo->trueHoles, beginLabel);
     patchUpLabelHoles(expInfo->falseHoles, nextLabel);
-
-    if (g_slist_length(breakHoles) > 0) {
-        patchUpLabelHoles(breakHoles, nextLabel);
-        g_slist_free(breakHoles);
-        breakHoles = NULL;
-    }
+    patchUpBreakHoles(nextLabel);
 
     GSList *codeList = NULL;
     codeList = g_slist_append(codeList, beginLabelCode);    // S.code = "Lbegin: "
@@ -566,12 +564,7 @@ void generateForCode(comp_tree_t *node) {
 
     patchUpLabelHoles(expInfo->trueHoles, trueLabel);
     patchUpLabelHoles(expInfo->falseHoles, nextLabel);
-
-    if (g_slist_length(breakHoles) > 0) {
-        patchUpLabelHoles(breakHoles, nextLabel);
-        g_slist_free(breakHoles);
-        breakHoles = NULL;
-    }
+    patchUpBreakHoles(nextLabel);
 
     GSList *codeList = cmds1Info->code;                     // S.code = cmds1.code
     codeList = g_slist_append(codeList, beginLabelCode);    // S.code += "Lbegin: "
@@ -608,5 +601,5 @@ void generateBreakCode(comp_tree_t *node) {
 
 void test(comp_tree_t *node) {
     AstNodeInfo *nodeInfo = node->value;
-    
+    printf("FUNC: breakHoles: %d\n", g_slist_length(breakHoles));
 }

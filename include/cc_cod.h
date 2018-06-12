@@ -16,6 +16,7 @@ int generateLabel();
 char *generateLabelCode(int labelNumber);
 void patchUpLabelHoles(GSList *holes, int labelNumber);
 void patchUpLabelHole(gpointer hole, gpointer label);
+void patchUpBreakHoles(int labelNumber);
 
 void cmdsCodeListConcat(comp_tree_t *cmd1, comp_tree_t *cmd2);
 

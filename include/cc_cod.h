@@ -52,3 +52,6 @@ void generateIfElseCode(comp_tree_t *node);
 void generateWhileCode(comp_tree_t *node);
 void generateDoWhileCode(comp_tree_t *node);
 void generateForCode(comp_tree_t *node);
+void generateBreakCode(comp_tree_t *node);
+
+void test(comp_tree_t *node);

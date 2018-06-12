@@ -535,6 +535,7 @@ break_cmd: TK_PR_BREAK          {
                                         // > AST
                                         $$ = makeASTNode(AST_BREAK, NULL);
                                         // > Code
+                                        generateCode($$);
                                 };
 
 continue_cmd: TK_PR_CONTINUE    {

@@ -614,7 +614,7 @@ void checkUserDataTypeMatching(comp_tree_t *idNode, comp_tree_t *expNode) {
 /* Auxiliary */
 
 void throwSemanticError(char *errorMsg, int errorCode) {
-    printf("Semantic error: %s - on line %d\n", errorMsg, getLineNumber());
+    fprintf(stderr, "Semantic error: %s - on line %d\n", errorMsg, getLineNumber());
     exit(errorCode);
 }
 

@@ -3,8 +3,21 @@ PROJECT(compilador)
 FIND_PACKAGE(FLEX REQUIRED)
 FIND_PACKAGE(BISON REQUIRED)
 FIND_PACKAGE(PkgConfig REQUIRED)
+
+# Glib stuff
+# how to based on
+# https://stackoverflow.com/questions/2730135/how-do-i-link-gtk-library-more-easily-with-cmake-in-windows/5105523#5105523
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GLIB REQUIRED glib-2.0)
+
 FLEX_TARGET(scanner scanner.l ${CMAKE_CURRENT_BINARY_DIR}/scanner.c)
 BISON_TARGET(parser parser.y ${CMAKE_CURRENT_BINARY_DIR}/parser.c VERBOSE REPORT_FILE parser.output)
+
+# Glib stuff
+include_directories((${GLIB_INCLUDE_DIRS}))
+link_directories(${GLIB_LIBRARY_DIRS})
+add_definitions (${GLIB_CFLAGS_OTHER})
+
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 INCLUDE_DIRECTORIES(${compilador_SOURCE_DIR}/include/)
 INCLUDE_DIRECTORIES(${compilador_SOURCE_DIR}/src/)
@@ -22,12 +35,7 @@ ADD_EXECUTABLE(main
   src/cc_ast.c
   src/cc_cod.c
 )
-TARGET_LINK_LIBRARIES(main ${FLEX_LIBRARIES} ${GLIB_LDFLAGS})
-
-pkg_search_module(GLIB REQUIRED glib-2.0)
-target_include_directories(main PRIVATE ${GLIB_INCLUDE_DIRS})
-
-ADD_EXECUTABLE(cc_dict_main_example src/cc_dict.c src/cc_dict_main_example.c)
+TARGET_LINK_LIBRARIES(main ${FLEX_LIBRARIES} ${GLIB_LDFLAGS} ${GLIB_LIBRARIES})
 
 ENABLE_TESTING()
 SET(i 0)

@@ -627,6 +627,8 @@ void checkUserDataTypeMatching(comp_tree_t *idNode, comp_tree_t *expNode) {
     }
 }
 
+// Code generating aux
+
 int getUserTypeSize(TokenInfo *idInfo) {
     char *typeName = idInfo->lexeme;
     UserTypeDesc *userTypeDesc = dict_get(userTypesTable, typeName);
@@ -671,6 +673,15 @@ int getUserTypeFieldOffset(char *typeName, char *fieldName) {
     }
 
     return 0;
+}
+
+comp_tree_t *getUserTypeFields(char *typeName) {
+    UserTypeDesc *userTypeDesc = dict_get(userTypesTable, typeName);
+    if (userTypeDesc != NULL) {
+        return userTypeDesc->fields;
+    } else {
+        return NULL;
+    }
 }
 
 /* Auxiliary */

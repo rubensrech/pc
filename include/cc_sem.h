@@ -147,6 +147,7 @@ void checkUserDataTypeMatching(comp_tree_t *node1, comp_tree_t *node2);
 // Code generating support
 int getUserTypeSize(TokenInfo *idInfo);
 int getUserTypeFieldOffset(char *typeName, char *fieldName);
+comp_tree_t *getUserTypeFields(char *typeName);
 
 /* Auxiliary */
 void throwSemanticError(char *errorMsg, int errorCode);

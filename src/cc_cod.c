@@ -321,8 +321,8 @@ void generateLoadArrayVarCode(comp_tree_t *arrNode) {
 
 // -> User vars
 void generateLoadUserVarCode(comp_tree_t *idNode) {
-    // HERE
-    // ____
+    // Implemented right in assign func
+    // -> generateUserVarAssignCode()
 }
 
 void generateLoadUserVarFieldCode(comp_tree_t *userVarNode) {
@@ -398,7 +398,57 @@ void generateUserVarFieldAssignCode(comp_tree_t *node) {
 }
 
 void generateUserVarAssignCode(comp_tree_t *node) {
-    puts("assign user var");
+    comp_tree_t *fromNode = node->last;
+    comp_tree_t *toNode = node->first;
+    AstNodeInfo *nodeInfo = node->value;
+    AstNodeInfo *fromInfo = fromNode->value;
+    AstNodeInfo *toInfo = toNode->value;
+    TokenInfo *fromToken = fromInfo->tokenInfo;
+    TokenInfo *toToken = toInfo->tokenInfo;
+
+    char *typeName = fromToken->userDataType;
+    comp_tree_t *currField = getUserTypeFields(typeName);
+    TokenInfo *currFieldInfo;
+    int fromVarOffset = fromToken->offset;
+    int toVarOffset = toToken->offset;
+
+    int maxCodeSize = 30;
+    char fromScopeReg[10], toScopeReg[10];
+    char *loadCode, *storeCode;
+    int tmpReg;
+    int currFieldOffset = 0;
+    int totalFromOffset, totalToOffset;
+
+    if (strcmp(fromToken->scope, "#GLOBAL#") == 0)
+        strcpy(fromScopeReg, "rbss");
+    else
+        strcpy(fromScopeReg, "rfp");
+
+    if (strcmp(toToken->scope, "#GLOBAL#") == 0)
+        strcpy(toScopeReg, "rbss");
+    else
+        strcpy(toScopeReg, "rfp");
+
+    GSList *codeList = NULL;
+
+    for (; currField != NULL; currField = currField->list_next) {
+        currFieldInfo = getTokenInfoFromIdNode(currField);
+        totalFromOffset = fromVarOffset + currFieldOffset;
+        totalToOffset = toVarOffset + currFieldOffset;
+        
+        loadCode = malloc(maxCodeSize);
+        storeCode = malloc(maxCodeSize);
+        tmpReg = generateTempReg();
+        
+        snprintf(loadCode, maxCodeSize, "loadAI %s, %d => r%d\n", fromScopeReg, totalFromOffset, tmpReg);
+        snprintf(storeCode, maxCodeSize, "storeAI r%d => %s, %d\n", tmpReg, toScopeReg, totalToOffset);
+        codeList = g_slist_append(codeList, loadCode);
+        codeList = g_slist_append(codeList, storeCode);
+
+        currFieldOffset += getSizeOf(currFieldInfo->dataType);
+    }
+
+    nodeInfo->code = codeList;
 }
 
 void generateSimpleVarAssignCode(comp_tree_t *node) {

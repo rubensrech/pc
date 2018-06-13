@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "cc_sem.h"
+#include "cc_cod.h"
 
 ScopeInfo scopeInfo =   {
                             .isCurrScopeGlobal = 1,
@@ -194,7 +195,7 @@ void checkIdNodeDeclared(comp_tree_t *node) {
 }
 
 void checkIdUsedAs(int usedAs, TokenInfo *id) {
-    // In case 'exp' is not an id (e.g. its an arith exp)
+    // In case 'exp' is not an id (e.g. it's an arith exp)
     if (id == NULL) return;
 
     char errorMsg[MAX_ERROR_MSG_SIZE];
@@ -624,6 +625,52 @@ void checkUserDataTypeMatching(comp_tree_t *idNode, comp_tree_t *expNode) {
             throwSemanticError(errorMsg, IKS_ERROR_WRONG_TYPE);
         }
     }
+}
+
+int getUserTypeSize(TokenInfo *idInfo) {
+    char *typeName = idInfo->lexeme;
+    UserTypeDesc *userTypeDesc = dict_get(userTypesTable, typeName);
+    if (userTypeDesc == NULL) return -1;
+
+    comp_tree_t *currField = userTypeDesc->fields;
+    TokenInfo *currFieldInfo;
+    int currFieldSize;
+    int size = 0;
+
+    while (currField != NULL) {
+        currFieldInfo = getTokenInfoFromIdNode(currField);
+        currFieldSize = getSizeOf(currFieldInfo->dataType);
+        size += currFieldSize;
+        currField = currField->list_next;
+    }
+
+    return size;
+}
+
+int getUserTypeFieldOffset(char *typeName, char *fieldName) {
+    UserTypeDesc *userTypeDesc = dict_get(userTypesTable, typeName);
+    if (userTypeDesc == NULL) return -1;
+
+    comp_tree_t *currField = userTypeDesc->fields;
+    TokenInfo *currFieldInfo = getTokenInfoFromIdNode(currField);
+    int currFieldSize;
+    int offset = 0;
+
+    while (strcmp(fieldName, currFieldInfo->lexeme) != 0) {
+        currFieldSize = getSizeOf(currFieldInfo->dataType);
+        offset += currFieldSize;
+
+        currField = currField->list_next;
+        if (currField == NULL) break; // Field not found
+
+        currFieldInfo = getTokenInfoFromIdNode(currField);
+    }
+
+    if (strcmp(fieldName, currFieldInfo->lexeme) == 0) {
+        return offset;
+    }
+
+    return 0;
 }
 
 /* Auxiliary */

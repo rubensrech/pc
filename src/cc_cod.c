@@ -128,6 +128,7 @@ void generateCode(comp_tree_t *node) {
     // Variables
     case AST_IDENTIFICADOR: generateLoadVarCode(node); break;
     case AST_VETOR_INDEXADO: generateLoadArrayVarCode(node); break;
+    case AST_USER_VAR: generateLoadUserVarFieldCode(node); break;
     case AST_ATRIBUICAO: generateAssignCode(node); break;
     case AST_INICIALIZACAO: generateAssignCode(node); break;
     // Comparison
@@ -150,6 +151,8 @@ void generateCode(comp_tree_t *node) {
     }
 }
 
+// Arithmetic
+
 void generateLiteralCode(comp_tree_t *node) {
     AstNodeInfo *nodeInfo = node->value;
 
@@ -167,8 +170,6 @@ void generateLiteralCode(comp_tree_t *node) {
     nodeInfo->code = g_slist_append(nodeInfo->code, code);
     nodeInfo->resultReg = reg;
 }
-
-// > Arithmetic
 
 void generateArithInvertCode(comp_tree_t *node) {
     AstNodeInfo *nodeInfo = node->value;
@@ -209,18 +210,18 @@ void generateArithCode(comp_tree_t *node, const char *op) {
     nodeInfo->resultReg = resultReg;
 }
 
-// > Variables
-
-void allocNewGlobalVar(int dataType) {
-    g_offset += getSizeOf(dataType);
+// Variables
+// - Declarations/allocations
+void allocNewGlobalVar(int size) {
+    g_offset += size;
 }
 
-void allocNewGlobalArray(int dataType, int length) {
-    g_offset += getSizeOf(dataType) * length;
+void allocNewGlobalArray(int itemSize, int length) {
+    g_offset += itemSize * length;
 }
 
-void allocNewLocalVar(int dataType) {
-    l_offset += getSizeOf(dataType);
+void allocNewLocalVar(int size) {
+    l_offset += size;
 }
 
 void setNodeLocalVarOffset(comp_tree_t *idNode) {
@@ -236,7 +237,17 @@ void setTokenGlobalVarOffset(TokenInfo *idInfo) {
     idInfo->offset = g_offset;
 }
 
+// - Loads
+
 void generateLoadVarCode(comp_tree_t *idNode) {
+    int idType = getTokenInfoFromIdNode(idNode)->idType;
+    switch (idType) {
+    case VAR_ID: generateLoadSimpleVarCode(idNode); break;
+    case USER_TYPE_ID: generateLoadUserVarCode(idNode); break;
+    }
+}
+
+void generateLoadSimpleVarCode(comp_tree_t *idNode) {
     AstNodeInfo *nodeInfo = idNode->value;
     TokenInfo *idInfo = nodeInfo->tokenInfo;
 
@@ -254,6 +265,7 @@ void generateLoadVarCode(comp_tree_t *idNode) {
     nodeInfo->resultReg = resultReg;
 }
 
+// -> Array vars
 GSList *getArrayAddrGeneratorCode(comp_tree_t *arrNode, int addrReg) {
     comp_tree_t *idNode = arrNode->first;
     comp_tree_t *indexNode = idNode->next;
@@ -307,21 +319,60 @@ void generateLoadArrayVarCode(comp_tree_t *arrNode) {
     arrInfo->resultReg = resultReg;
 }
 
-// > Assignment
+// -> User vars
+void generateLoadUserVarCode(comp_tree_t *idNode) {
+
+}
+
+void generateLoadUserVarFieldCode(comp_tree_t *userVarNode) {
+    comp_tree_t *varNode = userVarNode->first;
+    comp_tree_t *fieldNode = userVarNode->last;
+    AstNodeInfo *nodeInfo = userVarNode->value;
+    TokenInfo *varToken = getTokenInfoFromIdNode(varNode);
+    TokenInfo *fieldToken = getTokenInfoFromIdNode(fieldNode);
+
+    int varOffset = varToken->offset;
+    int fieldOffset = getUserTypeFieldOffset(varToken->userDataType, fieldToken->lexeme);
+    int totalOffset = varOffset + fieldOffset;
+
+    int maxCodeSize = 30;
+    char *code = malloc(maxCodeSize);
+    int resultReg = generateTempReg();
+
+    if (strcmp(varToken->scope, "#GLOBAL#") == 0)
+        snprintf(code, maxCodeSize, "loadAI rbss, %d => r%d\n", totalOffset, resultReg);
+    else
+        snprintf(code, maxCodeSize, "loadAI rfp, %d => r%d\n", totalOffset, resultReg);
+
+    nodeInfo->code = g_slist_append(nodeInfo->code, code);
+    nodeInfo->resultReg = resultReg;
+}
+
+// Assignment
 
 void generateAssignCode(comp_tree_t *node) {
     AstNodeInfo *destInfo = node->first->value;
-    AstNodeInfo *sndChildInfo = node->first->next->value;
+    int idType;
 
-    if (destInfo->type == AST_IDENTIFICADOR) {
-        if (sndChildInfo->type != AST_IDENTIFICADOR) {
+    switch (destInfo->type) {
+    case AST_IDENTIFICADOR:
+        idType = destInfo->tokenInfo->idType;
+        if (idType == VAR_ID)
             generateSimpleVarAssignCode(node);
-        } else {
-            // Assigning to user type var
-        }
-    } else if (destInfo->type == AST_VETOR_INDEXADO) {
-        generateArrayVarAssignCode(node);
+        else if (idType == USER_TYPE_ID)
+            generateUserVarAssignCode(node);
+        break;
+    case AST_VETOR_INDEXADO: generateArrayVarAssignCode(node); break;
+    case AST_USER_VAR: generateUserVarFieldAssignCode(node); break;
     }
+}
+
+void generateUserVarFieldAssignCode(comp_tree_t *node) {
+    puts("assign user var field");
+}
+
+void generateUserVarAssignCode(comp_tree_t *node) {
+    puts("assign user var");
 }
 
 void generateSimpleVarAssignCode(comp_tree_t *node) {

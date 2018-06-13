@@ -148,12 +148,15 @@ extern comp_dict_t *funcTable;
 programa: /* empty */   { $$ = makeASTNode(AST_PROGRAMA, NULL); ast = $$; }
          | code         { 
                                 // > AST
-                                if ($1 != NULL) $$ = makeASTUnaryNode(AST_PROGRAMA, NULL, $1);
-                                else $$ = makeASTNode(AST_PROGRAMA, NULL);
+                                if ($1 != NULL) {
+                                        $$ = makeASTUnaryNode(AST_PROGRAMA, NULL, $1);
+                                        // > Code
+                                        inheritCodeList($$, $1);
+                                        printNodeCodeList($$);
+                                } else {
+                                        $$ = makeASTNode(AST_PROGRAMA, NULL);
+                                }
                                 ast = $$;
-                                // > Code
-                                inheritCodeList($$, $1);
-                                // printNodeCodeList($$);
                         };
 
 code:  type_def ';'             { $$ = NULL; }
@@ -255,7 +258,7 @@ global_var: native_type TK_IDENTIFICADOR                {
                                                                 setIdType($2, VAR_ID);
                                                                 // > Code
                                                                 setTokenGlobalVarOffset($2);
-                                                                allocNewGlobalVar($1);
+                                                                allocNewGlobalVar(getSizeOf($1));
                                                         }
           | TK_IDENTIFICADOR TK_IDENTIFICADOR           {
                                                                 // > Semantic
@@ -263,6 +266,9 @@ global_var: native_type TK_IDENTIFICADOR                {
                                                                 setIdType($2, USER_TYPE_ID);
                                                                 checkUserTypeWasDeclared($1);
                                                                 setIdTokenUserDataType($2, $1);
+                                                                // > Code
+                                                                setTokenGlobalVarOffset($2);
+                                                                allocNewGlobalVar(getUserTypeSize($1));
                                                         };
 
 global_arr: native_type TK_IDENTIFICADOR '[' TK_LIT_INT ']'     {
@@ -271,13 +277,19 @@ global_arr: native_type TK_IDENTIFICADOR '[' TK_LIT_INT ']'     {
                                                                         setIdType($2, ARRAY_ID);
                                                                         // > Code
                                                                         setTokenGlobalVarOffset($2);
-                                                                        allocNewGlobalArray($1, $4->value.intVal);
+                                                                        int length = $4->value.intVal;
+                                                                        allocNewGlobalArray(getSizeOf($1), length);
                                                                 }
         | TK_IDENTIFICADOR TK_IDENTIFICADOR '[' TK_LIT_INT ']'  {
+                                                                        // > Semantic
                                                                         setIdTokenDataType($2, DATATYPE_USER_TYPE);
                                                                         setIdType($2, ARRAY_ID);
                                                                         checkUserTypeWasDeclared($1);
                                                                         setIdTokenUserDataType($2, $1);
+                                                                        // > Code
+                                                                        setTokenGlobalVarOffset($2);
+                                                                        int length = $4->value.intVal;
+                                                                        allocNewGlobalArray(getUserTypeSize($1), length);
                                                                 };
 /* Function Declaration */
 
@@ -394,7 +406,7 @@ var_dec:
                                                         checkDataTypeMatching($2, getASTNodeTokenDataType($4), 1);
                                                         // > Code
                                                         setNodeLocalVarOffset($3);
-                                                        allocNewLocalVar($2);
+                                                        allocNewLocalVar(getSizeOf($2));
                                                         generateCode($$);
                                                 }
         | native_type id init_var               {       
@@ -406,7 +418,7 @@ var_dec:
                                                         checkDataTypeMatching($1, getASTNodeTokenDataType($3), 1);
                                                         // > Code
                                                         setNodeLocalVarOffset($2);
-                                                        allocNewLocalVar($1);
+                                                        allocNewLocalVar(getSizeOf($1));
                                                         generateCode($$);
                                                 }
 
@@ -419,7 +431,7 @@ var_dec:
                                                                 setIdTokenDataType($3, $2);
                                                                 // > Code
                                                                 setTokenLocalVarOffset($3);
-                                                                allocNewLocalVar($2);
+                                                                allocNewLocalVar(getSizeOf($2));
                                                         }
         | native_type TK_IDENTIFICADOR                  {       
                                                                 // > AST
@@ -429,21 +441,33 @@ var_dec:
                                                                 setIdTokenDataType($2, $1);
                                                                 // > Code
                                                                 setTokenLocalVarOffset($2);
-                                                                allocNewLocalVar($1);
+                                                                allocNewLocalVar(getSizeOf($1));
                                                         }
         
         /* Cannot initialize user type variables */
-        | var_dec_mods TK_IDENTIFICADOR TK_IDENTIFICADOR        {       $$ = NULL;
+        | var_dec_mods TK_IDENTIFICADOR TK_IDENTIFICADOR        {       
+                                                                        // > AST
+                                                                        $$ = NULL;
+                                                                        // > Semantic
                                                                         setIdType($3, USER_TYPE_ID);
                                                                         setIdTokenDataType($3, DATATYPE_USER_TYPE);
                                                                         checkUserTypeWasDeclared($2);
                                                                         setIdTokenUserDataType($3, $2);
+                                                                        // > Code
+                                                                        setTokenLocalVarOffset($3);
+                                                                        allocNewLocalVar(getUserTypeSize($2));
                                                                 }
-        | TK_IDENTIFICADOR TK_IDENTIFICADOR                     {       $$ = NULL;
+        | TK_IDENTIFICADOR TK_IDENTIFICADOR                     {
+                                                                        // > AST
+                                                                        $$ = NULL;
+                                                                        // > Semantic
                                                                         setIdType($2, USER_TYPE_ID);
                                                                         setIdTokenDataType($2, DATATYPE_USER_TYPE);
                                                                         checkUserTypeWasDeclared($1);
                                                                         setIdTokenUserDataType($2, $1);
+                                                                        // > Code
+                                                                        setTokenLocalVarOffset($2);
+                                                                        allocNewLocalVar(getUserTypeSize($1));
                                                                 };
 
 var_dec_mods: TK_PR_STATIC
@@ -508,6 +532,8 @@ assig_cmd: id '=' un_plus exp           {
                                                 checkIdNodeUsedAs(ARRAY_ID, $4);
                                                 // Declaration check, id use as user type check, set node dataType => already done in 'user_var' rule
                                                 checkDataTypeMatching(getASTNodeDataType($1), getASTNodeDataType($4), 1);
+                                                // > Code
+                                                generateCode($$);
                                         };
 
 un_plus: /* empty */
@@ -680,79 +706,83 @@ cmd:      var_dec                       { $$ = $1; }
 
 /* Expressions */
 
-exp:  array                     {
-                                        // > AST
-                                        $$ = $1;
-                                        // > Code
-                                        generateCode($$);
-                                }
-    | user_var                  {
-                                        // > AST
-                                        $$ = $1;
-                                }
-    | id                        {       
-                                        // > AST
-                                        $$ = $1;
-                                        // > Semantic
-                                        checkIdNodeDeclared($1);
-                                        setNodeDataType($$, getASTNodeTokenDataType($1));
-                                        setNodeUserDataType($$, getTokenInfoFromIdNode($1)->userDataType);
-                                        // > Code
-                                        generateCode($$);
-                                }  
-    | func_call                 { $$ = $1; }
-    | int                       { $$ = $1; }
-    | float                     { $$ = $1; }
-    | string                    { $$ = $1; }
-    | char                      { $$ = $1; }
-    | true                      { $$ = $1; }
-    | false                     { $$ = $1; }
-    | '(' exp ')'               { $$ = $2; }        
-    | logicExp                  {       
-                                        // > AST
-                                        $$ = $1;
-                                        // > Semantic
-                                        int resultDataType = checkLogicExpDataTypeMatching($$->first, $$->last);
-                                        setNodeDataType($$, resultDataType);
-                                        // > Code
-                                        generateCode($$);
-                                }
-    | arimExp                   {       
-                                        // > AST
-                                        $$ = $1;
-                                        // > Semantic
-                                        int resultDataType = checkArimExpDataTypeMatching($$->first, $$->last);
-                                        setNodeDataType($$, resultDataType);
-                                        // > Code
-                                        generateCode($$);
-                                }
-    | compExp                   {       
-                                        // > AST
-                                        $$ = $1;
-                                        // > Semantic
-                                        int resultDataType = checkCompExpDataTypeMatching($$->first, $$->last);
-                                        setNodeDataType($$, resultDataType);
-                                        // > Code
-                                        generateCode($$);
-                                }
-    | '-' exp                   {       
-                                        // > AST
-                                        $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2);
-                                        // > Semantic
-                                        int resultDataType = checkArimExpDataTypeMatching($2, NULL);
-                                        setNodeDataType($$, resultDataType);
-                                        // > Code
-                                        generateCode($$);
-                                }
-    | '!' exp                   {       $$ = makeASTUnaryNode(AST_LOGICO_COMP_NEGACAO, NULL, $2);
-                                        int resultDataType = checkLogicExpDataTypeMatching($2, NULL);
-                                        setNodeDataType($$, resultDataType);
-                                }
-    | pipe_exp                  {       $$ = $1;
-                                        int resultDataType = getASTNodeDataType($1->last);
-                                        setNodeDataType($$, resultDataType);
-                                }
-    | '.'                       { $$ = makeASTNode(AST_DOT_PARAM, NULL); /* Keep dataType = DATATYPE_UNDEF */ };
+exp:  array             {
+                                // > AST
+                                $$ = $1;
+                                // > Code
+                                generateCode($$);
+                        }
+    | user_var          {
+                                // > AST
+                                $$ = $1;
+                                // > Code
+                                generateCode($$);
+                        }
+    | id                {       
+                                // > AST
+                                $$ = $1;
+                                // > Semantic
+                                checkIdNodeDeclared($1);
+                                setNodeDataType($$, getASTNodeTokenDataType($1));
+                                setNodeUserDataType($$, getTokenInfoFromIdNode($1)->userDataType);
+                                // > Code
+                                generateCode($$);
+                        }  
+    | func_call         { $$ = $1; }
+    | int               { $$ = $1; }
+    | float             { $$ = $1; }
+    | string            { $$ = $1; }
+    | char              { $$ = $1; }
+    | true              { $$ = $1; }
+    | false             { $$ = $1; }
+    | '(' exp ')'       { $$ = $2; }        
+    | logicExp          {       
+                                // > AST
+                                $$ = $1;
+                                // > Semantic
+                                int resultDataType = checkLogicExpDataTypeMatching($$->first, $$->last);
+                                setNodeDataType($$, resultDataType);
+                                // > Code
+                                generateCode($$);
+                        }
+    | arimExp           {       
+                                // > AST
+                                $$ = $1;
+                                // > Semantic
+                                int resultDataType = checkArimExpDataTypeMatching($$->first, $$->last);
+                                setNodeDataType($$, resultDataType);
+                                // > Code
+                                generateCode($$);
+                        }
+    | compExp           {       
+                                // > AST
+                                $$ = $1;
+                                // > Semantic
+                                int resultDataType = checkCompExpDataTypeMatching($$->first, $$->last);
+                                setNodeDataType($$, resultDataType);
+                                // > Code
+                                generateCode($$);
+                        }
+    | '-' exp           {       
+                                // > AST
+                                $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2);
+                                // > Semantic
+                                int resultDataType = checkArimExpDataTypeMatching($2, NULL);
+                                setNodeDataType($$, resultDataType);
+                                // > Code
+                                generateCode($$);
+                        }
+    | '!' exp           {
+                                $$ = makeASTUnaryNode(AST_LOGICO_COMP_NEGACAO, NULL, $2);
+                                int resultDataType = checkLogicExpDataTypeMatching($2, NULL);
+                                setNodeDataType($$, resultDataType);
+                        }
+    | pipe_exp          {
+                                $$ = $1;
+                                int resultDataType = getASTNodeDataType($1->last);
+                                setNodeDataType($$, resultDataType);
+                        }
+    | '.'               { $$ = makeASTNode(AST_DOT_PARAM, NULL); };
 
 compExp:  exp TK_OC_EQ exp      { $$ = makeASTBinaryNode(AST_LOGICO_COMP_IGUAL, NULL, $1, $3); }
         | exp TK_OC_NE exp      { $$ = makeASTBinaryNode(AST_LOGICO_COMP_DIF, NULL, $1, $3); }

@@ -321,7 +321,8 @@ void generateLoadArrayVarCode(comp_tree_t *arrNode) {
 
 // -> User vars
 void generateLoadUserVarCode(comp_tree_t *idNode) {
-
+    // HERE
+    // ____
 }
 
 void generateLoadUserVarFieldCode(comp_tree_t *userVarNode) {
@@ -368,7 +369,32 @@ void generateAssignCode(comp_tree_t *node) {
 }
 
 void generateUserVarFieldAssignCode(comp_tree_t *node) {
-    puts("assign user var field");
+    comp_tree_t *destNode = node->first;
+    comp_tree_t *varNode = destNode->first;
+    comp_tree_t *fieldNode = destNode->last;
+    comp_tree_t *expNode = node->last;
+    AstNodeInfo *nodeInfo = node->value;
+    AstNodeInfo *expInfo = expNode->value;
+    TokenInfo *varToken = getTokenInfoFromIdNode(varNode);
+    TokenInfo *fieldToken = getTokenInfoFromIdNode(fieldNode);
+
+    int maxCodeSize = 30; 
+    char *code = malloc(maxCodeSize);
+    int expValue = expInfo->resultReg;
+
+    int varOffset = varToken->offset;
+    int fieldOffset = getUserTypeFieldOffset(varToken->userDataType, fieldToken->lexeme);
+    int totalOffset = varOffset + fieldOffset;
+
+    if (strcmp(varToken->scope, "#GLOBAL#") == 0)
+        snprintf(code, maxCodeSize, "storeAI r%d => rbss, %d\n", expValue, totalOffset);
+    else
+        snprintf(code, maxCodeSize, "storeAI r%d => rfp, %d\n", expValue, totalOffset);
+
+    GSList *codeList = expInfo->code;
+    codeList = g_slist_append(codeList, code);
+
+    nodeInfo->code = codeList;
 }
 
 void generateUserVarAssignCode(comp_tree_t *node) {

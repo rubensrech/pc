@@ -215,9 +215,24 @@ char: TK_LIT_CHAR       {
                                 // > Code
                                 generateCode($$);
                         };
+false: TK_LIT_FALSE     {
+                                // > AST
+                                $$ = makeASTNode(AST_LITERAL, $1);
+                                // > Semantic
+                                setNodeDataType($$, DATATYPE_BOOL);
+                                // > Code
+                                generateCode($$);
+                        };
+true: TK_LIT_TRUE       {
+                                // > AST
+                                $$ = makeASTNode(AST_LITERAL, $1);
+                                // > Semantic
+                                setNodeDataType($$, DATATYPE_BOOL);
+                                // > Code
+                                generateCode($$);
+                        };
+
 float: TK_LIT_FLOAT     { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_FLOAT); };
-false: TK_LIT_FALSE     { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_BOOL); generateCode($$); };
-true: TK_LIT_TRUE       { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_BOOL); generateCode($$); };
 string: TK_LIT_STRING   { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_STRING); };
 
 native_type:  TK_PR_INT         { $$ = $1; }
@@ -504,10 +519,12 @@ literal:  int                   { $$ = $1; }
 shift_cmd: id TK_OC_SL int              {       $$ = makeASTBinaryNode(AST_SHIFT_LEFT, NULL, $1, $3);
                                                 checkIdNodeDeclared($1);
                                                 checkIdNodeUsedAs(VAR_ID, $1);
+                                                // TO-DO Check $1 data type
                                         }
           | id TK_OC_SR int             {       $$ = makeASTBinaryNode(AST_SHIFT_RIGHT, NULL, $1, $3);
                                                 checkIdNodeDeclared($1);
                                                 checkIdNodeUsedAs(VAR_ID, $1);
+                                                // TO-DO Check $1 data type
                                         };
 
 /* Assignment - command */
@@ -603,15 +620,15 @@ case_cmd: TK_PR_CASE int ':'            { $$ = makeASTUnaryNode(AST_CASE, NULL, 
 
 /* Pipes - command */
 
-pipe_exp:  pipe_pg_step0 func_call              { $$ = makeASTBinaryNode(AST_PIPE_G, NULL, $1, $2); endParsingPipeExp(); }
-         | pipe_pb_step0 func_call              { $$ = makeASTBinaryNode(AST_PIPE_B, NULL, $1, $2); endParsingPipeExp(); }
-         | pipe_pg_step1 func_call              { $$ = makeASTBinaryNode(AST_PIPE_G, NULL, $1, $2); endParsingPipeExp(); }
-         | pipe_pb_step1 func_call              { $$ = makeASTBinaryNode(AST_PIPE_B, NULL, $1, $2); endParsingPipeExp(); };
+pipe_exp:  pipe_pg_step0 func_call      { $$ = makeASTBinaryNode(AST_PIPE_G, NULL, $1, $2); endParsingPipeExp(); }
+         | pipe_pb_step0 func_call      { $$ = makeASTBinaryNode(AST_PIPE_B, NULL, $1, $2); endParsingPipeExp(); }
+         | pipe_pg_step1 func_call      { $$ = makeASTBinaryNode(AST_PIPE_G, NULL, $1, $2); endParsingPipeExp(); }
+         | pipe_pb_step1 func_call      { $$ = makeASTBinaryNode(AST_PIPE_B, NULL, $1, $2); endParsingPipeExp(); };
 
-pipe_pg_step0: func_call TK_OC_PG               { $$ = $1; setCurrParsingPipeExp(getASTNodeDataType($1)); };
-pipe_pb_step0: func_call TK_OC_PB               { $$ = $1; setCurrParsingPipeExp(getASTNodeDataType($1)); };
-pipe_pg_step1: pipe_exp TK_OC_PG                { $$ = $1; setCurrParsingPipeExp(getASTNodeDataType($1->last)); };
-pipe_pb_step1: pipe_exp TK_OC_PB                { $$ = $1; setCurrParsingPipeExp(getASTNodeDataType($1->last)); };
+pipe_pg_step0: func_call TK_OC_PG       { $$ = $1; setCurrParsingPipeExp(getASTNodeDataType($1)); };
+pipe_pb_step0: func_call TK_OC_PB       { $$ = $1; setCurrParsingPipeExp(getASTNodeDataType($1)); };
+pipe_pg_step1: pipe_exp TK_OC_PG        { $$ = $1; setCurrParsingPipeExp(getASTNodeDataType($1->last)); };
+pipe_pb_step1: pipe_exp TK_OC_PB        { $$ = $1; setCurrParsingPipeExp(getASTNodeDataType($1->last)); };
 
 
 /* Flow Control - Commands */
@@ -633,16 +650,6 @@ if_exp: TK_PR_IF '(' exp ')'                            {
                                                                 $$ = $3;
                                                                 checkExpNodeDataTypeIsBool($3);
                                                         };
-
-foreach: foreach_begin '(' id ':' exps_list ')' block   {       
-                                                                // > AST
-                                                                $$ = makeASTTernaryNode(AST_FOREACH, NULL, $3, $5, $7);
-                                                                // > Semantic
-                                                                checkIdNodeDeclared($3);
-                                                                checkIdNodeUsedAs(VAR_ID, $3);
-                                                                leftLoop();
-                                                        };
-
 while: while_begin '(' exp ')' TK_PR_DO block           {
                                                                 // > AST
                                                                 $$ = makeASTBinaryNode(AST_WHILE_DO, NULL, $3, $6);
@@ -670,6 +677,14 @@ for: for_begin '(' cmd_list':'exp':'cmd_list ')' block  {
                                                                 leftLoop();
                                                                 // > Code
                                                                 generateCode($$);
+                                                        };
+foreach: foreach_begin '(' id ':' exps_list ')' block   {       
+                                                                // > AST
+                                                                $$ = makeASTTernaryNode(AST_FOREACH, NULL, $3, $5, $7);
+                                                                // > Semantic
+                                                                checkIdNodeDeclared($3);
+                                                                checkIdNodeUsedAs(VAR_ID, $3);
+                                                                leftLoop();
                                                         };
 
 switch: switch_begin '(' exp ')' block                  {
@@ -781,8 +796,9 @@ exp:  array             {
                         }
     | '!' exp           {
                                 $$ = makeASTUnaryNode(AST_LOGICO_COMP_NEGACAO, NULL, $2);
-                                int resultDataType = checkLogicExpDataTypeMatching($2, NULL);
-                                setNodeDataType($$, resultDataType);
+                                checkExpNodeDataTypeIsBool($2);
+                                setNodeDataType($$, DATATYPE_BOOL);
+                                // TO-DO
                         }
     | pipe_exp          {
                                 $$ = $1;

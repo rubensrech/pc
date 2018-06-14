@@ -29,11 +29,11 @@ Grammar
 
    14 char: TK_LIT_CHAR
 
-   15 float: TK_LIT_FLOAT
+   15 false: TK_LIT_FALSE
 
-   16 false: TK_LIT_FALSE
+   16 true: TK_LIT_TRUE
 
-   17 true: TK_LIT_TRUE
+   17 float: TK_LIT_FLOAT
 
    18 string: TK_LIT_STRING
 
@@ -187,13 +187,13 @@ Grammar
 
   126 if_exp: TK_PR_IF '(' exp ')'
 
-  127 foreach: foreach_begin '(' id ':' exps_list ')' block
+  127 while: while_begin '(' exp ')' TK_PR_DO block
 
-  128 while: while_begin '(' exp ')' TK_PR_DO block
+  128 do_while: do_while_begin block TK_PR_WHILE '(' exp ')'
 
-  129 do_while: do_while_begin block TK_PR_WHILE '(' exp ')'
+  129 for: for_begin '(' cmd_list ':' exp ':' cmd_list ')' block
 
-  130 for: for_begin '(' cmd_list ':' exp ':' cmd_list ')' block
+  130 foreach: foreach_begin '(' id ':' exps_list ')' block
 
   131 switch: switch_begin '(' exp ')' block
 
@@ -278,7 +278,7 @@ $end (0) 0
 '-' (45) 13 90 168 179
 '.' (46) 11 171
 '/' (47) 180
-':' (58) 27 113 114 115 127 130
+':' (58) 27 113 114 115 129 130
 ';' (59) 3 4 6 7 57 58 59 60 61 62 63 64 66 67 68
 '<' (60) 177
 '=' (61) 97 98 99
@@ -296,8 +296,8 @@ TK_PR_STRING (262) 23
 TK_PR_IF (263) 126
 TK_PR_THEN (264) 124 125
 TK_PR_ELSE (265) 125
-TK_PR_WHILE (266) 129 133
-TK_PR_DO (267) 128 134
+TK_PR_WHILE (266) 128 133
+TK_PR_DO (267) 127 134
 TK_PR_INPUT (268) 102
 TK_PR_OUTPUT (269) 103
 TK_PR_RETURN (270) 110
@@ -324,9 +324,9 @@ TK_OC_SR (290) 96
 TK_OC_PG (291) 120 122
 TK_OC_PB (292) 121 123
 TK_LIT_INT (293) 12 38 39
-TK_LIT_FLOAT (294) 15
-TK_LIT_FALSE (295) 16
-TK_LIT_TRUE (296) 17
+TK_LIT_FLOAT (294) 17
+TK_LIT_FALSE (295) 15
+TK_LIT_TRUE (296) 16
 TK_LIT_CHAR (297) 14
 TK_LIT_STRING (298) 18
 TK_IDENTIFICADOR (299) 9 25 28 36 37 38 39 43 44 49 50 76 77 78 79
@@ -342,7 +342,7 @@ programa (66)
 code (67)
     on left: 3 4 5 6 7 8, on right: 2 6 7 8
 id (68)
-    on left: 9, on right: 10 11 74 75 84 95 96 97 104 127 156
+    on left: 9, on right: 10 11 74 75 84 95 96 97 104 130 156
 array (69)
     on left: 10, on right: 98 154
 user_var (70)
@@ -353,12 +353,12 @@ int_neg (72)
     on left: 13, on right: 87 115
 char (73)
     on left: 14, on right: 93 161
-float (74)
-    on left: 15, on right: 88 89 90 159
-false (75)
-    on left: 16, on right: 91 163
-true (76)
-    on left: 17, on right: 92 162
+false (74)
+    on left: 15, on right: 91 163
+true (75)
+    on left: 16, on right: 92 162
+float (76)
+    on left: 17, on right: 88 89 90 159
 string (77)
     on left: 18, on right: 94 160
 native_type (78)
@@ -447,35 +447,35 @@ if_stm (118)
     on left: 124 125, on right: 69 148
 if_exp (119)
     on left: 126, on right: 124 125
-foreach (120)
-    on left: 127, on right: 70 149
-while (121)
-    on left: 128, on right: 71 150
-do_while (122)
-    on left: 129, on right: 67 151
-for (123)
-    on left: 130, on right: 73 153
+while (120)
+    on left: 127, on right: 71 150
+do_while (121)
+    on left: 128, on right: 67 151
+for (122)
+    on left: 129, on right: 73 153
+foreach (123)
+    on left: 130, on right: 70 149
 switch (124)
     on left: 131, on right: 72 152
 foreach_begin (125)
-    on left: 132, on right: 127
+    on left: 132, on right: 130
 while_begin (126)
-    on left: 133, on right: 128
+    on left: 133, on right: 127
 do_while_begin (127)
-    on left: 134, on right: 129
+    on left: 134, on right: 128
 for_begin (128)
-    on left: 135, on right: 130
+    on left: 135, on right: 129
 switch_begin (129)
     on left: 136, on right: 131
 cmd_list (130)
-    on left: 137 138, on right: 130 138
+    on left: 137 138, on right: 129 138
 cmd (131)
     on left: 139 140 141 142 143 144 145 146 147 148 149 150 151 152
     153, on right: 137 138
 exp (132)
     on left: 154 155 156 157 158 159 160 161 162 163 164 165 166 167
-    168 169 170 171, on right: 10 97 98 99 102 109 110 126 128 129
-    130 131 164 168 169 172 173 174 175 176 177 178 179 180 181 182
+    168 169 170 171, on right: 10 97 98 99 102 109 110 126 127 128
+    129 131 164 168 169 172 173 174 175 176 177 178 179 180 181 182
     183 184 185 186
 compExp (133)
     on left: 172 173 174 175 176 177, on right: 167
@@ -484,7 +484,7 @@ arimExp (134)
 logicExp (135)
     on left: 183 184, on right: 165
 exps_list (136)
-    on left: 185 186, on right: 103 127 186
+    on left: 185 186, on right: 103 130 186
 
 
 State 0
@@ -879,10 +879,10 @@ State 31
     pipe_pb_step1   go to state 82
     if_stm          go to state 83
     if_exp          go to state 84
-    foreach         go to state 85
-    while           go to state 86
-    do_while        go to state 87
-    for             go to state 88
+    while           go to state 85
+    do_while        go to state 86
+    for             go to state 87
+    foreach         go to state 88
     switch          go to state 89
     foreach_begin   go to state 90
     while_begin     go to state 91
@@ -1041,9 +1041,9 @@ State 48
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -1078,9 +1078,9 @@ State 49
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -1116,9 +1116,9 @@ State 50
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -1323,10 +1323,10 @@ State 67
     pipe_pb_step1   go to state 82
     if_stm          go to state 83
     if_exp          go to state 84
-    foreach         go to state 85
-    while           go to state 86
-    do_while        go to state 87
-    for             go to state 88
+    while           go to state 85
+    do_while        go to state 86
+    for             go to state 87
+    foreach         go to state 88
     switch          go to state 89
     foreach_begin   go to state 90
     while_begin     go to state 91
@@ -1486,30 +1486,30 @@ State 84
 
 State 85
 
-   70 command: foreach .
-
-    $default  reduce using rule 70 (command)
-
-
-State 86
-
    71 command: while .
 
     $default  reduce using rule 71 (command)
 
 
-State 87
+State 86
 
    67 command: do_while . ';'
 
     ';'  shift, and go to state 175
 
 
-State 88
+State 87
 
    73 command: for .
 
     $default  reduce using rule 73 (command)
+
+
+State 88
+
+   70 command: foreach .
+
+    $default  reduce using rule 70 (command)
 
 
 State 89
@@ -1521,21 +1521,21 @@ State 89
 
 State 90
 
-  127 foreach: foreach_begin . '(' id ':' exps_list ')' block
+  130 foreach: foreach_begin . '(' id ':' exps_list ')' block
 
     '('  shift, and go to state 176
 
 
 State 91
 
-  128 while: while_begin . '(' exp ')' TK_PR_DO block
+  127 while: while_begin . '(' exp ')' TK_PR_DO block
 
     '('  shift, and go to state 177
 
 
 State 92
 
-  129 do_while: do_while_begin . block TK_PR_WHILE '(' exp ')'
+  128 do_while: do_while_begin . block TK_PR_WHILE '(' exp ')'
 
     '{'  shift, and go to state 31
 
@@ -1544,7 +1544,7 @@ State 92
 
 State 93
 
-  130 for: for_begin . '(' cmd_list ':' exp ':' cmd_list ')' block
+  129 for: for_begin . '(' cmd_list ':' exp ':' cmd_list ')' block
 
     '('  shift, and go to state 179
 
@@ -1664,9 +1664,9 @@ State 105
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -1689,23 +1689,23 @@ State 106
 
 State 107
 
-   15 float: TK_LIT_FLOAT .
+   17 float: TK_LIT_FLOAT .
 
-    $default  reduce using rule 15 (float)
+    $default  reduce using rule 17 (float)
 
 
 State 108
 
-   16 false: TK_LIT_FALSE .
+   15 false: TK_LIT_FALSE .
 
-    $default  reduce using rule 16 (false)
+    $default  reduce using rule 15 (false)
 
 
 State 109
 
-   17 true: TK_LIT_TRUE .
+   16 true: TK_LIT_TRUE .
 
-    $default  reduce using rule 17 (true)
+    $default  reduce using rule 16 (true)
 
 
 State 110
@@ -1750,9 +1750,9 @@ State 113
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -1787,9 +1787,9 @@ State 114
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -1831,9 +1831,9 @@ State 116
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -1891,23 +1891,23 @@ State 121
 
 State 122
 
-  159 exp: float .
-
-    $default  reduce using rule 159 (exp)
-
-
-State 123
-
   163 exp: false .
 
     $default  reduce using rule 163 (exp)
 
 
-State 124
+State 123
 
   162 exp: true .
 
     $default  reduce using rule 162 (exp)
+
+
+State 124
+
+  159 exp: float .
+
+    $default  reduce using rule 159 (exp)
 
 
 State 125
@@ -2158,9 +2158,9 @@ State 143
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -2206,9 +2206,9 @@ State 145
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     params         go to state 215
@@ -2459,7 +2459,7 @@ State 175
 
 State 176
 
-  127 foreach: foreach_begin '(' . id ':' exps_list ')' block
+  130 foreach: foreach_begin '(' . id ':' exps_list ')' block
 
     TK_IDENTIFICADOR  shift, and go to state 112
 
@@ -2468,7 +2468,7 @@ State 176
 
 State 177
 
-  128 while: while_begin '(' . exp ')' TK_PR_DO block
+  127 while: while_begin '(' . exp ')' TK_PR_DO block
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -2487,9 +2487,9 @@ State 177
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -2505,14 +2505,14 @@ State 177
 
 State 178
 
-  129 do_while: do_while_begin block . TK_PR_WHILE '(' exp ')'
+  128 do_while: do_while_begin block . TK_PR_WHILE '(' exp ')'
 
     TK_PR_WHILE  shift, and go to state 231
 
 
 State 179
 
-  130 for: for_begin '(' . cmd_list ':' exp ':' cmd_list ')' block
+  129 for: for_begin '(' . cmd_list ':' exp ':' cmd_list ')' block
 
     TK_PR_INT         shift, and go to state 1
     TK_PR_FLOAT       shift, and go to state 2
@@ -2553,10 +2553,10 @@ State 179
     pipe_pb_step1   go to state 82
     if_stm          go to state 241
     if_exp          go to state 84
-    foreach         go to state 242
-    while           go to state 243
-    do_while        go to state 244
-    for             go to state 245
+    while           go to state 242
+    do_while        go to state 243
+    for             go to state 244
+    foreach         go to state 245
     switch          go to state 246
     foreach_begin   go to state 90
     while_begin     go to state 91
@@ -2588,9 +2588,9 @@ State 180
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -2797,9 +2797,9 @@ State 193
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -2834,9 +2834,9 @@ State 194
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -2871,9 +2871,9 @@ State 195
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -2908,9 +2908,9 @@ State 196
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -2945,9 +2945,9 @@ State 197
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -2982,9 +2982,9 @@ State 198
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3019,9 +3019,9 @@ State 199
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3056,9 +3056,9 @@ State 200
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3093,9 +3093,9 @@ State 201
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3130,9 +3130,9 @@ State 202
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3167,9 +3167,9 @@ State 203
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3204,9 +3204,9 @@ State 204
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3241,9 +3241,9 @@ State 205
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3278,9 +3278,9 @@ State 206
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3463,9 +3463,9 @@ State 220
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3500,9 +3500,9 @@ State 221
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3537,9 +3537,9 @@ State 222
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3572,9 +3572,9 @@ State 223
     int      go to state 279
     int_neg  go to state 280
     char     go to state 281
-    float    go to state 282
-    false    go to state 283
-    true     go to state 284
+    false    go to state 282
+    true     go to state 283
+    float    go to state 284
     string   go to state 285
     literal  go to state 286
 
@@ -3623,14 +3623,14 @@ State 228
 
 State 229
 
-  127 foreach: foreach_begin '(' id . ':' exps_list ')' block
+  130 foreach: foreach_begin '(' id . ':' exps_list ')' block
 
     ':'  shift, and go to state 289
 
 
 State 230
 
-  128 while: while_begin '(' exp . ')' TK_PR_DO block
+  127 while: while_begin '(' exp . ')' TK_PR_DO block
   172 compExp: exp . TK_OC_EQ exp
   173        | exp . TK_OC_NE exp
   174        | exp . TK_OC_GE exp
@@ -3663,7 +3663,7 @@ State 230
 
 State 231
 
-  129 do_while: do_while_begin block TK_PR_WHILE . '(' exp ')'
+  128 do_while: do_while_begin block TK_PR_WHILE . '(' exp ')'
 
     '('  shift, and go to state 291
 
@@ -3750,30 +3750,30 @@ State 241
 
 State 242
 
-  149 cmd: foreach .
-
-    $default  reduce using rule 149 (cmd)
-
-
-State 243
-
   150 cmd: while .
 
     $default  reduce using rule 150 (cmd)
 
 
-State 244
+State 243
 
   151 cmd: do_while .
 
     $default  reduce using rule 151 (cmd)
 
 
-State 245
+State 244
 
   153 cmd: for .
 
     $default  reduce using rule 153 (cmd)
+
+
+State 245
+
+  149 cmd: foreach .
+
+    $default  reduce using rule 149 (cmd)
 
 
 State 246
@@ -3785,7 +3785,7 @@ State 246
 
 State 247
 
-  130 for: for_begin '(' cmd_list . ':' exp ':' cmd_list ')' block
+  129 for: for_begin '(' cmd_list . ':' exp ':' cmd_list ')' block
 
     ':'  shift, and go to state 292
 
@@ -4254,9 +4254,9 @@ State 272
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     params_list    go to state 295
@@ -4428,23 +4428,23 @@ State 281
 
 State 282
 
-   88 literal: float .
-
-    $default  reduce using rule 88 (literal)
-
-
-State 283
-
    91 literal: false .
 
     $default  reduce using rule 91 (literal)
 
 
-State 284
+State 283
 
    92 literal: true .
 
     $default  reduce using rule 92 (literal)
+
+
+State 284
+
+   88 literal: float .
+
+    $default  reduce using rule 88 (literal)
 
 
 State 285
@@ -4479,7 +4479,7 @@ State 288
 
 State 289
 
-  127 foreach: foreach_begin '(' id ':' . exps_list ')' block
+  130 foreach: foreach_begin '(' id ':' . exps_list ')' block
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -4498,9 +4498,9 @@ State 289
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -4517,14 +4517,14 @@ State 289
 
 State 290
 
-  128 while: while_begin '(' exp ')' . TK_PR_DO block
+  127 while: while_begin '(' exp ')' . TK_PR_DO block
 
     TK_PR_DO  shift, and go to state 301
 
 
 State 291
 
-  129 do_while: do_while_begin block TK_PR_WHILE '(' . exp ')'
+  128 do_while: do_while_begin block TK_PR_WHILE '(' . exp ')'
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -4543,9 +4543,9 @@ State 291
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -4561,7 +4561,7 @@ State 291
 
 State 292
 
-  130 for: for_begin '(' cmd_list ':' . exp ':' cmd_list ')' block
+  129 for: for_begin '(' cmd_list ':' . exp ':' cmd_list ')' block
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -4580,9 +4580,9 @@ State 292
     user_var       go to state 119
     int            go to state 120
     char           go to state 121
-    float          go to state 122
-    false          go to state 123
-    true           go to state 124
+    false          go to state 122
+    true           go to state 123
+    float          go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -4639,10 +4639,10 @@ State 293
     pipe_pb_step1   go to state 82
     if_stm          go to state 241
     if_exp          go to state 84
-    foreach         go to state 242
-    while           go to state 243
-    do_while        go to state 244
-    for             go to state 245
+    while           go to state 242
+    do_while        go to state 243
+    for             go to state 244
+    foreach         go to state 245
     switch          go to state 246
     foreach_begin   go to state 90
     while_begin     go to state 91
@@ -4699,14 +4699,14 @@ State 299
 
 State 300
 
-  127 foreach: foreach_begin '(' id ':' exps_list . ')' block
+  130 foreach: foreach_begin '(' id ':' exps_list . ')' block
 
     ')'  shift, and go to state 306
 
 
 State 301
 
-  128 while: while_begin '(' exp ')' TK_PR_DO . block
+  127 while: while_begin '(' exp ')' TK_PR_DO . block
 
     '{'  shift, and go to state 31
 
@@ -4715,7 +4715,7 @@ State 301
 
 State 302
 
-  129 do_while: do_while_begin block TK_PR_WHILE '(' exp . ')'
+  128 do_while: do_while_begin block TK_PR_WHILE '(' exp . ')'
   172 compExp: exp . TK_OC_EQ exp
   173        | exp . TK_OC_NE exp
   174        | exp . TK_OC_GE exp
@@ -4748,7 +4748,7 @@ State 302
 
 State 303
 
-  130 for: for_begin '(' cmd_list ':' exp . ':' cmd_list ')' block
+  129 for: for_begin '(' cmd_list ':' exp . ':' cmd_list ')' block
   172 compExp: exp . TK_OC_EQ exp
   173        | exp . TK_OC_NE exp
   174        | exp . TK_OC_GE exp
@@ -4795,7 +4795,7 @@ State 305
 
 State 306
 
-  127 foreach: foreach_begin '(' id ':' exps_list ')' . block
+  130 foreach: foreach_begin '(' id ':' exps_list ')' . block
 
     '{'  shift, and go to state 31
 
@@ -4804,21 +4804,21 @@ State 306
 
 State 307
 
-  128 while: while_begin '(' exp ')' TK_PR_DO block .
+  127 while: while_begin '(' exp ')' TK_PR_DO block .
 
-    $default  reduce using rule 128 (while)
+    $default  reduce using rule 127 (while)
 
 
 State 308
 
-  129 do_while: do_while_begin block TK_PR_WHILE '(' exp ')' .
+  128 do_while: do_while_begin block TK_PR_WHILE '(' exp ')' .
 
-    $default  reduce using rule 129 (do_while)
+    $default  reduce using rule 128 (do_while)
 
 
 State 309
 
-  130 for: for_begin '(' cmd_list ':' exp ':' . cmd_list ')' block
+  129 for: for_begin '(' cmd_list ':' exp ':' . cmd_list ')' block
 
     TK_PR_INT         shift, and go to state 1
     TK_PR_FLOAT       shift, and go to state 2
@@ -4859,10 +4859,10 @@ State 309
     pipe_pb_step1   go to state 82
     if_stm          go to state 241
     if_exp          go to state 84
-    foreach         go to state 242
-    while           go to state 243
-    do_while        go to state 244
-    for             go to state 245
+    while           go to state 242
+    do_while        go to state 243
+    for             go to state 244
+    foreach         go to state 245
     switch          go to state 246
     foreach_begin   go to state 90
     while_begin     go to state 91
@@ -4875,21 +4875,21 @@ State 309
 
 State 310
 
-  127 foreach: foreach_begin '(' id ':' exps_list ')' block .
+  130 foreach: foreach_begin '(' id ':' exps_list ')' block .
 
-    $default  reduce using rule 127 (foreach)
+    $default  reduce using rule 130 (foreach)
 
 
 State 311
 
-  130 for: for_begin '(' cmd_list ':' exp ':' cmd_list . ')' block
+  129 for: for_begin '(' cmd_list ':' exp ':' cmd_list . ')' block
 
     ')'  shift, and go to state 312
 
 
 State 312
 
-  130 for: for_begin '(' cmd_list ':' exp ':' cmd_list ')' . block
+  129 for: for_begin '(' cmd_list ':' exp ':' cmd_list ')' . block
 
     '{'  shift, and go to state 31
 
@@ -4898,6 +4898,6 @@ State 312
 
 State 313
 
-  130 for: for_begin '(' cmd_list ':' exp ':' cmd_list ')' block .
+  129 for: for_begin '(' cmd_list ':' exp ':' cmd_list ')' block .
 
-    $default  reduce using rule 130 (for)
+    $default  reduce using rule 129 (for)

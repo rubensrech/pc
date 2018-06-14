@@ -591,6 +591,37 @@ void generateArrayVarAssignCode(comp_tree_t *node) {
 
 // > Logic
 
+void generateLoadBoolVarLogicCode(comp_tree_t *node) {
+    AstNodeInfo *nodeInfo = node->value;
+   
+    if (nodeInfo->type != AST_IDENTIFICADOR) return;
+
+    int maxCodeSize = 30;
+    int varReg = nodeInfo->resultReg;
+    
+    char *cmpCode = malloc(maxCodeSize);
+    char *cbrCode = malloc(maxCodeSize);
+    char *trueHole = generateLabelHole();
+    char *cbrCodeComma = malloc(3);
+    char *falseHole = generateLabelHole();
+    char *cbrCodeLineBreak = malloc(2);
+
+    snprintf(cbrCode, maxCodeSize, "cbr r%d -> ", varReg);
+    strcpy(cbrCodeComma, ", ");
+    strcpy(cbrCodeLineBreak, "\n");
+
+    GSList *codeList = nodeInfo->code;
+    codeList = g_slist_append(codeList, cbrCode);
+    codeList = g_slist_append(codeList, trueHole);
+    codeList = g_slist_append(codeList, cbrCodeComma);
+    codeList = g_slist_append(codeList, falseHole);
+    codeList = g_slist_append(codeList, cbrCodeLineBreak);
+
+    nodeInfo->code = codeList;
+    nodeInfo->trueHoles = g_slist_append(nodeInfo->trueHoles, trueHole);
+    nodeInfo->falseHoles = g_slist_append(nodeInfo->falseHoles, falseHole);
+}
+
 void generateCompCode(comp_tree_t *node, const char *relOp) {
     AstNodeInfo *nodeInfo = node->value;
     AstNodeInfo *fstOpInfo = node->first->value;
@@ -629,13 +660,18 @@ void generateCompCode(comp_tree_t *node, const char *relOp) {
 }
 
 void generateLogicCode(comp_tree_t *node, const char *op) {
+    comp_tree_t *fstOpNode = node->first;
+    comp_tree_t *sndOpNode = node->last;
     AstNodeInfo *nodeInfo = node->value;
-    AstNodeInfo *fstOpInfo = node->first->value;
-    AstNodeInfo *sndOpInfo = node->last->value;
+    AstNodeInfo *fstOpInfo = fstOpNode->value;
+    AstNodeInfo *sndOpInfo = sndOpNode->value;
 
     int maxCodeSize = 10;
     int x = generateLabel();
     char *labelCode = generateLabelCode(x);
+
+    generateLoadBoolVarLogicCode(fstOpNode);
+    generateLoadBoolVarLogicCode(sndOpNode);
 
     GSList *codeList = fstOpInfo->code; // B.code = B1.code
     codeList = g_slist_append(codeList, labelCode); // B.code += "Lx: "
@@ -666,19 +702,18 @@ void generateIfCode(comp_tree_t *node) {
         return;
     }
     
+    comp_tree_t *expNode = node->first;
     AstNodeInfo *nodeInfo = node->value;
-    AstNodeInfo *expInfo = node->first->value;
+    AstNodeInfo *expInfo = expNode->value;
     AstNodeInfo *ifInfo = node->last->value;
-
-    if (expInfo->type == AST_IDENTIFICADOR) {
-        puts("generate load bool var for logic");
-    }
 
     int trueLabel = generateLabel();
     int nextLabel = generateLabel();
 
     char *trueLabelCode = generateLabelCode(trueLabel);
     char *nextLabelCode = generateLabelCode(nextLabel);
+
+    generateLoadBoolVarLogicCode(expNode);
 
     patchUpLabelHoles(expInfo->trueHoles, trueLabel);
     patchUpLabelHoles(expInfo->falseHoles, nextLabel);
@@ -699,13 +734,16 @@ void generateIfElseCommandCode(comp_tree_t *node) {
     AstNodeInfo *trueBlockInfo = trueBlockNode->value;
     AstNodeInfo *falseBlockInfo = falseBlockNode->value;
 
+    generateLoadBoolVarLogicCode(expNode);
+
     GSList *codeList = generateIfElseCode(expNode, trueBlockInfo->code, falseBlockInfo->code); 
     nodeInfo->code = codeList;
 }
 
-void generateWhileCode(comp_tree_t *node) {    
+void generateWhileCode(comp_tree_t *node) {  
+    comp_tree_t *expNode = node->first;  
     AstNodeInfo *nodeInfo = node->value;
-    AstNodeInfo *expInfo = node->first->value;
+    AstNodeInfo *expInfo = expNode->value;
     AstNodeInfo *blockInfo = node->last->value;
 
     int beginLabel = generateLabel();
@@ -717,6 +755,8 @@ void generateWhileCode(comp_tree_t *node) {
     char *nextLabelCode = generateLabelCode(nextLabel);
     char *jmpCode = malloc(30);
     snprintf(jmpCode, 30, "jumpI -> L%d\n", beginLabel);
+
+    generateLoadBoolVarLogicCode(expNode);
 
     patchUpLabelHoles(expInfo->trueHoles, trueLabel);
     patchUpLabelHoles(expInfo->falseHoles, nextLabel);
@@ -735,9 +775,10 @@ void generateWhileCode(comp_tree_t *node) {
 }
 
 void generateDoWhileCode(comp_tree_t *node) {
+    comp_tree_t *expNode = node->last; 
     AstNodeInfo *nodeInfo = node->value;
     AstNodeInfo *blockInfo = node->first->value;
-    AstNodeInfo *expInfo = node->last->value;
+    AstNodeInfo *expInfo = expNode->value;
 
     int beginLabel = generateLabel();
     int nextLabel = generateLabel();
@@ -747,6 +788,8 @@ void generateDoWhileCode(comp_tree_t *node) {
     char *beginLabelCode = generateLabelCode(beginLabel);
     char *nextLabelCode = generateLabelCode(nextLabel);
     char *continueLabelCode;
+
+    generateLoadBoolVarLogicCode(expNode);
 
     patchUpLabelHoles(expInfo->trueHoles, beginLabel);
     patchUpLabelHoles(expInfo->falseHoles, nextLabel);
@@ -769,9 +812,10 @@ void generateDoWhileCode(comp_tree_t *node) {
 }
 
 void generateForCode(comp_tree_t *node) {
+    comp_tree_t *expNode = node->first->next; 
     AstNodeInfo *nodeInfo = node->value;
     AstNodeInfo *cmds1Info = node->first->value;              // 1st child
-    AstNodeInfo *expInfo = node->first->next->value;          // 2nd child
+    AstNodeInfo *expInfo = expNode->value;                    // 2nd child
     AstNodeInfo *cmds2Info = node->first->next->next->value;  // 3rd child
     AstNodeInfo *blockInfo = node->last->value;               // 4th child (last)
 
@@ -787,6 +831,8 @@ void generateForCode(comp_tree_t *node) {
     char *jmpCode = malloc(30);
     snprintf(jmpCode, 30, "jumpI -> L%d\n", beginLabel);
     char *continueLabelCode;
+
+    generateLoadBoolVarLogicCode(expNode);
 
     patchUpLabelHoles(expInfo->trueHoles, trueLabel);
     patchUpLabelHoles(expInfo->falseHoles, nextLabel);

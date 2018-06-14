@@ -56,6 +56,7 @@ void generateUserVarFieldAssignCode(comp_tree_t *node);
 void generateSimpleVarAssignCode(comp_tree_t *node);
 void generateArrayVarAssignCode(comp_tree_t *node);
 // > Logic
+void generateLoadBoolVarLogicCode(comp_tree_t *node);
 void generateCompCode(comp_tree_t *node, const char *relOp);
 void generateLogicCode(comp_tree_t *node, const char *op);
 // > Control flow

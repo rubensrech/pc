@@ -80,7 +80,9 @@ int checkArimExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2) {
 
     if (exp1DataType == DATATYPE_FLOAT || exp2DataType == DATATYPE_FLOAT)
         return DATATYPE_FLOAT;
-    else
+    else if (exp1DataType == DATATYPE_CHAR || exp2DataType == DATATYPE_CHAR)
+        return DATATYPE_CHAR;
+    else 
         return DATATYPE_INT;
 }
 

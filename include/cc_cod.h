@@ -48,7 +48,7 @@ GSList *getArrayAddrGeneratorCode(comp_tree_t *arrNode, int addrReg);
 void generateLoadArrayVarCode(comp_tree_t *arrNode);
 
 // Assignment
-void generateLoadBoolExpCode(comp_tree_t *expNode);
+void generateLoadBoolExpForAssignCode(comp_tree_t *expNode);
 
 void generateAssignCode(comp_tree_t *node);
 void generateUserVarAssignCode(comp_tree_t *node);

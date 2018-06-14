@@ -406,9 +406,12 @@ void generateLoadUserVarFieldCode(comp_tree_t *userVarNode) {
 
 // Assignment
 
-void generateLoadBoolExpCode(comp_tree_t *expNode) {
+void generateLoadBoolExpForAssignCode(comp_tree_t *expNode) {
     AstNodeInfo *expInfo = expNode->value;
 
+    // Vars must be loaded from memory
+    if (expInfo->type == AST_IDENTIFICADOR) return;
+    // Only generate code if exp is boolean
     if (expInfo->dataType != DATATYPE_BOOL) return;
 
     int maxCodeSize = 30;
@@ -435,7 +438,7 @@ void generateAssignCode(comp_tree_t *node) {
     AstNodeInfo *destInfo = node->first->value;
     int idType;
 
-    generateLoadBoolExpCode(expNode);
+    generateLoadBoolExpForAssignCode(expNode);
 
     switch (destInfo->type) {
     case AST_IDENTIFICADOR:
@@ -666,6 +669,10 @@ void generateIfCode(comp_tree_t *node) {
     AstNodeInfo *nodeInfo = node->value;
     AstNodeInfo *expInfo = node->first->value;
     AstNodeInfo *ifInfo = node->last->value;
+
+    if (expInfo->type == AST_IDENTIFICADOR) {
+        puts("generate load bool var for logic");
+    }
 
     int trueLabel = generateLabel();
     int nextLabel = generateLabel();

@@ -39,17 +39,17 @@ void setNodeLocalVarOffset(comp_tree_t *idNode);
 void setTokenLocalVarOffset(TokenInfo *idInfo);
 void setTokenGlobalVarOffset(TokenInfo *idInfo);
 
+// Loads
 void generateLoadVarCode(comp_tree_t *idNode);
-
 void generateLoadSimpleVarCode(comp_tree_t *idNode);
-
 void generateLoadUserVarCode(comp_tree_t *idNode);
 void generateLoadUserVarFieldCode(comp_tree_t *userVarNode);
-
 GSList *getArrayAddrGeneratorCode(comp_tree_t *arrNode, int addrReg);
 void generateLoadArrayVarCode(comp_tree_t *arrNode);
 
 // Assignment
+void generateLoadBoolExpCode(comp_tree_t *expNode);
+
 void generateAssignCode(comp_tree_t *node);
 void generateUserVarAssignCode(comp_tree_t *node);
 void generateUserVarFieldAssignCode(comp_tree_t *node);

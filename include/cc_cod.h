@@ -25,6 +25,7 @@ void cmdsCodeListConcat(comp_tree_t *cmd1, comp_tree_t *cmd2);
 
 // > Code generating
 void generateCode(comp_tree_t *node);
+GSList *generateIfElseCode(comp_tree_t *expNode, GSList *trueCode, GSList *falseCode);
 // Arithmetic
 void generateLiteralCode(comp_tree_t *node);
 void generateArithInvertCode(comp_tree_t *node);
@@ -59,7 +60,7 @@ void generateCompCode(comp_tree_t *node, const char *relOp);
 void generateLogicCode(comp_tree_t *node, const char *op);
 // > Control flow
 void generateIfCode(comp_tree_t *node);
-void generateIfElseCode(comp_tree_t *node);
+void generateIfElseCommandCode(comp_tree_t *node);
 void generateWhileCode(comp_tree_t *node);
 void generateDoWhileCode(comp_tree_t *node);
 void generateForCode(comp_tree_t *node);

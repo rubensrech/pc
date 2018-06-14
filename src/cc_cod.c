@@ -161,6 +161,33 @@ void generateCode(comp_tree_t *node) {
     }
 }
 
+GSList *generateIfElseCode(comp_tree_t *expNode, GSList *trueCode, GSList *falseCode) {
+    AstNodeInfo *expInfo = expNode->value;
+
+    int trueLabel = generateLabel();
+    int falseLabel = generateLabel();
+    int nextLabel = generateLabel();
+
+    char *trueLabelCode = generateLabelCode(trueLabel);
+    char *falseLabelCode = generateLabelCode(falseLabel);
+    char *nextLabelCode = generateLabelCode(nextLabel);
+    char *jmpCode = malloc(30);
+    snprintf(jmpCode, 30, "jumpI -> L%d\n", nextLabel);
+
+    patchUpLabelHoles(expInfo->trueHoles, trueLabel);
+    patchUpLabelHoles(expInfo->falseHoles, falseLabel);
+
+    GSList *codeList = expInfo->code;   // S.code = B.code    
+    codeList = g_slist_append(codeList, trueLabelCode); // S.code += "Ltrue: "
+    codeList = g_slist_concat(codeList, trueCode); // S.code += S1.code
+    codeList = g_slist_append(codeList, jmpCode); // S.code += "jumpI -> S.next"
+    codeList = g_slist_append(codeList, falseLabelCode); // S.code += "Lfalse: "
+    codeList = g_slist_concat(codeList, falseCode); // S.code += S2.code
+    codeList = g_slist_append(codeList, nextLabelCode); // S.code += "Lnext: "
+
+    return codeList;
+}
+
 // Arithmetic
 
 void generateLiteralCode(comp_tree_t *node) {
@@ -379,9 +406,59 @@ void generateLoadUserVarFieldCode(comp_tree_t *userVarNode) {
 
 // Assignment
 
+void generateLoadBoolExpCode(comp_tree_t *expNode) {
+    AstNodeInfo *expInfo = expNode->value;
+
+    if (expInfo->dataType != DATATYPE_BOOL) return;
+
+    int trueLabel = generateLabel();
+    int falseLabel = generateLabel();
+    int nextLabel = generateLabel();
+
+
+
+    puts(">>>>>>>>>>>>>>");
+    printCodeList(expInfo->code);
+    printf("Result reg: %d\n", expInfo->resultReg);
+    puts(">>>>>>>>>>>>>>");
+
+    /*
+    AstNodeInfo *nodeInfo = node->value;
+    AstNodeInfo *expInfo = node->first->value;
+    AstNodeInfo *ifInfo = node->first->next->value;
+    AstNodeInfo *elseInfo = node->last->value;
+
+    int trueLabel = generateLabel();
+    int falseLabel = generateLabel();
+    int nextLabel = generateLabel();
+
+    char *trueLabelCode = generateLabelCode(trueLabel);
+    char *falseLabelCode = generateLabelCode(falseLabel);
+    char *nextLabelCode = generateLabelCode(nextLabel);
+    char *jmpCode = malloc(30);
+    snprintf(jmpCode, 30, "jumpI -> L%d\n", nextLabel);
+
+    patchUpLabelHoles(expInfo->trueHoles, trueLabel);
+    patchUpLabelHoles(expInfo->falseHoles, falseLabel);
+
+    GSList *codeList = expInfo->code;   // S.code = B.code    
+    codeList = g_slist_append(codeList, trueLabelCode); // S.code += "Ltrue: "
+    codeList = g_slist_concat(codeList, ifInfo->code); // S.code += S1.code
+    codeList = g_slist_append(codeList, jmpCode); // S.code += "jumpI -> S.next"
+    codeList = g_slist_append(codeList, falseLabelCode); // S.code += "Lfalse: "
+    codeList = g_slist_concat(codeList, elseInfo->code); // S.code += S2.code
+    codeList = g_slist_append(codeList, nextLabelCode); // S.code += "Lnext: "
+
+    nodeInfo->code = codeList;
+    */   
+}
+
 void generateAssignCode(comp_tree_t *node) {
+    comp_tree_t *expNode = node->last;
     AstNodeInfo *destInfo = node->first->value;
     int idType;
+
+    generateLoadBoolExpCode(expNode);
 
     switch (destInfo->type) {
     case AST_IDENTIFICADOR:
@@ -605,7 +682,7 @@ void generateLogicCode(comp_tree_t *node, const char *op) {
 
 void generateIfCode(comp_tree_t *node) {
     if (node->childnodes == 3) {
-        generateIfElseCode(node);
+        generateIfElseCommandCode(node);
         return;
     }
     
@@ -630,33 +707,15 @@ void generateIfCode(comp_tree_t *node) {
     nodeInfo->code = codeList;
 }
 
-void generateIfElseCode(comp_tree_t *node) {
+void generateIfElseCommandCode(comp_tree_t *node) {
+    comp_tree_t *expNode = node->first;
+    comp_tree_t *trueBlockNode = node->first->next;
+    comp_tree_t *falseBlockNode = node->last;
     AstNodeInfo *nodeInfo = node->value;
-    AstNodeInfo *expInfo = node->first->value;
-    AstNodeInfo *ifInfo = node->first->next->value;
-    AstNodeInfo *elseInfo = node->last->value;
+    AstNodeInfo *trueBlockInfo = trueBlockNode->value;
+    AstNodeInfo *falseBlockInfo = falseBlockNode->value;
 
-    int trueLabel = generateLabel();
-    int falseLabel = generateLabel();
-    int nextLabel = generateLabel();
-
-    char *trueLabelCode = generateLabelCode(trueLabel);
-    char *falseLabelCode = generateLabelCode(falseLabel);
-    char *nextLabelCode = generateLabelCode(nextLabel);
-    char *jmpCode = malloc(30);
-    snprintf(jmpCode, 30, "jumpI -> L%d\n", nextLabel);
-
-    patchUpLabelHoles(expInfo->trueHoles, trueLabel);
-    patchUpLabelHoles(expInfo->falseHoles, falseLabel);
-
-    GSList *codeList = expInfo->code;   // S.code = B.code    
-    codeList = g_slist_append(codeList, trueLabelCode); // S.code += "Ltrue: "
-    codeList = g_slist_concat(codeList, ifInfo->code); // S.code += S1.code
-    codeList = g_slist_append(codeList, jmpCode); // S.code += "jumpI -> S.next"
-    codeList = g_slist_append(codeList, falseLabelCode); // S.code += "Lfalse: "
-    codeList = g_slist_concat(codeList, elseInfo->code); // S.code += S2.code
-    codeList = g_slist_append(codeList, nextLabelCode); // S.code += "Lnext: "
-
+    GSList *codeList = generateIfElseCode(expNode, trueBlockInfo->code, falseBlockInfo->code); 
     nodeInfo->code = codeList;
 }
 

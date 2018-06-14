@@ -155,14 +155,18 @@ void generateCode(comp_tree_t *node) {
 
 void generateLiteralCode(comp_tree_t *node) {
     AstNodeInfo *nodeInfo = node->value;
+    TokenInfo *tokenInfo = nodeInfo->tokenInfo;
 
-    int maxCodeSize = 30;
-    char *code = malloc(maxCodeSize);
+    int codeSize = 30;
+    char *code = malloc(codeSize);
     int reg = generateTempReg();
       
     switch (nodeInfo->dataType) {
     case DATATYPE_INT:
-        snprintf(code, maxCodeSize, "loadI %s => r%d\n", nodeInfo->tokenInfo->lexeme, reg);
+        snprintf(code, codeSize, "loadI %d => r%d\n", tokenInfo->value.intVal, reg);
+        break;
+    case DATATYPE_CHAR:
+        snprintf(code, codeSize, "loadI %d => r%d\n", tokenInfo->value.charVal, reg);
         break;
     default: break;
     }

@@ -191,27 +191,34 @@ user_var: id '.' id        {
                                         setNodeUserDataType($$, getTokenInfoFromIdNode($1)->userDataType);
                                 };
 
-int: TK_LIT_INT                 {
-                                        // > AST
-                                        $$ = makeASTNode(AST_LITERAL, $1);
-                                        // > Semantic
-                                        setNodeDataType($$, DATATYPE_INT);
-                                        // > Code
-                                        generateCode($$);
-                                };
-int_neg: '-' int                {
-                                        // > AST
-                                        $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2);
-                                        // > Semantic
-                                        setNodeDataType($$, DATATYPE_INT);
-                                        // > Code
-                                        generateCode($$);
-                                };
-float: TK_LIT_FLOAT             { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_FLOAT); };
-false: TK_LIT_FALSE             { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_BOOL); };
-true: TK_LIT_TRUE               { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_BOOL); };
-char: TK_LIT_CHAR               { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_CHAR); };
-string: TK_LIT_STRING           { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_STRING); };
+int: TK_LIT_INT         {
+                                // > AST
+                                $$ = makeASTNode(AST_LITERAL, $1);
+                                // > Semantic
+                                setNodeDataType($$, DATATYPE_INT);
+                                // > Code
+                                generateCode($$);
+                        };
+int_neg: '-' int        {
+                                // > AST
+                                $$ = makeASTUnaryNode(AST_ARIM_INVERSAO, NULL, $2);
+                                // > Semantic
+                                setNodeDataType($$, DATATYPE_INT);
+                                // > Code
+                                generateCode($$);
+                        };
+char: TK_LIT_CHAR       {
+                                // > AST
+                                $$ = makeASTNode(AST_LITERAL, $1);
+                                // > Semantic
+                                setNodeDataType($$, DATATYPE_CHAR);
+                                // > Code
+                                generateCode($$);
+                        };
+float: TK_LIT_FLOAT     { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_FLOAT); };
+false: TK_LIT_FALSE     { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_BOOL); };
+true: TK_LIT_TRUE       { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_BOOL); };
+string: TK_LIT_STRING   { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_STRING); };
 
 native_type:  TK_PR_INT         { $$ = $1; }
             | TK_PR_FLOAT       { $$ = $1; }

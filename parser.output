@@ -27,13 +27,13 @@ Grammar
 
    13 int_neg: '-' int
 
-   14 float: TK_LIT_FLOAT
+   14 char: TK_LIT_CHAR
 
-   15 false: TK_LIT_FALSE
+   15 float: TK_LIT_FLOAT
 
-   16 true: TK_LIT_TRUE
+   16 false: TK_LIT_FALSE
 
-   17 char: TK_LIT_CHAR
+   17 true: TK_LIT_TRUE
 
    18 string: TK_LIT_STRING
 
@@ -324,10 +324,10 @@ TK_OC_SR (290) 96
 TK_OC_PG (291) 120 122
 TK_OC_PB (292) 121 123
 TK_LIT_INT (293) 12 38 39
-TK_LIT_FLOAT (294) 14
-TK_LIT_FALSE (295) 15
-TK_LIT_TRUE (296) 16
-TK_LIT_CHAR (297) 17
+TK_LIT_FLOAT (294) 15
+TK_LIT_FALSE (295) 16
+TK_LIT_TRUE (296) 17
+TK_LIT_CHAR (297) 14
 TK_LIT_STRING (298) 18
 TK_IDENTIFICADOR (299) 9 25 28 36 37 38 39 43 44 49 50 76 77 78 79
 TOKEN_ERRO (300)
@@ -351,14 +351,14 @@ int (71)
     on left: 12, on right: 13 85 86 95 96 113 114 158
 int_neg (72)
     on left: 13, on right: 87 115
-float (73)
-    on left: 14, on right: 88 89 90 159
-false (74)
-    on left: 15, on right: 91 163
-true (75)
-    on left: 16, on right: 92 162
-char (76)
-    on left: 17, on right: 93 161
+char (73)
+    on left: 14, on right: 93 161
+float (74)
+    on left: 15, on right: 88 89 90 159
+false (75)
+    on left: 16, on right: 91 163
+true (76)
+    on left: 17, on right: 92 162
 string (77)
     on left: 18, on right: 94 160
 native_type (78)
@@ -1040,10 +1040,10 @@ State 48
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -1077,10 +1077,10 @@ State 49
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -1115,10 +1115,10 @@ State 50
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -1663,10 +1663,10 @@ State 105
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -1689,30 +1689,30 @@ State 106
 
 State 107
 
-   14 float: TK_LIT_FLOAT .
+   15 float: TK_LIT_FLOAT .
 
-    $default  reduce using rule 14 (float)
+    $default  reduce using rule 15 (float)
 
 
 State 108
 
-   15 false: TK_LIT_FALSE .
+   16 false: TK_LIT_FALSE .
 
-    $default  reduce using rule 15 (false)
+    $default  reduce using rule 16 (false)
 
 
 State 109
 
-   16 true: TK_LIT_TRUE .
+   17 true: TK_LIT_TRUE .
 
-    $default  reduce using rule 16 (true)
+    $default  reduce using rule 17 (true)
 
 
 State 110
 
-   17 char: TK_LIT_CHAR .
+   14 char: TK_LIT_CHAR .
 
-    $default  reduce using rule 17 (char)
+    $default  reduce using rule 14 (char)
 
 
 State 111
@@ -1749,10 +1749,10 @@ State 113
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -1786,10 +1786,10 @@ State 114
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -1830,10 +1830,10 @@ State 116
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -1884,30 +1884,30 @@ State 120
 
 State 121
 
+  161 exp: char .
+
+    $default  reduce using rule 161 (exp)
+
+
+State 122
+
   159 exp: float .
 
     $default  reduce using rule 159 (exp)
 
 
-State 122
+State 123
 
   163 exp: false .
 
     $default  reduce using rule 163 (exp)
 
 
-State 123
+State 124
 
   162 exp: true .
 
     $default  reduce using rule 162 (exp)
-
-
-State 124
-
-  161 exp: char .
-
-    $default  reduce using rule 161 (exp)
 
 
 State 125
@@ -2157,10 +2157,10 @@ State 143
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -2205,10 +2205,10 @@ State 145
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     params         go to state 215
@@ -2486,10 +2486,10 @@ State 177
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -2587,10 +2587,10 @@ State 180
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -2796,10 +2796,10 @@ State 193
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -2833,10 +2833,10 @@ State 194
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -2870,10 +2870,10 @@ State 195
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -2907,10 +2907,10 @@ State 196
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -2944,10 +2944,10 @@ State 197
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -2981,10 +2981,10 @@ State 198
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3018,10 +3018,10 @@ State 199
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3055,10 +3055,10 @@ State 200
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3092,10 +3092,10 @@ State 201
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3129,10 +3129,10 @@ State 202
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3166,10 +3166,10 @@ State 203
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3203,10 +3203,10 @@ State 204
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3240,10 +3240,10 @@ State 205
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3277,10 +3277,10 @@ State 206
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3462,10 +3462,10 @@ State 220
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3499,10 +3499,10 @@ State 221
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3536,10 +3536,10 @@ State 222
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -3571,10 +3571,10 @@ State 223
     id       go to state 278
     int      go to state 279
     int_neg  go to state 280
-    float    go to state 281
-    false    go to state 282
-    true     go to state 283
-    char     go to state 284
+    char     go to state 281
+    float    go to state 282
+    false    go to state 283
+    true     go to state 284
     string   go to state 285
     literal  go to state 286
 
@@ -4253,10 +4253,10 @@ State 272
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     params_list    go to state 295
@@ -4421,30 +4421,30 @@ State 280
 
 State 281
 
+   93 literal: char .
+
+    $default  reduce using rule 93 (literal)
+
+
+State 282
+
    88 literal: float .
 
     $default  reduce using rule 88 (literal)
 
 
-State 282
+State 283
 
    91 literal: false .
 
     $default  reduce using rule 91 (literal)
 
 
-State 283
+State 284
 
    92 literal: true .
 
     $default  reduce using rule 92 (literal)
-
-
-State 284
-
-   93 literal: char .
-
-    $default  reduce using rule 93 (literal)
 
 
 State 285
@@ -4497,10 +4497,10 @@ State 289
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -4542,10 +4542,10 @@ State 291
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127
@@ -4579,10 +4579,10 @@ State 292
     array          go to state 118
     user_var       go to state 119
     int            go to state 120
-    float          go to state 121
-    false          go to state 122
-    true           go to state 123
-    char           go to state 124
+    char           go to state 121
+    float          go to state 122
+    false          go to state 123
+    true           go to state 124
     string         go to state 125
     func_call      go to state 126
     pipe_exp       go to state 127

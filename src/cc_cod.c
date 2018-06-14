@@ -170,6 +170,7 @@ void generateLiteralCode(comp_tree_t *node) {
     int codeSize = 30;
     char *code = malloc(codeSize);
     int reg = generateTempReg();
+    char *boolHole, *breakLineCode;
       
     switch (nodeInfo->dataType) {
     case DATATYPE_INT:
@@ -178,6 +179,19 @@ void generateLiteralCode(comp_tree_t *node) {
     case DATATYPE_CHAR:
         snprintf(code, codeSize, "loadI %d => r%d\n", tokenInfo->value.charVal, reg);
         break;
+    case DATATYPE_BOOL:
+        boolHole = generateLabelHole();
+        breakLineCode = malloc(2);
+        snprintf(code, codeSize, "jumpI -> ");
+        strcpy(breakLineCode, "\n");
+        nodeInfo->code = g_slist_append(nodeInfo->code, code);
+        nodeInfo->code = g_slist_append(nodeInfo->code, boolHole);
+        nodeInfo->code = g_slist_append(nodeInfo->code, breakLineCode);
+        if (strcmp(tokenInfo->lexeme, "true") == 0)
+            nodeInfo->trueHoles = g_slist_append(nodeInfo->trueHoles, boolHole);
+        else
+            nodeInfo->falseHoles = g_slist_append(nodeInfo->falseHoles, boolHole);
+        return;
     default: break;
     }
 

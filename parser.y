@@ -216,8 +216,8 @@ char: TK_LIT_CHAR       {
                                 generateCode($$);
                         };
 float: TK_LIT_FLOAT     { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_FLOAT); };
-false: TK_LIT_FALSE     { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_BOOL); };
-true: TK_LIT_TRUE       { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_BOOL); };
+false: TK_LIT_FALSE     { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_BOOL); generateCode($$); };
+true: TK_LIT_TRUE       { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_BOOL); generateCode($$); };
 string: TK_LIT_STRING   { $$ = makeASTNode(AST_LITERAL, $1); setNodeDataType($$, DATATYPE_STRING); };
 
 native_type:  TK_PR_INT         { $$ = $1; }

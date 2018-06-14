@@ -38,6 +38,16 @@ void inheritCodeList(comp_tree_t *to, comp_tree_t *from) {
 
 // > General
 
+// Called in cc_ast.c -> freeAST()
+void freeCodeList(GSList *codeList) {
+    g_slist_free_full(codeList, freeCodeListItem);
+}
+
+void freeCodeListItem(gpointer data) {
+    char *codeStr = data;
+    free(data);
+}
+
 int generateTempReg() {
     return tempReg++;
 }

@@ -8,6 +8,9 @@ void printNodeCodeList(comp_tree_t *node);
 void inheritCodeList(comp_tree_t *to, comp_tree_t *from);
 
 // > General
+void freeCodeList(GSList *codeList);
+void freeCodeListItem(gpointer data);
+
 int getSizeOf(int type);
 int generateTempReg();
 char *generateLabelHole();

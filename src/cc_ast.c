@@ -3,6 +3,7 @@
 #include "cc_ast.h"
 #include "cc_gv.h"
 #include "cc_sem.h"
+#include "cc_cod.h"
 
 comp_tree_t *ast;
 
@@ -12,7 +13,9 @@ void initAST() {
 }
 
 void freeAST() {
+    AstNodeInfo *astInfo = ast->value;
     gv_close();
+    freeCodeList(astInfo->code);
     freeASTSubTree(ast);
     tree_free(ast);
 }

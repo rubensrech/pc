@@ -184,6 +184,7 @@ void checkIdDeclared(TokenInfo *id) {
             id->dataType = globalId->dataType;
             id->userDataType = globalId->userDataType;
             id->offset = globalId->offset;
+            id->length = globalId->length;
         } else {
             snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Undeclared identifier '%s'", id->lexeme);
             throwSemanticError(errorMsg, IKS_ERROR_UNDECLARED);

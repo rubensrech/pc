@@ -193,96 +193,98 @@ Grammar
 
   129 for: for_begin '(' cmd_list ':' exp ':' cmd_list ')' block
 
-  130 foreach: foreach_begin '(' id ':' exps_list ')' block
+  130 foreach: foreach_begin '(' id ':' foreach_iter_vars ')' block
 
-  131 switch: switch_begin '(' exp ')' block
+  131 foreach_iter_vars: id ',' id
 
-  132 foreach_begin: TK_PR_FOREACH
+  132 switch: switch_begin '(' exp ')' block
 
-  133 while_begin: TK_PR_WHILE
+  133 foreach_begin: TK_PR_FOREACH
 
-  134 do_while_begin: TK_PR_DO
+  134 while_begin: TK_PR_WHILE
 
-  135 for_begin: TK_PR_FOR
+  135 do_while_begin: TK_PR_DO
 
-  136 switch_begin: TK_PR_SWITCH
+  136 for_begin: TK_PR_FOR
 
-  137 cmd_list: cmd
-  138         | cmd ',' cmd_list
+  137 switch_begin: TK_PR_SWITCH
 
-  139 cmd: var_dec
-  140    | shift_cmd
-  141    | assig_cmd
-  142    | block
-  143    | func_call
-  144    | return_cmd
-  145    | break_cmd
-  146    | continue_cmd
-  147    | pipe_exp
-  148    | if_stm
-  149    | foreach
-  150    | while
-  151    | do_while
-  152    | switch
-  153    | for
+  138 cmd_list: cmd
+  139         | cmd ',' cmd_list
 
-  154 exp: array
-  155    | user_var
-  156    | id
-  157    | func_call
-  158    | int
-  159    | float
-  160    | string
-  161    | char
-  162    | true
-  163    | false
-  164    | '(' exp ')'
-  165    | logicExp
-  166    | arimExp
-  167    | compExp
-  168    | '-' exp
-  169    | '!' exp
-  170    | pipe_exp
-  171    | '.'
+  140 cmd: var_dec
+  141    | shift_cmd
+  142    | assig_cmd
+  143    | block
+  144    | func_call
+  145    | return_cmd
+  146    | break_cmd
+  147    | continue_cmd
+  148    | pipe_exp
+  149    | if_stm
+  150    | foreach
+  151    | while
+  152    | do_while
+  153    | switch
+  154    | for
 
-  172 compExp: exp TK_OC_EQ exp
-  173        | exp TK_OC_NE exp
-  174        | exp TK_OC_GE exp
-  175        | exp TK_OC_LE exp
-  176        | exp '>' exp
-  177        | exp '<' exp
+  155 exp: array
+  156    | user_var
+  157    | id
+  158    | func_call
+  159    | int
+  160    | float
+  161    | string
+  162    | char
+  163    | true
+  164    | false
+  165    | '(' exp ')'
+  166    | logicExp
+  167    | arimExp
+  168    | compExp
+  169    | '-' exp
+  170    | '!' exp
+  171    | pipe_exp
+  172    | '.'
 
-  178 arimExp: exp '+' exp
-  179        | exp '-' exp
-  180        | exp '/' exp
-  181        | exp '*' exp
-  182        | exp '%' exp
+  173 compExp: exp TK_OC_EQ exp
+  174        | exp TK_OC_NE exp
+  175        | exp TK_OC_GE exp
+  176        | exp TK_OC_LE exp
+  177        | exp '>' exp
+  178        | exp '<' exp
 
-  183 logicExp: exp TK_OC_AND exp
-  184         | exp TK_OC_OR exp
+  179 arimExp: exp '+' exp
+  180        | exp '-' exp
+  181        | exp '/' exp
+  182        | exp '*' exp
+  183        | exp '%' exp
 
-  185 exps_list: exp
-  186          | exp ',' exps_list
+  184 logicExp: exp TK_OC_AND exp
+  185         | exp TK_OC_OR exp
+
+  186 exps_list: exp
+  187          | exp ',' exps_list
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
-'!' (33) 169
-'%' (37) 182
-'(' (40) 42 104 126 127 128 129 130 131 164
-')' (41) 42 104 126 127 128 129 130 131 164
-'*' (42) 181
-'+' (43) 86 89 101 114 178
-',' (44) 48 108 138 186
-'-' (45) 13 90 168 179
-'.' (46) 11 171
-'/' (47) 180
+'!' (33) 170
+'%' (37) 183
+'(' (40) 42 104 126 127 128 129 130 132 165
+')' (41) 42 104 126 127 128 129 130 132 165
+'*' (42) 182
+'+' (43) 86 89 101 114 179
+',' (44) 48 108 131 139 187
+'-' (45) 13 90 169 180
+'.' (46) 11 172
+'/' (47) 181
 ':' (58) 27 113 114 115 129 130
 ';' (59) 3 4 6 7 57 58 59 60 61 62 63 64 66 67 68
-'<' (60) 177
+'<' (60) 178
 '=' (61) 97 98 99
-'>' (62) 176
+'>' (62) 177
 '[' (91) 10 24 38 39
 ']' (93) 10 24 38 39
 '{' (123) 53 54
@@ -296,16 +298,16 @@ TK_PR_STRING (262) 23
 TK_PR_IF (263) 126
 TK_PR_THEN (264) 124 125
 TK_PR_ELSE (265) 125
-TK_PR_WHILE (266) 128 133
-TK_PR_DO (267) 127 134
+TK_PR_WHILE (266) 128 134
+TK_PR_DO (267) 127 135
 TK_PR_INPUT (268) 102
 TK_PR_OUTPUT (269) 103
 TK_PR_RETURN (270) 110
 TK_PR_CONST (271) 52 81 82
 TK_PR_STATIC (272) 32 34 41 80 82
-TK_PR_FOREACH (273) 132
-TK_PR_FOR (274) 135
-TK_PR_SWITCH (275) 136
+TK_PR_FOREACH (273) 133
+TK_PR_FOR (274) 136
+TK_PR_SWITCH (275) 137
 TK_PR_CASE (276) 113 114 115
 TK_PR_BREAK (277) 111
 TK_PR_CONTINUE (278) 112
@@ -313,12 +315,12 @@ TK_PR_CLASS (279) 25
 TK_PR_PRIVATE (280) 30
 TK_PR_PUBLIC (281) 31
 TK_PR_PROTECTED (282) 29
-TK_OC_LE (283) 83 84 175
-TK_OC_GE (284) 174
-TK_OC_EQ (285) 172
-TK_OC_NE (286) 173
-TK_OC_AND (287) 183
-TK_OC_OR (288) 184
+TK_OC_LE (283) 83 84 176
+TK_OC_GE (284) 175
+TK_OC_EQ (285) 173
+TK_OC_NE (286) 174
+TK_OC_AND (287) 184
+TK_OC_OR (288) 185
 TK_OC_SL (289) 95
 TK_OC_SR (290) 96
 TK_OC_PG (291) 120 122
@@ -342,25 +344,25 @@ programa (66)
 code (67)
     on left: 3 4 5 6 7 8, on right: 2 6 7 8
 id (68)
-    on left: 9, on right: 10 11 74 75 84 95 96 97 104 130 156
+    on left: 9, on right: 10 11 74 75 84 95 96 97 104 130 131 157
 array (69)
-    on left: 10, on right: 98 154
+    on left: 10, on right: 98 155
 user_var (70)
-    on left: 11, on right: 99 155
+    on left: 11, on right: 99 156
 int (71)
-    on left: 12, on right: 13 85 86 95 96 113 114 158
+    on left: 12, on right: 13 85 86 95 96 113 114 159
 int_neg (72)
     on left: 13, on right: 87 115
 char (73)
-    on left: 14, on right: 93 161
+    on left: 14, on right: 93 162
 false (74)
-    on left: 15, on right: 91 163
+    on left: 15, on right: 91 164
 true (75)
-    on left: 16, on right: 92 162
+    on left: 16, on right: 92 163
 float (76)
-    on left: 17, on right: 88 89 90 159
+    on left: 17, on right: 88 89 90 160
 string (77)
-    on left: 18, on right: 94 160
+    on left: 18, on right: 94 161
 native_type (78)
     on left: 19 20 21 22 23, on right: 28 36 38 43 49 74 75 76 77
 type_def (79)
@@ -394,15 +396,15 @@ param_dec (92)
 param_dec_mods (93)
     on left: 51 52, on right: 49 50
 block (94)
-    on left: 53 54, on right: 40 41 68 124 125 127 128 129 130 131
-    142
+    on left: 53 54, on right: 40 41 68 124 125 127 128 129 130 132
+    143
 commands (95)
     on left: 55 56, on right: 54 56
 command (96)
     on left: 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73, on right:
     55 56
 var_dec (97)
-    on left: 74 75 76 77 78 79, on right: 57 139
+    on left: 74 75 76 77 78 79, on right: 57 140
 var_dec_mods (98)
     on left: 80 81 82, on right: 74 76 78
 init_var (99)
@@ -410,15 +412,15 @@ init_var (99)
 literal (100)
     on left: 85 86 87 88 89 90 91 92 93 94, on right: 83
 shift_cmd (101)
-    on left: 95 96, on right: 58 140
+    on left: 95 96, on right: 58 141
 assig_cmd (102)
-    on left: 97 98 99, on right: 59 141
+    on left: 97 98 99, on right: 59 142
 un_plus (103)
     on left: 100 101, on right: 97 98 99
 io_cmd (104)
     on left: 102 103, on right: 60
 func_call (105)
-    on left: 104, on right: 61 116 117 118 119 120 121 143 157
+    on left: 104, on right: 61 116 117 118 119 120 121 144 158
 params (106)
     on left: 105 106, on right: 104
 params_list (107)
@@ -426,15 +428,15 @@ params_list (107)
 param (108)
     on left: 109, on right: 107 108
 return_cmd (109)
-    on left: 110, on right: 62 144
+    on left: 110, on right: 62 145
 break_cmd (110)
-    on left: 111, on right: 63 145
+    on left: 111, on right: 63 146
 continue_cmd (111)
-    on left: 112, on right: 64 146
+    on left: 112, on right: 64 147
 case_cmd (112)
     on left: 113 114 115, on right: 65
 pipe_exp (113)
-    on left: 116 117 118 119, on right: 66 122 123 147 170
+    on left: 116 117 118 119, on right: 66 122 123 148 171
 pipe_pg_step0 (114)
     on left: 120, on right: 116
 pipe_pb_step0 (115)
@@ -444,47 +446,49 @@ pipe_pg_step1 (116)
 pipe_pb_step1 (117)
     on left: 123, on right: 119
 if_stm (118)
-    on left: 124 125, on right: 69 148
+    on left: 124 125, on right: 69 149
 if_exp (119)
     on left: 126, on right: 124 125
 while (120)
-    on left: 127, on right: 71 150
+    on left: 127, on right: 71 151
 do_while (121)
-    on left: 128, on right: 67 151
+    on left: 128, on right: 67 152
 for (122)
-    on left: 129, on right: 73 153
+    on left: 129, on right: 73 154
 foreach (123)
-    on left: 130, on right: 70 149
-switch (124)
-    on left: 131, on right: 72 152
-foreach_begin (125)
-    on left: 132, on right: 130
-while_begin (126)
-    on left: 133, on right: 127
-do_while_begin (127)
-    on left: 134, on right: 128
-for_begin (128)
-    on left: 135, on right: 129
-switch_begin (129)
-    on left: 136, on right: 131
-cmd_list (130)
-    on left: 137 138, on right: 129 138
-cmd (131)
-    on left: 139 140 141 142 143 144 145 146 147 148 149 150 151 152
-    153, on right: 137 138
-exp (132)
-    on left: 154 155 156 157 158 159 160 161 162 163 164 165 166 167
-    168 169 170 171, on right: 10 97 98 99 102 109 110 126 127 128
-    129 131 164 168 169 172 173 174 175 176 177 178 179 180 181 182
-    183 184 185 186
-compExp (133)
-    on left: 172 173 174 175 176 177, on right: 167
-arimExp (134)
-    on left: 178 179 180 181 182, on right: 166
-logicExp (135)
-    on left: 183 184, on right: 165
-exps_list (136)
-    on left: 185 186, on right: 103 130 186
+    on left: 130, on right: 70 150
+foreach_iter_vars (124)
+    on left: 131, on right: 130
+switch (125)
+    on left: 132, on right: 72 153
+foreach_begin (126)
+    on left: 133, on right: 130
+while_begin (127)
+    on left: 134, on right: 127
+do_while_begin (128)
+    on left: 135, on right: 128
+for_begin (129)
+    on left: 136, on right: 129
+switch_begin (130)
+    on left: 137, on right: 132
+cmd_list (131)
+    on left: 138 139, on right: 129 139
+cmd (132)
+    on left: 140 141 142 143 144 145 146 147 148 149 150 151 152 153
+    154, on right: 138 139
+exp (133)
+    on left: 155 156 157 158 159 160 161 162 163 164 165 166 167 168
+    169 170 171 172, on right: 10 97 98 99 102 109 110 126 127 128
+    129 132 165 169 170 173 174 175 176 177 178 179 180 181 182 183
+    184 185 186 187
+compExp (134)
+    on left: 173 174 175 176 177 178, on right: 168
+arimExp (135)
+    on left: 179 180 181 182 183, on right: 167
+logicExp (136)
+    on left: 184 185, on right: 166
+exps_list (137)
+    on left: 186 187, on right: 103 187
 
 
 State 0
@@ -1008,16 +1012,16 @@ State 45
 
 State 46
 
-  133 while_begin: TK_PR_WHILE .
+  134 while_begin: TK_PR_WHILE .
 
-    $default  reduce using rule 133 (while_begin)
+    $default  reduce using rule 134 (while_begin)
 
 
 State 47
 
-  134 do_while_begin: TK_PR_DO .
+  135 do_while_begin: TK_PR_DO .
 
-    $default  reduce using rule 134 (do_while_begin)
+    $default  reduce using rule 135 (do_while_begin)
 
 
 State 48
@@ -1151,23 +1155,23 @@ State 52
 
 State 53
 
-  132 foreach_begin: TK_PR_FOREACH .
+  133 foreach_begin: TK_PR_FOREACH .
 
-    $default  reduce using rule 132 (foreach_begin)
+    $default  reduce using rule 133 (foreach_begin)
 
 
 State 54
 
-  135 for_begin: TK_PR_FOR .
+  136 for_begin: TK_PR_FOR .
 
-    $default  reduce using rule 135 (for_begin)
+    $default  reduce using rule 136 (for_begin)
 
 
 State 55
 
-  136 switch_begin: TK_PR_SWITCH .
+  137 switch_begin: TK_PR_SWITCH .
 
-    $default  reduce using rule 136 (switch_begin)
+    $default  reduce using rule 137 (switch_begin)
 
 
 State 56
@@ -1521,7 +1525,7 @@ State 89
 
 State 90
 
-  130 foreach: foreach_begin . '(' id ':' exps_list ')' block
+  130 foreach: foreach_begin . '(' id ':' foreach_iter_vars ')' block
 
     '('  shift, and go to state 176
 
@@ -1551,7 +1555,7 @@ State 93
 
 State 94
 
-  131 switch: switch_begin . '(' exp ')' block
+  132 switch: switch_begin . '(' exp ')' block
 
     '('  shift, and go to state 180
 
@@ -1731,7 +1735,7 @@ State 112
 
 State 113
 
-  168 exp: '-' . exp
+  169 exp: '-' . exp
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -1768,7 +1772,7 @@ State 113
 
 State 114
 
-  169 exp: '!' . exp
+  170 exp: '!' . exp
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -1805,14 +1809,14 @@ State 114
 
 State 115
 
-  171 exp: '.' .
+  172 exp: '.' .
 
-    $default  reduce using rule 171 (exp)
+    $default  reduce using rule 172 (exp)
 
 
 State 116
 
-  164 exp: '(' . exp ')'
+  165 exp: '(' . exp ')'
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -1852,111 +1856,111 @@ State 117
    10 array: id . '[' exp ']'
    11 user_var: id . '.' id
   104 func_call: id . '(' params ')'
-  156 exp: id .
+  157 exp: id .
 
     '['  shift, and go to state 143
     '.'  shift, and go to state 144
     '('  shift, and go to state 145
 
-    $default  reduce using rule 156 (exp)
+    $default  reduce using rule 157 (exp)
 
 
 State 118
 
-  154 exp: array .
-
-    $default  reduce using rule 154 (exp)
-
-
-State 119
-
-  155 exp: user_var .
+  155 exp: array .
 
     $default  reduce using rule 155 (exp)
 
 
+State 119
+
+  156 exp: user_var .
+
+    $default  reduce using rule 156 (exp)
+
+
 State 120
 
-  158 exp: int .
-
-    $default  reduce using rule 158 (exp)
-
-
-State 121
-
-  161 exp: char .
-
-    $default  reduce using rule 161 (exp)
-
-
-State 122
-
-  163 exp: false .
-
-    $default  reduce using rule 163 (exp)
-
-
-State 123
-
-  162 exp: true .
-
-    $default  reduce using rule 162 (exp)
-
-
-State 124
-
-  159 exp: float .
+  159 exp: int .
 
     $default  reduce using rule 159 (exp)
 
 
-State 125
+State 121
 
-  160 exp: string .
+  162 exp: char .
+
+    $default  reduce using rule 162 (exp)
+
+
+State 122
+
+  164 exp: false .
+
+    $default  reduce using rule 164 (exp)
+
+
+State 123
+
+  163 exp: true .
+
+    $default  reduce using rule 163 (exp)
+
+
+State 124
+
+  160 exp: float .
 
     $default  reduce using rule 160 (exp)
+
+
+State 125
+
+  161 exp: string .
+
+    $default  reduce using rule 161 (exp)
 
 
 State 126
 
   120 pipe_pg_step0: func_call . TK_OC_PG
   121 pipe_pb_step0: func_call . TK_OC_PB
-  157 exp: func_call .
+  158 exp: func_call .
 
     TK_OC_PG  shift, and go to state 160
     TK_OC_PB  shift, and go to state 161
 
-    $default  reduce using rule 157 (exp)
+    $default  reduce using rule 158 (exp)
 
 
 State 127
 
   122 pipe_pg_step1: pipe_exp . TK_OC_PG
   123 pipe_pb_step1: pipe_exp . TK_OC_PB
-  170 exp: pipe_exp .
+  171 exp: pipe_exp .
 
     TK_OC_PG  shift, and go to state 166
     TK_OC_PB  shift, and go to state 167
 
-    $default  reduce using rule 170 (exp)
+    $default  reduce using rule 171 (exp)
 
 
 State 128
 
   102 io_cmd: TK_PR_INPUT exp .
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
     TK_OC_LE   shift, and go to state 193
     TK_OC_GE   shift, and go to state 194
@@ -1977,42 +1981,42 @@ State 128
 
 State 129
 
-  167 exp: compExp .
+  168 exp: compExp .
 
-    $default  reduce using rule 167 (exp)
+    $default  reduce using rule 168 (exp)
 
 
 State 130
 
-  166 exp: arimExp .
+  167 exp: arimExp .
 
-    $default  reduce using rule 166 (exp)
+    $default  reduce using rule 167 (exp)
 
 
 State 131
 
-  165 exp: logicExp .
+  166 exp: logicExp .
 
-    $default  reduce using rule 165 (exp)
+    $default  reduce using rule 166 (exp)
 
 
 State 132
 
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
-  185 exps_list: exp .
-  186          | exp . ',' exps_list
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
+  186 exps_list: exp .
+  187          | exp . ',' exps_list
 
     TK_OC_LE   shift, and go to state 193
     TK_OC_GE   shift, and go to state 194
@@ -2029,7 +2033,7 @@ State 132
     '%'        shift, and go to state 205
     ','        shift, and go to state 206
 
-    $default  reduce using rule 185 (exps_list)
+    $default  reduce using rule 186 (exps_list)
 
 
 State 133
@@ -2042,19 +2046,19 @@ State 133
 State 134
 
   110 return_cmd: TK_PR_RETURN exp .
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
     TK_OC_LE   shift, and go to state 193
     TK_OC_GE   shift, and go to state 194
@@ -2459,7 +2463,7 @@ State 175
 
 State 176
 
-  130 foreach: foreach_begin '(' . id ':' exps_list ')' block
+  130 foreach: foreach_begin '(' . id ':' foreach_iter_vars ')' block
 
     TK_IDENTIFICADOR  shift, and go to state 112
 
@@ -2569,7 +2573,7 @@ State 179
 
 State 180
 
-  131 switch: switch_begin '(' . exp ')' block
+  132 switch: switch_begin '(' . exp ')' block
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -2669,19 +2673,19 @@ State 188
 State 189
 
   126 if_exp: TK_PR_IF '(' exp . ')'
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
     TK_OC_LE   shift, and go to state 193
     TK_OC_GE   shift, and go to state 194
@@ -2701,64 +2705,64 @@ State 189
 
 State 190
 
-  168 exp: '-' exp .
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  169 exp: '-' exp .
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
     '*'  shift, and go to state 203
     '/'  shift, and go to state 204
     '%'  shift, and go to state 205
 
-    $default  reduce using rule 168 (exp)
+    $default  reduce using rule 169 (exp)
 
 
 State 191
 
-  169 exp: '!' exp .
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  170 exp: '!' exp .
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
-    $default  reduce using rule 169 (exp)
+    $default  reduce using rule 170 (exp)
 
 
 State 192
 
-  164 exp: '(' exp . ')'
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  165 exp: '(' exp . ')'
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
     TK_OC_LE   shift, and go to state 193
     TK_OC_GE   shift, and go to state 194
@@ -2778,7 +2782,7 @@ State 192
 
 State 193
 
-  175 compExp: exp TK_OC_LE . exp
+  176 compExp: exp TK_OC_LE . exp
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -2815,7 +2819,7 @@ State 193
 
 State 194
 
-  174 compExp: exp TK_OC_GE . exp
+  175 compExp: exp TK_OC_GE . exp
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -2852,7 +2856,7 @@ State 194
 
 State 195
 
-  172 compExp: exp TK_OC_EQ . exp
+  173 compExp: exp TK_OC_EQ . exp
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -2889,7 +2893,7 @@ State 195
 
 State 196
 
-  173 compExp: exp TK_OC_NE . exp
+  174 compExp: exp TK_OC_NE . exp
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -2926,7 +2930,7 @@ State 196
 
 State 197
 
-  183 logicExp: exp TK_OC_AND . exp
+  184 logicExp: exp TK_OC_AND . exp
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -2963,7 +2967,7 @@ State 197
 
 State 198
 
-  184 logicExp: exp TK_OC_OR . exp
+  185 logicExp: exp TK_OC_OR . exp
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -3000,7 +3004,7 @@ State 198
 
 State 199
 
-  177 compExp: exp '<' . exp
+  178 compExp: exp '<' . exp
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -3037,7 +3041,7 @@ State 199
 
 State 200
 
-  176 compExp: exp '>' . exp
+  177 compExp: exp '>' . exp
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -3074,7 +3078,7 @@ State 200
 
 State 201
 
-  179 arimExp: exp '-' . exp
+  180 arimExp: exp '-' . exp
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -3111,7 +3115,7 @@ State 201
 
 State 202
 
-  178 arimExp: exp '+' . exp
+  179 arimExp: exp '+' . exp
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -3148,7 +3152,7 @@ State 202
 
 State 203
 
-  181 arimExp: exp '*' . exp
+  182 arimExp: exp '*' . exp
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -3185,7 +3189,7 @@ State 203
 
 State 204
 
-  180 arimExp: exp '/' . exp
+  181 arimExp: exp '/' . exp
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -3222,7 +3226,7 @@ State 204
 
 State 205
 
-  182 arimExp: exp '%' . exp
+  183 arimExp: exp '%' . exp
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -3259,7 +3263,7 @@ State 205
 
 State 206
 
-  186 exps_list: exp ',' . exps_list
+  187 exps_list: exp ',' . exps_list
 
     TK_LIT_INT        shift, and go to state 106
     TK_LIT_FLOAT      shift, and go to state 107
@@ -3340,19 +3344,19 @@ State 212
 State 213
 
    10 array: id '[' exp . ']'
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
     TK_OC_LE   shift, and go to state 193
     TK_OC_GE   shift, and go to state 194
@@ -3404,19 +3408,19 @@ State 217
 State 218
 
   109 param: exp .
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
     TK_OC_LE   shift, and go to state 193
     TK_OC_GE   shift, and go to state 194
@@ -3623,7 +3627,7 @@ State 228
 
 State 229
 
-  130 foreach: foreach_begin '(' id . ':' exps_list ')' block
+  130 foreach: foreach_begin '(' id . ':' foreach_iter_vars ')' block
 
     ':'  shift, and go to state 289
 
@@ -3631,19 +3635,19 @@ State 229
 State 230
 
   127 while: while_begin '(' exp . ')' TK_PR_DO block
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
     TK_OC_LE   shift, and go to state 193
     TK_OC_GE   shift, and go to state 194
@@ -3670,117 +3674,117 @@ State 231
 
 State 232
 
-  142 cmd: block .
+  143 cmd: block .
 
-    $default  reduce using rule 142 (cmd)
+    $default  reduce using rule 143 (cmd)
 
 
 State 233
 
-  139 cmd: var_dec .
-
-    $default  reduce using rule 139 (cmd)
-
-
-State 234
-
-  140 cmd: shift_cmd .
+  140 cmd: var_dec .
 
     $default  reduce using rule 140 (cmd)
 
 
-State 235
+State 234
 
-  141 cmd: assig_cmd .
+  141 cmd: shift_cmd .
 
     $default  reduce using rule 141 (cmd)
+
+
+State 235
+
+  142 cmd: assig_cmd .
+
+    $default  reduce using rule 142 (cmd)
 
 
 State 236
 
   120 pipe_pg_step0: func_call . TK_OC_PG
   121 pipe_pb_step0: func_call . TK_OC_PB
-  143 cmd: func_call .
+  144 cmd: func_call .
 
     TK_OC_PG  shift, and go to state 160
     TK_OC_PB  shift, and go to state 161
 
-    $default  reduce using rule 143 (cmd)
+    $default  reduce using rule 144 (cmd)
 
 
 State 237
 
-  144 cmd: return_cmd .
-
-    $default  reduce using rule 144 (cmd)
-
-
-State 238
-
-  145 cmd: break_cmd .
+  145 cmd: return_cmd .
 
     $default  reduce using rule 145 (cmd)
 
 
-State 239
+State 238
 
-  146 cmd: continue_cmd .
+  146 cmd: break_cmd .
 
     $default  reduce using rule 146 (cmd)
+
+
+State 239
+
+  147 cmd: continue_cmd .
+
+    $default  reduce using rule 147 (cmd)
 
 
 State 240
 
   122 pipe_pg_step1: pipe_exp . TK_OC_PG
   123 pipe_pb_step1: pipe_exp . TK_OC_PB
-  147 cmd: pipe_exp .
+  148 cmd: pipe_exp .
 
     TK_OC_PG  shift, and go to state 166
     TK_OC_PB  shift, and go to state 167
 
-    $default  reduce using rule 147 (cmd)
+    $default  reduce using rule 148 (cmd)
 
 
 State 241
 
-  148 cmd: if_stm .
-
-    $default  reduce using rule 148 (cmd)
-
-
-State 242
-
-  150 cmd: while .
-
-    $default  reduce using rule 150 (cmd)
-
-
-State 243
-
-  151 cmd: do_while .
-
-    $default  reduce using rule 151 (cmd)
-
-
-State 244
-
-  153 cmd: for .
-
-    $default  reduce using rule 153 (cmd)
-
-
-State 245
-
-  149 cmd: foreach .
+  149 cmd: if_stm .
 
     $default  reduce using rule 149 (cmd)
 
 
-State 246
+State 242
 
-  152 cmd: switch .
+  151 cmd: while .
+
+    $default  reduce using rule 151 (cmd)
+
+
+State 243
+
+  152 cmd: do_while .
 
     $default  reduce using rule 152 (cmd)
+
+
+State 244
+
+  154 cmd: for .
+
+    $default  reduce using rule 154 (cmd)
+
+
+State 245
+
+  150 cmd: foreach .
+
+    $default  reduce using rule 150 (cmd)
+
+
+State 246
+
+  153 cmd: switch .
+
+    $default  reduce using rule 153 (cmd)
 
 
 State 247
@@ -3792,30 +3796,30 @@ State 247
 
 State 248
 
-  137 cmd_list: cmd .
-  138         | cmd . ',' cmd_list
+  138 cmd_list: cmd .
+  139         | cmd . ',' cmd_list
 
     ','  shift, and go to state 293
 
-    $default  reduce using rule 137 (cmd_list)
+    $default  reduce using rule 138 (cmd_list)
 
 
 State 249
 
-  131 switch: switch_begin '(' exp . ')' block
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  132 switch: switch_begin '(' exp . ')' block
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
     TK_OC_LE   shift, and go to state 193
     TK_OC_GE   shift, and go to state 194
@@ -3863,27 +3867,53 @@ State 253
 
 State 254
 
-  164 exp: '(' exp ')' .
+  165 exp: '(' exp ')' .
 
-    $default  reduce using rule 164 (exp)
+    $default  reduce using rule 165 (exp)
 
 
 State 255
 
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  175        | exp TK_OC_LE exp .
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  176        | exp TK_OC_LE exp .
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
+
+    '-'  shift, and go to state 201
+    '+'  shift, and go to state 202
+    '*'  shift, and go to state 203
+    '/'  shift, and go to state 204
+    '%'  shift, and go to state 205
+
+    $default  reduce using rule 176 (compExp)
+
+
+State 256
+
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  175        | exp TK_OC_GE exp .
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
     '-'  shift, and go to state 201
     '+'  shift, and go to state 202
@@ -3894,78 +3924,22 @@ State 255
     $default  reduce using rule 175 (compExp)
 
 
-State 256
-
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  174        | exp TK_OC_GE exp .
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
-
-    '-'  shift, and go to state 201
-    '+'  shift, and go to state 202
-    '*'  shift, and go to state 203
-    '/'  shift, and go to state 204
-    '%'  shift, and go to state 205
-
-    $default  reduce using rule 174 (compExp)
-
-
 State 257
 
-  172 compExp: exp . TK_OC_EQ exp
-  172        | exp TK_OC_EQ exp .
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
-
-    TK_OC_LE  shift, and go to state 193
-    TK_OC_GE  shift, and go to state 194
-    '<'       shift, and go to state 199
-    '>'       shift, and go to state 200
-    '-'       shift, and go to state 201
-    '+'       shift, and go to state 202
-    '*'       shift, and go to state 203
-    '/'       shift, and go to state 204
-    '%'       shift, and go to state 205
-
-    $default  reduce using rule 172 (compExp)
-
-
-State 258
-
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  173        | exp TK_OC_NE exp .
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  173 compExp: exp . TK_OC_EQ exp
+  173        | exp TK_OC_EQ exp .
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
     TK_OC_LE  shift, and go to state 193
     TK_OC_GE  shift, and go to state 194
@@ -3980,22 +3954,52 @@ State 258
     $default  reduce using rule 173 (compExp)
 
 
+State 258
+
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  174        | exp TK_OC_NE exp .
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
+
+    TK_OC_LE  shift, and go to state 193
+    TK_OC_GE  shift, and go to state 194
+    '<'       shift, and go to state 199
+    '>'       shift, and go to state 200
+    '-'       shift, and go to state 201
+    '+'       shift, and go to state 202
+    '*'       shift, and go to state 203
+    '/'       shift, and go to state 204
+    '%'       shift, and go to state 205
+
+    $default  reduce using rule 174 (compExp)
+
+
 State 259
 
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  183         | exp TK_OC_AND exp .
-  184         | exp . TK_OC_OR exp
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  184         | exp TK_OC_AND exp .
+  185         | exp . TK_OC_OR exp
 
     TK_OC_LE  shift, and go to state 193
     TK_OC_GE  shift, and go to state 194
@@ -4009,25 +4013,25 @@ State 259
     '/'       shift, and go to state 204
     '%'       shift, and go to state 205
 
-    $default  reduce using rule 183 (logicExp)
+    $default  reduce using rule 184 (logicExp)
 
 
 State 260
 
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
-  184         | exp TK_OC_OR exp .
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
+  185         | exp TK_OC_OR exp .
 
     TK_OC_LE   shift, and go to state 193
     TK_OC_GE   shift, and go to state 194
@@ -4042,25 +4046,51 @@ State 260
     '/'        shift, and go to state 204
     '%'        shift, and go to state 205
 
-    $default  reduce using rule 184 (logicExp)
+    $default  reduce using rule 185 (logicExp)
 
 
 State 261
 
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  177        | exp '<' exp .
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  178        | exp '<' exp .
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
+
+    '-'  shift, and go to state 201
+    '+'  shift, and go to state 202
+    '*'  shift, and go to state 203
+    '/'  shift, and go to state 204
+    '%'  shift, and go to state 205
+
+    $default  reduce using rule 178 (compExp)
+
+
+State 262
+
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  177        | exp '>' exp .
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
     '-'  shift, and go to state 201
     '+'  shift, and go to state 202
@@ -4071,48 +4101,46 @@ State 261
     $default  reduce using rule 177 (compExp)
 
 
-State 262
+State 263
 
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  176        | exp '>' exp .
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  180        | exp '-' exp .
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
-    '-'  shift, and go to state 201
-    '+'  shift, and go to state 202
     '*'  shift, and go to state 203
     '/'  shift, and go to state 204
     '%'  shift, and go to state 205
 
-    $default  reduce using rule 176 (compExp)
+    $default  reduce using rule 180 (arimExp)
 
 
-State 263
+State 264
 
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  179        | exp '-' exp .
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  179        | exp '+' exp .
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
     '*'  shift, and go to state 203
     '/'  shift, and go to state 204
@@ -4121,95 +4149,71 @@ State 263
     $default  reduce using rule 179 (arimExp)
 
 
-State 264
-
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  178        | exp '+' exp .
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
-
-    '*'  shift, and go to state 203
-    '/'  shift, and go to state 204
-    '%'  shift, and go to state 205
-
-    $default  reduce using rule 178 (arimExp)
-
-
 State 265
 
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  181        | exp '*' exp .
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
-
-    $default  reduce using rule 181 (arimExp)
-
-
-State 266
-
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  180        | exp '/' exp .
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
-
-    $default  reduce using rule 180 (arimExp)
-
-
-State 267
-
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  182        | exp '%' exp .
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  182        | exp '*' exp .
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
     $default  reduce using rule 182 (arimExp)
 
 
+State 266
+
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  181        | exp '/' exp .
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
+
+    $default  reduce using rule 181 (arimExp)
+
+
+State 267
+
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  183        | exp '%' exp .
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
+
+    $default  reduce using rule 183 (arimExp)
+
+
 State 268
 
-  186 exps_list: exp ',' exps_list .
+  187 exps_list: exp ',' exps_list .
 
-    $default  reduce using rule 186 (exps_list)
+    $default  reduce using rule 187 (exps_list)
 
 
 State 269
@@ -4275,19 +4279,19 @@ State 272
 State 273
 
    97 assig_cmd: id '=' un_plus exp .
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
     TK_OC_LE   shift, and go to state 193
     TK_OC_GE   shift, and go to state 194
@@ -4309,19 +4313,19 @@ State 273
 State 274
 
    98 assig_cmd: array '=' un_plus exp .
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
     TK_OC_LE   shift, and go to state 193
     TK_OC_GE   shift, and go to state 194
@@ -4343,19 +4347,19 @@ State 274
 State 275
 
    99 assig_cmd: user_var '=' un_plus exp .
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
     TK_OC_LE   shift, and go to state 193
     TK_OC_GE   shift, and go to state 194
@@ -4479,47 +4483,19 @@ State 288
 
 State 289
 
-  130 foreach: foreach_begin '(' id ':' . exps_list ')' block
+  130 foreach: foreach_begin '(' id ':' . foreach_iter_vars ')' block
 
-    TK_LIT_INT        shift, and go to state 106
-    TK_LIT_FLOAT      shift, and go to state 107
-    TK_LIT_FALSE      shift, and go to state 108
-    TK_LIT_TRUE       shift, and go to state 109
-    TK_LIT_CHAR       shift, and go to state 110
-    TK_LIT_STRING     shift, and go to state 111
     TK_IDENTIFICADOR  shift, and go to state 112
-    '-'               shift, and go to state 113
-    '!'               shift, and go to state 114
-    '.'               shift, and go to state 115
-    '('               shift, and go to state 116
 
-    id             go to state 117
-    array          go to state 118
-    user_var       go to state 119
-    int            go to state 120
-    char           go to state 121
-    false          go to state 122
-    true           go to state 123
-    float          go to state 124
-    string         go to state 125
-    func_call      go to state 126
-    pipe_exp       go to state 127
-    pipe_pg_step0  go to state 79
-    pipe_pb_step0  go to state 80
-    pipe_pg_step1  go to state 81
-    pipe_pb_step1  go to state 82
-    exp            go to state 132
-    compExp        go to state 129
-    arimExp        go to state 130
-    logicExp       go to state 131
-    exps_list      go to state 300
+    id                 go to state 300
+    foreach_iter_vars  go to state 301
 
 
 State 290
 
   127 while: while_begin '(' exp ')' . TK_PR_DO block
 
-    TK_PR_DO  shift, and go to state 301
+    TK_PR_DO  shift, and go to state 302
 
 
 State 291
@@ -4553,7 +4529,7 @@ State 291
     pipe_pb_step0  go to state 80
     pipe_pg_step1  go to state 81
     pipe_pb_step1  go to state 82
-    exp            go to state 302
+    exp            go to state 303
     compExp        go to state 129
     arimExp        go to state 130
     logicExp       go to state 131
@@ -4590,7 +4566,7 @@ State 292
     pipe_pb_step0  go to state 80
     pipe_pg_step1  go to state 81
     pipe_pb_step1  go to state 82
-    exp            go to state 303
+    exp            go to state 304
     compExp        go to state 129
     arimExp        go to state 130
     logicExp       go to state 131
@@ -4598,7 +4574,7 @@ State 292
 
 State 293
 
-  138 cmd_list: cmd ',' . cmd_list
+  139 cmd_list: cmd ',' . cmd_list
 
     TK_PR_INT         shift, and go to state 1
     TK_PR_FLOAT       shift, and go to state 2
@@ -4649,17 +4625,17 @@ State 293
     do_while_begin  go to state 92
     for_begin       go to state 93
     switch_begin    go to state 94
-    cmd_list        go to state 304
+    cmd_list        go to state 305
     cmd             go to state 248
 
 
 State 294
 
-  131 switch: switch_begin '(' exp ')' . block
+  132 switch: switch_begin '(' exp ')' . block
 
     '{'  shift, and go to state 31
 
-    block  go to state 305
+    block  go to state 306
 
 
 State 295
@@ -4699,69 +4675,43 @@ State 299
 
 State 300
 
-  130 foreach: foreach_begin '(' id ':' exps_list . ')' block
+  131 foreach_iter_vars: id . ',' id
 
-    ')'  shift, and go to state 306
+    ','  shift, and go to state 307
 
 
 State 301
+
+  130 foreach: foreach_begin '(' id ':' foreach_iter_vars . ')' block
+
+    ')'  shift, and go to state 308
+
+
+State 302
 
   127 while: while_begin '(' exp ')' TK_PR_DO . block
 
     '{'  shift, and go to state 31
 
-    block  go to state 307
-
-
-State 302
-
-  128 do_while: do_while_begin block TK_PR_WHILE '(' exp . ')'
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
-
-    TK_OC_LE   shift, and go to state 193
-    TK_OC_GE   shift, and go to state 194
-    TK_OC_EQ   shift, and go to state 195
-    TK_OC_NE   shift, and go to state 196
-    TK_OC_AND  shift, and go to state 197
-    TK_OC_OR   shift, and go to state 198
-    '<'        shift, and go to state 199
-    '>'        shift, and go to state 200
-    '-'        shift, and go to state 201
-    '+'        shift, and go to state 202
-    '*'        shift, and go to state 203
-    '/'        shift, and go to state 204
-    '%'        shift, and go to state 205
-    ')'        shift, and go to state 308
+    block  go to state 309
 
 
 State 303
 
-  129 for: for_begin '(' cmd_list ':' exp . ':' cmd_list ')' block
-  172 compExp: exp . TK_OC_EQ exp
-  173        | exp . TK_OC_NE exp
-  174        | exp . TK_OC_GE exp
-  175        | exp . TK_OC_LE exp
-  176        | exp . '>' exp
-  177        | exp . '<' exp
-  178 arimExp: exp . '+' exp
-  179        | exp . '-' exp
-  180        | exp . '/' exp
-  181        | exp . '*' exp
-  182        | exp . '%' exp
-  183 logicExp: exp . TK_OC_AND exp
-  184         | exp . TK_OC_OR exp
+  128 do_while: do_while_begin block TK_PR_WHILE '(' exp . ')'
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
     TK_OC_LE   shift, and go to state 193
     TK_OC_GE   shift, and go to state 194
@@ -4776,47 +4726,89 @@ State 303
     '*'        shift, and go to state 203
     '/'        shift, and go to state 204
     '%'        shift, and go to state 205
-    ':'        shift, and go to state 309
+    ')'        shift, and go to state 310
 
 
 State 304
 
-  138 cmd_list: cmd ',' cmd_list .
+  129 for: for_begin '(' cmd_list ':' exp . ':' cmd_list ')' block
+  173 compExp: exp . TK_OC_EQ exp
+  174        | exp . TK_OC_NE exp
+  175        | exp . TK_OC_GE exp
+  176        | exp . TK_OC_LE exp
+  177        | exp . '>' exp
+  178        | exp . '<' exp
+  179 arimExp: exp . '+' exp
+  180        | exp . '-' exp
+  181        | exp . '/' exp
+  182        | exp . '*' exp
+  183        | exp . '%' exp
+  184 logicExp: exp . TK_OC_AND exp
+  185         | exp . TK_OC_OR exp
 
-    $default  reduce using rule 138 (cmd_list)
+    TK_OC_LE   shift, and go to state 193
+    TK_OC_GE   shift, and go to state 194
+    TK_OC_EQ   shift, and go to state 195
+    TK_OC_NE   shift, and go to state 196
+    TK_OC_AND  shift, and go to state 197
+    TK_OC_OR   shift, and go to state 198
+    '<'        shift, and go to state 199
+    '>'        shift, and go to state 200
+    '-'        shift, and go to state 201
+    '+'        shift, and go to state 202
+    '*'        shift, and go to state 203
+    '/'        shift, and go to state 204
+    '%'        shift, and go to state 205
+    ':'        shift, and go to state 311
 
 
 State 305
 
-  131 switch: switch_begin '(' exp ')' block .
+  139 cmd_list: cmd ',' cmd_list .
 
-    $default  reduce using rule 131 (switch)
+    $default  reduce using rule 139 (cmd_list)
 
 
 State 306
 
-  130 foreach: foreach_begin '(' id ':' exps_list ')' . block
+  132 switch: switch_begin '(' exp ')' block .
 
-    '{'  shift, and go to state 31
-
-    block  go to state 310
+    $default  reduce using rule 132 (switch)
 
 
 State 307
+
+  131 foreach_iter_vars: id ',' . id
+
+    TK_IDENTIFICADOR  shift, and go to state 112
+
+    id  go to state 312
+
+
+State 308
+
+  130 foreach: foreach_begin '(' id ':' foreach_iter_vars ')' . block
+
+    '{'  shift, and go to state 31
+
+    block  go to state 313
+
+
+State 309
 
   127 while: while_begin '(' exp ')' TK_PR_DO block .
 
     $default  reduce using rule 127 (while)
 
 
-State 308
+State 310
 
   128 do_while: do_while_begin block TK_PR_WHILE '(' exp ')' .
 
     $default  reduce using rule 128 (do_while)
 
 
-State 309
+State 311
 
   129 for: for_begin '(' cmd_list ':' exp ':' . cmd_list ')' block
 
@@ -4869,34 +4861,41 @@ State 309
     do_while_begin  go to state 92
     for_begin       go to state 93
     switch_begin    go to state 94
-    cmd_list        go to state 311
+    cmd_list        go to state 314
     cmd             go to state 248
 
 
-State 310
+State 312
 
-  130 foreach: foreach_begin '(' id ':' exps_list ')' block .
+  131 foreach_iter_vars: id ',' id .
+
+    $default  reduce using rule 131 (foreach_iter_vars)
+
+
+State 313
+
+  130 foreach: foreach_begin '(' id ':' foreach_iter_vars ')' block .
 
     $default  reduce using rule 130 (foreach)
 
 
-State 311
+State 314
 
   129 for: for_begin '(' cmd_list ':' exp ':' cmd_list . ')' block
 
-    ')'  shift, and go to state 312
+    ')'  shift, and go to state 315
 
 
-State 312
+State 315
 
   129 for: for_begin '(' cmd_list ':' exp ':' cmd_list ')' . block
 
     '{'  shift, and go to state 31
 
-    block  go to state 313
+    block  go to state 316
 
 
-State 313
+State 316
 
   129 for: for_begin '(' cmd_list ':' exp ':' cmd_list ')' block .
 

@@ -156,6 +156,7 @@ void generateCode(comp_tree_t *node) {
     case AST_WHILE_DO: generateWhileCode(node); break;
     case AST_DO_WHILE: generateDoWhileCode(node); break;
     case AST_FOR: generateForCode(node); break;
+    case AST_FOREACH: generateForeachCode(node); break;
     case AST_BREAK: generateBreakContinueCode(node); break;
     case AST_CONTINUE: generateBreakContinueCode(node); break;
     }
@@ -290,6 +291,10 @@ void setTokenLocalVarOffset(TokenInfo *idInfo) {
 
 void setTokenGlobalVarOffset(TokenInfo *idInfo) {
     idInfo->offset = g_offset;
+}
+
+void setTokenArrayLength(TokenInfo *idInfo, int length) {
+    idInfo->length = length;
 }
 
 // - Loads
@@ -853,6 +858,86 @@ void generateForCode(comp_tree_t *node) {
     codeList = g_slist_concat(codeList, cmds2Info->code);   // S.code += cmds2.code
     codeList = g_slist_append(codeList, jmpCode);           // S.code += "jumpI -> Lbegin"
     codeList = g_slist_append(codeList, nextLabelCode);     // S.code += "Lnext: "
+
+    nodeInfo->code = codeList;
+}
+
+GSList *generateForeachUpdateItVarCode(comp_tree_t *destIdNode, comp_tree_t *arrIdNode, int indexReg) {
+    comp_tree_t *arrIndexNode = makeASTNode(-1, NULL);
+    comp_tree_t *arrNode = makeASTBinaryNode(AST_VETOR_INDEXADO, NULL, arrIdNode, arrIndexNode);
+    comp_tree_t *assignNode = makeASTBinaryNode(AST_ATRIBUICAO, NULL, destIdNode, arrNode);
+    AstNodeInfo *arrIndexInfo = arrIndexNode->value;
+    AstNodeInfo *assignInfo = assignNode->value;
+
+    arrIndexInfo->resultReg = indexReg;
+    generateCode(arrNode);
+    generateCode(assignNode);
+
+    return assignInfo->code;
+}
+
+GSList *generateForeachUpdateItIndexCode(comp_tree_t *destIdNode, int indexReg) {
+    comp_tree_t *indexNode = makeASTNode(-1, NULL);
+    comp_tree_t *assignNode = makeASTBinaryNode(AST_ATRIBUICAO, NULL, destIdNode, indexNode);
+    AstNodeInfo *indexInfo = indexNode->value;
+    AstNodeInfo *assignInfo = assignNode->value;
+
+    indexInfo->resultReg = indexReg;
+    generateCode(assignNode);
+
+    return assignInfo->code;
+}
+
+void generateForeachCode(comp_tree_t *node) {
+    comp_tree_t *arrIdNode = node->first;
+    comp_tree_t *itIndexIdNode = node->first->next;
+    comp_tree_t *itVarIdNode = itIndexIdNode->list_next;
+    comp_tree_t *blockNode = node->last;
+    AstNodeInfo *nodeInfo = node->value;
+    AstNodeInfo *blockInfo = blockNode->value;
+    TokenInfo *arrIdToken = getTokenInfoFromIdNode(arrIdNode);
+
+    int codeSize = 30;
+    int arrayLength = arrIdToken->length;
+    int indexReg = generateTempReg();
+    int arrLengthReg = generateTempReg();
+    int cmpReg = generateTempReg();
+    int beginLabel = generateLabel();
+    int trueLabel = generateLabel();
+    int nextLabel = generateLabel();
+
+    char *initIndexRegCode = malloc(codeSize);
+    char *initArrayLengthRegCode = malloc(codeSize);
+    char *cmpCode = malloc(codeSize);
+    char *cbrCode = malloc(codeSize);
+    char *beginLabelCode = generateLabelCode(beginLabel);
+    char *trueLabelCode = generateLabelCode(trueLabel);
+    char *nextLabelCode = generateLabelCode(nextLabel);
+    char *incCode = malloc(codeSize);
+    char *jmpCode = malloc(codeSize);
+
+    snprintf(initIndexRegCode, codeSize, "loadI 0 => r%d\n", indexReg);
+    snprintf(initArrayLengthRegCode, codeSize, "loadI %d => r%d\n", arrayLength, arrLengthReg);
+    snprintf(cmpCode, codeSize, "cmp_EQ r%d, r%d => r%d\n", indexReg, arrLengthReg, cmpReg);
+    snprintf(cbrCode, codeSize, "cbr r%d -> L%d, L%d\n", cmpReg, nextLabel, trueLabel);
+    snprintf(incCode, codeSize, "addI r%d, 1 => r%d\n", indexReg, indexReg);
+    snprintf(jmpCode, codeSize, "jumpI -> L%d\n", beginLabel);
+
+    GSList *updateItIndexCode = generateForeachUpdateItIndexCode(itIndexIdNode, indexReg);
+    GSList *updateItVarCode = generateForeachUpdateItVarCode(itVarIdNode, arrIdNode, indexReg);
+    GSList *codeList = NULL;
+    codeList = g_slist_append(codeList, initIndexRegCode);
+    codeList = g_slist_append(codeList, initArrayLengthRegCode);
+    codeList = g_slist_append(codeList, beginLabelCode);
+    codeList = g_slist_append(codeList, cmpCode);
+    codeList = g_slist_append(codeList, cbrCode);
+    codeList = g_slist_append(codeList, trueLabelCode);
+    codeList = g_slist_concat(codeList, updateItIndexCode);
+    codeList = g_slist_concat(codeList, updateItVarCode);
+    codeList = g_slist_concat(codeList, blockInfo->code);
+    codeList = g_slist_append(codeList, incCode);
+    codeList = g_slist_append(codeList, jmpCode);
+    codeList = g_slist_append(codeList, nextLabelCode);
 
     nodeInfo->code = codeList;
 }

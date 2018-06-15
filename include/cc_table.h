@@ -24,6 +24,7 @@ typedef struct tokenInfo {
     // IF YOU ARE ADDING ATTRS HERE -> REMEMBER TO:
     // UPDATE checkIdDeclared FUNCTION (THAT LOADS GLOBAL ID ATTRS TO LOCAL ID)
     int offset;
+    int length; // array length
 } TokenInfo;
 
 void initSymbolsTable();

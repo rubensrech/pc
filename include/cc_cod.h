@@ -39,6 +39,8 @@ void setNodeLocalVarOffset(comp_tree_t *idNode);
 void setTokenLocalVarOffset(TokenInfo *idInfo);
 void setTokenGlobalVarOffset(TokenInfo *idInfo);
 
+void setTokenArrayLength(TokenInfo *idInfo, int length);
+
 // Loads
 void generateLoadVarCode(comp_tree_t *idNode);
 void generateLoadSimpleVarCode(comp_tree_t *idNode);
@@ -65,6 +67,9 @@ void generateIfElseCommandCode(comp_tree_t *node);
 void generateWhileCode(comp_tree_t *node);
 void generateDoWhileCode(comp_tree_t *node);
 void generateForCode(comp_tree_t *node);
+GSList *generateForeachUpdateItVarCode(comp_tree_t *destIdNode, comp_tree_t *arrIdNode, int indexReg)
+GSList *generateForeachUpdateItIndexCode(comp_tree_t *destIdNode, int indexReg);
+void generateForeachCode(comp_tree_t *node);
 void generateBreakContinueCode(comp_tree_t *node);
 
 

@@ -102,6 +102,7 @@ extern comp_dict_t *funcTable;
 %type <ast>case_cmd
 %type <ast>switch
 %type <ast>foreach
+%type <ast>foreach_iter_vars
 %type <ast>for
 %type <ast>pipe_exp
 %type <ast>func_call
@@ -300,6 +301,7 @@ global_arr: native_type TK_IDENTIFICADOR '[' TK_LIT_INT ']'     {
                                                                         // > Code
                                                                         setTokenGlobalVarOffset($2);
                                                                         int length = $4->value.intVal;
+                                                                        setTokenArrayLength($2, length);
                                                                         allocNewGlobalArray(getSizeOf($1), length);
                                                                 }
         | TK_IDENTIFICADOR TK_IDENTIFICADOR '[' TK_LIT_INT ']'  {
@@ -311,6 +313,7 @@ global_arr: native_type TK_IDENTIFICADOR '[' TK_LIT_INT ']'     {
                                                                         // > Code
                                                                         setTokenGlobalVarOffset($2);
                                                                         int length = $4->value.intVal;
+                                                                        setTokenArrayLength($2, length);
                                                                         allocNewGlobalArray(getUserTypeSize($1), length);
                                                                 };
 /* Function Declaration */
@@ -543,7 +546,7 @@ assig_cmd: id '=' un_plus exp           {
                                                 // > AST
                                                 $$ = makeASTBinaryNode(AST_ATRIBUICAO, NULL, $1, $4);
                                                 // > Semantic
-                                                checkIdNodeUsedAs(ARRAY_ID, $4);
+                                                checkIdNodeUsedAs(ARRAY_ID, $1);
                                                 // Declaration check, id use as array check, set node dataType => already done in 'array' rule
                                                 checkUserDataTypeMatching($1->first, $4);
                                                 // > Code
@@ -678,14 +681,22 @@ for: for_begin '(' cmd_list':'exp':'cmd_list ')' block  {
                                                                 // > Code
                                                                 generateCode($$);
                                                         };
-foreach: foreach_begin '(' id ':' exps_list ')' block   {       
+foreach: foreach_begin '(' id ':' foreach_iter_vars ')' block   {       
                                                                 // > AST
                                                                 $$ = makeASTTernaryNode(AST_FOREACH, NULL, $3, $5, $7);
                                                                 // > Semantic
                                                                 checkIdNodeDeclared($3);
-                                                                checkIdNodeUsedAs(VAR_ID, $3);
+                                                                checkIdNodeUsedAs(ARRAY_ID, $3);
                                                                 leftLoop();
+                                                                // > Code
+                                                                generateCode($$);
                                                         };
+
+foreach_iter_vars: id ',' id    {
+                                        // > AST
+                                        tree_set_list_next_node($1, $3);
+                                        $$ = $1;
+                                };
 
 switch: switch_begin '(' exp ')' block                  {
                                                                 // > AST
@@ -795,9 +806,12 @@ exp:  array             {
                                 generateCode($$);
                         }
     | '!' exp           {
+                                // > AST
                                 $$ = makeASTUnaryNode(AST_LOGICO_COMP_NEGACAO, NULL, $2);
+                                // > Semantic
                                 checkExpNodeDataTypeIsBool($2);
                                 setNodeDataType($$, DATATYPE_BOOL);
+                                // > Code
                                 // TO-DO
                         }
     | pipe_exp          {

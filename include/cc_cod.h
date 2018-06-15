@@ -30,6 +30,8 @@ GSList *generateIfElseCode(comp_tree_t *expNode, GSList *trueCode, GSList *false
 void generateLiteralCode(comp_tree_t *node);
 void generateArithInvertCode(comp_tree_t *node);
 void generateArithCode(comp_tree_t *node, const char *op);
+// Shift
+void generateShiftCode(comp_tree_t *node, const char *shiftOp);
 // Variables
 void allocNewGlobalVar(int size);
 void allocNewGlobalArray(int itemSize, int length);

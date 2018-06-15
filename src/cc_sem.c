@@ -125,6 +125,13 @@ void checkExpNodeDataTypeIsInt(comp_tree_t *exp) {
     }
 }
 
+void checkIdNodeDataTypeIsShiftable(comp_tree_t *id) {
+    int idDataType = getASTNodeTokenDataType(id);
+    if (idDataType != DATATYPE_INT) {
+        throwSemanticError("Cannot shift non-integer value", IKS_ERROR_WRONG_TYPE);
+    }
+}
+
 /* Scope control */
 
 void setCurrentScopeToGlobalScope() {
@@ -218,26 +225,6 @@ void checkIdUsedAs(int usedAs, TokenInfo *id) {
 void checkIdNodeUsedAs(int usedAs, comp_tree_t *node) {
     AstNodeInfo *nodeInfo = node->value;
     checkIdUsedAs(usedAs, nodeInfo->tokenInfo);
-}
-
-void checkIdUsedAsMultiple(int usedAs1, int usedAs2, TokenInfo *id) {
-    char errorMsg[MAX_ERROR_MSG_SIZE];
-
-    if (id->idType != usedAs1 && id->idType != usedAs2) {
-        snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Wrong use for identifier '%s'", id->lexeme);
-        
-        switch (id->idType) {
-        case VAR_ID: throwSemanticError(errorMsg, IKS_ERROR_VARIABLE); break;
-        case ARRAY_ID: throwSemanticError(errorMsg, IKS_ERROR_VECTOR); break;
-        case FUNC_ID: throwSemanticError(errorMsg, IKS_ERROR_FUNCTION); break;
-        case USER_TYPE_ID: throwSemanticError(errorMsg, IKS_ERROR_USER_TYPE); break;
-        }
-    }
-}
-
-void checkIdNodeUsedAsMultiple(int usedAs1, int usedAs2, comp_tree_t *node) {
-    AstNodeInfo *nodeInfo = node->value;
-    checkIdUsedAsMultiple(usedAs1, usedAs2, nodeInfo->tokenInfo);
 }
 
 TokenInfo *searchIdInGlobalScope(char *id) {

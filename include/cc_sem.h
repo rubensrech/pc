@@ -96,6 +96,7 @@ int checkLogicExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2);
 int checkCompExpDataTypeMatching(comp_tree_t *exp1, comp_tree_t *exp2);
 void checkExpNodeDataTypeIsBool(comp_tree_t *exp);
 void checkExpNodeDataTypeIsInt(comp_tree_t *exp);
+void checkIdNodeDataTypeIsShiftable(comp_tree_t *id);
 void setNodeDataType(comp_tree_t *node, int dataType);
 
 /* Scope control */
@@ -111,8 +112,6 @@ void setIdType(TokenInfo *id, int idType);
 void setIdNodeIdType(comp_tree_t *node, int idType);
 void checkIdUsedAs(int usedAs, TokenInfo *id);
 void checkIdNodeUsedAs(int usedAs, comp_tree_t *node);
-void checkIdUsedAsMultiple(int usedAs1, int usedAs2, TokenInfo *id);
-void checkIdNodeUsedAsMultiple(int usedAs1, int usedAs2, comp_tree_t *node);
 TokenInfo *searchIdInGlobalScope(char *id);
 
 /* Functions */

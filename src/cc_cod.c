@@ -135,6 +135,9 @@ void generateCode(comp_tree_t *node) {
     case AST_ARIM_SUBTRACAO: generateArithCode(node, "sub"); break;
     case AST_ARIM_DIVISAO: generateArithCode(node, "div"); break;
     case AST_ARIM_MULTIPLICACAO: generateArithCode(node, "mult"); break;
+    // Shift
+    case AST_SHIFT_LEFT: generateShiftCode(node, "lshift"); break;
+    case AST_SHIFT_RIGHT: generateShiftCode(node, "rshift"); break;
     // Variables
     case AST_IDENTIFICADOR: generateLoadVarCode(node); break;
     case AST_VETOR_INDEXADO: generateLoadArrayVarCode(node); break;
@@ -265,6 +268,45 @@ void generateArithCode(comp_tree_t *node, const char *op) {
 
     nodeInfo->code = codeList;
     nodeInfo->resultReg = resultReg;
+}
+
+// Shift
+
+void generateShiftCode(comp_tree_t *node, const char *shiftOp) {
+    comp_tree_t *idNode = node->first;
+    AstNodeInfo *nodeInfo = node->value;
+    AstNodeInfo *idInfo = idNode->value;
+    AstNodeInfo *shAmtInfo = node->last->value;
+
+    int varValReg;
+    int shAmtReg = shAmtInfo->resultReg;
+    int shiftResultReg = generateTempReg();
+    char *shiftCode = malloc(30);
+
+    // Generate code for load id
+    generateCode(idNode);
+    varValReg = idInfo->resultReg;
+
+    // Generate code for var assignment
+    comp_tree_t *shiftedValNode = makeASTNode(-1, NULL);
+    comp_tree_t *assignNode = makeASTBinaryNode(AST_ATRIBUICAO, NULL, idNode, shiftedValNode);
+    AstNodeInfo *shiftedValInfo = shiftedValNode->value;
+    AstNodeInfo *assignInfo = assignNode->value;
+    shiftedValInfo->resultReg = shiftResultReg;
+    generateCode(assignNode);
+
+    // Generate code for shift cmd
+    snprintf(shiftCode, 30, "%s r%d, r%d => r%d\n", shiftOp, varValReg, shAmtReg, shiftResultReg);
+
+    GSList *loadVarCode = idInfo->code;
+    GSList *storeVarCode = assignInfo->code;
+
+    GSList *codeList = shAmtInfo->code;
+    codeList = g_slist_concat(codeList, loadVarCode);
+    codeList = g_slist_append(codeList, shiftCode);
+    codeList = g_slist_concat(codeList, storeVarCode);
+
+    nodeInfo->code = codeList;
 }
 
 // Variables

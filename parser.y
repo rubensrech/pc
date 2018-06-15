@@ -519,15 +519,25 @@ literal:  int                   { $$ = $1; }
 
 /* Shift command - command */
 
-shift_cmd: id TK_OC_SL int              {       $$ = makeASTBinaryNode(AST_SHIFT_LEFT, NULL, $1, $3);
+shift_cmd: id TK_OC_SL int              {       
+                                                // > AST
+                                                $$ = makeASTBinaryNode(AST_SHIFT_LEFT, NULL, $1, $3);
+                                                // > Semantic
                                                 checkIdNodeDeclared($1);
                                                 checkIdNodeUsedAs(VAR_ID, $1);
-                                                // TO-DO Check $1 data type
+                                                checkIdNodeDataTypeIsShiftable($1);
+                                                // > Code
+                                                generateCode($$);
                                         }
-          | id TK_OC_SR int             {       $$ = makeASTBinaryNode(AST_SHIFT_RIGHT, NULL, $1, $3);
+          | id TK_OC_SR int             {
+                                                // > AST
+                                                $$ = makeASTBinaryNode(AST_SHIFT_RIGHT, NULL, $1, $3);
+                                                // > Semantic
                                                 checkIdNodeDeclared($1);
                                                 checkIdNodeUsedAs(VAR_ID, $1);
-                                                // TO-DO Check $1 data type
+                                                checkIdNodeDataTypeIsShiftable($1);
+                                                // > Code
+                                                generateCode($$);
                                         };
 
 /* Assignment - command */

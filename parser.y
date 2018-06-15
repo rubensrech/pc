@@ -812,7 +812,7 @@ exp:  array             {
                                 checkExpNodeDataTypeIsBool($2);
                                 setNodeDataType($$, DATATYPE_BOOL);
                                 // > Code
-                                // TO-DO
+                                generateCode($$);
                         }
     | pipe_exp          {
                                 $$ = $1;

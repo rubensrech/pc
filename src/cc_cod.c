@@ -149,6 +149,7 @@ void generateCode(comp_tree_t *node) {
     case AST_LOGICO_COMP_G: generateCompCode(node, "cmp_GT"); break;
     case AST_LOGICO_COMP_L: generateCompCode(node, "cmp_LT"); break;
     // Logic
+    case AST_LOGICO_COMP_NEGACAO: generateLogicNegCode(node); break;
     case AST_LOGICO_E: generateLogicCode(node, "and"); break;
     case AST_LOGICO_OU: generateLogicCode(node, "or"); break;
     // Control Flow
@@ -261,7 +262,7 @@ void generateArithCode(comp_tree_t *node, const char *op) {
     GSList *codeList = fstOpInfo->code;
     codeList = g_slist_concat(codeList, sndOpInfo->code);    
     codeList = g_slist_append(codeList, code);
-    
+
     nodeInfo->code = codeList;
     nodeInfo->resultReg = resultReg;
 }
@@ -697,6 +698,19 @@ void generateLogicCode(comp_tree_t *node, const char *op) {
     }
     
     nodeInfo->code = codeList;    
+}
+
+void generateLogicNegCode(comp_tree_t *node) {
+    comp_tree_t *expNode = node->first;
+    AstNodeInfo *nodeInfo = node->value;
+    AstNodeInfo *expInfo = expNode->value;
+
+    generateLoadBoolVarLogicCode(expNode);
+
+    // Swap holes lists
+    nodeInfo->code = expInfo->code;
+    nodeInfo->trueHoles = expInfo->falseHoles;
+    nodeInfo->falseHoles = expInfo->trueHoles;
 }
 
 // > Control flow

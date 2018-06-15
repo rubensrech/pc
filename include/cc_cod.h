@@ -61,13 +61,14 @@ void generateArrayVarAssignCode(comp_tree_t *node);
 void generateLoadBoolVarLogicCode(comp_tree_t *node);
 void generateCompCode(comp_tree_t *node, const char *relOp);
 void generateLogicCode(comp_tree_t *node, const char *op);
+void generateLogicNegCode(comp_tree_t *node);
 // > Control flow
 void generateIfCode(comp_tree_t *node);
 void generateIfElseCommandCode(comp_tree_t *node);
 void generateWhileCode(comp_tree_t *node);
 void generateDoWhileCode(comp_tree_t *node);
 void generateForCode(comp_tree_t *node);
-GSList *generateForeachUpdateItVarCode(comp_tree_t *destIdNode, comp_tree_t *arrIdNode, int indexReg)
+GSList *generateForeachUpdateItVarCode(comp_tree_t *destIdNode, comp_tree_t *arrIdNode, int indexReg);
 GSList *generateForeachUpdateItIndexCode(comp_tree_t *destIdNode, int indexReg);
 void generateForeachCode(comp_tree_t *node);
 void generateBreakContinueCode(comp_tree_t *node);

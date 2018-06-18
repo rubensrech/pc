@@ -1,0 +1,16 @@
+/* >> Continue inside do while <<
+* Expect: 
+*      -> a (MEM(0)) = 8
+*      -> i (MEM(4)) = 10
+*/ 
+int main() {
+    int a <= 0;
+    int i <= 0;
+    do {
+        i = i + 1;
+        if (i == 5 || i == 6) then {
+            continue;
+        }
+        a = a + 1;
+    } while (i < 10);
+}

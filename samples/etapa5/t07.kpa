@@ -1,0 +1,16 @@
+/* >> Break inside while <<
+ * Expect: 
+ *      -> a (MEM(0)) = 6
+ *      -> i (MEM(4)) = 5
+ */
+int main() {
+    int a <= 0;
+    int i <= 0;
+    while (i < 10) do {
+        a = a + 1;
+        if (i == 5) then {
+            break;
+        }
+        i = i + 1;
+    }
+}

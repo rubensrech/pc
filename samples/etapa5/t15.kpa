@@ -1,0 +1,11 @@
+/* >> Bool assign <<
+* Expect: 
+*      -> b (MEM(0)) = 1 
+*      -> c (MEM(1)) = 1 
+*/ 
+int main() {
+    bool b;
+    bool c;
+    b = true || 5 > 6;
+    c = b;
+}

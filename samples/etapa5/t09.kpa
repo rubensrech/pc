@@ -1,0 +1,21 @@
+/* >> Continue inside for <<
+ * Expect: 
+ *      -> a (MEM(0)) = 80
+ *      -> b (MEM(4)) = 10
+ *      -> i (MEM(8)) = 10
+ *      -> j (MEM(12)) = 10
+ */ 
+
+int main() {
+    int a <= 0;
+    int b <= 0;
+    for (int i <= 0 : i < 10 : i = i + 1) {
+        for (int j <= 0 : j < 10 : j = j + 1) {
+            if (j == 5 || j == 6) then {
+                continue;
+            }
+            a = a + 1;
+        }
+        b = b + 1;
+    }
+}

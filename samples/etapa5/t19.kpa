@@ -1,0 +1,12 @@
+/* >> Shift <<
+* Expect: 
+*      -> a (MEM(0)) = 5
+*      -> b (MEM(4)) = 20
+*/
+ 
+int main() {
+    int a <= 20;
+    int b <= 5;
+    a >> 2;
+    b << 2;
+}

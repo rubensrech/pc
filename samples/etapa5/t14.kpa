@@ -1,0 +1,11 @@
+/* >> Char load and assignment <<
+* Expect: 
+*      -> a (MEM(0)) = 53 (char '5') 
+*      -> b (MEM(1)) = 53 (char '5')
+*/ 
+int main() {
+    char a;
+    char b;
+    a = '0' + 5;
+    b = a;
+}

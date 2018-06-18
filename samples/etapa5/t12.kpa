@@ -1,0 +1,19 @@
+/* >> User var field load and assign <<
+* Expect: 
+*      -> MEM(5) = 3
+*      -> MEM(9) = 3
+*      -> MEM(18) = 3
+*/ 
+class Tipo [
+    private int a :
+    public char b :
+    public int c
+];
+int main() {
+    Tipo var1;
+    Tipo var2;
+    int a;
+    var1.c = 3;
+    a = var1.c;
+    var2.a = var1.c;
+}

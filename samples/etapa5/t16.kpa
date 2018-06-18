@@ -1,0 +1,15 @@
+/* >> Bool assign and load <<
+* Expect: 
+*      -> a (MEM(0)) = 2 
+*      -> b (MEM(4)) = 0
+*/ 
+
+int main() {
+    int a <= 0;
+    bool b <= false;
+    if (b && 6 > 5) then {
+        a = 5;
+    } else {
+        a = 2;
+    }
+}

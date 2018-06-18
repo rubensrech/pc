@@ -1,0 +1,13 @@
+/* >> Var decs, arith exps, vars load, arrays load <<
+ * Expect:  
+ *      -> b (MEM(0)) = -85
+ *      -> c[5] (MEM(1048)) = 6
+ */
+
+int a;
+int c[10];
+int main() {
+    int b;
+    c[5] = 6;
+    b = 5 + c[5] * -15;
+}

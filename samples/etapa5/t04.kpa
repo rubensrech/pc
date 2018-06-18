@@ -1,0 +1,14 @@
+/* >> Do while <<
+ * Expect:  
+ *      -> a (MEM(0)) = 100
+ *      -> i (MEM(4)) = 0
+ */
+
+int main() {
+    int a <= 0;
+    int i <= 20;
+    do {
+        a = a + 5;
+        i = i - 1;
+    } while (i > 0);
+}

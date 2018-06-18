@@ -1,0 +1,20 @@
+/* >> User var load and assign <<
+* Expect: 
+*      -> MEM(0) = 10 (var1.a)
+*      -> MEM(5) = 20 (var1.c)
+*      -> MEM(9) = 10 (var2.a)
+*      -> MEM(13) = 0 (var2.b)
+*      -> MEM(14) = 20 (var2.c)
+*/ 
+class Tipo [
+    public int a :
+    public char b :
+    public int c
+];
+int main() {
+    Tipo var1;
+    Tipo var2;
+    var1.a = 10;
+    var1.c = 20;
+    var2 = var1;
+}

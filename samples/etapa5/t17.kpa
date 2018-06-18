@@ -1,0 +1,29 @@
+/* >> Foreach <<
+* Expect: 
+*      -> i      (MEM(0)) = 9
+*      -> numero (MEM(4)) = 9
+*      -> soma   (MEM(8)) = 45
+*      -> arr[0] (MEM(1024)) = 0
+*      -> arr[1] (MEM(1024)) = 1
+*      -> arr[2] (MEM(1024)) = 2
+*      -> arr[3] (MEM(1024)) = 3
+*      -> arr[4] (MEM(1024)) = 4
+*      -> arr[5] (MEM(1024)) = 5
+*      -> arr[6] (MEM(1024)) = 6
+*      -> arr[7] (MEM(1024)) = 7
+*      -> arr[8] (MEM(1024)) = 8
+*      -> arr[9] (MEM(1024)) = 9
+*/ 
+
+int arr[10];
+int main() {
+    int i;
+    int numero;
+    int soma <= 0;
+    foreach (arr : i, numero) {
+        arr[i] = i;
+    }    
+    foreach (arr : i, numero) {
+        soma = soma + numero;
+    }
+}

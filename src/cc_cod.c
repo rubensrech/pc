@@ -362,7 +362,7 @@ void generateLoadSimpleVarCode(comp_tree_t *idNode) {
     if (strcmp(idInfo->scope, "#GLOBAL#") == 0)
         snprintf(code, maxCodeSize, "loadAI rbss, %d => r%d\n", idInfo->offset, resultReg);
     else
-        snprintf(code, maxCodeSize, "loadAI rfp, %d => r%d\n", idInfo->offset, resultReg);
+        snprintf(code, maxCodeSize, "loadAI rarp, %d => r%d\n", idInfo->offset, resultReg);
 
     nodeInfo->code = g_slist_append(nodeInfo->code, code);
     nodeInfo->resultReg = resultReg;
@@ -386,7 +386,7 @@ GSList *getArrayAddrGeneratorCode(comp_tree_t *arrNode, int addrReg) {
 
     // multReg = i * w => offset inside array
     snprintf(multCode, maxCodeSize, "multI r%d, %d => r%d\n", indexReg, typeSize, multReg);
-    // addrReg = base + (i * w) => relative address (offset from rbss/rfp)
+    // addrReg = base + (i * w) => relative address (offset from rbss/rarp)
     snprintf(sumCode, maxCodeSize, "addI r%d, %d => r%d\n", multReg, varBase, addrReg);
 
     GSList *codeList = indexInfo->code;
@@ -410,7 +410,7 @@ void generateLoadArrayVarCode(comp_tree_t *arrNode) {
     if (strcmp(idToken->scope, "#GLOBAL#") == 0) {
         snprintf(code, maxCodeSize, "loadAO rbss, r%d => r%d\n", addrReg, resultReg);
     } else {
-        snprintf(code, maxCodeSize, "loadAO rfp, r%d => r%d\n", addrReg, resultReg);
+        snprintf(code, maxCodeSize, "loadAO rarp, r%d => r%d\n", addrReg, resultReg);
     }
 
     GSList *addrCode = getArrayAddrGeneratorCode(arrNode, addrReg);
@@ -446,7 +446,7 @@ void generateLoadUserVarFieldCode(comp_tree_t *userVarNode) {
     if (strcmp(varToken->scope, "#GLOBAL#") == 0)
         snprintf(code, maxCodeSize, "loadAI rbss, %d => r%d\n", totalOffset, resultReg);
     else
-        snprintf(code, maxCodeSize, "loadAI rfp, %d => r%d\n", totalOffset, resultReg);
+        snprintf(code, maxCodeSize, "loadAI rarp, %d => r%d\n", totalOffset, resultReg);
 
     nodeInfo->code = g_slist_append(nodeInfo->code, code);
     nodeInfo->resultReg = resultReg;
@@ -522,7 +522,7 @@ void generateUserVarFieldAssignCode(comp_tree_t *node) {
     if (strcmp(varToken->scope, "#GLOBAL#") == 0)
         snprintf(code, maxCodeSize, "storeAI r%d => rbss, %d\n", expValue, totalOffset);
     else
-        snprintf(code, maxCodeSize, "storeAI r%d => rfp, %d\n", expValue, totalOffset);
+        snprintf(code, maxCodeSize, "storeAI r%d => rarp, %d\n", expValue, totalOffset);
 
     GSList *codeList = expInfo->code;
     codeList = g_slist_append(codeList, code);
@@ -555,12 +555,12 @@ void generateUserVarAssignCode(comp_tree_t *node) {
     if (strcmp(fromToken->scope, "#GLOBAL#") == 0)
         strcpy(fromScopeReg, "rbss");
     else
-        strcpy(fromScopeReg, "rfp");
+        strcpy(fromScopeReg, "rarp");
 
     if (strcmp(toToken->scope, "#GLOBAL#") == 0)
         strcpy(toScopeReg, "rbss");
     else
-        strcpy(toScopeReg, "rfp");
+        strcpy(toScopeReg, "rarp");
 
     GSList *codeList = NULL;
 
@@ -600,7 +600,7 @@ void generateSimpleVarAssignCode(comp_tree_t *node) {
     if (strcmp(idToken->scope, "#GLOBAL#") == 0)
         snprintf(code, maxCodeSize, "storeAI r%d => rbss, %d\n", expValue, varAddr);
     else
-        snprintf(code, maxCodeSize, "storeAI r%d => rfp, %d\n", expValue, varAddr);
+        snprintf(code, maxCodeSize, "storeAI r%d => rarp, %d\n", expValue, varAddr);
 
     GSList *codeList = expInfo->code;
     codeList = g_slist_append(codeList, code);
@@ -625,7 +625,7 @@ void generateArrayVarAssignCode(comp_tree_t *node) {
     if (strcmp(idToken->scope, "#GLOBAL#") == 0)
         snprintf(code, maxCodeSize, "storeAO r%d => rbss, r%d\n", expValueReg, addrReg);
     else
-        snprintf(code, maxCodeSize, "storeAO r%d => rfp, r%d\n", expValueReg, addrReg);
+        snprintf(code, maxCodeSize, "storeAO r%d => rarp, r%d\n", expValueReg, addrReg);
 
     GSList *addrCode = getArrayAddrGeneratorCode(arrNode, addrReg);
 

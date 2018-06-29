@@ -34,6 +34,7 @@ ADD_EXECUTABLE(main
   src/cc_tree.c
   src/cc_ast.c
   src/cc_cod.c
+  src/cc_exe.c
 )
 TARGET_LINK_LIBRARIES(main ${FLEX_LIBRARIES} ${GLIB_LDFLAGS} ${GLIB_LIBRARIES})
 

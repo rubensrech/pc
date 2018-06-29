@@ -74,6 +74,6 @@ GSList *generateForeachUpdateItVarCode(comp_tree_t *destIdNode, comp_tree_t *arr
 GSList *generateForeachUpdateItIndexCode(comp_tree_t *destIdNode, int indexReg);
 void generateForeachCode(comp_tree_t *node);
 void generateBreakContinueCode(comp_tree_t *node);
-
-
-void test(comp_tree_t *node);
+// > Functions
+int getCurrFuncLocalVarsSize();
+void resetLocalVarsOffset();

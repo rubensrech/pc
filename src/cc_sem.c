@@ -434,6 +434,26 @@ void checkFuncReturnDataType(comp_tree_t *returnNode) {
     }  
 }
 
+// Code generating support
+int getFuncParamsSize(char *funcName) {
+    FuncDesc *funcDesc = dict_get(funcTable, funcName);
+    if (funcDesc == NULL) return -1;
+
+    comp_tree_t *currParam = funcDesc->params;
+    TokenInfo *currParamInfo;
+    int currParamSize;
+    int size = 0;
+
+    while (currParam != NULL) {
+        currParamInfo = getTokenInfoFromIdNode(currParam);
+        currParamSize = getSizeOf(currParamInfo->dataType);
+        size += currParamSize;
+        currParam = currParam->list_next;
+    }
+
+    return size;
+}
+
 /* Pipe Expressions */
 void setCurrParsingPipeExp(int lastFuncCallRetType) {
     pipeExpParseInfo.isParsingPipeExp = 1;

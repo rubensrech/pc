@@ -124,6 +124,8 @@ int countFuncParameters(comp_tree_t *params);
 void checkFuncCall(comp_tree_t *funcAST);
 void checkFuncHasReturnCmd(comp_tree_t *funcNode);
 void checkFuncReturnDataType(comp_tree_t *returnNode);
+// Code generating support
+int getFuncParamsSize(char *funcName);
 
 /* Pipe Expressions */
 void setCurrParsingPipeExp(int lastFuncCallRetType);

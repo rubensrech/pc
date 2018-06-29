@@ -11,6 +11,7 @@
 #include "cc_ast.h"
 #include "cc_sem.h"
 #include "cc_cod.h"
+#include "cc_exe.h"
 
 extern comp_tree_t *ast;
 extern comp_dict_t *funcTable;
@@ -327,6 +328,8 @@ func_dec: func_header block                     {
                                                         checkFuncHasReturnCmd($$);
                                                         // > Code
                                                         inheritCodeList($$, $2);
+                                                        // > Exec
+                                                        generateFuncCode($$);
                                                 }
         | TK_PR_STATIC func_header block        {       
                                                         // > AST
@@ -367,9 +370,14 @@ params_dec_list: param_dec                      { $$ = $1; }
                 | param_dec ',' params_dec_list { $$ = $1; tree_set_list_next_node($1, $3); };
 
 param_dec: param_dec_mods native_type TK_IDENTIFICADOR          {
+                                                                        // > AST
                                                                         $$ = makeASTNode(LIST_NODE_PARAM_ID, $3);
+                                                                        // > Semantic
                                                                         setIdTokenDataType($3, $2);
                                                                         setIdType($3, VAR_ID);
+                                                                        // > Code / Exec
+                                                                        setTokenLocalVarOffset($3);
+                                                                        allocNewLocalVar(getSizeOf($2));
                                                                 }
         | param_dec_mods TK_IDENTIFICADOR TK_IDENTIFICADOR      {
                                                                         $$ = makeASTNode(LIST_NODE_PARAM_ID, $3);
@@ -605,8 +613,12 @@ param: exp                              { $$ = $1; };
 /* Return, break, continue and case - commands */
 
 return_cmd: TK_PR_RETURN exp    {
+                                        // > AST
                                         $$ = makeASTUnaryNode(AST_RETURN, NULL, $2);
+                                        // > Semantic
                                         checkFuncReturnDataType($$);
+                                        // > Code / Exec
+                                        generateReturnCmdCode($$);
                                 };
 
 break_cmd: TK_PR_BREAK          {

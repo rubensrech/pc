@@ -1021,11 +1021,3 @@ void generateBreakContinueCode(comp_tree_t *node) {
     }
     nodeInfo->code = codeList;
 }
-
-
-
-
-void test(comp_tree_t *node) {
-    AstNodeInfo *nodeInfo = node->value;
-    printf("FUNC: breakHoles: %d\n", g_slist_length(breakHoles));
-}

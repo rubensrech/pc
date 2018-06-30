@@ -326,9 +326,7 @@ func_dec: func_header block                     {
                                                         // Scope ended -> back to global scope
                                                         setCurrentScopeToGlobalScope();
                                                         checkFuncHasReturnCmd($$);
-                                                        // > Code
-                                                        inheritCodeList($$, $2);
-                                                        // > Exec
+                                                        // > Code / Exec
                                                         generateFuncCode($$);
                                                 }
         | TK_PR_STATIC func_header block        {       

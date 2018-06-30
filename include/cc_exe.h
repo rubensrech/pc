@@ -15,3 +15,4 @@ GSList *generateSaveRARPCode();
 GSList *generateCreateARCode(int paramsLocalVarsSize);
 
 void generateReturnCmdCode(comp_tree_t *retNode);
+GSList *generateReturnSupportCode();

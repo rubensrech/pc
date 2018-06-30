@@ -378,7 +378,7 @@ void checkFuncCall(comp_tree_t *funcAST) {
     }
 }
 
-void checkFuncHasReturnCmd(comp_tree_t *funcNode) {
+int checkFuncHasReturnCmd(comp_tree_t *funcNode) {
     char errorMsg[MAX_ERROR_MSG_SIZE];
     TokenInfo *funcIdInfo = ((AstNodeInfo *)funcNode->value)->tokenInfo;
     char *funcId = funcIdInfo->lexeme;
@@ -398,7 +398,10 @@ void checkFuncHasReturnCmd(comp_tree_t *funcNode) {
         snprintf(errorMsg, MAX_ERROR_MSG_SIZE, "Function '%s' has no return command", funcId);
         if (ENABLE_RETURN_CHECK)
             throwSemanticError(errorMsg, IKS_ERROR_NO_RETURN);
+        return 0;
     }
+
+    return 1;
 }
 
 void checkFuncReturnDataType(comp_tree_t *returnNode) {

@@ -17,9 +17,10 @@ void generateFuncCode(comp_tree_t *funcNode) {
     int paramsLocalVarsSize = getCurrFuncLocalVarsSize();
     resetLocalVarsOffset();
 
-    GSList *codeList;
+    GSList *codeList = NULL;
 
     if (strcmp(funcName, "main") != 0) {
+        // Function is NOT main()
         GSList *saveRSP = generateSaveRSPCode(); 
         GSList *saveRARP = generateSaveRARPCode();
         GSList *createAR = generateCreateARCode(paramsLocalVarsSize);
@@ -28,16 +29,23 @@ void generateFuncCode(comp_tree_t *funcNode) {
         codeList = g_slist_concat(codeList, createAR);          // Create AR
         codeList = g_slist_concat(codeList, blockInfo->code);   // [func block code]
 
-        printf("func name: %s\n", funcName);
-        printCodeList(codeList);
-        printf("\n\n");
+        if (!checkFuncHasReturnCmd(funcNode)) {
+            // If func does not have return command -> return on function end
+            GSList *retSupportCode = generateReturnSupportCode();
+            codeList = g_slist_concat(codeList, retSupportCode); // Destroy AR + jump-back
+        }
+    } else {
+        // Function is main()
+        // Create AR -> alloc local vars
+        int codeSize = 30;
+        char *allocLocalVarsCode = malloc(codeSize);
+        snprintf(allocLocalVarsCode, codeSize, "addI rsp, %d => rsp\n", paramsLocalVarsSize);
+
+        codeList = g_slist_append(codeList, allocLocalVarsCode);    // Create AR (local vars only)
+        codeList = g_slist_concat(codeList, blockInfo->code);       // [func block code]
     }
 
-    
-    // Pass return value
-    // Destroy AR
-    // Tranfer execution
-
+    funcInfo->code = codeList;
 }
 
 GSList *generateSaveRSPCode() {
@@ -90,10 +98,44 @@ void generateReturnCmdCode(comp_tree_t *retNode) {
 
     snprintf(saveRetValCode, codeSize, "storeAI r%d => rarp, %d\n", expResReg, AR_OFFSET_RET_VAL);
 
+    GSList *retSupportCode = generateReturnSupportCode();
+
     GSList *codeList = expInfo->code;
     codeList = g_slist_append(codeList, saveRetValCode);
-
-    // Generate return code (Destroy RA, jump back)
+    codeList = g_slist_concat(codeList, retSupportCode);
 
     retInfo->code = codeList;
+}
+
+GSList *generateReturnSupportCode() {
+    int retAddrReg = generateTempReg();
+    int oldSPReg = generateTempReg();
+    int oldRARPReg = generateTempReg();
+
+    int codeSize = 30;
+    char *loadRetAddrCode = malloc(codeSize);
+    char *loadOldSPCode = malloc(codeSize);
+    char *loadOldRARPCode = malloc(codeSize);
+    char *updateSPCode = malloc(codeSize);
+    char *updateRARPCode = malloc(codeSize);
+    char *jumpBackCode = malloc(codeSize);
+
+    // > Destroy AR
+    snprintf(loadRetAddrCode, codeSize, "loadAI rarp, %d => r%d\n", AR_OFFSET_RET_ADDR, retAddrReg);
+    snprintf(loadOldSPCode, codeSize, "loadAI rarp, %d => r%d\n", AR_OFFSET_OLD_RSP, oldSPReg);
+    snprintf(loadOldRARPCode, codeSize, "loadAI rarp, %d => r%d\n", AR_OFFSET_OLD_RARP, oldRARPReg);
+    snprintf(updateSPCode, codeSize, "i2i r%d => rsp\n", oldSPReg);
+    snprintf(updateRARPCode, codeSize, "i2i r%d => rarp\n", oldRARPReg);
+    // > Transfer execution (jump back to caller function)
+    snprintf(jumpBackCode, codeSize, "jump -> r%d\n", retAddrReg);
+
+    GSList *codeList = NULL;
+    codeList = g_slist_append(codeList, loadRetAddrCode);
+    codeList = g_slist_append(codeList, loadOldSPCode);
+    codeList = g_slist_append(codeList, loadOldRARPCode);
+    codeList = g_slist_append(codeList, updateSPCode);
+    codeList = g_slist_append(codeList, updateRARPCode);
+    codeList = g_slist_append(codeList, jumpBackCode);
+
+    return codeList;
 }

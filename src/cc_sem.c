@@ -287,6 +287,7 @@ void insertFuncTable(TokenInfo *idInfo, comp_tree_t *params) {
 
     funcDesc->id = idInfo->lexeme;
     funcDesc->returnDataType = idInfo->dataType;
+    funcDesc->label = 0;
     funcDesc->returnUserDataType = idInfo->userDataType;
     funcDesc->params = params;
 
@@ -455,6 +456,20 @@ int getFuncParamsSize(char *funcName) {
     }
 
     return size;
+}
+
+void setFuncLabel(char *funcName, int label) {
+    FuncDesc *funcDesc = dict_get(funcTable, funcName);
+    if (funcDesc == NULL) return;
+
+    funcDesc->label = label;
+}
+
+int getFuncLabel(char *funcName) {
+    FuncDesc *funcDesc = dict_get(funcTable, funcName);
+    if (funcDesc == NULL) return -1;
+
+    return funcDesc->label;
 }
 
 /* Pipe Expressions */

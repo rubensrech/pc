@@ -59,11 +59,10 @@
 #define IKS_ERROR_INVALID_BREAK     21 // uso de break fora de loop ou switch
 #define IKS_ERROR_INVALID_CONTINUE  22 // uso de continue fora de loop
 
-
-
 typedef struct funcDesc {
     char *id;
     int returnDataType;
+    int label;
     char *returnUserDataType;
     comp_tree_t *params;
 } FuncDesc;
@@ -126,6 +125,8 @@ int checkFuncHasReturnCmd(comp_tree_t *funcNode);
 void checkFuncReturnDataType(comp_tree_t *returnNode);
 // Code generating support
 int getFuncParamsSize(char *funcName);
+void setFuncLabel(char *funcName, int label);
+int getFuncLabel(char *funcName);
 
 /* Pipe Expressions */
 void setCurrParsingPipeExp(int lastFuncCallRetType);

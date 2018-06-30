@@ -152,8 +152,8 @@ programa: /* empty */   { $$ = makeASTNode(AST_PROGRAMA, NULL); ast = $$; }
                                 // > AST
                                 if ($1 != NULL) {
                                         $$ = makeASTUnaryNode(AST_PROGRAMA, NULL, $1);
-                                        // > Code
-                                        inheritCodeList($$, $1);
+                                        // > Code / Exec
+                                        generateFullCode($$);
                                         printNodeCodeList($$);
                                 } else {
                                         $$ = makeASTNode(AST_PROGRAMA, NULL);
@@ -167,8 +167,11 @@ code:  type_def ';'             { $$ = NULL; }
      | type_def ';' code        { $$ = $3; }
      | global_def ';' code      { $$ = $3; }
      | func_dec code            { 
+                                        // > AST
                                         if ($2 != NULL) tree_set_list_next_node($1, $2);
                                         $$ = $1;
+                                        // > Code / Exec
+                                        cmdsCodeListConcat($1, $2);
                                 };
 
 /* Auxiliary rules */
@@ -346,10 +349,14 @@ func_header: func_id '(' params_dec ')'         {
                                                 };
 
 func_id: native_type TK_IDENTIFICADOR           {       
+                                                        // > AST
                                                         $$ = $2;
+                                                        // > Semantic
                                                         createNewScope($2->lexeme);
                                                         setIdType($2, FUNC_ID);
                                                         setIdTokenDataType($2, $1);
+                                                        // > Code / Exec
+                                                        setCurrFuncVarsOffset($2);
                                                 }
         | TK_IDENTIFICADOR TK_IDENTIFICADOR     {
                                                         $$ = $2;
@@ -589,12 +596,17 @@ io_cmd: TK_PR_INPUT exp                 { $$ = makeASTUnaryNode(AST_INPUT, NULL,
 
 /* Function call - command */
 
-func_call: id '(' params ')'    {       if ($3 != NULL) $$ = makeASTBinaryNode(AST_CHAMADA_DE_FUNCAO, NULL, $1, $3);
+func_call: id '(' params ')'    {
+                                        // > AST
+                                        if ($3 != NULL) $$ = makeASTBinaryNode(AST_CHAMADA_DE_FUNCAO, NULL, $1, $3);
                                         else $$ = makeASTUnaryNode(AST_CHAMADA_DE_FUNCAO, NULL, $1);
+                                        // > Semantic
                                         checkIdNodeDeclared($1);
                                         checkIdNodeUsedAs(FUNC_ID, $1);
                                         setNodeDataType($$, getASTNodeTokenDataType($1));
                                         checkFuncCall($$);
+                                        // > Code / Exec
+                                        generateFuncCallCode($$);
                                 };
 
 params:  /* empty */                    { $$ = NULL; }

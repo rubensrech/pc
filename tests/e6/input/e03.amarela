@@ -5,7 +5,7 @@ int fatorial (int n)
 {
     if (n == 1) then {
        return n;
-    };
+    }
     return fatorial(n-1) * n;          
 }
 

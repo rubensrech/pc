@@ -346,6 +346,7 @@ func_dec: func_header block                     {
 func_header: func_id '(' params_dec ')'         {       
                                                         $$ = $1;
                                                         insertFuncTable($1, $3);
+                                                        generateLabelForFunc($1);
                                                 };
 
 func_id: native_type TK_IDENTIFICADOR           {       

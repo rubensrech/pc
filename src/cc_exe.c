@@ -88,9 +88,9 @@ void generateFuncCode(comp_tree_t *funcNode) {
     TokenInfo *idToken = funcInfo->tokenInfo;
 
     int paramsLocalVarsSize = getCurrFuncLocalVarsSize();
-    int funcLabel = generateLabel();
 
     char *funcName = idToken->lexeme;
+    int funcLabel = getFuncLabel(funcName);
     char *funcLabelCode = generateLabelCode(funcLabel);
 
     GSList *codeList = NULL;
@@ -123,7 +123,6 @@ void generateFuncCode(comp_tree_t *funcNode) {
         codeList = g_slist_concat(codeList, blockInfo->code);       // [func block code]
     }
 
-    setFuncLabel(funcName, funcLabel);
     resetLocalVarsOffset();
 
     funcInfo->code = codeList;
@@ -166,6 +165,12 @@ GSList *generateCreateARCode(int paramsLocalVarsSize) {
     codeList = g_slist_append(codeList, setRSPCode);
 
     return codeList;
+}
+
+void generateLabelForFunc(TokenInfo *funcIdToken) {
+    char *funcName = funcIdToken->lexeme;
+    int funcLabel = generateLabel();
+    setFuncLabel(funcName, funcLabel);
 }
 
 void generateReturnCmdCode(comp_tree_t *retNode) {
@@ -244,6 +249,7 @@ void generateFuncCallCode(comp_tree_t *callNode) {
 
     codeList = g_slist_concat(codeList, retAddrCode);
     codeList = g_slist_concat(codeList, jumpCode);
+    
     codeList = g_slist_concat(codeList, retCode);
 
     callInfo->resultReg = funcRetValReg;
@@ -310,7 +316,7 @@ GSList *generateFuncCallJumpCode(int funcLabel) {
 GSList *generateFuncCallLoadRetValCode(int retValReg) {
     int codeSize = 30;
     char *loadRetValCode = malloc(codeSize);
-    snprintf(loadRetValCode, codeSize, "loadAI rsp, %d -> r%d\n", AR_OFFSET_RET_VAL, retValReg);
+    snprintf(loadRetValCode, codeSize, "loadAI rsp, %d => r%d\n", AR_OFFSET_RET_VAL, retValReg);
 
     GSList *codeList = NULL;
     codeList = g_slist_append(codeList, loadRetValCode);

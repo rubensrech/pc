@@ -467,6 +467,7 @@ void setFuncLabel(char *funcName, int label) {
 
 int getFuncLabel(char *funcName) {
     FuncDesc *funcDesc = dict_get(funcTable, funcName);
+
     if (funcDesc == NULL) return -1;
 
     return funcDesc->label;

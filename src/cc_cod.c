@@ -263,9 +263,16 @@ void generateArithCode(comp_tree_t *node, const char *op) {
 
     snprintf(code, maxCodeSize, "%s r%d, r%d => r%d\n", op, fstOpReg, sndOpReg, resultReg);
 
-    GSList *codeList = fstOpInfo->code;
-    codeList = g_slist_concat(codeList, sndOpInfo->code);    
-    codeList = g_slist_append(codeList, code);
+    GSList *codeList;
+    if (sndOpInfo->type == AST_CHAMADA_DE_FUNCAO) {
+        codeList = sndOpInfo->code;
+        codeList = g_slist_concat(codeList, fstOpInfo->code);   
+        codeList = g_slist_append(codeList, code);
+    } else {
+        codeList = fstOpInfo->code;
+        codeList = g_slist_concat(codeList, sndOpInfo->code);   
+        codeList = g_slist_append(codeList, code);
+    }
 
     nodeInfo->code = codeList;
     nodeInfo->resultReg = resultReg;

@@ -25,6 +25,8 @@ GSList *generateSaveRSPCode();
 GSList *generateSaveRARPCode();
 GSList *generateCreateARCode(int paramsLocalVarsSize);
 
+void generateLabelForFunc(TokenInfo *funcIdToken);
+
 void generateReturnCmdCode(comp_tree_t *retNode);
 GSList *generateReturnSupportCode();
 

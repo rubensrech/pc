@@ -8,13 +8,13 @@ int main()
     y = 456;
   } else {
     y = 0;
-  }
+  };
 
   if (y > 0) then {
     x = 123;
   } else {
     x = 456;
-  }
+  };
   return 0;
 }
 

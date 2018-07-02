@@ -1,0 +1,11 @@
+//shift
+int main()
+{
+  int i;
+  int j;
+  i = 10;
+  i << 2;
+  j = i;
+  j >> 2;
+  return 0;
+}

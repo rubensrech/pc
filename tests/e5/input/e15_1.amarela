@@ -1,8 +1,0 @@
-/* arranjo with two dimensions */
-int x[12312][98343];
-
-int main ()
-{
-  x[9232][83232] = 1234;
-  x[6236][52231] = 4569;
-}

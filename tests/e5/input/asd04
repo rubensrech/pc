@@ -1,0 +1,9 @@
+//local + offset
+int main()
+{
+  int i;
+  int j;
+  int k;
+  k = 123;
+  return 0;
+}

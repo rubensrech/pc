@@ -1,0 +1,3 @@
+! timeout 10
+
+$ ./tests/scripts/valgrindtest ./main ./tests/e5/input/asd15

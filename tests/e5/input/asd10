@@ -1,0 +1,10 @@
+//if condicional
+int x;
+int main()
+{
+  x = 1332;
+  if (x > 1000) then {
+    x = 24;
+  };
+  return 0;
+}

@@ -1,0 +1,5 @@
+! timeout 5
+
+$ ./tests/e5/execute.sh "./main < ./tests/e5/input/asd18 | ./tests/scripts/ilocsim --data 2048 --stack 1024 -m -x | grep -v Change"
+> 00001024 4
+> 00002048 10

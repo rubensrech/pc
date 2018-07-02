@@ -45,6 +45,8 @@ class Operation:
       l = []
       # op
       l.append(('nop',None,None))
+      # halt
+      l.append(('halt',None,None))
       # op => l
       l.append(('jumpI','',label,'->'))
       # op => r
@@ -235,7 +237,7 @@ class Sim:
    def step(self):
       if self.trace:
          eprint('%d %s'%(self.ip, self.code[self.ip]))
-         eprint(self.reg['r0'],self.reg['r1'],self.reg['r2'],self.reg['r3'],self.reg['r4'])
+#         eprint(self.reg['r0'],self.reg['r1'],self.reg['r2'],self.reg['r3'],self.reg['r4'])
       self.stats['instructions'] += 1
       op = self.code[self.ip]
       self.reg['rpc'] = self.ip;
@@ -249,6 +251,7 @@ class Sim:
 #      eprint('m',self.mem[0x100001],self.mem[0x100003])
 
    def op_nop    (self,op): pass
+   def op_halt   (self,op): self.ip = len(self.code)+1
 
    def op_add    (self,op): self.reg[op[2]] = self.reg[op[0]]  + self.reg[op[1]]
    def op_sub    (self,op): self.reg[op[2]] = self.reg[op[0]]  - self.reg[op[1]]
@@ -331,6 +334,7 @@ class Sim:
       rbss = self.reg.get('rbss')
       tests =[
       ('nop',),
+      ('halt',),
       ('add r1, r2 => r3',{'r1':1,'r2':3},{'r1':1,'r2':3,'r3':4}),
       ('sub r1, r2 => r3',{'r1':1,'r2':3},{'r1':1,'r2':3,'r3':-2}),
       ('mult r1, r2 => r3',{'r1':1,'r2':3},{'r1':1,'r2':3,'r3':3}),
@@ -378,16 +382,17 @@ class Sim:
 def main():
    # Os argumentos são os seguintes
    parser = argparse.ArgumentParser(description='ILOC Simulator')
-   parser.add_argument('-i', '--instructions', type=bool, default=0)
-   parser.add_argument('-m', '--memory', type=bool, default=0)
-   parser.add_argument('-s', '--stats', type=bool, default=0)
-   parser.add_argument('-t', '--trace', type=bool, default=0)
-   parser.add_argument('--bss', type=int, default=0)
+   # See https://stackoverflow.com/questions/8259001/python-argparse-command-line-flags-without-arguments
+   parser.add_argument('-i', '--instructions', action='store_true')
+   parser.add_argument('-m', '--memory', action='store_true')
+   parser.add_argument('-s', '--stats', action='store_true')
+   parser.add_argument('-t', '--trace', action='store_true')
+   parser.add_argument('--data', type=int, default=0)
    parser.add_argument('--stack', type=int, default=1024)
    # If active (default), strict makes impossible
    # - any update of bss
    # - the first definition of stack (rfp/rsp)
-   parser.add_argument('-x', '--strict', type=bool, default=1)
+   parser.add_argument('-x', '--strict', action='store_true')
    parser.add_argument('ILOCFILE', nargs='?')
    args = parser.parse_args()
 
@@ -403,7 +408,7 @@ def main():
       program = sys.stdin.read()
 
    # Criar o simulador com o código do program (em program)
-   sim = Sim(program, args.bss, args.stack, args.trace)
+   sim = Sim(program, args.data, args.stack, args.trace)
 
    # Enquanto o tamanho do código do simulador for maior que o PC
    while len(sim.code) > sim.ip:

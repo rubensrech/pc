@@ -1,0 +1,19 @@
+/* curto-circuito 2 */
+int x;
+int y;
+int z;
+int main()
+{
+  x = 1;
+  y = 1;
+  z = 0;
+  if ((x == 1) || ((y == 0) && (z == 0))) then {
+	x = 123;
+  };
+  return 0;
+}
+
+//check is made through the number of cbr instructions executed
+//only one cbr has to be executed to pass this test
+//memory situation is also checked
+

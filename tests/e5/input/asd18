@@ -1,0 +1,11 @@
+//for
+int sum;
+int main ()
+{
+  int i;
+  sum = 0;
+  foreach (i : 1, 2, 3, 4) {
+     sum = sum + i;
+  };
+  return 0;
+}

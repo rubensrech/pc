@@ -1,0 +1,18 @@
+//curto-circuito 1
+int x;
+int y;
+int main()
+{
+  x = 0;
+  y = 0;
+  if ((x > 0) && (y > 0)) then {
+    x = 123;
+  } else {
+    x = 456;
+  };
+  return 0;
+}
+
+//check is made through the number of cbr instructions executed
+//only one cbr has to be executed to pass this test
+//memory situation is also checked

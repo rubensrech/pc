@@ -1,0 +1,13 @@
+//while-do
+int x;
+int y;
+int main()
+{
+  y = 0;
+  x = y;
+  while (x < 10) do {
+    x = x + 1;
+    y = (y + 1) * 3;
+  };
+  return 0;
+}

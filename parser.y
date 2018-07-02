@@ -412,11 +412,14 @@ command:  var_dec ';'           { $$ = $1; }
         | pipe_exp ';'          { $$ = $1; }
         | do_while ';'          { $$ = $1; }
         | block ';'             { $$ = $1; }
-        | if_stm                { $$ = $1; }
-        | foreach               { $$ = $1; }
-        | while                 { $$ = $1; }
-        | switch                { $$ = $1; }
-        | for                   { $$ = $1; };
+        | if_stm opt_smcolon    { $$ = $1; }
+        | foreach opt_smcolon   { $$ = $1; }
+        | while opt_smcolon     { $$ = $1; }
+        | switch opt_smcolon    { $$ = $1; }
+        | for opt_smcolon       { $$ = $1; };
+
+opt_smcolon: /* empty */
+             | ';';
 
 /* Local Variables Declaration - command */
 /* > VAR DECLARATION */

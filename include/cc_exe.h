@@ -13,6 +13,17 @@
 #include "cc_tree.h"
 #include "cc_ast.h"
 
+/*
+ * Activation Record
+ *      -------------------------
+ * 0    | return address        |
+ * 4    | old RSP               |
+ * 8    | old RARP              |
+ * 12   | return value          |
+ * 16   | params../local vars.. |
+ * ..   -------------------------
+ */
+
 void setCurrFuncVarsOffset(TokenInfo *funcIdToken);
 int getCurrFuncVarsOffset();
 
